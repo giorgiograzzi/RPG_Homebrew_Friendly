@@ -22,12 +22,12 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 
 ### Codice e struttura
 - [ ] 🟡 Scheda PDF: tolta in step 1 (usava il modello ufficiale). Resta `src/export/sheetData.ts`; il pulsante "Stampa scheda" torna con il nuovo generatore (step 7). Chiavi `wizard.sheet.*` in `it.json` ancora presenti.
-- [ ] 🟡 `scripts/extract-*.ts` citano ancora PDF/fonti non SRD (la guardia non li scandisce): riscrittura in step 2.
+- [x] `scripts/extract-*.ts` e `validate-data.ts` (citavano fonti non SRD) rimossi in step 1; `validate:data` ed `extract:data` (script npm) tornano con la riscrittura in step 2.
 - [ ] 🟡 `origin: "private"` (default in `src/engine/schema/content.ts` e nei test): con i dati SRD tracciati va sostituito con `"srd"` (step 2/4).
 - [ ] 🟡 `Dockerfile` e `.dockerignore` parlano ancora di `data/private` (step 9).
 - [ ] 🟡 Dopo lo step 1 `npm test` ha 8 file che falliscono per mancanza di `data/` (stessi di prima): tornano verdi con gli step 2-4.
 - [ ] 🟡 `.env.example`: porta 8097 scelta per l'app privata; rivedere se serve (step 9).
-- [ ] 🟡 Commento in `scripts/extract-conditions.ts` cita fonti non SRD: sparisce con la riscrittura degli estrattori (step 2).
+- [x] Commento in `scripts/extract-conditions.ts`: file rimosso in step 1.
 - [ ] 🟡 `ATTRIBUTION.md`: diciture trascritte dai PDF, riverificare a occhio (step 8).
 - [ ] 🟡 I test `*.private.test.ts` saltano i dati mancanti: rinominarli e farli girare sempre, sui dati SRD tracciati (step 4).
 - [ ] 🟡 `README` e doc dell'app privata citano il bunker, Cloudflare, porte e dominio personale: **non** portarli nella repo pubblica.
