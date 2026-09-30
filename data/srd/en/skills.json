@@ -1,0 +1,149 @@
+{
+ "kind": "skills",
+ "entries": [
+  {
+   "id": "acrobatics",
+   "name": "Acrobatics",
+   "extra": {
+    "ability": "dex"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "animal_handling",
+   "name": "Animal Handling",
+   "extra": {
+    "ability": "wis"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "arcana",
+   "name": "Arcana",
+   "extra": {
+    "ability": "int"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "athletics",
+   "name": "Athletics",
+   "extra": {
+    "ability": "str"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "deception",
+   "name": "Deception",
+   "extra": {
+    "ability": "cha"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "history",
+   "name": "History",
+   "extra": {
+    "ability": "int"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "insight",
+   "name": "Insight",
+   "extra": {
+    "ability": "wis"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "intimidation",
+   "name": "Intimidation",
+   "extra": {
+    "ability": "cha"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "investigation",
+   "name": "Investigation",
+   "extra": {
+    "ability": "int"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "medicine",
+   "name": "Medicine",
+   "extra": {
+    "ability": "wis"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "nature",
+   "name": "Nature",
+   "extra": {
+    "ability": "int"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "perception",
+   "name": "Perception",
+   "extra": {
+    "ability": "wis"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "performance",
+   "name": "Performance",
+   "extra": {
+    "ability": "cha"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "persuasion",
+   "name": "Persuasion",
+   "extra": {
+    "ability": "cha"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "religion",
+   "name": "Religion",
+   "extra": {
+    "ability": "int"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "sleight_of_hand",
+   "name": "Sleight of Hand",
+   "extra": {
+    "ability": "dex"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "stealth",
+   "name": "Stealth",
+   "extra": {
+    "ability": "dex"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "survival",
+   "name": "Survival",
+   "extra": {
+    "ability": "wis"
+   },
+   "origin": "srd"
+  }
+ ]
+}

@@ -1,0 +1,1028 @@
+{
+ "kind": "items",
+ "entries": [
+  {
+   "id": "acid",
+   "name": "Acido",
+   "category": "adventuring_gear",
+   "weight": 1,
+   "cost": 2500,
+   "origin": "srd"
+  },
+  {
+   "id": "alchemists_fire",
+   "name": "Fuoco dell'alchimista",
+   "category": "adventuring_gear",
+   "weight": 1,
+   "cost": 5000,
+   "origin": "srd"
+  },
+  {
+   "id": "antitoxin",
+   "name": "Antitossina",
+   "category": "adventuring_gear",
+   "weight": 0,
+   "cost": 5000,
+   "origin": "srd"
+  },
+  {
+   "id": "backpack",
+   "name": "Zaino",
+   "category": "adventuring_gear",
+   "weight": 5,
+   "cost": 200,
+   "origin": "srd"
+  },
+  {
+   "id": "ball_bearings",
+   "name": "Sfere metalliche",
+   "category": "adventuring_gear",
+   "weight": 2,
+   "cost": 100,
+   "origin": "srd"
+  },
+  {
+   "id": "barrel",
+   "name": "Barile",
+   "category": "adventuring_gear",
+   "weight": 70,
+   "cost": 200,
+   "origin": "srd"
+  },
+  {
+   "id": "basket",
+   "name": "Cesto",
+   "category": "adventuring_gear",
+   "weight": 2,
+   "cost": 40,
+   "origin": "srd"
+  },
+  {
+   "id": "bedroll",
+   "name": "Giaciglio",
+   "category": "adventuring_gear",
+   "weight": 7,
+   "cost": 100,
+   "origin": "srd"
+  },
+  {
+   "id": "bell",
+   "name": "Campanella",
+   "category": "adventuring_gear",
+   "weight": 0,
+   "cost": 100,
+   "origin": "srd"
+  },
+  {
+   "id": "blanket",
+   "name": "Coperta",
+   "category": "adventuring_gear",
+   "weight": 3,
+   "cost": 50,
+   "origin": "srd"
+  },
+  {
+   "id": "block_and_tackle",
+   "name": "Carrucola e paranco",
+   "category": "adventuring_gear",
+   "weight": 5,
+   "cost": 100,
+   "origin": "srd"
+  },
+  {
+   "id": "book",
+   "name": "Libro",
+   "category": "adventuring_gear",
+   "weight": 5,
+   "cost": 2500,
+   "origin": "srd"
+  },
+  {
+   "id": "glass_bottle",
+   "name": "Bottiglia di vetro",
+   "category": "adventuring_gear",
+   "weight": 2,
+   "cost": 200,
+   "origin": "srd"
+  },
+  {
+   "id": "bucket",
+   "name": "Secchio",
+   "category": "adventuring_gear",
+   "weight": 2,
+   "cost": 5,
+   "origin": "srd"
+  },
+  {
+   "id": "burglars_pack",
+   "name": "Dotazione da scassinatore",
+   "category": "pack",
+   "weight": 42,
+   "cost": 1600,
+   "contents": [
+    {
+     "item": "backpack",
+     "qty": 1
+    },
+    {
+     "item": "ball_bearings",
+     "qty": 1
+    },
+    {
+     "item": "bell",
+     "qty": 1
+    },
+    {
+     "item": "candle",
+     "qty": 10
+    },
+    {
+     "item": "crowbar",
+     "qty": 1
+    },
+    {
+     "item": "hooded_lantern",
+     "qty": 1
+    },
+    {
+     "item": "oil",
+     "qty": 7
+    },
+    {
+     "item": "rations",
+     "qty": 5
+    },
+    {
+     "item": "rope",
+     "qty": 1
+    },
+    {
+     "item": "tinderbox",
+     "qty": 1
+    },
+    {
+     "item": "waterskin",
+     "qty": 1
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "caltrops",
+   "name": "Triboli",
+   "category": "adventuring_gear",
+   "weight": 2,
+   "cost": 100,
+   "origin": "srd"
+  },
+  {
+   "id": "candle",
+   "name": "Candela",
+   "category": "adventuring_gear",
+   "weight": 0,
+   "cost": 1,
+   "origin": "srd"
+  },
+  {
+   "id": "crossbow_bolt_case",
+   "name": "Custodia per quadrelli da balestra",
+   "category": "adventuring_gear",
+   "weight": 1,
+   "cost": 100,
+   "origin": "srd"
+  },
+  {
+   "id": "map_or_scroll_case",
+   "name": "Custodia per mappe o pergamene",
+   "category": "adventuring_gear",
+   "weight": 1,
+   "cost": 100,
+   "origin": "srd"
+  },
+  {
+   "id": "chain",
+   "name": "Catena",
+   "category": "adventuring_gear",
+   "weight": 10,
+   "cost": 500,
+   "origin": "srd"
+  },
+  {
+   "id": "chest",
+   "name": "Forziere",
+   "category": "adventuring_gear",
+   "weight": 25,
+   "cost": 500,
+   "origin": "srd"
+  },
+  {
+   "id": "climbers_kit",
+   "name": "Attrezzi da scalatore",
+   "category": "adventuring_gear",
+   "weight": 12,
+   "cost": 2500,
+   "origin": "srd"
+  },
+  {
+   "id": "fine_clothes",
+   "name": "Abiti eleganti",
+   "category": "adventuring_gear",
+   "weight": 6,
+   "cost": 1500,
+   "origin": "srd"
+  },
+  {
+   "id": "travelers_clothes",
+   "name": "Abiti da viaggiatore",
+   "category": "adventuring_gear",
+   "weight": 4,
+   "cost": 200,
+   "origin": "srd"
+  },
+  {
+   "id": "component_pouch",
+   "name": "Borsa per componenti",
+   "category": "adventuring_gear",
+   "weight": 2,
+   "cost": 2500,
+   "origin": "srd"
+  },
+  {
+   "id": "costume",
+   "name": "Costume",
+   "category": "adventuring_gear",
+   "weight": 4,
+   "cost": 500,
+   "origin": "srd"
+  },
+  {
+   "id": "crowbar",
+   "name": "Piede di porco",
+   "category": "adventuring_gear",
+   "weight": 5,
+   "cost": 200,
+   "origin": "srd"
+  },
+  {
+   "id": "diplomats_pack",
+   "name": "Dotazione da diplomatico",
+   "category": "pack",
+   "weight": 39,
+   "cost": 3900,
+   "contents": [
+    {
+     "item": "chest",
+     "qty": 1
+    },
+    {
+     "item": "fine_clothes",
+     "qty": 1
+    },
+    {
+     "item": "ink",
+     "qty": 1
+    },
+    {
+     "item": "ink_pen",
+     "qty": 5
+    },
+    {
+     "item": "lamp",
+     "qty": 1
+    },
+    {
+     "item": "map_or_scroll_case",
+     "qty": 2
+    },
+    {
+     "item": "oil",
+     "qty": 4
+    },
+    {
+     "item": "paper",
+     "qty": 5
+    },
+    {
+     "item": "parchment",
+     "qty": 5
+    },
+    {
+     "item": "perfume",
+     "qty": 1
+    },
+    {
+     "item": "tinderbox",
+     "qty": 1
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "dungeoneers_pack",
+   "name": "Dotazione da avventuriero",
+   "category": "pack",
+   "weight": 55,
+   "cost": 1200,
+   "contents": [
+    {
+     "item": "backpack",
+     "qty": 1
+    },
+    {
+     "item": "caltrops",
+     "qty": 1
+    },
+    {
+     "item": "crowbar",
+     "qty": 1
+    },
+    {
+     "item": "oil",
+     "qty": 2
+    },
+    {
+     "item": "rations",
+     "qty": 10
+    },
+    {
+     "item": "rope",
+     "qty": 1
+    },
+    {
+     "item": "tinderbox",
+     "qty": 1
+    },
+    {
+     "item": "torch",
+     "qty": 10
+    },
+    {
+     "item": "waterskin",
+     "qty": 1
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "entertainers_pack",
+   "name": "Dotazione da intrattenitore",
+   "category": "pack",
+   "weight": 58.5,
+   "cost": 4000,
+   "contents": [
+    {
+     "item": "backpack",
+     "qty": 1
+    },
+    {
+     "item": "bedroll",
+     "qty": 1
+    },
+    {
+     "item": "bell",
+     "qty": 1
+    },
+    {
+     "item": "bullseye_lantern",
+     "qty": 1
+    },
+    {
+     "item": "costume",
+     "qty": 3
+    },
+    {
+     "item": "mirror",
+     "qty": 1
+    },
+    {
+     "item": "oil",
+     "qty": 8
+    },
+    {
+     "item": "rations",
+     "qty": 9
+    },
+    {
+     "item": "waterskin",
+     "qty": 1
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "explorers_pack",
+   "name": "Dotazione da esploratore",
+   "category": "pack",
+   "weight": 55,
+   "cost": 1000,
+   "contents": [
+    {
+     "item": "backpack",
+     "qty": 1
+    },
+    {
+     "item": "bedroll",
+     "qty": 1
+    },
+    {
+     "item": "oil",
+     "qty": 2
+    },
+    {
+     "item": "rations",
+     "qty": 10
+    },
+    {
+     "item": "rope",
+     "qty": 1
+    },
+    {
+     "item": "tinderbox",
+     "qty": 1
+    },
+    {
+     "item": "torch",
+     "qty": 10
+    },
+    {
+     "item": "waterskin",
+     "qty": 1
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "flask",
+   "name": "Ampolla",
+   "category": "adventuring_gear",
+   "weight": 1,
+   "cost": 2,
+   "origin": "srd"
+  },
+  {
+   "id": "grappling_hook",
+   "name": "Rampino",
+   "category": "adventuring_gear",
+   "weight": 4,
+   "cost": 200,
+   "origin": "srd"
+  },
+  {
+   "id": "healers_kit",
+   "name": "Borsa del guaritore",
+   "category": "adventuring_gear",
+   "weight": 3,
+   "cost": 500,
+   "origin": "srd"
+  },
+  {
+   "id": "holy_water",
+   "name": "Acqua santa",
+   "category": "adventuring_gear",
+   "weight": 1,
+   "cost": 2500,
+   "origin": "srd"
+  },
+  {
+   "id": "hunting_trap",
+   "name": "Tagliola",
+   "category": "adventuring_gear",
+   "weight": 25,
+   "cost": 500,
+   "origin": "srd"
+  },
+  {
+   "id": "ink",
+   "name": "Inchiostro",
+   "category": "adventuring_gear",
+   "weight": 0,
+   "cost": 1000,
+   "origin": "srd"
+  },
+  {
+   "id": "ink_pen",
+   "name": "Pennino",
+   "category": "adventuring_gear",
+   "weight": 0,
+   "cost": 2,
+   "origin": "srd"
+  },
+  {
+   "id": "jug",
+   "name": "Brocca",
+   "category": "adventuring_gear",
+   "weight": 4,
+   "cost": 2,
+   "origin": "srd"
+  },
+  {
+   "id": "ladder",
+   "name": "Scala a pioli",
+   "category": "adventuring_gear",
+   "weight": 25,
+   "cost": 10,
+   "origin": "srd"
+  },
+  {
+   "id": "lamp",
+   "name": "Lampada",
+   "category": "adventuring_gear",
+   "weight": 1,
+   "cost": 50,
+   "origin": "srd"
+  },
+  {
+   "id": "bullseye_lantern",
+   "name": "Lanterna a lente sporgente",
+   "category": "adventuring_gear",
+   "weight": 2,
+   "cost": 1000,
+   "origin": "srd"
+  },
+  {
+   "id": "hooded_lantern",
+   "name": "Lanterna schermabile",
+   "category": "adventuring_gear",
+   "weight": 2,
+   "cost": 500,
+   "origin": "srd"
+  },
+  {
+   "id": "lock",
+   "name": "Serratura",
+   "category": "adventuring_gear",
+   "weight": 1,
+   "cost": 1000,
+   "origin": "srd"
+  },
+  {
+   "id": "magnifying_glass",
+   "name": "Lente d'ingrandimento",
+   "category": "adventuring_gear",
+   "weight": 0,
+   "cost": 10000,
+   "origin": "srd"
+  },
+  {
+   "id": "manacles",
+   "name": "Manette",
+   "category": "adventuring_gear",
+   "weight": 6,
+   "cost": 200,
+   "origin": "srd"
+  },
+  {
+   "id": "map",
+   "name": "Mappa",
+   "category": "adventuring_gear",
+   "weight": 0,
+   "cost": 100,
+   "origin": "srd"
+  },
+  {
+   "id": "mirror",
+   "name": "Specchio",
+   "category": "adventuring_gear",
+   "weight": 0.5,
+   "cost": 500,
+   "origin": "srd"
+  },
+  {
+   "id": "net",
+   "name": "Rete",
+   "category": "adventuring_gear",
+   "weight": 3,
+   "cost": 100,
+   "origin": "srd"
+  },
+  {
+   "id": "oil",
+   "name": "Olio",
+   "category": "adventuring_gear",
+   "weight": 1,
+   "cost": 10,
+   "origin": "srd"
+  },
+  {
+   "id": "paper",
+   "name": "Carta",
+   "category": "adventuring_gear",
+   "weight": 0,
+   "cost": 20,
+   "origin": "srd"
+  },
+  {
+   "id": "parchment",
+   "name": "Pergamena",
+   "category": "adventuring_gear",
+   "weight": 0,
+   "cost": 10,
+   "origin": "srd"
+  },
+  {
+   "id": "perfume",
+   "name": "Profumo",
+   "category": "adventuring_gear",
+   "weight": 0,
+   "cost": 500,
+   "origin": "srd"
+  },
+  {
+   "id": "basic_poison",
+   "name": "Veleno, base",
+   "category": "adventuring_gear",
+   "weight": 0,
+   "cost": 10000,
+   "origin": "srd"
+  },
+  {
+   "id": "pole",
+   "name": "Asta",
+   "category": "adventuring_gear",
+   "weight": 7,
+   "cost": 5,
+   "origin": "srd"
+  },
+  {
+   "id": "iron_pot",
+   "name": "Pentola di ferro",
+   "category": "adventuring_gear",
+   "weight": 10,
+   "cost": 200,
+   "origin": "srd"
+  },
+  {
+   "id": "potion_of_healing",
+   "name": "Pozione di guarigione",
+   "category": "adventuring_gear",
+   "weight": 0.5,
+   "cost": 5000,
+   "origin": "srd"
+  },
+  {
+   "id": "pouch",
+   "name": "Borsa",
+   "category": "adventuring_gear",
+   "weight": 1,
+   "cost": 50,
+   "origin": "srd"
+  },
+  {
+   "id": "priests_pack",
+   "name": "Dotazione da sacerdote",
+   "category": "pack",
+   "weight": 29,
+   "cost": 3300,
+   "contents": [
+    {
+     "item": "backpack",
+     "qty": 1
+    },
+    {
+     "item": "blanket",
+     "qty": 1
+    },
+    {
+     "item": "holy_water",
+     "qty": 1
+    },
+    {
+     "item": "lamp",
+     "qty": 1
+    },
+    {
+     "item": "rations",
+     "qty": 7
+    },
+    {
+     "item": "robe",
+     "qty": 1
+    },
+    {
+     "item": "tinderbox",
+     "qty": 1
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "quiver",
+   "name": "Faretra",
+   "category": "adventuring_gear",
+   "weight": 1,
+   "cost": 100,
+   "origin": "srd"
+  },
+  {
+   "id": "portable_ram",
+   "name": "Ariete portatile",
+   "category": "adventuring_gear",
+   "weight": 35,
+   "cost": 400,
+   "origin": "srd"
+  },
+  {
+   "id": "rations",
+   "name": "Razioni",
+   "category": "adventuring_gear",
+   "weight": 2,
+   "cost": 50,
+   "origin": "srd"
+  },
+  {
+   "id": "robe",
+   "name": "Tunica",
+   "category": "adventuring_gear",
+   "weight": 4,
+   "cost": 100,
+   "origin": "srd"
+  },
+  {
+   "id": "rope",
+   "name": "Corda",
+   "category": "adventuring_gear",
+   "weight": 5,
+   "cost": 100,
+   "origin": "srd"
+  },
+  {
+   "id": "sack",
+   "name": "Sacco",
+   "category": "adventuring_gear",
+   "weight": 0.5,
+   "cost": 1,
+   "origin": "srd"
+  },
+  {
+   "id": "scholars_pack",
+   "name": "Dotazione da studioso",
+   "category": "pack",
+   "weight": 22,
+   "cost": 4000,
+   "contents": [
+    {
+     "item": "backpack",
+     "qty": 1
+    },
+    {
+     "item": "book",
+     "qty": 1
+    },
+    {
+     "item": "ink",
+     "qty": 1
+    },
+    {
+     "item": "ink_pen",
+     "qty": 1
+    },
+    {
+     "item": "lamp",
+     "qty": 1
+    },
+    {
+     "item": "oil",
+     "qty": 10
+    },
+    {
+     "item": "parchment",
+     "qty": 10
+    },
+    {
+     "item": "tinderbox",
+     "qty": 1
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "shovel",
+   "name": "Pala",
+   "category": "adventuring_gear",
+   "weight": 5,
+   "cost": 200,
+   "origin": "srd"
+  },
+  {
+   "id": "signal_whistle",
+   "name": "Fischietto da richiamo",
+   "category": "adventuring_gear",
+   "weight": 0,
+   "cost": 5,
+   "origin": "srd"
+  },
+  {
+   "id": "spell_scroll_cantrip",
+   "name": "Pergamena magica (trucchetto)",
+   "category": "adventuring_gear",
+   "weight": 0,
+   "cost": 3000,
+   "origin": "srd"
+  },
+  {
+   "id": "spell_scroll_level_1",
+   "name": "Pergamena magica (livello 1)",
+   "category": "adventuring_gear",
+   "weight": 0,
+   "cost": 5000,
+   "origin": "srd"
+  },
+  {
+   "id": "iron_spikes",
+   "name": "Spuntoni di ferro",
+   "category": "adventuring_gear",
+   "weight": 5,
+   "cost": 100,
+   "origin": "srd"
+  },
+  {
+   "id": "spyglass",
+   "name": "Cannocchiale",
+   "category": "adventuring_gear",
+   "weight": 1,
+   "cost": 100000,
+   "origin": "srd"
+  },
+  {
+   "id": "string",
+   "name": "Spago",
+   "category": "adventuring_gear",
+   "weight": 0,
+   "cost": 10,
+   "origin": "srd"
+  },
+  {
+   "id": "tent",
+   "name": "Tenda",
+   "category": "adventuring_gear",
+   "weight": 20,
+   "cost": 200,
+   "origin": "srd"
+  },
+  {
+   "id": "tinderbox",
+   "name": "Acciarino e pietra focaia",
+   "category": "adventuring_gear",
+   "weight": 1,
+   "cost": 50,
+   "origin": "srd"
+  },
+  {
+   "id": "torch",
+   "name": "Torcia",
+   "category": "adventuring_gear",
+   "weight": 1,
+   "cost": 1,
+   "origin": "srd"
+  },
+  {
+   "id": "vial",
+   "name": "Fiala",
+   "category": "adventuring_gear",
+   "weight": 0,
+   "cost": 100,
+   "origin": "srd"
+  },
+  {
+   "id": "waterskin",
+   "name": "Otre",
+   "category": "adventuring_gear",
+   "weight": 5,
+   "cost": 20,
+   "origin": "srd"
+  },
+  {
+   "id": "arrows",
+   "name": "Frecce",
+   "category": "ammunition",
+   "amount": 20,
+   "weight": 1,
+   "cost": 100,
+   "origin": "srd"
+  },
+  {
+   "id": "bolts",
+   "name": "Quadrelli",
+   "category": "ammunition",
+   "amount": 20,
+   "weight": 1.5,
+   "cost": 100,
+   "origin": "srd"
+  },
+  {
+   "id": "bullets_firearm",
+   "name": "Proiettili (arma da fuoco)",
+   "category": "ammunition",
+   "amount": 10,
+   "weight": 2,
+   "cost": 300,
+   "origin": "srd"
+  },
+  {
+   "id": "bullets_sling",
+   "name": "Proiettili (fionda)",
+   "category": "ammunition",
+   "amount": 20,
+   "weight": 1.5,
+   "cost": 4,
+   "origin": "srd"
+  },
+  {
+   "id": "needles",
+   "name": "Aghi",
+   "category": "ammunition",
+   "amount": 50,
+   "weight": 1,
+   "cost": 100,
+   "origin": "srd"
+  },
+  {
+   "id": "arcane_focus_crystal",
+   "name": "Focus arcano (cristallo)",
+   "category": "arcane_focus",
+   "weight": 1,
+   "cost": 1000,
+   "origin": "srd"
+  },
+  {
+   "id": "arcane_focus_orb",
+   "name": "Focus arcano (globo)",
+   "category": "arcane_focus",
+   "weight": 3,
+   "cost": 2000,
+   "origin": "srd"
+  },
+  {
+   "id": "arcane_focus_rod",
+   "name": "Focus arcano (verga)",
+   "category": "arcane_focus",
+   "weight": 2,
+   "cost": 1000,
+   "origin": "srd"
+  },
+  {
+   "id": "arcane_focus_staff",
+   "name": "Focus arcano (bastone (anche bastone ferrato))",
+   "category": "arcane_focus",
+   "weight": 4,
+   "cost": 500,
+   "origin": "srd"
+  },
+  {
+   "id": "arcane_focus_wand",
+   "name": "Focus arcano (bacchetta)",
+   "category": "arcane_focus",
+   "weight": 1,
+   "cost": 1000,
+   "origin": "srd"
+  },
+  {
+   "id": "druidic_focus_sprig_of_mistletoe",
+   "name": "Focus druidico (rametto di vischio)",
+   "category": "druidic_focus",
+   "weight": 0,
+   "cost": 100,
+   "origin": "srd"
+  },
+  {
+   "id": "druidic_focus_wooden_staff",
+   "name": "Focus druidico (bastone di legno (anche bastone ferrato))",
+   "category": "druidic_focus",
+   "weight": 4,
+   "cost": 500,
+   "origin": "srd"
+  },
+  {
+   "id": "druidic_focus_yew_wand",
+   "name": "Focus druidico (bacchetta in legno di tasso)",
+   "category": "druidic_focus",
+   "weight": 1,
+   "cost": 1000,
+   "origin": "srd"
+  },
+  {
+   "id": "holy_symbol_amulet",
+   "name": "Simbolo sacro (amuleto (indossato o tenuto in mano))",
+   "category": "holy_symbol",
+   "weight": 1,
+   "cost": 500,
+   "origin": "srd"
+  },
+  {
+   "id": "holy_symbol_emblem",
+   "name": "Simbolo sacro (emblema (portato su un tessuto o uno scudo))",
+   "category": "holy_symbol",
+   "weight": 0,
+   "cost": 500,
+   "origin": "srd"
+  },
+  {
+   "id": "holy_symbol_reliquary",
+   "name": "Simbolo sacro (reliquiario (tenuto in mano))",
+   "category": "holy_symbol",
+   "weight": 2,
+   "cost": 500,
+   "origin": "srd"
+  }
+ ]
+}

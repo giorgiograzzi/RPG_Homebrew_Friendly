@@ -1,0 +1,65 @@
+{
+ "kind": "weaponProperties",
+ "entries": [
+  {
+   "id": "ammunition",
+   "name": "Munizioni",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "finesse",
+   "name": "Accurata",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "heavy",
+   "name": "Pesante",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "light",
+   "name": "Leggera",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "loading",
+   "name": "Ricarica",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "range",
+   "name": "Gittata",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "reach",
+   "name": "Portata",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "thrown",
+   "name": "Lancio",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "two_handed",
+   "name": "A due mani",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "versatile",
+   "name": "Versatile",
+   "extra": {},
+   "origin": "srd"
+  }
+ ]
+}

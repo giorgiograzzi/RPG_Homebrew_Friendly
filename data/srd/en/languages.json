@@ -1,0 +1,157 @@
+{
+ "kind": "languages",
+ "entries": [
+  {
+   "id": "common",
+   "name": "Common",
+   "extra": {
+    "rarity": "standard"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "common_sign_language",
+   "name": "Common Sign Language",
+   "extra": {
+    "rarity": "standard"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "draconic",
+   "name": "Draconic",
+   "extra": {
+    "rarity": "standard"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "dwarvish",
+   "name": "Dwarvish",
+   "extra": {
+    "rarity": "standard"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "elvish",
+   "name": "Elvish",
+   "extra": {
+    "rarity": "standard"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "giant",
+   "name": "Giant",
+   "extra": {
+    "rarity": "standard"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "gnomish",
+   "name": "Gnomish",
+   "extra": {
+    "rarity": "standard"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "goblin",
+   "name": "Goblin",
+   "extra": {
+    "rarity": "standard"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "halfling",
+   "name": "Halfling",
+   "extra": {
+    "rarity": "standard"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "orc",
+   "name": "Orc",
+   "extra": {
+    "rarity": "standard"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "abyssal",
+   "name": "Abyssal",
+   "extra": {
+    "rarity": "rare"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "celestial",
+   "name": "Celestial",
+   "extra": {
+    "rarity": "rare"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "deep_speech",
+   "name": "Deep Speech",
+   "extra": {
+    "rarity": "rare"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "druidic",
+   "name": "Druidic",
+   "extra": {
+    "rarity": "rare"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "infernal",
+   "name": "Infernal",
+   "extra": {
+    "rarity": "rare"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "primordial",
+   "name": "Primordial",
+   "extra": {
+    "rarity": "rare"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "sylvan",
+   "name": "Sylvan",
+   "extra": {
+    "rarity": "rare"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "thieves_cant",
+   "name": "Thieves' Cant",
+   "extra": {
+    "rarity": "rare"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "undercommon",
+   "name": "Undercommon",
+   "extra": {
+    "rarity": "rare"
+   },
+   "origin": "srd"
+  }
+ ]
+}

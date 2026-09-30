@@ -21,7 +21,11 @@ export const REGAIN = /^(\d+d\d+([+-]\d+)?|\d+)$/;
 export const recharge = z.enum(["short_rest", "long_rest", "dawn", "none"]);
 export const damageType = z.string().regex(/^[a-z_]+$/); // acid, fire, necrotic...
 
-// Testo localizzato: l'italiano è obbligatorio, l'inglese è il riferimento stabile
-export const text = z.object({ it: z.string(), en: z.string().optional() });
+// Testo localizzato: l'italiano è obbligatorio, l'inglese è il riferimento stabile.
+// I file in data/srd/<lingua>/ hanno una stringa semplice nella lingua del file: qui diventa { it, en } con lo stesso testo.
+export const text = z.preprocess(
+  (v) => (typeof v === "string" ? { it: v, en: v } : v),
+  z.object({ it: z.string(), en: z.string().optional() }),
+);
 
 export const SCHEMA_VERSION = 1;

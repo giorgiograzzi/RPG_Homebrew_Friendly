@@ -1,0 +1,685 @@
+{
+ "kind": "weapons",
+ "entries": [
+  {
+   "id": "club",
+   "name": "Randello",
+   "category": "simple",
+   "kind": "melee",
+   "damage": "1d4",
+   "damageType": "bludgeoning",
+   "properties": [
+    "light"
+   ],
+   "mastery": "slow",
+   "weight": 2,
+   "cost": 10,
+   "origin": "srd"
+  },
+  {
+   "id": "dagger",
+   "name": "Pugnale",
+   "category": "simple",
+   "kind": "melee",
+   "damage": "1d4",
+   "damageType": "piercing",
+   "properties": [
+    "finesse",
+    "light",
+    "thrown"
+   ],
+   "range": {
+    "normal": 20,
+    "long": 60
+   },
+   "mastery": "nick",
+   "weight": 1,
+   "cost": 200,
+   "origin": "srd"
+  },
+  {
+   "id": "greatclub",
+   "name": "Randello pesante",
+   "category": "simple",
+   "kind": "melee",
+   "damage": "1d8",
+   "damageType": "bludgeoning",
+   "properties": [
+    "two_handed"
+   ],
+   "mastery": "push",
+   "weight": 10,
+   "cost": 20,
+   "origin": "srd"
+  },
+  {
+   "id": "handaxe",
+   "name": "Ascia",
+   "category": "simple",
+   "kind": "melee",
+   "damage": "1d6",
+   "damageType": "slashing",
+   "properties": [
+    "light",
+    "thrown"
+   ],
+   "range": {
+    "normal": 20,
+    "long": 60
+   },
+   "mastery": "vex",
+   "weight": 2,
+   "cost": 500,
+   "origin": "srd"
+  },
+  {
+   "id": "javelin",
+   "name": "Giavellotto",
+   "category": "simple",
+   "kind": "melee",
+   "damage": "1d6",
+   "damageType": "piercing",
+   "properties": [
+    "thrown"
+   ],
+   "range": {
+    "normal": 30,
+    "long": 120
+   },
+   "mastery": "slow",
+   "weight": 2,
+   "cost": 50,
+   "origin": "srd"
+  },
+  {
+   "id": "light_hammer",
+   "name": "Martello leggero",
+   "category": "simple",
+   "kind": "melee",
+   "damage": "1d4",
+   "damageType": "bludgeoning",
+   "properties": [
+    "light",
+    "thrown"
+   ],
+   "range": {
+    "normal": 20,
+    "long": 60
+   },
+   "mastery": "nick",
+   "weight": 2,
+   "cost": 200,
+   "origin": "srd"
+  },
+  {
+   "id": "mace",
+   "name": "Mazza",
+   "category": "simple",
+   "kind": "melee",
+   "damage": "1d6",
+   "damageType": "bludgeoning",
+   "properties": [],
+   "mastery": "sap",
+   "weight": 4,
+   "cost": 500,
+   "origin": "srd"
+  },
+  {
+   "id": "quarterstaff",
+   "name": "Bastone ferrato",
+   "category": "simple",
+   "kind": "melee",
+   "damage": "1d6",
+   "damageType": "bludgeoning",
+   "properties": [
+    "versatile"
+   ],
+   "versatileDamage": "1d8",
+   "mastery": "topple",
+   "weight": 4,
+   "cost": 20,
+   "origin": "srd"
+  },
+  {
+   "id": "sickle",
+   "name": "Falcetto",
+   "category": "simple",
+   "kind": "melee",
+   "damage": "1d4",
+   "damageType": "slashing",
+   "properties": [
+    "light"
+   ],
+   "mastery": "nick",
+   "weight": 2,
+   "cost": 100,
+   "origin": "srd"
+  },
+  {
+   "id": "spear",
+   "name": "Lancia",
+   "category": "simple",
+   "kind": "melee",
+   "damage": "1d6",
+   "damageType": "piercing",
+   "properties": [
+    "thrown",
+    "versatile"
+   ],
+   "versatileDamage": "1d8",
+   "range": {
+    "normal": 20,
+    "long": 60
+   },
+   "mastery": "sap",
+   "weight": 3,
+   "cost": 100,
+   "origin": "srd"
+  },
+  {
+   "id": "dart",
+   "name": "Dardo",
+   "category": "simple",
+   "kind": "ranged",
+   "damage": "1d4",
+   "damageType": "piercing",
+   "properties": [
+    "finesse",
+    "thrown"
+   ],
+   "range": {
+    "normal": 20,
+    "long": 60
+   },
+   "mastery": "vex",
+   "weight": 0.25,
+   "cost": 5,
+   "origin": "srd"
+  },
+  {
+   "id": "light_crossbow",
+   "name": "Balestra leggera",
+   "category": "simple",
+   "kind": "ranged",
+   "damage": "1d8",
+   "damageType": "piercing",
+   "properties": [
+    "ammunition",
+    "loading",
+    "two_handed"
+   ],
+   "range": {
+    "normal": 80,
+    "long": 320
+   },
+   "mastery": "slow",
+   "ammunition": "bolts",
+   "weight": 5,
+   "cost": 2500,
+   "origin": "srd"
+  },
+  {
+   "id": "shortbow",
+   "name": "Arco corto",
+   "category": "simple",
+   "kind": "ranged",
+   "damage": "1d6",
+   "damageType": "piercing",
+   "properties": [
+    "ammunition",
+    "two_handed"
+   ],
+   "range": {
+    "normal": 80,
+    "long": 320
+   },
+   "mastery": "vex",
+   "ammunition": "arrows",
+   "weight": 2,
+   "cost": 2500,
+   "origin": "srd"
+  },
+  {
+   "id": "sling",
+   "name": "Fionda",
+   "category": "simple",
+   "kind": "ranged",
+   "damage": "1d4",
+   "damageType": "bludgeoning",
+   "properties": [
+    "ammunition"
+   ],
+   "range": {
+    "normal": 30,
+    "long": 120
+   },
+   "mastery": "slow",
+   "ammunition": "bullets_sling",
+   "weight": 0,
+   "cost": 10,
+   "origin": "srd"
+  },
+  {
+   "id": "battleaxe",
+   "name": "Ascia da battaglia",
+   "category": "martial",
+   "kind": "melee",
+   "damage": "1d8",
+   "damageType": "slashing",
+   "properties": [
+    "versatile"
+   ],
+   "versatileDamage": "1d10",
+   "mastery": "topple",
+   "weight": 4,
+   "cost": 1000,
+   "origin": "srd"
+  },
+  {
+   "id": "flail",
+   "name": "Mazzafrusto",
+   "category": "martial",
+   "kind": "melee",
+   "damage": "1d8",
+   "damageType": "bludgeoning",
+   "properties": [],
+   "mastery": "sap",
+   "weight": 2,
+   "cost": 1000,
+   "origin": "srd"
+  },
+  {
+   "id": "glaive",
+   "name": "Falcione",
+   "category": "martial",
+   "kind": "melee",
+   "damage": "1d10",
+   "damageType": "slashing",
+   "properties": [
+    "heavy",
+    "reach",
+    "two_handed"
+   ],
+   "mastery": "graze",
+   "weight": 6,
+   "cost": 2000,
+   "origin": "srd"
+  },
+  {
+   "id": "greataxe",
+   "name": "Ascia bipenne",
+   "category": "martial",
+   "kind": "melee",
+   "damage": "1d12",
+   "damageType": "slashing",
+   "properties": [
+    "heavy",
+    "two_handed"
+   ],
+   "mastery": "cleave",
+   "weight": 7,
+   "cost": 3000,
+   "origin": "srd"
+  },
+  {
+   "id": "greatsword",
+   "name": "Spadone",
+   "category": "martial",
+   "kind": "melee",
+   "damage": "2d6",
+   "damageType": "slashing",
+   "properties": [
+    "heavy",
+    "two_handed"
+   ],
+   "mastery": "graze",
+   "weight": 6,
+   "cost": 5000,
+   "origin": "srd"
+  },
+  {
+   "id": "halberd",
+   "name": "Alabarda",
+   "category": "martial",
+   "kind": "melee",
+   "damage": "1d10",
+   "damageType": "slashing",
+   "properties": [
+    "heavy",
+    "reach",
+    "two_handed"
+   ],
+   "mastery": "cleave",
+   "weight": 6,
+   "cost": 2000,
+   "origin": "srd"
+  },
+  {
+   "id": "lance",
+   "name": "Lancia da cavaliere",
+   "category": "martial",
+   "kind": "melee",
+   "damage": "1d10",
+   "damageType": "piercing",
+   "properties": [
+    "heavy",
+    "reach",
+    "two_handed"
+   ],
+   "mastery": "topple",
+   "twoHandedUnlessMounted": true,
+   "weight": 6,
+   "cost": 1000,
+   "origin": "srd"
+  },
+  {
+   "id": "longsword",
+   "name": "Spada lunga",
+   "category": "martial",
+   "kind": "melee",
+   "damage": "1d8",
+   "damageType": "slashing",
+   "properties": [
+    "versatile"
+   ],
+   "versatileDamage": "1d10",
+   "mastery": "sap",
+   "weight": 3,
+   "cost": 1500,
+   "origin": "srd"
+  },
+  {
+   "id": "maul",
+   "name": "Maglio",
+   "category": "martial",
+   "kind": "melee",
+   "damage": "2d6",
+   "damageType": "bludgeoning",
+   "properties": [
+    "heavy",
+    "two_handed"
+   ],
+   "mastery": "topple",
+   "weight": 10,
+   "cost": 1000,
+   "origin": "srd"
+  },
+  {
+   "id": "morningstar",
+   "name": "Mazza chiodata",
+   "category": "martial",
+   "kind": "melee",
+   "damage": "1d8",
+   "damageType": "piercing",
+   "properties": [],
+   "mastery": "sap",
+   "weight": 4,
+   "cost": 1500,
+   "origin": "srd"
+  },
+  {
+   "id": "pike",
+   "name": "Picca",
+   "category": "martial",
+   "kind": "melee",
+   "damage": "1d10",
+   "damageType": "piercing",
+   "properties": [
+    "heavy",
+    "reach",
+    "two_handed"
+   ],
+   "mastery": "push",
+   "weight": 18,
+   "cost": 500,
+   "origin": "srd"
+  },
+  {
+   "id": "rapier",
+   "name": "Stocco",
+   "category": "martial",
+   "kind": "melee",
+   "damage": "1d8",
+   "damageType": "piercing",
+   "properties": [
+    "finesse"
+   ],
+   "mastery": "vex",
+   "weight": 2,
+   "cost": 2500,
+   "origin": "srd"
+  },
+  {
+   "id": "scimitar",
+   "name": "Scimitarra",
+   "category": "martial",
+   "kind": "melee",
+   "damage": "1d6",
+   "damageType": "slashing",
+   "properties": [
+    "finesse",
+    "light"
+   ],
+   "mastery": "nick",
+   "weight": 3,
+   "cost": 2500,
+   "origin": "srd"
+  },
+  {
+   "id": "shortsword",
+   "name": "Spada corta",
+   "category": "martial",
+   "kind": "melee",
+   "damage": "1d6",
+   "damageType": "piercing",
+   "properties": [
+    "finesse",
+    "light"
+   ],
+   "mastery": "vex",
+   "weight": 2,
+   "cost": 1000,
+   "origin": "srd"
+  },
+  {
+   "id": "trident",
+   "name": "Tridente",
+   "category": "martial",
+   "kind": "melee",
+   "damage": "1d8",
+   "damageType": "piercing",
+   "properties": [
+    "thrown",
+    "versatile"
+   ],
+   "versatileDamage": "1d10",
+   "range": {
+    "normal": 20,
+    "long": 60
+   },
+   "mastery": "topple",
+   "weight": 4,
+   "cost": 500,
+   "origin": "srd"
+  },
+  {
+   "id": "warhammer",
+   "name": "Martello da guerra",
+   "category": "martial",
+   "kind": "melee",
+   "damage": "1d8",
+   "damageType": "bludgeoning",
+   "properties": [
+    "versatile"
+   ],
+   "versatileDamage": "1d10",
+   "mastery": "push",
+   "weight": 5,
+   "cost": 1500,
+   "origin": "srd"
+  },
+  {
+   "id": "war_pick",
+   "name": "Piccone da guerra",
+   "category": "martial",
+   "kind": "melee",
+   "damage": "1d8",
+   "damageType": "piercing",
+   "properties": [
+    "versatile"
+   ],
+   "versatileDamage": "1d10",
+   "mastery": "sap",
+   "weight": 2,
+   "cost": 500,
+   "origin": "srd"
+  },
+  {
+   "id": "whip",
+   "name": "Frusta",
+   "category": "martial",
+   "kind": "melee",
+   "damage": "1d4",
+   "damageType": "slashing",
+   "properties": [
+    "finesse",
+    "reach"
+   ],
+   "mastery": "slow",
+   "weight": 3,
+   "cost": 200,
+   "origin": "srd"
+  },
+  {
+   "id": "blowgun",
+   "name": "Cerbottana",
+   "category": "martial",
+   "kind": "ranged",
+   "damage": "1",
+   "damageType": "piercing",
+   "properties": [
+    "ammunition",
+    "loading"
+   ],
+   "range": {
+    "normal": 25,
+    "long": 100
+   },
+   "mastery": "vex",
+   "ammunition": "needles",
+   "weight": 1,
+   "cost": 1000,
+   "origin": "srd"
+  },
+  {
+   "id": "hand_crossbow",
+   "name": "Balestra a mano",
+   "category": "martial",
+   "kind": "ranged",
+   "damage": "1d6",
+   "damageType": "piercing",
+   "properties": [
+    "ammunition",
+    "light",
+    "loading"
+   ],
+   "range": {
+    "normal": 30,
+    "long": 120
+   },
+   "mastery": "vex",
+   "ammunition": "bolts",
+   "weight": 3,
+   "cost": 7500,
+   "origin": "srd"
+  },
+  {
+   "id": "heavy_crossbow",
+   "name": "Balestra pesante",
+   "category": "martial",
+   "kind": "ranged",
+   "damage": "1d10",
+   "damageType": "piercing",
+   "properties": [
+    "ammunition",
+    "heavy",
+    "loading",
+    "two_handed"
+   ],
+   "range": {
+    "normal": 100,
+    "long": 400
+   },
+   "mastery": "push",
+   "ammunition": "bolts",
+   "weight": 18,
+   "cost": 5000,
+   "origin": "srd"
+  },
+  {
+   "id": "longbow",
+   "name": "Arco lungo",
+   "category": "martial",
+   "kind": "ranged",
+   "damage": "1d8",
+   "damageType": "piercing",
+   "properties": [
+    "ammunition",
+    "heavy",
+    "two_handed"
+   ],
+   "range": {
+    "normal": 150,
+    "long": 600
+   },
+   "mastery": "slow",
+   "ammunition": "arrows",
+   "weight": 2,
+   "cost": 5000,
+   "origin": "srd"
+  },
+  {
+   "id": "musket",
+   "name": "Moschetto",
+   "category": "martial",
+   "kind": "ranged",
+   "damage": "1d12",
+   "damageType": "piercing",
+   "properties": [
+    "ammunition",
+    "loading",
+    "two_handed"
+   ],
+   "range": {
+    "normal": 40,
+    "long": 120
+   },
+   "mastery": "slow",
+   "ammunition": "bullets_firearm",
+   "weight": 10,
+   "cost": 50000,
+   "origin": "srd"
+  },
+  {
+   "id": "pistol",
+   "name": "Pistola",
+   "category": "martial",
+   "kind": "ranged",
+   "damage": "1d10",
+   "damageType": "piercing",
+   "properties": [
+    "ammunition",
+    "loading"
+   ],
+   "range": {
+    "normal": 30,
+    "long": 90
+   },
+   "mastery": "vex",
+   "ammunition": "bullets_firearm",
+   "weight": 3,
+   "cost": 25000,
+   "origin": "srd"
+  }
+ ]
+}

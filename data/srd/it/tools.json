@@ -1,0 +1,338 @@
+{
+ "kind": "tools",
+ "entries": [
+  {
+   "id": "alchemists_supplies",
+   "name": "Scorte da alchimista",
+   "group": "artisan",
+   "ability": "int",
+   "weight": 8,
+   "cost": 5000,
+   "origin": "srd"
+  },
+  {
+   "id": "brewers_supplies",
+   "name": "Scorte da birraio",
+   "group": "artisan",
+   "ability": "int",
+   "weight": 9,
+   "cost": 2000,
+   "origin": "srd"
+  },
+  {
+   "id": "calligraphers_supplies",
+   "name": "Scorte da calligrafo",
+   "group": "artisan",
+   "ability": "dex",
+   "weight": 5,
+   "cost": 1000,
+   "origin": "srd"
+  },
+  {
+   "id": "carpenters_tools",
+   "name": "Strumenti da falegname",
+   "group": "artisan",
+   "ability": "str",
+   "weight": 6,
+   "cost": 800,
+   "origin": "srd"
+  },
+  {
+   "id": "cartographers_tools",
+   "name": "Strumenti da cartografo",
+   "group": "artisan",
+   "ability": "wis",
+   "weight": 6,
+   "cost": 1500,
+   "origin": "srd"
+  },
+  {
+   "id": "cobblers_tools",
+   "name": "Strumenti da calzolaio",
+   "group": "artisan",
+   "ability": "dex",
+   "weight": 5,
+   "cost": 500,
+   "origin": "srd"
+  },
+  {
+   "id": "cooks_utensils",
+   "name": "Utensili da cuoco",
+   "group": "artisan",
+   "ability": "wis",
+   "weight": 8,
+   "cost": 100,
+   "origin": "srd"
+  },
+  {
+   "id": "glassblowers_tools",
+   "name": "Strumenti da soffiatore",
+   "group": "artisan",
+   "ability": "int",
+   "weight": 5,
+   "cost": 3000,
+   "origin": "srd"
+  },
+  {
+   "id": "jewelers_tools",
+   "name": "Strumenti da gioielliere",
+   "group": "artisan",
+   "ability": "int",
+   "weight": 2,
+   "cost": 2500,
+   "origin": "srd"
+  },
+  {
+   "id": "leatherworkers_tools",
+   "name": "Strumenti da conciatore",
+   "group": "artisan",
+   "ability": "dex",
+   "weight": 5,
+   "cost": 500,
+   "origin": "srd"
+  },
+  {
+   "id": "masons_tools",
+   "name": "Strumenti da muratore",
+   "group": "artisan",
+   "ability": "str",
+   "weight": 8,
+   "cost": 1000,
+   "origin": "srd"
+  },
+  {
+   "id": "painters_supplies",
+   "name": "Strumenti da pittore",
+   "group": "artisan",
+   "ability": "wis",
+   "weight": 5,
+   "cost": 1000,
+   "origin": "srd"
+  },
+  {
+   "id": "potters_tools",
+   "name": "Strumenti da vasaio",
+   "group": "artisan",
+   "ability": "int",
+   "weight": 3,
+   "cost": 1000,
+   "origin": "srd"
+  },
+  {
+   "id": "smiths_tools",
+   "name": "Strumenti da fabbro",
+   "group": "artisan",
+   "ability": "str",
+   "weight": 8,
+   "cost": 2000,
+   "origin": "srd"
+  },
+  {
+   "id": "tinkers_tools",
+   "name": "Strumenti da inventore",
+   "group": "artisan",
+   "ability": "dex",
+   "weight": 10,
+   "cost": 5000,
+   "origin": "srd"
+  },
+  {
+   "id": "weavers_tools",
+   "name": "Strumenti da tessitore",
+   "group": "artisan",
+   "ability": "dex",
+   "weight": 5,
+   "cost": 100,
+   "origin": "srd"
+  },
+  {
+   "id": "woodcarvers_tools",
+   "name": "Strumenti da intagliatore",
+   "group": "artisan",
+   "ability": "dex",
+   "weight": 5,
+   "cost": 100,
+   "origin": "srd"
+  },
+  {
+   "id": "disguise_kit",
+   "name": "Trucchi per il camuffamento",
+   "group": "other",
+   "ability": "cha",
+   "weight": 3,
+   "cost": 2500,
+   "origin": "srd"
+  },
+  {
+   "id": "forgery_kit",
+   "name": "Arnesi da falsario",
+   "group": "other",
+   "ability": "dex",
+   "weight": 5,
+   "cost": 1500,
+   "origin": "srd"
+  },
+  {
+   "id": "herbalism_kit",
+   "name": "Borsa da erborista",
+   "group": "other",
+   "ability": "int",
+   "weight": 3,
+   "cost": 500,
+   "origin": "srd"
+  },
+  {
+   "id": "navigators_tools",
+   "name": "Strumenti da navigatore",
+   "group": "other",
+   "ability": "wis",
+   "weight": 2,
+   "cost": 2500,
+   "origin": "srd"
+  },
+  {
+   "id": "poisoners_kit",
+   "name": "Sostanze da avvelenatore",
+   "group": "other",
+   "ability": "int",
+   "weight": 2,
+   "cost": 5000,
+   "origin": "srd"
+  },
+  {
+   "id": "thieves_tools",
+   "name": "Arnesi da scasso",
+   "group": "other",
+   "ability": "dex",
+   "weight": 1,
+   "cost": 2500,
+   "origin": "srd"
+  },
+  {
+   "id": "dice",
+   "name": "Dadi",
+   "group": "gaming",
+   "ability": "wis",
+   "weight": 0,
+   "cost": 10,
+   "origin": "srd"
+  },
+  {
+   "id": "dragonchess",
+   "name": "Scacchi dei draghi",
+   "group": "gaming",
+   "ability": "wis",
+   "weight": 0,
+   "cost": 100,
+   "origin": "srd"
+  },
+  {
+   "id": "playing_cards",
+   "name": "Carte da gioco",
+   "group": "gaming",
+   "ability": "wis",
+   "weight": 0,
+   "cost": 50,
+   "origin": "srd"
+  },
+  {
+   "id": "three_dragon_ante",
+   "name": "Tre draghi al buio",
+   "group": "gaming",
+   "ability": "wis",
+   "weight": 0,
+   "cost": 100,
+   "origin": "srd"
+  },
+  {
+   "id": "bagpipes",
+   "name": "Cornamusa",
+   "group": "musical",
+   "ability": "cha",
+   "weight": 6,
+   "cost": 3000,
+   "origin": "srd"
+  },
+  {
+   "id": "drum",
+   "name": "Tamburo",
+   "group": "musical",
+   "ability": "cha",
+   "weight": 3,
+   "cost": 600,
+   "origin": "srd"
+  },
+  {
+   "id": "dulcimer",
+   "name": "Dulcimer",
+   "group": "musical",
+   "ability": "cha",
+   "weight": 10,
+   "cost": 2500,
+   "origin": "srd"
+  },
+  {
+   "id": "flute",
+   "name": "Flauto",
+   "group": "musical",
+   "ability": "cha",
+   "weight": 1,
+   "cost": 200,
+   "origin": "srd"
+  },
+  {
+   "id": "horn",
+   "name": "Corno",
+   "group": "musical",
+   "ability": "cha",
+   "weight": 2,
+   "cost": 300,
+   "origin": "srd"
+  },
+  {
+   "id": "lute",
+   "name": "Liuto",
+   "group": "musical",
+   "ability": "cha",
+   "weight": 2,
+   "cost": 3500,
+   "origin": "srd"
+  },
+  {
+   "id": "lyre",
+   "name": "Lira",
+   "group": "musical",
+   "ability": "cha",
+   "weight": 2,
+   "cost": 3000,
+   "origin": "srd"
+  },
+  {
+   "id": "pan_flute",
+   "name": "Flauto di pan",
+   "group": "musical",
+   "ability": "cha",
+   "weight": 2,
+   "cost": 1200,
+   "origin": "srd"
+  },
+  {
+   "id": "shawm",
+   "name": "Ciaramella",
+   "group": "musical",
+   "ability": "cha",
+   "weight": 1,
+   "cost": 200,
+   "origin": "srd"
+  },
+  {
+   "id": "viol",
+   "name": "Viola",
+   "group": "musical",
+   "ability": "cha",
+   "weight": 1,
+   "cost": 3000,
+   "origin": "srd"
+  }
+ ]
+}

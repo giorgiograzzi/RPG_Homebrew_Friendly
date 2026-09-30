@@ -1,0 +1,65 @@
+{
+ "kind": "weaponProperties",
+ "entries": [
+  {
+   "id": "ammunition",
+   "name": "Ammunition",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "finesse",
+   "name": "Finesse",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "heavy",
+   "name": "Heavy",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "light",
+   "name": "Light",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "loading",
+   "name": "Loading",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "range",
+   "name": "Range",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "reach",
+   "name": "Reach",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "thrown",
+   "name": "Thrown",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "two_handed",
+   "name": "Two-Handed",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "versatile",
+   "name": "Versatile",
+   "extra": {},
+   "origin": "srd"
+  }
+ ]
+}

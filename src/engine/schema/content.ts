@@ -145,8 +145,9 @@ export const armorSchema = z.object({
 export const itemSchema = z.object({
   ...base,
   category: z.string(),
-  weight: z.number().default(0),
+  weight: z.number().default(0), // libbre (l'app mostra i kg in italiano: 1 lb = 0,5 kg come nell'SRD IT)
   cost: z.number().default(0),
+  amount: z.number().int().optional(), // munizioni: pezzi per confezione (peso e costo sono della confezione)
   attunement: z.boolean().default(false),
   charges: chargesSchema.optional(),
   contents: z.array(z.object({ item: id, qty: z.number().int().min(1) })).optional(), // dotazioni

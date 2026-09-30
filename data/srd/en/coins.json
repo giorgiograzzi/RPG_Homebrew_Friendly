@@ -1,0 +1,55 @@
+{
+ "kind": "coins",
+ "entries": [
+  {
+   "id": "cp",
+   "name": "Copper Piece",
+   "extra": {
+    "abbrEn": "CP",
+    "abbrIt": "mr",
+    "copper": 1
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "sp",
+   "name": "Silver Piece",
+   "extra": {
+    "abbrEn": "SP",
+    "abbrIt": "ma",
+    "copper": 10
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "ep",
+   "name": "Electrum Piece",
+   "extra": {
+    "abbrEn": "EP",
+    "abbrIt": "me",
+    "copper": 50
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "gp",
+   "name": "Gold Piece",
+   "extra": {
+    "abbrEn": "GP",
+    "abbrIt": "mo",
+    "copper": 100
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "pp",
+   "name": "Platinum Piece",
+   "extra": {
+    "abbrEn": "PP",
+    "abbrIt": "mp",
+    "copper": 1000
+   },
+   "origin": "srd"
+  }
+ ]
+}

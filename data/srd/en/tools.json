@@ -1,0 +1,338 @@
+{
+ "kind": "tools",
+ "entries": [
+  {
+   "id": "alchemists_supplies",
+   "name": "Alchemist's Supplies",
+   "group": "artisan",
+   "ability": "int",
+   "weight": 8,
+   "cost": 5000,
+   "origin": "srd"
+  },
+  {
+   "id": "brewers_supplies",
+   "name": "Brewer's Supplies",
+   "group": "artisan",
+   "ability": "int",
+   "weight": 9,
+   "cost": 2000,
+   "origin": "srd"
+  },
+  {
+   "id": "calligraphers_supplies",
+   "name": "Calligrapher's Supplies",
+   "group": "artisan",
+   "ability": "dex",
+   "weight": 5,
+   "cost": 1000,
+   "origin": "srd"
+  },
+  {
+   "id": "carpenters_tools",
+   "name": "Carpenter's Tools",
+   "group": "artisan",
+   "ability": "str",
+   "weight": 6,
+   "cost": 800,
+   "origin": "srd"
+  },
+  {
+   "id": "cartographers_tools",
+   "name": "Cartographer's Tools",
+   "group": "artisan",
+   "ability": "wis",
+   "weight": 6,
+   "cost": 1500,
+   "origin": "srd"
+  },
+  {
+   "id": "cobblers_tools",
+   "name": "Cobbler's Tools",
+   "group": "artisan",
+   "ability": "dex",
+   "weight": 5,
+   "cost": 500,
+   "origin": "srd"
+  },
+  {
+   "id": "cooks_utensils",
+   "name": "Cook's Utensils",
+   "group": "artisan",
+   "ability": "wis",
+   "weight": 8,
+   "cost": 100,
+   "origin": "srd"
+  },
+  {
+   "id": "glassblowers_tools",
+   "name": "Glassblower's Tools",
+   "group": "artisan",
+   "ability": "int",
+   "weight": 5,
+   "cost": 3000,
+   "origin": "srd"
+  },
+  {
+   "id": "jewelers_tools",
+   "name": "Jeweler's Tools",
+   "group": "artisan",
+   "ability": "int",
+   "weight": 2,
+   "cost": 2500,
+   "origin": "srd"
+  },
+  {
+   "id": "leatherworkers_tools",
+   "name": "Leatherworker's Tools",
+   "group": "artisan",
+   "ability": "dex",
+   "weight": 5,
+   "cost": 500,
+   "origin": "srd"
+  },
+  {
+   "id": "masons_tools",
+   "name": "Mason's Tools",
+   "group": "artisan",
+   "ability": "str",
+   "weight": 8,
+   "cost": 1000,
+   "origin": "srd"
+  },
+  {
+   "id": "painters_supplies",
+   "name": "Painter's Supplies",
+   "group": "artisan",
+   "ability": "wis",
+   "weight": 5,
+   "cost": 1000,
+   "origin": "srd"
+  },
+  {
+   "id": "potters_tools",
+   "name": "Potter's Tools",
+   "group": "artisan",
+   "ability": "int",
+   "weight": 3,
+   "cost": 1000,
+   "origin": "srd"
+  },
+  {
+   "id": "smiths_tools",
+   "name": "Smith's Tools",
+   "group": "artisan",
+   "ability": "str",
+   "weight": 8,
+   "cost": 2000,
+   "origin": "srd"
+  },
+  {
+   "id": "tinkers_tools",
+   "name": "Tinker's Tools",
+   "group": "artisan",
+   "ability": "dex",
+   "weight": 10,
+   "cost": 5000,
+   "origin": "srd"
+  },
+  {
+   "id": "weavers_tools",
+   "name": "Weaver's Tools",
+   "group": "artisan",
+   "ability": "dex",
+   "weight": 5,
+   "cost": 100,
+   "origin": "srd"
+  },
+  {
+   "id": "woodcarvers_tools",
+   "name": "Woodcarver's Tools",
+   "group": "artisan",
+   "ability": "dex",
+   "weight": 5,
+   "cost": 100,
+   "origin": "srd"
+  },
+  {
+   "id": "disguise_kit",
+   "name": "Disguise Kit",
+   "group": "other",
+   "ability": "cha",
+   "weight": 3,
+   "cost": 2500,
+   "origin": "srd"
+  },
+  {
+   "id": "forgery_kit",
+   "name": "Forgery Kit",
+   "group": "other",
+   "ability": "dex",
+   "weight": 5,
+   "cost": 1500,
+   "origin": "srd"
+  },
+  {
+   "id": "herbalism_kit",
+   "name": "Herbalism Kit",
+   "group": "other",
+   "ability": "int",
+   "weight": 3,
+   "cost": 500,
+   "origin": "srd"
+  },
+  {
+   "id": "navigators_tools",
+   "name": "Navigator's Tools",
+   "group": "other",
+   "ability": "wis",
+   "weight": 2,
+   "cost": 2500,
+   "origin": "srd"
+  },
+  {
+   "id": "poisoners_kit",
+   "name": "Poisoner's Kit",
+   "group": "other",
+   "ability": "int",
+   "weight": 2,
+   "cost": 5000,
+   "origin": "srd"
+  },
+  {
+   "id": "thieves_tools",
+   "name": "Thieves' Tools",
+   "group": "other",
+   "ability": "dex",
+   "weight": 1,
+   "cost": 2500,
+   "origin": "srd"
+  },
+  {
+   "id": "dice",
+   "name": "Dice",
+   "group": "gaming",
+   "ability": "wis",
+   "weight": 0,
+   "cost": 10,
+   "origin": "srd"
+  },
+  {
+   "id": "dragonchess",
+   "name": "Dragonchess",
+   "group": "gaming",
+   "ability": "wis",
+   "weight": 0,
+   "cost": 100,
+   "origin": "srd"
+  },
+  {
+   "id": "playing_cards",
+   "name": "Playing Cards",
+   "group": "gaming",
+   "ability": "wis",
+   "weight": 0,
+   "cost": 50,
+   "origin": "srd"
+  },
+  {
+   "id": "three_dragon_ante",
+   "name": "Three-Dragon Ante",
+   "group": "gaming",
+   "ability": "wis",
+   "weight": 0,
+   "cost": 100,
+   "origin": "srd"
+  },
+  {
+   "id": "bagpipes",
+   "name": "Bagpipes",
+   "group": "musical",
+   "ability": "cha",
+   "weight": 6,
+   "cost": 3000,
+   "origin": "srd"
+  },
+  {
+   "id": "drum",
+   "name": "Drum",
+   "group": "musical",
+   "ability": "cha",
+   "weight": 3,
+   "cost": 600,
+   "origin": "srd"
+  },
+  {
+   "id": "dulcimer",
+   "name": "Dulcimer",
+   "group": "musical",
+   "ability": "cha",
+   "weight": 10,
+   "cost": 2500,
+   "origin": "srd"
+  },
+  {
+   "id": "flute",
+   "name": "Flute",
+   "group": "musical",
+   "ability": "cha",
+   "weight": 1,
+   "cost": 200,
+   "origin": "srd"
+  },
+  {
+   "id": "horn",
+   "name": "Horn",
+   "group": "musical",
+   "ability": "cha",
+   "weight": 2,
+   "cost": 300,
+   "origin": "srd"
+  },
+  {
+   "id": "lute",
+   "name": "Lute",
+   "group": "musical",
+   "ability": "cha",
+   "weight": 2,
+   "cost": 3500,
+   "origin": "srd"
+  },
+  {
+   "id": "lyre",
+   "name": "Lyre",
+   "group": "musical",
+   "ability": "cha",
+   "weight": 2,
+   "cost": 3000,
+   "origin": "srd"
+  },
+  {
+   "id": "pan_flute",
+   "name": "Pan Flute",
+   "group": "musical",
+   "ability": "cha",
+   "weight": 2,
+   "cost": 1200,
+   "origin": "srd"
+  },
+  {
+   "id": "shawm",
+   "name": "Shawm",
+   "group": "musical",
+   "ability": "cha",
+   "weight": 1,
+   "cost": 200,
+   "origin": "srd"
+  },
+  {
+   "id": "viol",
+   "name": "Viol",
+   "group": "musical",
+   "ability": "cha",
+   "weight": 1,
+   "cost": 3000,
+   "origin": "srd"
+  }
+ ]
+}

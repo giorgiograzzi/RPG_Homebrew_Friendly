@@ -1,0 +1,157 @@
+{
+ "kind": "languages",
+ "entries": [
+  {
+   "id": "common",
+   "name": "Comune",
+   "extra": {
+    "rarity": "standard"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "common_sign_language",
+   "name": "Lingua dei segni comune",
+   "extra": {
+    "rarity": "standard"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "draconic",
+   "name": "Draconico",
+   "extra": {
+    "rarity": "standard"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "dwarvish",
+   "name": "Nanico",
+   "extra": {
+    "rarity": "standard"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "elvish",
+   "name": "Elfico",
+   "extra": {
+    "rarity": "standard"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "giant",
+   "name": "Gigante",
+   "extra": {
+    "rarity": "standard"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "gnomish",
+   "name": "Gnomesco",
+   "extra": {
+    "rarity": "standard"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "goblin",
+   "name": "Goblin",
+   "extra": {
+    "rarity": "standard"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "halfling",
+   "name": "Halfling",
+   "extra": {
+    "rarity": "standard"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "orc",
+   "name": "Orchesco",
+   "extra": {
+    "rarity": "standard"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "abyssal",
+   "name": "Abissale",
+   "extra": {
+    "rarity": "rare"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "celestial",
+   "name": "Celestiale",
+   "extra": {
+    "rarity": "rare"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "deep_speech",
+   "name": "Gergo delle profondità",
+   "extra": {
+    "rarity": "rare"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "druidic",
+   "name": "Druidico",
+   "extra": {
+    "rarity": "rare"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "infernal",
+   "name": "Infernale",
+   "extra": {
+    "rarity": "rare"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "primordial",
+   "name": "Primordiale",
+   "extra": {
+    "rarity": "rare"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "sylvan",
+   "name": "Silvano",
+   "extra": {
+    "rarity": "rare"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "thieves_cant",
+   "name": "Gergo ladresco",
+   "extra": {
+    "rarity": "rare"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "undercommon",
+   "name": "Sottocomune",
+   "extra": {
+    "rarity": "rare"
+   },
+   "origin": "srd"
+  }
+ ]
+}

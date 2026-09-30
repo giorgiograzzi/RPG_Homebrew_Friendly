@@ -1,0 +1,149 @@
+{
+ "kind": "skills",
+ "entries": [
+  {
+   "id": "acrobatics",
+   "name": "Acrobazia",
+   "extra": {
+    "ability": "dex"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "animal_handling",
+   "name": "Addestrare animali",
+   "extra": {
+    "ability": "wis"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "arcana",
+   "name": "Arcano",
+   "extra": {
+    "ability": "int"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "athletics",
+   "name": "Atletica",
+   "extra": {
+    "ability": "str"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "deception",
+   "name": "Inganno",
+   "extra": {
+    "ability": "cha"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "history",
+   "name": "Storia",
+   "extra": {
+    "ability": "int"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "insight",
+   "name": "Intuizione",
+   "extra": {
+    "ability": "wis"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "intimidation",
+   "name": "Intimidire",
+   "extra": {
+    "ability": "cha"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "investigation",
+   "name": "Indagare",
+   "extra": {
+    "ability": "int"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "medicine",
+   "name": "Medicina",
+   "extra": {
+    "ability": "wis"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "nature",
+   "name": "Natura",
+   "extra": {
+    "ability": "int"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "perception",
+   "name": "Percezione",
+   "extra": {
+    "ability": "wis"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "performance",
+   "name": "Intrattenere",
+   "extra": {
+    "ability": "cha"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "persuasion",
+   "name": "Persuasione",
+   "extra": {
+    "ability": "cha"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "religion",
+   "name": "Religione",
+   "extra": {
+    "ability": "int"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "sleight_of_hand",
+   "name": "Rapidità di mano",
+   "extra": {
+    "ability": "dex"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "stealth",
+   "name": "Furtività",
+   "extra": {
+    "ability": "dex"
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "survival",
+   "name": "Sopravvivenza",
+   "extra": {
+    "ability": "wis"
+   },
+   "origin": "srd"
+  }
+ ]
+}

@@ -1,0 +1,53 @@
+{
+ "kind": "masteries",
+ "entries": [
+  {
+   "id": "cleave",
+   "name": "Doppio fendente",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "graze",
+   "name": "Colpo di striscio",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "nick",
+   "name": "Graffio",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "push",
+   "name": "Spinta",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "sap",
+   "name": "Fiaccare",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "slow",
+   "name": "Lentezza",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "topple",
+   "name": "Rovesciamento",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "vex",
+   "name": "Vessazione",
+   "extra": {},
+   "origin": "srd"
+  }
+ ]
+}
