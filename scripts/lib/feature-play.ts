@@ -4,7 +4,7 @@ type Json = Record<string, any>;
 const MOD_ID: Record<string, string> = { For: "str", Des: "dex", Cos: "con", Int: "int", Sag: "wis", Car: "cha" };
 const rechargeOf = (s: string): "short_rest" | "long_rest" => (/Breve/.test(s) ? "short_rest" : "long_rest");
 
-// Usi limitati dal testo del privilegio (i riepiloghi in docs/rules): solo formule esplicite, niente interpretazioni.
+// Usi limitati dal testo del privilegio: solo formule esplicite, niente interpretazioni.
 //   "Usi = mod Sag (min 1) per Riposo Lungo" · "mod Car volte per Riposo Lungo" · "1 volta per Riposo Breve o Lungo"
 // Restano fuori "1 volta per turno" e gli incantesimi lanciabili senza slot (hanno già `freeCast`).
 export function deriveUsage(text: string): { uses: number | string; recharge: "short_rest" | "long_rest" } | undefined {

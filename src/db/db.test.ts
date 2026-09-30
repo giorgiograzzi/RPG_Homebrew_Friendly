@@ -85,7 +85,7 @@ describe("backup: export → import", () => {
     expect(p.ok && p.items.map((i) => i.status)).toEqual(["same", "conflict", "invalid"]);
     expect(previewImport("non json", [])).toMatchObject({ ok: false });
     expect(previewImport(JSON.stringify({ format: "altro" }), [])).toMatchObject({ ok: false });
-    expect(previewImport(JSON.stringify({ format: "dnd-personaggi-backup", version: 9, exportedAt: 0, characters: [] }), [])).toMatchObject({ ok: false, error: expect.stringContaining("più recente") });
+    expect(previewImport(JSON.stringify({ format: "srd-personaggi-backup", version: 9, exportedAt: 0, characters: [] }), [])).toMatchObject({ ok: false, error: expect.stringContaining("più recente") });
   });
   it("risolve i conflitti: copia (default), sostituisci, salta", () => {
     const changed = { ...pg("b"), name: "Nuovo" };

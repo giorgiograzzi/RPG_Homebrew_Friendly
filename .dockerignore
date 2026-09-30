@@ -7,4 +7,4 @@ dist
 docs
 data/*.pdf
 data/https*
-# NON escludere data/private (dati di gioco che finiscono nel bundle) né public/forms (scheda PDF)
+# NON escludere data/ (dati di gioco che finiscono nel bundle)

@@ -11,7 +11,6 @@ import { Button, Dialog, Field } from "../ui/xp";
 import { AsiView, QuestionView } from "./QuestionView";
 import { ScoresStep } from "./ScoresStep";
 import { HomebrewStep } from "./HomebrewStep";
-import { SheetButton } from "./SheetButton";
 import { Summary } from "./Summary";
 import { applyAsiDraft, choose, finalizeCharacter, gamingSetsNeeded } from "./logic";
 
@@ -54,7 +53,6 @@ export function Wizard({ ch, rs, allowReroll, onChange, onDone }: {
         <>
           <HpField ch={ch} rs={rs} allowReroll={allowReroll} onChange={onChange} />
           <Summary ch={fin.ok ? fin.character : ch} rs={rs} />
-          <SheetButton ch={fin.ok ? fin.character : ch} rs={rs} />
           {needGaming && (
             <Field label={t.gamingSet}>
               <select className="xp-select" value={gaming} onChange={(e) => setGaming(e.target.value)}>

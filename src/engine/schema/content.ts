@@ -160,7 +160,7 @@ export const toolSchema = z.object({
   cost: z.number().default(0),
 });
 
-// Condizioni (Appendice C del PHB 2024). Gli effetti sono oggetti con `type` (vocabolario in ARCHITECTURE.md):
+// Condizioni (regole dell'SRD). Gli effetti sono oggetti con `type` (vocabolario in ARCHITECTURE.md):
 // il motore interpreta quelli che non dipendono da fonte o situazione, gli altri restano come testo.
 export const CONDITION_EFFECT_TYPES = [
   "cant_see", "cant_hear", "cant_speak", "no_actions", "break_concentration", "unaware_of_surroundings", "concealed",
@@ -191,7 +191,6 @@ export const conditionDefSchema = z.object({
   notes: z.string().default(""),
   origin: z.enum(["srd", "private", "homebrew"]).default("private"),
   needsReview: z.boolean().default(false),
-  bookPage: z.number().int().optional(),
   stackable: z.boolean().default(false), // solo Esaurimento
   requiresSource: z.boolean().default(false), // serve tracciare chi causa la condizione (Affascinato, Spaventato, Afferrato)
   grantsConditions: z.array(id).default([]), // condizioni incluse (risolte ricorsivamente)

@@ -4,7 +4,7 @@ PWA per creare e gestire personaggi, **italiano + inglese**, offline. Contiene *
 Nasce dall'app privata `giorgiograzzi/Prova_creazione_dnd_character` (non si tocca: resta com'è). Il codice si copia **senza cronologia git**, così i PDF non liberi non entrano mai qui.
 
 ## Stato
-**Step 0: fatto (in attesa di merge). Step 1 → 10: da fare.** Ultimo step chiuso: nessuno (0 da confermare). Aggiorna questa riga e le caselle ad ogni merge.
+**Step 0 chiuso (PR #2). Step 1: fatto, in attesa di merge. Step 2 → 10: da fare.** Ultimo step chiuso: 0.
 
 ## Decisioni già prese (Giorgio)
 | Tema | Scelta |
@@ -39,7 +39,7 @@ Nasce dall'app privata `giorgiograzzi/Prova_creazione_dnd_character` (non si toc
 - **Cosa**: rinomina il PDF inglese in `docs/srd/SRD_5.2_en.pdf`; recupera il PDF italiano in `docs/srd/SRD_5.2.1_it.pdf`; copia dall'app privata (da `origin/main`, **senza** `.git`): `src/`, `scripts/`, `public/` (senza `public/forms/`), `index.html`, `vite.config.ts`, `tsconfig.json`, `package*.json`, `Dockerfile`, `docker/`, `docker-compose.yml`, `.env.example`, `.dockerignore`; **non** copiare `data/*.pdf`, `data/srd/`, le vecchie `PLAN/ARCHITECTURE/DATA_TODO/README`. Aggiungi `LICENSE` (MIT), `.gitignore`, `README.md` nuovo, `ATTRIBUTION.md` con la dicitura CC-BY (testo esatto dalla prima pagina di ciascun PDF).
 - **Test/verifica**: `npm ci` ok; `npm run typecheck` ok (i test di dati possono ancora fallire: si sistemano negli step 1-4); `git ls-files | grep -i pdf` mostra solo i due SRD in `docs/srd/`; nessun file con `:` nel nome.
 
-### Step 1 — Pulizia del non libero + test guardia  ☐
+### Step 1 — Pulizia del non libero + test guardia  ☑
 - **Cosa**: togli ogni riferimento a Manuale del Giocatore / PHB / D&D Beyond / "2024" / "5.5" in codice, testi, commenti, `index.html`, manifest PWA, `it.json`; rinomina l'app (nome neutro); rimuovi `public/forms/`; rimuovi/neutralizza i testi "bookPage" e le dizioni del manuale. Toglie dal `.gitignore` le regole su `data/private` e `docs/rules`.
 - **Test**: nuovo `src/legal/noProtected.test.ts` che scandisce `src/`, `data/`, `public/`, `index.html` e fallisce se trova: `dndbeyond`, `Player's Handbook`, `Manuale del Giocatore`, `PHB`, `Wizards` (tranne `ATTRIBUTION`/dicitura), `Dungeons & Dragons`, estensioni `.pdf` fuori da `docs/srd/`. Il test deve fallire prima della pulizia e passare dopo.
 

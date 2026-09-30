@@ -4,7 +4,7 @@ import type { Character } from "../engine/types";
 import { migrateCharacter } from "./migrations";
 import { HB_KINDS, type HbEntry } from "../engine/homebrew";
 
-export const BACKUP_FORMAT = "dnd-personaggi-backup";
+export const BACKUP_FORMAT = "srd-personaggi-backup";
 export const BACKUP_VERSION = 1;
 
 const containerSchema = z.object({
