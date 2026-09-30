@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <link rel="icon" type="image/svg+xml" href="/icons/icon.svg" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <meta name="description" content="Crea e gestisci personaggi di D&amp;D 5.5 (2024), in italiano, anche senza rete." />
+    <meta name="theme-color" content="#2f6fe0" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="D&amp;D PG" />
+    <title>Personaggi D&D</title>
+  </head>
+  <body>
+    <script>
+      // Rete di sicurezza: se un file dell'app non si carica (index.html vecchio in cache dopo un aggiornamento) si ricarica una volta sola
+      window.addEventListener("error", function (e) {
+        var t = e.target;
+        if (!t || (t.tagName !== "SCRIPT" && t.tagName !== "LINK")) return;
+        try { if (sessionStorage.getItem("reloaded")) return; sessionStorage.setItem("reloaded", "1"); } catch (_) { return; }
+        location.replace(location.pathname + "?v=" + Date.now());
+      }, true);
+    </script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
