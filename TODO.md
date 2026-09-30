@@ -13,7 +13,7 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 - [ ] 🟢 Decidere se includere gli oggetti magici dell'SRD (step 2g).
 
 ### Legale
-- [ ] 🔴 Nome definitivo dell'app (provvisorio "Personaggi SRD 5.2"): niente "D&D", "Dungeons & Dragons", loghi o marchi WotC. Il nome della repo `RPG_Homebrew_Friendly` è ok.
+- [ ] 🔴 Nome definitivo dell'app (ora "Personaggi SRD 5.2", provvisorio "Personaggi SRD 5.2"): niente "D&D", "Dungeons & Dragons", loghi o marchi WotC. Il nome della repo `RPG_Homebrew_Friendly` è ok.
 - [ ] 🔴 Dicitura CC-BY: copiare **testo esatto** dalla prima pagina di ciascun PDF (la versione IT e quella EN sono diverse).
 - [ ] 🟡 Font per la scheda PDF: usare solo font con licenza libera (es. OFL) e citarli in `ATTRIBUTION.md`.
 - [ ] 🟡 Icone/immagini: usare solo asset originali (le attuali in `public/icons/` vanno riviste: se sono generiche ok, altrimenti rifarle).
@@ -21,13 +21,16 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 - [ ] 🟡 Rileggere il testo legale finale con calma prima della release (non sono un avvocato: è una verifica tecnica, non un parere legale).
 
 ### Codice e struttura
+- [ ] 🟡 Scheda PDF: tolta in step 1 (usava il modello ufficiale). Resta `src/export/sheetData.ts`; il pulsante "Stampa scheda" torna con il nuovo generatore (step 7). Chiavi `wizard.sheet.*` in `it.json` ancora presenti.
+- [ ] 🟡 `scripts/extract-*.ts` citano ancora PDF/fonti non SRD (la guardia non li scandisce): riscrittura in step 2.
+- [ ] 🟡 `origin: "private"` (default in `src/engine/schema/content.ts` e nei test): con i dati SRD tracciati va sostituito con `"srd"` (step 2/4).
+- [ ] 🟡 `Dockerfile` e `.dockerignore` parlano ancora di `data/private` (step 9).
+- [ ] 🟡 Dopo lo step 1 `npm test` ha 8 file che falliscono per mancanza di `data/` (stessi di prima): tornano verdi con gli step 2-4.
 - [ ] 🟡 `.env.example`: porta 8097 scelta per l'app privata; rivedere se serve (step 9).
 - [ ] 🟡 Commento in `scripts/extract-conditions.ts` cita fonti non SRD: sparisce con la riscrittura degli estrattori (step 2).
 - [ ] 🟡 `ATTRIBUTION.md`: diciture trascritte dai PDF, riverificare a occhio (step 8).
-- [ ] 🟡 Nome del database Dexie e chiavi localStorage: usare nomi nuovi per non scontrarsi con l'app privata se servite dallo stesso dominio.
 - [ ] 🟡 I test `*.private.test.ts` saltano i dati mancanti: rinominarli e farli girare sempre, sui dati SRD tracciati (step 4).
 - [ ] 🟡 `README` e doc dell'app privata citano il bunker, Cloudflare, porte e dominio personale: **non** portarli nella repo pubblica.
-- [ ] 🟡 Testi in `it.json` che citano regole del "2024"/"5.5": riscriverli neutri (step 1).
 - [ ] 🟢 Workflow CI GitHub Actions (step 9).
 
 ### Prodotto
@@ -36,6 +39,8 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 - [ ] 🟢 Terza lingua in futuro? L'architettura dei dati per lingua (`data/srd/<lang>/`) la permette.
 
 ## Chiusi
+- [x] 🟡 Testi in `it.json` con "2024"/"5.5"/Manuale del Giocatore e nome "D&D" → neutri (step 1)
+- [x] 🟡 Nomi Dexie/backup/pacchetto/Docker rinominati `srd-personaggi` (step 1)
 - [x] 🔴 **Versioni diverse dell'SRD**: EN è la **5.2** (361 pag.), IT è la **5.2.1** (405 pag.). Possono differire (testi, errata, nuove voci). Decidere: cercare l'EN 5.2.1 (Giorgio può caricarlo al posto del 5.2) oppure accettare la differenza e segnare in `ATTRIBUTION.md` le due versioni. Serve prima dello step 2. → chiuso in step 0 (EN 5.2.1 trovato in root: stessa versione dell'IT)
 - [x] 🔴 Il PDF inglese in root ha un nome con `:` (`https::media.dndbeyond.com:…SRD_CC_v5.2.pdf`): rinominare in `docs/srd/SRD_5.2_en.pdf` (step 0) — su Windows/macOS i nomi con `:` danno problemi. → chiuso in step 0
 - [x] 🔴 Recuperare il PDF italiano dalla cronologia dell'app privata (`2b0a85e^:IT_SRD_CC_v5.2.1.pdf`) e metterlo in `docs/srd/` (step 0). → chiuso in step 0

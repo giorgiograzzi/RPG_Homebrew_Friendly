@@ -24,7 +24,7 @@ const entries = raw.conditions.map((c) => {
   const e = convert(c) as Record<string, any>;
   return {
     id: e.id, name: { it: e.nameIt, en: e.nameEn }, description: e.summaryIt ?? "", notes: e.notesIt ?? "",
-    bookPage: e.bookPage, stackable: e.stackable, requiresSource: e.requiresSource, grantsConditions: e.grantsConditions,
+    stackable: e.stackable, requiresSource: e.requiresSource, grantsConditions: e.grantsConditions,
     ...(e.levels ? { levels: e.levels } : {}), effects: e.effects,
     ...(e.removal ? { removal: e.removal } : {}), ...(e.endConditions ? { endConditions: e.endConditions } : {}),
     ...(e.escape ? { escape: e.escape } : {}),

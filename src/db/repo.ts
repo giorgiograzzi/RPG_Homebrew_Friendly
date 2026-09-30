@@ -17,7 +17,7 @@ class AppDb extends Dexie {
   }
 }
 
-export function createRepo(dbName = "dnd-personaggi") {
+export function createRepo(dbName = "srd-personaggi") {
   const db = new AppDb(dbName);
   return {
     async list(): Promise<CharacterSummary[]> {

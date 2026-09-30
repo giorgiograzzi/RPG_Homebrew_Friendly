@@ -452,7 +452,7 @@ describe.skipIf(!has)("dati privati (step 4)", () => {
     });
   });
 
-  describe("condizioni (spec PHB 2024, App. C)", () => {
+  describe("condizioni (spec SRD)", () => {
     const R = fullRuleset();
     const base = testCharacter({ classes: [{ classId: "fighter", level: 1, hpRolls: [] }] });
     const run = (state: object) => computeCharacter({ ...base, state: { ...base.state, ...state } }, R);
@@ -462,7 +462,7 @@ describe.skipIf(!has)("dati privati (step 4)", () => {
       expect(checkReferences(R)).toEqual([]);
       expect([...R.conditions.values()].filter((c) => c.stackable).map((c) => c.id)).toEqual(["exhaustion"]);
       expect([...R.conditions.values()].filter((c) => c.requiresSource).map((c) => c.id).sort()).toEqual(["charmed", "frightened", "grappled"]);
-      for (const c of R.conditions.values()) { expect(c.bookPage, c.id).toBeGreaterThan(300); expect(c.description, c.id).not.toBe(""); }
+      for (const c of R.conditions.values()) { expect(c.description, c.id).not.toBe(""); }
       const g = R.conditions.get("grappled")!;
       expect(g.escape).toMatchObject({ action: true, check: [{ ability: "str", skill: "athletics" }, { ability: "dex", skill: "acrobatics" }] });
       expect(R.conditions.get("exhaustion")!.levels).toEqual({ min: 1, max: 6, deathAt: 6 });

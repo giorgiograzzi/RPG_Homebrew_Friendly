@@ -1,7 +1,7 @@
 import type { Derived } from "../compute/types";
 import type { Character } from "../types";
 
-// Punti Ferita in gioco (regole 2024): PF temporanei assorbono per primi; a 0 PF si è privi di sensi e si tirano le
+// Punti Ferita in gioco (regole SRD 5.2.1): PF temporanei assorbono per primi; a 0 PF si è privi di sensi e si tirano le
 // salvezze contro morte; danno pari o superiore ai PF massimi oltre lo zero = morte istantanea.
 const ZERO_SRC = "0 PF";
 const clamp = (n: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, n));

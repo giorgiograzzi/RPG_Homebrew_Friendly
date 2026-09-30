@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "Personaggi D&D"
+    "title": "Personaggi SRD 5.2"
   },
   "tabs": {
     "characters": "Eroi",
@@ -204,7 +204,7 @@
       "open": "Apri il PDF",
       "done": "Scheda di {name} pronta: la trovi tra i download.",
       "error": "Non riesco a creare il PDF: {e}",
-      "help": "Scrive i dati del personaggio sulla scheda ufficiale 2024 in italiano, pronta da stampare."
+      "help": "Scrive i dati del personaggio su una scheda PDF pronta da stampare."
     }
   },
   "play": {
@@ -393,8 +393,8 @@
     "noResults": "Nessun oggetto.",
     "noHomebrew": "Nessuna creazione homebrew attiva in questa sezione.",
     "showHomebrew": "Mostra le creazioni Homebrew",
-    "showManual": "Torna al Manuale del Giocatore",
-    "sourceManual": "Manuale del Giocatore",
+    "showManual": "Torna ai contenuti SRD",
+    "sourceManual": "Contenuti SRD",
     "sourceHomebrew": "Creazioni Homebrew",
     "lb": "lb",
     "time": {

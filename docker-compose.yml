@@ -1,10 +1,10 @@
-# App dei personaggi D&D: nginx con i file statici dell'app.
+# App dei personaggi SRD: nginx con i file statici dell'app.
 # Avvio:  docker compose up -d --build        (la porta si cambia in .env, vedi .env.example)
 services:
-  dnd-personaggi:
+  srd-personaggi:
     build: .
-    image: dnd-personaggi:latest
-    container_name: dnd-personaggi
+    image: srd-personaggi:latest
+    container_name: srd-personaggi
     restart: unless-stopped
     ports:
       - "${PORT:-8097}:80"

@@ -12,7 +12,7 @@ const lists = (): Lists => ({ adv: [], dis: [] });
 const push = (l: Lists, mode: "advantage" | "disadvantage" | undefined, who: string) => { if (mode) (mode === "advantage" ? l.adv : l.dis).push(who); };
 const uniq = <T>(a: T[]) => [...new Set(a)];
 
-// Condizioni attive → effetti calcolabili. Regole (spec condizioni, App. C PHB 2024):
+// Condizioni attive → effetti calcolabili. Regole (spec condizioni dell'SRD):
 //  - le condizioni incluse (grantsConditions) si risolvono ricorsivamente e senza duplicati;
 //  - un'immunità (Pietrificato → Avvelenato) toglie la condizione;
 //  - Vantaggio e Svantaggio sullo stesso tiro si annullano (combineMode);

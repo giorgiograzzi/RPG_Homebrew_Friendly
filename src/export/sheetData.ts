@@ -7,7 +7,7 @@ import { ABILITIES, type Ability } from "../engine/schema";
 import type { Character } from "../engine/types";
 import it from "../i18n/it.json";
 
-// Dati del personaggio pronti da scrivere sulla scheda ufficiale (2024, italiana): solo testi già formattati.
+// Dati del personaggio pronti da scrivere sulla scheda PDF (step 7): solo testi già formattati.
 // Niente calcoli qui: ogni numero arriva dal motore (computeCharacter), la scheda stampata coincide con quella dell'app.
 export interface SheetData {
   name: string; klass: string; level: string; subclass: string; species: string; background: string; xp: string; size: string;

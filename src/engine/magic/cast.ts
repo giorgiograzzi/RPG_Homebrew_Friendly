@@ -34,7 +34,7 @@ export function castSpell(ch: Character, rs: Ruleset, d: Derived, spellId: strin
       const total = d.spellSlots.slots[via.level - 1] ?? 0;
       if (!total || (d.spellSlots.remaining[via.level - 1] ?? 0) <= 0) return fail(`Nessuno slot di ${via.level}° livello disponibile`);
       next = toggleSlot(ch, via.level, total, 1); level = via.level;
-      notes.push("Regola 2024: in un turno puoi spendere un solo slot per lanciare un incantesimo (trucchetti e lanci gratuiti non contano)");
+      notes.push("Regola: in un turno puoi spendere un solo slot per lanciare un incantesimo (trucchetti e lanci gratuiti non contano)");
       break;
     }
     case "pact": {
@@ -44,7 +44,7 @@ export function castSpell(ch: Character, rs: Ruleset, d: Derived, spellId: strin
       if (p.level < sp.level) return fail(`Gli slot del Patto sono di ${p.level}° livello: l'incantesimo è di ${sp.level}°`);
       if (p.remaining <= 0) return fail("Nessuno slot del Patto rimasto");
       next = { ...ch, state: { ...ch.state, pactUsed: (ch.state.pactUsed ?? 0) + 1 } }; level = p.level;
-      notes.push("Regola 2024: in un turno puoi spendere un solo slot per lanciare un incantesimo");
+      notes.push("Regola: in un turno puoi spendere un solo slot per lanciare un incantesimo");
       break;
     }
     case "free": {

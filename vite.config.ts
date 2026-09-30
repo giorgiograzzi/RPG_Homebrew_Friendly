@@ -12,7 +12,7 @@ export default defineConfig({
       registerType: "prompt",
       includeAssets: ["icons/icon.svg", "icons/apple-touch-icon.png"],
       manifest: {
-        id: "./", name: "Personaggi D&D", short_name: "D&D PG", description: "Crea e gestisci personaggi di D&D 5.5 (2024), in italiano, anche senza rete.",
+        id: "./", name: "Personaggi SRD 5.2", short_name: "PG SRD", description: "Crea e gestisci personaggi con le regole libere dell'SRD 5.2.1, in italiano e inglese, anche senza rete.",
         lang: "it", dir: "ltr", start_url: "./", scope: "./", display: "standalone", orientation: "any", categories: ["games", "entertainment"],
         background_color: "#ece9d8", theme_color: "#0a3fb5",
         icons: [
@@ -24,7 +24,7 @@ export default defineConfig({
       workbox: {
         // Offline completo: tutto ciò che serve (anche i dati di gioco, che stanno dentro i file JS) entra nella cache del primo caricamento.
         // Il limite predefinito (2 MB) lascerebbe fuori i file grandi: senza dati di gioco nel bundle l'app non parte offline.
-        globPatterns: ["**/*.{js,css,html,svg,png,ico,webmanifest,woff2}", "forms/*.pdf"], // la scheda PDF (5 MB) c'è dal primo caricamento: si stampa anche offline
+        globPatterns: ["**/*.{js,css,html,svg,png,ico,webmanifest,woff2}"],
         maximumFileSizeToCacheInBytes: 30 * 1024 * 1024,
         navigateFallback: "index.html",
         cleanupOutdatedCaches: true,
