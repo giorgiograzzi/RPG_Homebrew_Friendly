@@ -1,0 +1,10 @@
+node_modules
+dist
+.git
+.env
+*.log
+# PDF delle regole e schede di riferimento in data/: pesano decine di MB e non servono al build
+docs
+data/*.pdf
+data/https*
+# NON escludere data/private (dati di gioco che finiscono nel bundle) né public/forms (scheda PDF)

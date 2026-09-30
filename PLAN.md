@@ -4,13 +4,13 @@ PWA per creare e gestire personaggi, **italiano + inglese**, offline. Contiene *
 Nasce dall'app privata `giorgiograzzi/Prova_creazione_dnd_character` (non si tocca: resta com'è). Il codice si copia **senza cronologia git**, così i PDF non liberi non entrano mai qui.
 
 ## Stato
-**Step 0 → 10: da fare.** Ultimo step chiuso: nessuno. Aggiorna questa riga e le caselle ad ogni merge.
+**Step 0: fatto (in attesa di merge). Step 1 → 10: da fare.** Ultimo step chiuso: nessuno (0 da confermare). Aggiorna questa riga e le caselle ad ogni merge.
 
 ## Decisioni già prese (Giorgio)
 | Tema | Scelta |
 |---|---|
 | Repo | separata: `giorgiograzzi/RPG_Homebrew_Friendly` |
-| Contenuti | solo SRD 5.2 (IT: 5.2.1, EN: 5.2). Niente Manuale del Giocatore, niente D&D Beyond |
+| Contenuti | solo SRD 5.2 (IT e EN: 5.2.1). Niente Manuale del Giocatore, niente D&D Beyond |
 | Lingue | italiano + inglese, cambio lingua dall'app; id dei contenuti uguali nelle due lingue |
 | PDF scheda | scheda **originale** disegnata nel codice (pdf-lib); il PDF ufficiale WotC non c'è più |
 | Homebrew | tenuto; **tolta** "copia da voce ufficiale"; esempi solo SRD |
@@ -28,14 +28,14 @@ Nasce dall'app privata `giorgiograzzi/Prova_creazione_dnd_character` (non si toc
 7. Convenzioni (ereditate): file < ~300 righe, commenti in italiano, motore in `src/engine` senza UI, testi in `src/i18n/*.json`.
 
 ## Fonti in repo
-- `docs/srd/SRD_5.2_en.pdf` (361 pag., inglese, 5.2) — oggi sta in root con un nome pieno di `:`: va rinominato (step 0).
-- `docs/srd/SRD_5.2.1_it.pdf` (405 pag., italiano, 5.2.1) — da recuperare dalla cronologia dell'app privata (commit `2b0a85e^`, file `IT_SRD_CC_v5.2.1.pdf`, 9,3 MB).
+- `docs/srd/SRD_5.2.1_en.pdf` (364 pag., inglese, 5.2.1).
+- `docs/srd/SRD_5.2.1_it.pdf` (405 pag., italiano, 5.2.1).
 
 ---
 
 ## Step
 
-### Step 0 — Bootstrap della repo  ☐
+### Step 0 — Bootstrap della repo  ☑
 - **Cosa**: rinomina il PDF inglese in `docs/srd/SRD_5.2_en.pdf`; recupera il PDF italiano in `docs/srd/SRD_5.2.1_it.pdf`; copia dall'app privata (da `origin/main`, **senza** `.git`): `src/`, `scripts/`, `public/` (senza `public/forms/`), `index.html`, `vite.config.ts`, `tsconfig.json`, `package*.json`, `Dockerfile`, `docker/`, `docker-compose.yml`, `.env.example`, `.dockerignore`; **non** copiare `data/*.pdf`, `data/srd/`, le vecchie `PLAN/ARCHITECTURE/DATA_TODO/README`. Aggiungi `LICENSE` (MIT), `.gitignore`, `README.md` nuovo, `ATTRIBUTION.md` con la dicitura CC-BY (testo esatto dalla prima pagina di ciascun PDF).
 - **Test/verifica**: `npm ci` ok; `npm run typecheck` ok (i test di dati possono ancora fallire: si sistemano negli step 1-4); `git ls-files | grep -i pdf` mostra solo i due SRD in `docs/srd/`; nessun file con `:` nel nome.
 

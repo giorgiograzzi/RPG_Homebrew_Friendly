@@ -1,0 +1,15 @@
+# App dei personaggi D&D: nginx con i file statici dell'app.
+# Avvio:  docker compose up -d --build        (la porta si cambia in .env, vedi .env.example)
+services:
+  dnd-personaggi:
+    build: .
+    image: dnd-personaggi:latest
+    container_name: dnd-personaggi
+    restart: unless-stopped
+    ports:
+      - "${PORT:-8097}:80"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1/"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
