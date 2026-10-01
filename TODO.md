@@ -40,6 +40,18 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 - [ ] 🟡 Effetti di gioco dei talenti: solo Allerta (bonus a iniziativa), Tiro, Difesa e Dono della vista pura hanno effetti numerici; Combattere con armi possenti/due armi e Aumento dei punteggi sono gestiti dal motore per id. Restano a testo: Aggressore selvaggio, Lottatore, Dono del fato (ricarica), Dono delle abilità di combattimento, ecc.
 - [ ] 🟢 Le "Abile"/"Iniziato alla magia" sono ripetibili: il motore le gestisce con scelte separate per acquisizione (verificare in step 4/5).
 
+### Dati SRD (step 2c)
+- [ ] 🔴 Gli incantesimi concessi dalle specie (21 id in `SPELL_NAMES`, es. `faerie_fire`, `speak_with_animals`) devono esistere in 2e con **questi id**: `brokenReferences` li controlla da quando `spells` non è vuoto.
+- [ ] 🟡 Percezione tellurica (Nano, Esperto minatore) non è tra i sensi del motore (`senseKind`: scurovisione, vista cieca, vista pura): resta solo testo + contatore di usi. Valutare di aggiungere `tremorsense`.
+- [ ] 🟡 Volo draconico: la velocità di volo è fissata a 30 ft (nell'SRD è "pari alla tua velocità"); il motore non ha un valore "uguale alla velocità". Da rivedere se la velocità cambia.
+- [ ] 🟡 Taglia a scelta (Umano e Tiefling: Media o Piccola): nei dati `sizes: ["medium","small"]`; creazione e scheda devono chiederla (step 4/5).
+- [ ] 🟡 Le velocità e le distanze delle specie sono in **piedi** nei dati (come l'SRD EN); le descrizioni IT usano i metri come il PDF IT. L'interfaccia italiana deve convertire (step 3/5).
+- [ ] 🟡 `saveAdvantage.against` è testo libero per lingua ("la condizione Avvelenato" / "the Poisoned condition"); il motore scrive una frase in italiano ("Vantaggio ai TS contro ..."): da localizzare con lo step 3.
+- [ ] 🟡 Solo a testo (nessun effetto): Fortuna, Furtività innata, Agilità halfling, Coraggioso, Trance, Intraprendente (Ispirazione eroica), sostituzione del trucchetto dell'Elfo alto, congegni dello Gnomo delle rocce, doni della Discendenza gigantica (tutti e 6), Presenza ultraterrena (la sua caratteristica segue la scelta).
+- [ ] 🟡 Scarica di adrenalina (Orco): `recharge: "short_rest"` rappresenta "riposo breve o lungo"; verificare che il motore ricarichi anche con il riposo lungo.
+- [ ] 🟢 L'altezza media di ogni specie non è nei dati (non serve al motore); si può aggiungere come testo.
+- [ ] 🟢 Rimossi `scripts/lib/species-rules.ts` e `feat-rules.ts` (superati da `species-srd.ts` e `feats-srd.ts`); restano da riscrivere `class-rules.ts`, `feature-play.ts`, `spells.ts`, `equipment.ts` (2d-2e).
+
 ### Codice e struttura
 - [ ] 🟡 Scheda PDF: tolta in step 1 (usava il modello ufficiale). Resta `src/export/sheetData.ts`; il pulsante "Stampa scheda" torna con il nuovo generatore (step 7). Chiavi `wizard.sheet.*` in `it.json` ancora presenti.
 - [x] `scripts/extract-*.ts` e `validate-data.ts` (citavano fonti non SRD) rimossi in step 1; `validate:data` ed `extract:data` (script npm) tornano con la riscrittura in step 2.

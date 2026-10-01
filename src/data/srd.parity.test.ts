@@ -4,7 +4,7 @@ import { brokenReferences, idsByKind, loadSrd, SRD_LANGS } from "./srdIntegrity"
 // Conteggi presi dalle tabelle dell'SRD 5.2.1 (armi: 10 semplici da mischia + 4 semplici a distanza + 18 da guerra da mischia + 6 da guerra a distanza)
 const COUNTS: Record<string, number> = {
   skills: 18, languages: 19, sizes: 6, damageTypes: 13, weaponProperties: 10, masteries: 8, coins: 5,
-  weapons: 38, armors: 13, tools: 37, items: 94, backgrounds: 4, feats: 17,
+  weapons: 38, armors: 13, tools: 37, items: 94, backgrounds: 4, feats: 17, species: 9,
 };
 
 describe.each(SRD_LANGS)("dati SRD (%s)", (lang) => {
@@ -100,5 +100,56 @@ describe("background e talenti: valori controllati sul PDF (SRD 5.2.1)", () => {
     expect(en.feats.get("skilled")!.repeatable).toBe(true);
     expect(rsIt.feats.get("grappler")!.name.it).toBe("Lottatore");
     expect(en.feats.get("archery")!.name.it).toBe("Archery");
+  });
+});
+
+describe("specie: valori controllati sul PDF (SRD 5.2.1)", () => {
+  const [rsIt, en] = [loadSrd("it"), loadSrd("en")];
+  const darkvision = (id: string) => en.species.get(id)!.effects.flatMap((e) => (e.op === "sense" && e.kind === "darkvision" ? [e.range] : []));
+  it("le 9 specie, con taglia e velocità in piedi", () => {
+    expect([...en.species.keys()]).toEqual(["dragonborn", "dwarf", "elf", "gnome", "goliath", "halfling", "human", "orc", "tiefling"]);
+    expect(Object.fromEntries([...en.species.values()].map((s) => [s.id, [s.speed, s.sizes.join("/")]]))).toEqual({
+      dragonborn: [30, "medium"], dwarf: [30, "medium"], elf: [30, "medium"], gnome: [30, "small"], goliath: [35, "medium"],
+      halfling: [30, "small"], human: [30, "medium/small"], orc: [30, "medium"], tiefling: [30, "medium/small"],
+    });
+  });
+  it("scurovisione", () => {
+    expect(["dragonborn", "dwarf", "elf", "gnome", "goliath", "halfling", "human", "orc", "tiefling"].map((id) => [id, darkvision(id)[0] ?? 0])).toEqual([
+      ["dragonborn", 60], ["dwarf", 120], ["elf", 60], ["gnome", 60], ["goliath", 0], ["halfling", 0], ["human", 0], ["orc", 120], ["tiefling", 60]]);
+    const drow = en.species.get("elf")!.choices.find((c) => c.id === "elven_lineage")!.options!.find((o) => o.id === "drow")!;
+    expect(drow.effects.some((e) => e.op === "sense" && e.kind === "darkvision" && e.range === 120)).toBe(true);
+  });
+  it("antenati draconici: tipo di danno", () => {
+    const opts = en.species.get("dragonborn")!.choices[0]!.options!;
+    expect(Object.fromEntries(opts.map((o) => [o.id, (o.effects[0] as { types: string[] }).types[0]]))).toEqual({
+      black: "acid", blue: "lightning", brass: "fire", bronze: "lightning", copper: "acid", gold: "fire", green: "poison", red: "fire", silver: "cold", white: "cold" });
+  });
+  it("lignaggi elfici e retaggi immondi (incantesimi per livello)", () => {
+    const spells = (sp: string, ch: string, opt: string) => en.species.get(sp)!.choices.find((c) => c.id === ch)!.options!.find((o) => o.id === opt)!.effects
+      .flatMap((e) => (e.op === "grantSpell" ? [`${e.spell}@${e.when ?? "1"}`] : []));
+    expect(spells("elf", "elven_lineage", "drow")).toEqual(["dancing_lights@1", "faerie_fire@level>=3", "darkness@level>=5"]);
+    expect(spells("elf", "elven_lineage", "high_elf")).toEqual(["prestidigitation@1", "detect_magic@level>=3", "misty_step@level>=5"]);
+    expect(spells("elf", "elven_lineage", "wood_elf")).toEqual(["druidcraft@1", "longstrider@level>=3", "pass_without_trace@level>=5"]);
+    expect(spells("tiefling", "fiendish_legacy", "abyssal")).toEqual(["poison_spray@1", "ray_of_sickness@level>=3", "hold_person@level>=5"]);
+    expect(spells("tiefling", "fiendish_legacy", "chthonic")).toEqual(["chill_touch@1", "false_life@level>=3", "ray_of_enfeeblement@level>=5"]);
+    expect(spells("tiefling", "fiendish_legacy", "infernal")).toEqual(["fire_bolt@1", "hellish_rebuke@level>=3", "darkness@level>=5"]);
+    const wood = en.species.get("elf")!.choices.find((c) => c.id === "elven_lineage")!.options!.find((o) => o.id === "wood_elf")!;
+    expect(wood.effects).toContainEqual({ op: "setSpeed", mode: "walk", value: 35 });
+  });
+  it("usi dei tratti", () => {
+    const usage = (sp: string, t: string) => en.species.get(sp)!.traits.find((x) => x.id === t)!.usage;
+    expect(usage("dragonborn", "breath_weapon")).toEqual({ uses: "pb", recharge: "long_rest" });
+    expect(usage("orc", "adrenaline_rush")).toEqual({ uses: "pb", recharge: "short_rest" });
+    expect(usage("orc", "relentless_endurance")).toEqual({ uses: 1, recharge: "long_rest" });
+    expect(en.species.get("goliath")!.traits.find((x) => x.id === "large_form")!.level).toBe(5);
+    expect(en.species.get("dragonborn")!.traits.find((x) => x.id === "draconic_flight")!.level).toBe(5);
+    expect(en.species.get("goliath")!.choices[0]!.options).toHaveLength(6);
+  });
+  it("stessa struttura in IT e EN (nomi e testi a parte)", () => {
+    const noText = (es: object[]) => es.map(({ against: _a, ...e }: { against?: string }) => e); // `against` è testo libero per lingua
+    const shape = (rs: typeof en) => [...rs.species.values()].map((s) => ({ id: s.id, sizes: s.sizes, speed: s.speed, effects: noText(s.effects), traits: s.traits.map((t) => [t.id, t.level, t.usage, t.activation?.resource, t.effects]), choices: s.choices.map((c) => [c.id, c.count, c.source, (c.options ?? []).map((o) => [o.id, o.effects])]) }));
+    expect(shape(rsIt)).toEqual(shape(en));
+    expect(rsIt.species.get("dwarf")!.name.it).toBe("Nano");
+    expect(rsIt.species.get("elf")!.choices.find((c) => c.id === "elven_lineage")!.options!.find((o) => o.id === "high_elf")!.name.it).toBe("Elfo alto");
   });
 });
