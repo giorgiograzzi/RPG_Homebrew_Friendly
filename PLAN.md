@@ -45,14 +45,14 @@ Nasce dall'app privata `giorgiograzzi/Prova_creazione_dnd_character` (non si toc
 
 ### Step 2 — Estrazione dati SRD (IT + EN)  ☐
 Riscrittura degli estrattori in `scripts/` perché leggano **solo** i due PDF SRD e scrivano JSON tracciati in `data/srd/it/` e `data/srd/en/` (stessi id in entrambe). Un sotto-passo = un commit = un blocco di dati.
-- **2a Fondamenti**: abilità, linguaggi, taglie, tipi di danno, PX/competenza, armi (+ proprietà e maestrie), armature, strumenti, equipaggiamento, monete.
+- **2a Fondamenti** ☑: abilità, linguaggi, taglie, tipi di danno, PX/competenza, armi (+ proprietà e maestrie), armature, strumenti, equipaggiamento, monete.
 - **2b Background e talenti**: i background dell'SRD, talenti (origine, generali, stili di combattimento, doni epici se presenti).
 - **2c Specie**: le specie dell'SRD con scelte interne (lignaggi ecc.).
 - **2d Classi e sottoclassi**: le 12 classi (tabelle 1-20) e la sottoclasse che l'SRD include per ciascuna.
 - **2e Incantesimi**: tutti quelli dell'SRD (livello, scuola, classi, tempo, gittata, componenti, durata, testo, livelli superiori) + liste per classe + tabelle slot.
 - **2f Condizioni, riposi, morte e regole di gioco** usate dal motore (Esaurimento incluso).
 - **2g (opzionale, da decidere)**: oggetti magici dell'SRD.
-- **Test per ogni sotto-passo**: `npm run validate:data` (schema Zod + riferimenti incrociati) su entrambe le lingue; test "IT e EN hanno gli stessi id" (`data/srd.parity.test.ts`); **conteggi attesi** scritti nel test (es. n. di classi, specie, incantesimi) presi dall'indice del PDF; controllo a campione di ≥10 voci per blocco contro il PDF (riportato nel riepilogo); i dubbi vanno in `TODO.md`, non inventati.
+- **Test per ogni sotto-passo**: `npm run validate:data` (schema Zod + riferimenti incrociati) su entrambe le lingue; test "IT e EN hanno gli stessi id" (`src/data/srd.parity.test.ts`); **conteggi attesi** scritti nel test (es. n. di classi, specie, incantesimi) presi dall'indice del PDF; controllo a campione di ≥10 voci per blocco contro il PDF (riportato nel riepilogo); i dubbi vanno in `TODO.md`, non inventati.
 
 ### Step 3 — Caricamento dati e lingua (i18n IT/EN)  ☐
 - **Cosa**: `loadRuleset(lang)` legge `data/srd/<lang>/`; `src/i18n/en.json` accanto a `it.json`; selettore lingua in Impostazioni (default = lingua del browser, fallback EN); la lingua cambia testi **e** dati senza perdere i personaggi (salvati per id).

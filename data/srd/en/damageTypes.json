@@ -1,0 +1,83 @@
+{
+ "kind": "damageTypes",
+ "entries": [
+  {
+   "id": "acid",
+   "name": "Acid",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "bludgeoning",
+   "name": "Bludgeoning",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "cold",
+   "name": "Cold",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "fire",
+   "name": "Fire",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "force",
+   "name": "Force",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "lightning",
+   "name": "Lightning",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "necrotic",
+   "name": "Necrotic",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "piercing",
+   "name": "Piercing",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "poison",
+   "name": "Poison",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "psychic",
+   "name": "Psychic",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "radiant",
+   "name": "Radiant",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "slashing",
+   "name": "Slashing",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "thunder",
+   "name": "Thunder",
+   "extra": {},
+   "origin": "srd"
+  }
+ ]
+}

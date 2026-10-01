@@ -1,0 +1,55 @@
+{
+ "kind": "coins",
+ "entries": [
+  {
+   "id": "cp",
+   "name": "Moneta di rame",
+   "extra": {
+    "abbrEn": "CP",
+    "abbrIt": "mr",
+    "copper": 1
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "sp",
+   "name": "Moneta d'argento",
+   "extra": {
+    "abbrEn": "SP",
+    "abbrIt": "ma",
+    "copper": 10
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "ep",
+   "name": "Moneta di electrum",
+   "extra": {
+    "abbrEn": "EP",
+    "abbrIt": "me",
+    "copper": 50
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "gp",
+   "name": "Moneta d'oro",
+   "extra": {
+    "abbrEn": "GP",
+    "abbrIt": "mo",
+    "copper": 100
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "pp",
+   "name": "Moneta di platino",
+   "extra": {
+    "abbrEn": "PP",
+    "abbrIt": "mp",
+    "copper": 1000
+   },
+   "origin": "srd"
+  }
+ ]
+}

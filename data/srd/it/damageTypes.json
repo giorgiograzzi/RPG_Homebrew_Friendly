@@ -1,0 +1,83 @@
+{
+ "kind": "damageTypes",
+ "entries": [
+  {
+   "id": "acid",
+   "name": "Acido",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "bludgeoning",
+   "name": "Contundente",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "cold",
+   "name": "Freddo",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "fire",
+   "name": "Fuoco",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "force",
+   "name": "Forza",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "lightning",
+   "name": "Fulmine",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "necrotic",
+   "name": "Necrotico",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "piercing",
+   "name": "Perforante",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "poison",
+   "name": "Veleno",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "psychic",
+   "name": "Psichico",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "radiant",
+   "name": "Radioso",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "slashing",
+   "name": "Tagliente",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "thunder",
+   "name": "Tuono",
+   "extra": {},
+   "origin": "srd"
+  }
+ ]
+}

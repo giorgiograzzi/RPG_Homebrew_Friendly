@@ -1,0 +1,53 @@
+{
+ "kind": "masteries",
+ "entries": [
+  {
+   "id": "cleave",
+   "name": "Cleave",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "graze",
+   "name": "Graze",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "nick",
+   "name": "Nick",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "push",
+   "name": "Push",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "sap",
+   "name": "Sap",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "slow",
+   "name": "Slow",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "topple",
+   "name": "Topple",
+   "extra": {},
+   "origin": "srd"
+  },
+  {
+   "id": "vex",
+   "name": "Vex",
+   "extra": {},
+   "origin": "srd"
+  }
+ ]
+}

@@ -1,0 +1,53 @@
+{
+ "kind": "sizes",
+ "entries": [
+  {
+   "id": "tiny",
+   "name": "Minuscola",
+   "extra": {
+    "spaceFeet": 2.5
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "small",
+   "name": "Piccola",
+   "extra": {
+    "spaceFeet": 5
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "medium",
+   "name": "Media",
+   "extra": {
+    "spaceFeet": 5
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "large",
+   "name": "Grande",
+   "extra": {
+    "spaceFeet": 10
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "huge",
+   "name": "Enorme",
+   "extra": {
+    "spaceFeet": 15
+   },
+   "origin": "srd"
+  },
+  {
+   "id": "gargantuan",
+   "name": "Mastodontica",
+   "extra": {
+    "spaceFeet": 20
+   },
+   "origin": "srd"
+  }
+ ]
+}

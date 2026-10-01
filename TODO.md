@@ -20,6 +20,14 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 - [ ] 🟡 Licenza delle dipendenze npm: controllare che siano tutte compatibili con MIT (report `npm ls` / license-checker).
 - [ ] 🟡 Rileggere il testo legale finale con calma prima della release (non sono un avvocato: è una verifica tecnica, non un parere legale).
 
+### Dati SRD (step 2a)
+- [ ] 🟡 Le voci di 2a hanno `description` vuota: il testo dei PDF ha caratteri rovinati (lettere maiuscole iniziali e cifre perse, es. "ragonborn, warf", "ʹd͸ cid"). Decidere come ottenere le descrizioni (riscrittura originale breve, o estrazione con controllo a mano) prima della release.
+- [ ] 🟡 Nel PDF IT mancano dalla tabella delle abilità le righe Furtività e Sopravvivenza (testo non estraibile): nomi e caratteristica verificati dall'elenco per caratteristica; riguardare la pagina a occhio.
+- [ ] 🟡 Dotazioni (pacchetti): peso IT ≠ peso EN per Scassinatore (38 vs 42 lb), Intrattenitore (58 vs 58,5) e Sacerdote (28 vs 29); il prezzo delle dotazioni di Diplomatico, Intrattenitore e Studioso non coincide con la somma degli oggetti (39 mo vs 40, 40 vs 39,5, 40 vs 40,02). Nei dati si tiene il valore EN/del PDF; contenuti letti dal PDF IT (il testo EN ha le cifre rovinate).
+- [ ] 🟡 Pesi in libbre nei dati (1 lb = 0,5 kg come nell'SRD IT): l'interfaccia italiana deve mostrare i kg (step 3/5). Costi in monete di rame.
+- [ ] 🟡 `loadRuleset` legge solo `data/srd/it` fino allo step 3 (selezione lingua).
+- [ ] 🟢 Le munizioni hanno `amount` (pezzi per confezione); peso e costo sono della confezione.
+
 ### Codice e struttura
 - [ ] 🟡 Scheda PDF: tolta in step 1 (usava il modello ufficiale). Resta `src/export/sheetData.ts`; il pulsante "Stampa scheda" torna con il nuovo generatore (step 7). Chiavi `wizard.sheet.*` in `it.json` ancora presenti.
 - [x] `scripts/extract-*.ts` e `validate-data.ts` (citavano fonti non SRD) rimossi in step 1; `validate:data` ed `extract:data` (script npm) tornano con la riscrittura in step 2.
