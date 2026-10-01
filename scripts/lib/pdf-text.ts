@@ -42,3 +42,21 @@ export function section(lines: string[], from: string, to?: string, fromLast = t
   const b = to ? idx(to, false) : lines.length;
   return lines.slice(a + 1, b > a ? b : lines.length).join(" ").replace(/\s+/g, " ").replace(/Tormentar e\b/g, "Tormentare").trim();
 }
+
+// Come pdfPages, ma per pagine a due colonne: prima tutto il testo della colonna sinistra, poi quello della destra
+// (nel flusso del PDF alcuni blocchi della colonna destra compaiono prima del resto della pagina)
+export async function pdfPagesColumns(path: string): Promise<string[]> {
+  const doc = await getDocument({ data: new Uint8Array(readFileSync(path)), useSystemFonts: true }).promise;
+  const pages: string[] = [];
+  for (let i = 1; i <= doc.numPages; i++) {
+    const page = await doc.getPage(i);
+    const mid = page.getViewport({ scale: 1 }).width / 2;
+    const c = await page.getTextContent();
+    const items = c.items.filter((it) => "str" in it) as { str: string; hasEOL: boolean; transform: number[] }[];
+    const side = (it: { transform: number[] }) => (it.transform[4]! < mid ? 0 : 1);
+    let t = "";
+    for (const s of [0, 1]) for (const it of items) if (side(it) === s) t += it.str + (it.hasEOL ? "\n" : " ");
+    pages.push(t);
+  }
+  return pages;
+}

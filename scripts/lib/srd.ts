@@ -1,5 +1,5 @@
 import { mkdirSync, writeFileSync } from "node:fs";
-import { pdfPages } from "./pdf-text";
+import { pdfPages, pdfPagesColumns } from "./pdf-text";
 import { DESCRIPTIONS, GROUP_DESCRIPTIONS } from "./descriptions";
 import { fixEnGlyphs } from "./srd-clean";
 
@@ -14,6 +14,12 @@ const cache = new Map<Lang, string[]>();
 export async function srdPages(l: Lang): Promise<string[]> {
   if (!cache.has(l)) cache.set(l, (await pdfPages(SRD_PDF(l))).map((t) => (l === "en" ? fixEnGlyphs(t) : t).replace(/System Reference Document 5\.2\.1 \d+ ?/g, "")));
   return cache.get(l)!;
+}
+// Come srdPages, ma con le colonne lette in ordine (per le pagine a due colonne, come gli incantesimi)
+const cacheCols = new Map<Lang, string[]>();
+export async function srdPagesColumns(l: Lang): Promise<string[]> {
+  if (!cacheCols.has(l)) cacheCols.set(l, (await pdfPagesColumns(SRD_PDF(l))).map((t) => (l === "en" ? fixEnGlyphs(t) : t).replace(/System Reference Document 5\.2\.1 \d+ ?/g, "")));
+  return cacheCols.get(l)!;
 }
 export const pageText = async (l: Lang, from: number, to = from) => (await srdPages(l)).slice(from - 1, to).join("\n");
 
