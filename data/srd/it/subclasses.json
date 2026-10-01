@@ -43,6 +43,157 @@
    "origin": "srd"
   },
   {
+   "id": "lore",
+   "classId": "bard",
+   "name": "Collegio della Sapienza",
+   "description": "Raccoglie conoscenze e segreti magici da ogni fonte: competenze extra, parole taglienti e scoperte magiche.",
+   "features": [
+    {
+     "level": 3,
+     "id": "bonus_proficiencies",
+     "name": "Competenze bonus",
+     "description": "Competenza in tre abilità a tua scelta.",
+     "choices": [
+      {
+       "id": "lore_bonus_skills",
+       "label": "Abilità",
+       "count": 3,
+       "source": "skills"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 3,
+     "id": "cutting_words",
+     "name": "Parole taglienti",
+     "description": "Con la reazione, quando una creatura entro 18 m fa un tiro per i danni o supera una prova di caratteristica o un tiro per colpire, spendi un uso di Ispirazione bardica e sottrai il tiro del dado al suo risultato.",
+     "origin": "srd"
+    },
+    {
+     "level": 6,
+     "id": "magical_discoveries",
+     "name": "Scoperte magiche",
+     "description": "Impari due incantesimi (trucchetti o di un livello per cui hai slot) dalle liste di chierico, druido e mago: sono sempre preparati e puoi sostituirne uno a ogni livello da bardo.",
+     "origin": "srd"
+    },
+    {
+     "level": 14,
+     "id": "peerless_skill",
+     "name": "Abilità impareggiabile",
+     "description": "Quando fallisci una prova di caratteristica o un tiro per colpire puoi spendere un uso di Ispirazione bardica e sommare il dado al d20; se fallisce ancora, l'uso non viene speso.",
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "life_domain",
+   "classId": "cleric",
+   "name": "Dominio della Vita",
+   "description": "Energia positiva e guarigione: incantesimi sempre preparati, cure potenziate e Preservare vita.",
+   "features": [
+    {
+     "level": 3,
+     "id": "disciple_of_life",
+     "name": "Discepolo della vita",
+     "description": "Quando un tuo incantesimo con slot ripristina PF, la creatura recupera 2 + il livello dello slot PF aggiuntivi.",
+     "origin": "srd"
+    },
+    {
+     "level": 3,
+     "id": "life_domain_spells",
+     "name": "Incantesimi del Dominio della Vita",
+     "description": "Incantesimi sempre preparati: 3° Aiuto, Benedizione, Cura ferite, Ristorare inferiore; 5° Parola guaritrice di massa, Rinascita; 7° Aura di vita, Interdizione alla morte; 9° Ristorare superiore, Cura ferite di massa.",
+     "effects": [
+      {
+       "op": "grantSpell",
+       "spell": "aid",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:cleric>=3"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "bless",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:cleric>=3"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "cure_wounds",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:cleric>=3"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "lesser_restoration",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:cleric>=3"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "mass_healing_word",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:cleric>=5"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "revivify",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:cleric>=5"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "aura_of_life",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:cleric>=7"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "death_ward",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:cleric>=7"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "greater_restoration",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:cleric>=9"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "mass_cure_wounds",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:cleric>=9"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 3,
+     "id": "preserve_life",
+     "name": "Preservare vita",
+     "description": "Azione di Magia, spendendo un uso di Incanalare divinità: ripristini PF pari a 5 × livello da chierico, divisi tra creature sanguinanti entro 9 m (nessuna oltre metà dei PF massimi).",
+     "origin": "srd"
+    },
+    {
+     "level": 6,
+     "id": "blessed_healer",
+     "name": "Guaritore benedetto",
+     "description": "Quando curi altri con un incantesimo con slot, recuperi anche tu 2 + il livello dello slot PF.",
+     "origin": "srd"
+    },
+    {
+     "level": 17,
+     "id": "supreme_healing",
+     "name": "Guarigione suprema",
+     "description": "Quando tiri dadi per ripristinare PF con un incantesimo o con Incanalare divinità, usi il massimo di ogni dado.",
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  },
+  {
    "id": "champion",
    "classId": "fighter",
    "name": "Campione",
@@ -149,6 +300,194 @@
      "id": "quivering_palm",
      "name": "Palmo tremante",
      "description": "Se colpisci con un colpo senz'armi puoi spendere 4 punti concentrazione per innescare vibrazioni (durano giorni pari al tuo livello da monaco). Con un'azione (o rinunciando a un attacco) le fai cessare: tiro salvezza su Costituzione, 10d12 danni da forza se fallito, metà se superato. Una creatura alla volta.",
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "devotion",
+   "classId": "paladin",
+   "name": "Giuramento di devozione",
+   "description": "Ideali di giustizia e ordine: arma consacrata, aure di devozione e Nube sacra.",
+   "features": [
+    {
+     "level": 3,
+     "id": "oath_of_devotion_spells",
+     "name": "Incantesimi del Giuramento di devozione",
+     "description": "Incantesimi sempre preparati: 3° Protezione dal bene e dal male, Scudo della fede; 5° Aiuto, Zona di verità; 9° Faro di speranza, Dissolvi magie; 13° Libertà di movimento, Guardiano della fede; 17° Comunione, Colpo infuocato.",
+     "effects": [
+      {
+       "op": "grantSpell",
+       "spell": "protection_from_evil_and_good",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:paladin>=3"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "shield_of_faith",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:paladin>=3"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "aid",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:paladin>=5"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "zone_of_truth",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:paladin>=5"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "beacon_of_hope",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:paladin>=9"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "dispel_magic",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:paladin>=9"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "freedom_of_movement",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:paladin>=13"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "guardian_of_faith",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:paladin>=13"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "commune",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:paladin>=17"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "flame_strike",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:paladin>=17"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 3,
+     "id": "sacred_weapon",
+     "name": "Arma consacrata",
+     "description": "Con l'azione Attacco, spendendo un uso di Incanalare divinità, infondi un'arma da mischia per 10 minuti: aggiungi Carisma (minimo +1) ai tiri per colpire, puoi infliggere danni radiosi, l'arma emette luce (6 m intensa + 6 m fioca).",
+     "origin": "srd"
+    },
+    {
+     "level": 7,
+     "id": "aura_of_devotion",
+     "name": "Aura di devozione",
+     "description": "Tu e i tuoi alleati non potete essere affascinati nell'Aura di protezione; un alleato affascinato che vi entra non subisce l'effetto finché resta dentro.",
+     "origin": "srd"
+    },
+    {
+     "level": 15,
+     "id": "smite_of_protection",
+     "name": "Punizione protettiva",
+     "description": "Quando usi Punizione divina, tu e i tuoi alleati ottenete mezza copertura nell'Aura di protezione fino all'inizio del tuo prossimo turno.",
+     "origin": "srd"
+    },
+    {
+     "level": 20,
+     "id": "holy_nimbus",
+     "name": "Nube sacra",
+     "description": "Azione bonus: per 10 minuti l'aura infligge ai nemici che iniziano il turno dentro danni radiosi pari a Carisma + competenza, brilla di luce solare e ti dà Vantaggio ai tiri salvezza contro immondi e non morti. Una volta per riposo lungo (o spendendo uno slot di 5° livello).",
+     "usage": {
+      "uses": 1,
+      "recharge": "long_rest"
+     },
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "hunter",
+   "classId": "ranger",
+   "name": "Cacciatore",
+   "description": "Protegge la natura e le persone: sapienza e preda del cacciatore, tattiche difensive.",
+   "features": [
+    {
+     "level": 3,
+     "id": "hunters_lore",
+     "name": "Sapienza del cacciatore",
+     "description": "Su una creatura con il tuo Marchio del cacciatore sai se ha immunità, resistenze o vulnerabilità, e quali.",
+     "origin": "srd"
+    },
+    {
+     "level": 3,
+     "id": "hunters_prey",
+     "name": "Preda del cacciatore",
+     "description": "Scegli: Devastatore dell'orda (una volta per turno, con un attacco con arma ne fai un altro con la stessa arma contro una creatura diversa entro 1,5 m dal bersaglio) o Sterminatore di colossi (+1d8 danni a una creatura ferita, una volta per turno). Puoi cambiare scelta a ogni riposo breve o lungo.",
+     "choices": [
+      {
+       "id": "hunter_prey",
+       "label": "Preda del cacciatore",
+       "count": 1,
+       "options": [
+        {
+         "id": "colossus_slayer",
+         "name": "Sterminatore di colossi"
+        },
+        {
+         "id": "horde_breaker",
+         "name": "Devastatore dell'orda"
+        }
+       ]
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 7,
+     "id": "defensive_tactics",
+     "name": "Tattiche difensive",
+     "description": "Scegli: Difesa dal multiattacco (dopo che una creatura ti colpisce, gli altri suoi attacchi contro di te nel turno hanno Svantaggio) o Sfuggire all'orda (gli attacchi di opportunità contro di te hanno Svantaggio). Puoi cambiare a ogni riposo.",
+     "choices": [
+      {
+       "id": "hunter_defensive_tactics",
+       "label": "Tattiche difensive",
+       "count": 1,
+       "options": [
+        {
+         "id": "multiattack_defense",
+         "name": "Difesa dal multiattacco"
+        },
+        {
+         "id": "escape_the_horde",
+         "name": "Sfuggire all'orda"
+        }
+       ]
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 11,
+     "id": "superior_hunters_prey",
+     "name": "Preda del cacciatore superiore",
+     "description": "Una volta per turno, quando infliggi danni a una creatura con il Marchio del cacciatore, puoi infliggere i danni extra dell'incantesimo anche a un'altra creatura visibile entro 9 m dalla prima.",
+     "origin": "srd"
+    },
+    {
+     "level": 15,
+     "id": "superior_hunters_defense",
+     "name": "Difesa del cacciatore superiore",
+     "description": "Quando subisci danni puoi usare la reazione per ottenere resistenza a quel danno e ad altri dello stesso tipo fino alla fine del turno.",
      "origin": "srd"
     }
    ],

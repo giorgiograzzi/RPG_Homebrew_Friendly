@@ -80,7 +80,7 @@ describe("homebrew: validazione dei nuovi tipi", () => {
   const cls = JSON.parse(pack("esempio-classe")).classes[0];
   it("una classe incantatrice senza slot, caratteristica o colonna preparati viene spiegata", () => {
     const r = validateEntry("classes", { ...cls, spellSlots: undefined, spellAbility: undefined, table: {} }, rs);
-    expect(!r.ok && r.errors.join(" ")).toMatch(/caratteristica da incantatore[\s\S]*slot[\s\S]*preparati/);
+    expect(!r.ok && r.errors.join(" ")).toMatch(/caratteristica da incantatore[\s\S]*slot[\s\S]*prepared/);
   });
   it("un background deve avere un talento e uno strumento esistenti", () => {
     const bg = JSON.parse(pack("esempio-background")).backgrounds[0];
@@ -146,7 +146,7 @@ describe("homebrew: copia di una voce ufficiale", () => {
   const rs = base();
   it("una classe copiata ha id nuovi, scelte col nuovo prefisso e la stessa lista di incantesimi", () => {
     const off = { id: "wizard", name: t("Mago"), hitDie: 6, primaryAbility: ["int"], saves: ["int", "wis"], skillChoices: { count: 2, from: "any" }, armorTraining: [], weaponProficiency: [], caster: "full", spellAbility: "int",
-      spellSlots: Array(20).fill([2]), table: { preparati: Array(20).fill(4) }, equipment: {}, features: [], choices: [{ id: "wizard_skills", label: t("Abilità"), count: 2, source: "skills" }, { id: "wizard_spellbook", label: t("Libro"), count: 1, source: "spells:wizard" }] };
+      spellSlots: Array(20).fill([2]), table: { prepared: Array(20).fill(4) }, equipment: {}, features: [], choices: [{ id: "wizard_skills", label: t("Abilità"), count: 2, source: "skills" }, { id: "wizard_spellbook", label: t("Libro"), count: 1, source: "spells:wizard" }] };
     const e = copyOfficial("classes", off, rs, []);
     const d = e.data as Record<string, any>;
     expect(d.id).toBe("hb_mago_copia");

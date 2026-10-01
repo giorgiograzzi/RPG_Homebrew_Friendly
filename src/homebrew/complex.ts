@@ -183,6 +183,8 @@ export function classFromData(d: Record<string, any>): ClassDraft {
 export const isCaster = (c: string) => c !== "none";
 // Colonne che una classe incantatrice deve avere (da lì arrivano il numero di trucchetti e di incantesimi preparati)
 export const CASTER_COLUMNS = ["trucchetti", "preparati"];
+// Le colonne scritte in italiano nell'editor hanno un id inglese nei dati (come le classi SRD)
+const COLUMN_ID: Record<string, string> = { trucchetti: "cantrips", preparati: "prepared" };
 
 // Elenco delle tabelle di slot su cui modellare la classe: classi (e sottoclassi) del ruleset con slot o slot del patto
 export function slotSources(rs: Ruleset, caster: string): { id: string; label: string }[] {
@@ -196,7 +198,7 @@ export function classToData(x: ClassDraft, id: string, rs: Ruleset, previous?: R
   const cols: Record<string, (number | string)[]> = {};
   for (const c of x.columns) {
     if (!str(c.name)) continue;
-    cols[slug(c.name, "colonna")] = Array.from({ length: 20 }, (_, i) => { const v = str(c.values[i]); return v === "" ? 0 : /^-?\d+(\.\d+)?$/.test(v) ? Number(v) : v; });
+    cols[COLUMN_ID[slug(c.name, "colonna")] ?? slug(c.name, "colonna")] = Array.from({ length: 20 }, (_, i) => { const v = str(c.values[i]); return v === "" ? 0 : /^-?\d+(\.\d+)?$/.test(v) ? Number(v) : v; });
   }
   const count = Math.max(1, Math.round(num(x.skillCount) || 2));
   const generated: unknown[] = [x.skillFrom.length === 0
@@ -205,8 +207,8 @@ export function classToData(x: ClassDraft, id: string, rs: Ruleset, previous?: R
   let slots: Record<string, unknown> = {};
   const list = x.spellList || id; // lista di incantesimi: una propria (id della classe) oppure quella di una classe ufficiale
   if (isCaster(x.caster)) {
-    if (cols["trucchetti"]) generated.push({ id: `${id}_cantrips`, label: { it: "Trucchetti" }, count: 1, countFrom: "trucchetti", source: `cantrips:${list}` });
-    generated.push({ id: `${id}_prepared`, label: { it: "Incantesimi preparati" }, count: 1, countFrom: "preparati", source: `spells:${list}` });
+    if (cols["cantrips"]) generated.push({ id: `${id}_cantrips`, label: { it: "Trucchetti" }, count: 1, countFrom: "cantrips", source: `cantrips:${list}` });
+    generated.push({ id: `${id}_prepared`, label: { it: "Incantesimi preparati" }, count: 1, countFrom: "prepared", source: `spells:${list}` });
     if (x.slotsFrom === "keep" && previous) slots = { ...(previous.spellSlots ? { spellSlots: previous.spellSlots } : {}), ...(previous.pactSlots ? { pactSlots: previous.pactSlots } : {}) };
     else if (x.slotsFrom.startsWith("class:")) { const c = rs.classes.get(x.slotsFrom.slice(6)); slots = x.caster === "pact" ? { pactSlots: c?.pactSlots } : { spellSlots: c?.spellSlots }; }
     else if (x.slotsFrom.startsWith("sub:")) slots = { spellSlots: rs.subclasses.get(x.slotsFrom.slice(4))?.spellSlots };

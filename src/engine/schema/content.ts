@@ -101,7 +101,7 @@ export const classSchema = z.object({
   }).optional(),
   equipment: z.partialRecord(z.enum(["A", "B", "C"]), equipmentSet),
   features: z.array(featureSchema),
-  // Colonne della tabella 1-20 (ire, dadi, trucchetti, preparati...); 20 valori ciascuna
+  // Colonne della tabella 1-20 (rages, dadi, cantrips, prepared...); 20 valori ciascuna
   table: z.record(z.string(), z.array(z.union([z.number(), z.string()])).length(20)).default({}),
   subclassLevel: z.number().int().default(3),
 });

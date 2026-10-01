@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { brokenReferences, idsByKind, loadSrd, SRD_LANGS } from "./srdIntegrity";
+import { brokenReferences, grantedSpells, idsByKind, loadSrd, SRD_LANGS } from "./srdIntegrity";
 
 // Conteggi presi dalle tabelle dell'SRD 5.2.1 (armi: 10 semplici da mischia + 4 semplici a distanza + 18 da guerra da mischia + 6 da guerra a distanza)
 const COUNTS: Record<string, number> = {
   skills: 18, languages: 19, sizes: 6, damageTypes: 13, weaponProperties: 10, masteries: 8, coins: 5,
-  weapons: 38, armors: 13, tools: 37, items: 94, backgrounds: 4, feats: 17, species: 9, classes: 4, subclasses: 4,
+  weapons: 38, armors: 13, tools: 37, items: 94, backgrounds: 4, feats: 17, species: 9, classes: 8, subclasses: 8,
 };
 
 describe.each(SRD_LANGS)("dati SRD (%s)", (lang) => {
@@ -211,10 +211,67 @@ describe("classi (blocco 1: Barbaro, Guerriero, Monaco, Ladro): valori controlla
     expect(en.subclasses.get("open_hand")!.name.it).toBe("Warrior of the Open Hand");
   });
   it("stessa struttura in IT e EN (nomi e testi a parte)", () => {
-    const shape = (rs: typeof en) => [...rs.classes.values()].map((c) => ({ id: c.id, hitDie: c.hitDie, table: c.table, equipment: c.equipment, features: c.features.map((x) => [x.id, x.level, x.usage, x.effects, (x.choices ?? []).map((k) => [k.id, k.count, k.countFrom, k.source])]) }));
+    const shape = (rs: typeof en) => [...rs.classes.values()].map((c) => ({ id: c.id, hitDie: c.hitDie, table: c.table, caster: c.caster, spellSlots: c.spellSlots, choices: c.choices.map((k) => [k.id, k.count, k.countFrom, k.source]), equipment: c.equipment, features: c.features.map((x) => [x.id, x.level, x.usage, x.effects, (x.choices ?? []).map((k) => [k.id, k.count, k.countFrom, k.source])]) }));
     expect(shape(rsIt)).toEqual(shape(en));
     expect(rsIt.classes.get("barbarian")!.name.it).toBe("Barbaro");
     expect(rsIt.classes.get("rogue")!.features.find((x) => x.id === "sneak_attack")!.name.it).toBe("Attacco furtivo");
     expect(rsIt.classes.get("barbarian")!.features.find((x) => x.id === "primal_knowledge")!.choices[0]!.options![1]!.name.it).toBe("Atletica");
   });
 });
+
+describe("classi (blocco 2: Bardo, Chierico, Paladino, Ranger): valori controllati sul PDF (SRD 5.2.1)", () => {
+  const [rsIt, en] = [loadSrd("it"), loadSrd("en")];
+  const cls = (id: string) => en.classes.get(id)!;
+  it("tratti fondamentali e incantesimi", () => {
+    expect(["bard", "cleric", "paladin", "ranger"].map((id) => [id, cls(id).hitDie, cls(id).primaryAbility.join("/"), cls(id).saves.join("/"), cls(id).skillChoices.count, cls(id).caster, cls(id).spellAbility, cls(id).spellList])).toEqual([
+      ["bard", 8, "cha", "dex/cha", 3, "full", "cha", "bard"], ["cleric", 8, "wis", "wis/cha", 2, "full", "wis", "cleric"],
+      ["paladin", 10, "str/cha", "wis/cha", 2, "half", "cha", "paladin"], ["ranger", 10, "dex/wis", "str/dex", 3, "half", "wis", "ranger"]]);
+    expect(cls("bard").skillChoices.from).toBe("any");
+    expect(cls("bard").choices.find((c) => c.id === "bard_tools")).toMatchObject({ count: 3, source: "tools:musical" });
+    expect(cls("cleric").equipment.A!.items).toContainEqual({ item: "$holy_symbol", qty: 1 });
+  });
+  it("tabelle: dado bardico, trucchetti, preparati, incanalare divinità, nemico prescelto", () => {
+    expect(cls("bard").table.bardic_die![0]).toBe("d6"); expect(cls("bard").table.bardic_die![4]).toBe("d8"); expect(cls("bard").table.bardic_die![9]).toBe("d10"); expect(cls("bard").table.bardic_die![14]).toBe("d12");
+    expect(cls("bard").table.cantrips).toEqual([2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4]);
+    expect(cls("bard").table.prepared).toEqual([4, 5, 6, 7, 9, 10, 11, 12, 14, 15, 16, 16, 17, 17, 18, 18, 19, 20, 21, 22]);
+    expect(cls("cleric").table.cantrips).toEqual([3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5]);
+    expect(cls("cleric").table.channel_divinity).toEqual([0, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4]);
+    expect(cls("paladin").table.channel_divinity).toEqual([0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]);
+    expect(cls("paladin").table.prepared).toEqual([2, 3, 4, 5, 6, 6, 7, 7, 9, 9, 10, 10, 11, 11, 12, 12, 14, 14, 15, 15]);
+    expect(cls("ranger").table.favored_enemy).toEqual([2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6]);
+    expect(cls("ranger").table.prepared).toEqual([2, 3, 4, 5, 6, 6, 7, 7, 9, 9, 10, 10, 11, 11, 12, 12, 14, 14, 15, 15]);
+  });
+  it("slot incantesimo per livello", () => {
+    expect(cls("bard").spellSlots![0]).toEqual([2]); expect(cls("bard").spellSlots![2]).toEqual([4, 2]); expect(cls("bard").spellSlots![8]).toEqual([4, 3, 3, 3, 1]); expect(cls("bard").spellSlots![19]).toEqual([4, 3, 3, 3, 3, 2, 2, 1, 1]);
+    expect(cls("cleric").spellSlots).toEqual(cls("bard").spellSlots);
+    expect(cls("paladin").spellSlots![0]).toEqual([2]); expect(cls("paladin").spellSlots![4]).toEqual([4, 2]); expect(cls("paladin").spellSlots![16]).toEqual([4, 3, 3, 3, 1]); expect(cls("paladin").spellSlots![19]).toEqual([4, 3, 3, 3, 2]);
+    expect(cls("ranger").spellSlots).toEqual(cls("paladin").spellSlots);
+    for (const id of ["bard", "cleric", "paladin", "ranger"]) expect(Object.keys(cls(id).table).some((k) => k.startsWith("slot_"))).toBe(false);
+  });
+  it("scelte di incantesimi e privilegi", () => {
+    expect(cls("bard").choices.filter((c) => c.countFrom).map((c) => [c.id, c.countFrom, c.source])).toEqual([["bard_cantrips", "cantrips", "cantrips:bard"], ["bard_prepared", "prepared", "spells:bard"]]);
+    expect(cls("paladin").choices.filter((c) => c.countFrom).map((c) => c.id)).toEqual(["paladin_prepared"]);
+    expect(cls("paladin").features.find((x) => x.id === "lay_on_hands")!.usage).toEqual({ uses: "5 * classLevel:paladin", recharge: "long_rest" });
+    expect(cls("paladin").features.find((x) => x.id === "fighting_style")!.choices.map((c) => c.group)).toEqual(["paladin_style", "paladin_style"]);
+    expect(cls("cleric").features.find((x) => x.id === "divine_order")!.choices[0]!.options!.map((o) => o.id)).toEqual(["protector", "thaumaturge"]);
+    expect(cls("ranger").features.find((x) => x.id === "feral_senses")!.effects).toContainEqual({ op: "sense", kind: "blindsight", range: 30, additive: false });
+    expect(["jack_of_all_trades", "extra_attack"].map((id) => [id, [cls("bard"), cls("paladin")].some((c) => c.features.some((x) => x.id === id))])).toEqual([["jack_of_all_trades", true], ["extra_attack", true]]);
+    expect(levelsOf(cls("bard"), "expertise")).toEqual([2, 9]);
+    expect(levelsOf(cls("ranger"), "expertise")).toEqual([9]);
+  });
+  it("sottoclassi e incantesimi concessi", () => {
+    const sub = (id: string) => [...en.subclasses.values()].find((s) => s.classId === id)!;
+    expect(["bard", "cleric", "paladin", "ranger"].map((id) => [sub(id).id, sub(id).features.map((x) => x.level).join(",")])).toEqual([
+      ["lore", "3,3,6,14"], ["life_domain", "3,3,3,6,17"], ["devotion", "3,3,7,15,20"], ["hunter", "3,3,7,11,15"]]);
+    const life = sub("cleric").features.find((x) => x.id === "life_domain_spells")!;
+    expect(life.effects.map((e) => `${(e as { spell: string }).spell}@${e.when}`)).toEqual([
+      "aid@classLevel:cleric>=3", "bless@classLevel:cleric>=3", "cure_wounds@classLevel:cleric>=3", "lesser_restoration@classLevel:cleric>=3",
+      "mass_healing_word@classLevel:cleric>=5", "revivify@classLevel:cleric>=5", "aura_of_life@classLevel:cleric>=7", "death_ward@classLevel:cleric>=7",
+      "greater_restoration@classLevel:cleric>=9", "mass_cure_wounds@classLevel:cleric>=9"]);
+    const all = new Set([...en.classes.values(), ...en.subclasses.values()].flatMap(grantedSpells));
+    for (const s of ["divine_smite", "find_steed", "hunters_mark", "power_word_heal", "power_word_kill", "commune", "flame_strike", "shield_of_faith"]) expect(all.has(s), s).toBe(true);
+    expect(rsIt.subclasses.get("life_domain")!.name.it).toBe("Dominio della Vita");
+    expect(rsIt.classes.get("ranger")!.features.find((x) => x.id === "favored_enemy")!.name.it).toBe("Nemico prescelto");
+  });
+});
+const levelsOf = (c: { features: { id: string; level: number }[] }, id: string) => c.features.filter((x) => x.id.startsWith(id)).map((x) => x.level);

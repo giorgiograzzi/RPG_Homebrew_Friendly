@@ -11,7 +11,7 @@ export interface FeatureDef {
   effects?: Json[]; choices?: Json[]; usage?: Json; activation?: Json;
   build?: (t: Table) => { effects?: Json[]; choices?: Json[]; usage?: Json; activation?: Json }; // parti che dipendono dalla tabella letta dal PDF
 }
-export interface SubclassDef { id: string; name: Bi; heading: Bi; description: Bi; features: FeatureDef[] }
+export interface SubclassDef { id: string; name: Bi; heading: Bi; description: Bi; features: FeatureDef[]; checkPhrases?: { it: string[]; en: string[] } }
 export interface ItemDef { item: string; qty?: number; it: string; en: string } // it/en: frammento di testo che deve comparire nel PDF
 export interface EquipmentDef { gp: number; items: ItemDef[] }
 export interface ColumnDef { id: string; name: Bi } // colonna della tabella dopo "Privilegi di classe", nell'ordine del PDF
@@ -53,3 +53,7 @@ export const steps = (col: string, make: (delta: number, level: number) => Json)
 
 // Opzioni di competenza in abilità: il nome viene preso dai dati delle abilità (segnaposto "$skill:<id>" risolto dall'estrattore)
 export const skillOpts = (ids: string[]): Json[] => ids.map((id) => ({ id, name: { it: `$skill:${id}`, en: `$skill:${id}` }, effects: [{ op: "grantSkillProficiency", skills: [id] }] }));
+
+// Colonne degli slot incantesimo (1°..n°) della tabella: diventano `spellSlots` e non restano nella tabella
+export const slotCols = (n: number): ColumnDef[] => Array.from({ length: n }, (_, i) => ({ id: `slot_${i + 1}`, name: B(`Slot di ${i + 1}° livello`, `Level ${i + 1} spell slots`) }));
+export const SLOT_COL = /^slot_(\d)$/;

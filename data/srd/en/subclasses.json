@@ -43,6 +43,157 @@
    "origin": "srd"
   },
   {
+   "id": "lore",
+   "classId": "bard",
+   "name": "College of Lore",
+   "description": "Gathers lore and magical secrets from every source: extra proficiencies, cutting words, and magical discoveries.",
+   "features": [
+    {
+     "level": 3,
+     "id": "bonus_proficiencies",
+     "name": "Bonus Proficiencies",
+     "description": "You gain proficiency in three skills of your choice.",
+     "choices": [
+      {
+       "id": "lore_bonus_skills",
+       "label": "Skills",
+       "count": 3,
+       "source": "skills"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 3,
+     "id": "cutting_words",
+     "name": "Cutting Words",
+     "description": "As a Reaction, when a creature within 60 feet makes a damage roll or succeeds on an ability check or attack roll, spend a Bardic Inspiration use and subtract the die roll from its result.",
+     "origin": "srd"
+    },
+    {
+     "level": 6,
+     "id": "magical_discoveries",
+     "name": "Magical Discoveries",
+     "description": "You learn two spells (cantrips or of a level you have slots for) from the Cleric, Druid, and Wizard lists: they're always prepared and you can swap one whenever you gain a Bard level.",
+     "origin": "srd"
+    },
+    {
+     "level": 14,
+     "id": "peerless_skill",
+     "name": "Peerless Skill",
+     "description": "When you fail an ability check or attack roll you can spend a Bardic Inspiration use and add the die to the d20; if you still fail, the use isn't expended.",
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "life_domain",
+   "classId": "cleric",
+   "name": "Life Domain",
+   "description": "Positive energy and healing: always-prepared spells, boosted cures, and Preserve Life.",
+   "features": [
+    {
+     "level": 3,
+     "id": "disciple_of_life",
+     "name": "Disciple of Life",
+     "description": "When a spell you cast with a slot restores Hit Points, the creature regains additional Hit Points equal to 2 plus the slot's level.",
+     "origin": "srd"
+    },
+    {
+     "level": 3,
+     "id": "life_domain_spells",
+     "name": "Life Domain Spells",
+     "description": "Always-prepared spells: level 3 Aid, Bless, Cure Wounds, Lesser Restoration; 5 Mass Healing Word, Revivify; 7 Aura of Life, Death Ward; 9 Greater Restoration, Mass Cure Wounds.",
+     "effects": [
+      {
+       "op": "grantSpell",
+       "spell": "aid",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:cleric>=3"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "bless",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:cleric>=3"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "cure_wounds",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:cleric>=3"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "lesser_restoration",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:cleric>=3"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "mass_healing_word",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:cleric>=5"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "revivify",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:cleric>=5"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "aura_of_life",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:cleric>=7"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "death_ward",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:cleric>=7"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "greater_restoration",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:cleric>=9"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "mass_cure_wounds",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:cleric>=9"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 3,
+     "id": "preserve_life",
+     "name": "Preserve Life",
+     "description": "As a Magic action, expending a Channel Divinity use: restore Hit Points equal to five times your Cleric level, divided among Bloodied creatures within 30 feet (none above half its Hit Point maximum).",
+     "origin": "srd"
+    },
+    {
+     "level": 6,
+     "id": "blessed_healer",
+     "name": "Blessed Healer",
+     "description": "When you heal others with a spell using a slot, you also regain 2 plus the slot's level Hit Points.",
+     "origin": "srd"
+    },
+    {
+     "level": 17,
+     "id": "supreme_healing",
+     "name": "Supreme Healing",
+     "description": "When you would roll dice to restore Hit Points with a spell or Channel Divinity, use the highest number possible for each die.",
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  },
+  {
    "id": "champion",
    "classId": "fighter",
    "name": "Champion",
@@ -149,6 +300,194 @@
      "id": "quivering_palm",
      "name": "Quivering Palm",
      "description": "When you hit with an Unarmed Strike you can spend 4 Focus Points to start imperceptible vibrations (lasting days equal to your Monk level). With an action (or by forgoing an attack) you end them: Constitution save, 10d12 Force damage on a failure, half on a success. One creature at a time.",
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "devotion",
+   "classId": "paladin",
+   "name": "Oath of Devotion",
+   "description": "Ideals of justice and order: Sacred Weapon, devotion auras, and a holy nimbus.",
+   "features": [
+    {
+     "level": 3,
+     "id": "oath_of_devotion_spells",
+     "name": "Oath of Devotion Spells",
+     "description": "Always-prepared spells: level 3 Protection from Evil and Good, Shield of Faith; 5 Aid, Zone of Truth; 9 Beacon of Hope, Dispel Magic; 13 Freedom of Movement, Guardian of Faith; 17 Commune, Flame Strike.",
+     "effects": [
+      {
+       "op": "grantSpell",
+       "spell": "protection_from_evil_and_good",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:paladin>=3"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "shield_of_faith",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:paladin>=3"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "aid",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:paladin>=5"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "zone_of_truth",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:paladin>=5"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "beacon_of_hope",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:paladin>=9"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "dispel_magic",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:paladin>=9"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "freedom_of_movement",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:paladin>=13"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "guardian_of_faith",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:paladin>=13"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "commune",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:paladin>=17"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "flame_strike",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:paladin>=17"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 3,
+     "id": "sacred_weapon",
+     "name": "Sacred Weapon",
+     "description": "When you take the Attack action, expending a Channel Divinity use, you imbue a melee weapon for 10 minutes: add your Charisma modifier (minimum +1) to attack rolls, you can deal Radiant damage, and it sheds Bright Light (20 feet) and Dim Light (20 feet more).",
+     "origin": "srd"
+    },
+    {
+     "level": 7,
+     "id": "aura_of_devotion",
+     "name": "Aura of Devotion",
+     "description": "You and your allies can't be Charmed while in your Aura of Protection; a Charmed ally that enters it has the condition suspended while inside.",
+     "origin": "srd"
+    },
+    {
+     "level": 15,
+     "id": "smite_of_protection",
+     "name": "Smite of Protection",
+     "description": "Whenever you cast Divine Smite, you and your allies gain Half Cover while in your Aura of Protection until the start of your next turn.",
+     "origin": "srd"
+    },
+    {
+     "level": 20,
+     "id": "holy_nimbus",
+     "name": "Holy Nimbus",
+     "description": "Bonus Action: for 10 minutes the aura deals Radiant damage (Charisma + Proficiency) to enemies that start their turn in it, shines with sunlight, and gives you Advantage on saves against Fiends and Undead. Once per Long Rest (or by expending a level 5 slot).",
+     "usage": {
+      "uses": 1,
+      "recharge": "long_rest"
+     },
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "hunter",
+   "classId": "ranger",
+   "name": "Hunter",
+   "description": "Protects nature and people: Hunter's Lore and Prey, and defensive tactics.",
+   "features": [
+    {
+     "level": 3,
+     "id": "hunters_lore",
+     "name": "Hunter's Lore",
+     "description": "While a creature is marked by your Hunter's Mark, you know whether it has any Immunities, Resistances, or Vulnerabilities, and what they are.",
+     "origin": "srd"
+    },
+    {
+     "level": 3,
+     "id": "hunters_prey",
+     "name": "Hunter's Prey",
+     "description": "Choose: Horde Breaker (once per turn, when you attack with a weapon you can make another attack with the same weapon against a different creature within 5 feet of the original target) or Colossus Slayer (+1d8 damage to a creature that is missing Hit Points, once per turn). You can change the choice after a Short or Long Rest.",
+     "choices": [
+      {
+       "id": "hunter_prey",
+       "label": "Hunter's Prey",
+       "count": 1,
+       "options": [
+        {
+         "id": "colossus_slayer",
+         "name": "Colossus Slayer"
+        },
+        {
+         "id": "horde_breaker",
+         "name": "Horde Breaker"
+        }
+       ]
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 7,
+     "id": "defensive_tactics",
+     "name": "Defensive Tactics",
+     "description": "Choose: Multiattack Defense (after a creature hits you, its other attack rolls against you this turn have Disadvantage) or Escape the Horde (Opportunity Attacks against you have Disadvantage). You can change after a Short or Long Rest.",
+     "choices": [
+      {
+       "id": "hunter_defensive_tactics",
+       "label": "Defensive Tactics",
+       "count": 1,
+       "options": [
+        {
+         "id": "multiattack_defense",
+         "name": "Multiattack Defense"
+        },
+        {
+         "id": "escape_the_horde",
+         "name": "Escape the Horde"
+        }
+       ]
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 11,
+     "id": "superior_hunters_prey",
+     "name": "Superior Hunter's Prey",
+     "description": "Once per turn when you deal damage to a creature marked by Hunter's Mark, you can also deal its extra damage to a different creature you can see within 30 feet of the first.",
+     "origin": "srd"
+    },
+    {
+     "level": 15,
+     "id": "superior_hunters_defense",
+     "name": "Superior Hunter's Defense",
+     "description": "When you take damage you can use your Reaction to gain Resistance to it and other damage of that type until the end of the current turn.",
      "origin": "srd"
     }
    ],
