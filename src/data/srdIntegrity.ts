@@ -27,6 +27,13 @@ export function brokenReferences(rs: Ruleset): string[] {
     need(`weapons/${w.id}`, "items", w.ammunition);
     for (const pr of w.properties) need(`weapons/${w.id}`, "weaponProperties", pr);
   }
+  const gear = (id: string) => rs.items.has(id) || rs.tools.has(id) || rs.weapons.has(id) || rs.armors.has(id);
+  for (const b of rs.backgrounds.values()) {
+    need(`backgrounds/${b.id}`, "feats", b.feat);
+    for (const sk of b.skills) need(`backgrounds/${b.id}`, "skills", sk);
+    if (!rs.tools.has(b.tool) && !["artisan", "gaming", "musical"].includes(b.tool)) p.push(`backgrounds/${b.id} → tools/${b.tool} non esiste`);
+    for (const [opt, set] of Object.entries(b.equipment)) for (const it of set.items) if (!it.item.startsWith("$") && !gear(it.item)) p.push(`backgrounds/${b.id}/${opt} → ${it.item} non esiste`);
+  }
   for (const i of rs.items.values()) for (const c of i.contents ?? []) need(`items/${i.id}`, "items", c.item);
   return p;
 }

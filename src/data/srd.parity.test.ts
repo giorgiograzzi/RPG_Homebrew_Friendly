@@ -4,7 +4,7 @@ import { brokenReferences, idsByKind, loadSrd, SRD_LANGS } from "./srdIntegrity"
 // Conteggi presi dalle tabelle dell'SRD 5.2.1 (armi: 10 semplici da mischia + 4 semplici a distanza + 18 da guerra da mischia + 6 da guerra a distanza)
 const COUNTS: Record<string, number> = {
   skills: 18, languages: 19, sizes: 6, damageTypes: 13, weaponProperties: 10, masteries: 8, coins: 5,
-  weapons: 38, armors: 13, tools: 37, items: 94,
+  weapons: 38, armors: 13, tools: 37, items: 94, backgrounds: 4, feats: 17,
 };
 
 describe.each(SRD_LANGS)("dati SRD (%s)", (lang) => {
@@ -67,5 +67,38 @@ describe("valori controllati sul PDF", () => {
     expect(rs.skills.get("sleight_of_hand")!.extra).toEqual({ ability: "dex" });
     expect(rs.coins.get("ep")!.extra).toMatchObject({ copper: 50 });
     expect(rs.sizes.get("gargantuan")!.extra).toEqual({ spaceFeet: 20 });
+  });
+});
+
+describe("background e talenti: valori controllati sul PDF (SRD 5.2.1)", () => {
+  const [rsIt, en] = [loadSrd("it"), loadSrd("en")];
+  it("background", () => {
+    expect(en.backgrounds.get("acolyte")).toMatchObject({ abilityOptions: ["int", "wis", "cha"], feat: "magic_initiate", featConfig: { list: "cleric" }, skills: ["insight", "religion"], tool: "calligraphers_supplies" });
+    expect(en.backgrounds.get("criminal")).toMatchObject({ abilityOptions: ["dex", "con", "int"], feat: "alert", skills: ["sleight_of_hand", "stealth"], tool: "thieves_tools" });
+    expect(en.backgrounds.get("sage")).toMatchObject({ abilityOptions: ["con", "int", "wis"], feat: "magic_initiate", featConfig: { list: "wizard" }, skills: ["arcana", "history"] });
+    expect(en.backgrounds.get("soldier")).toMatchObject({ abilityOptions: ["str", "dex", "con"], feat: "savage_attacker", skills: ["athletics", "intimidation"], tool: "gaming" });
+    for (const b of en.backgrounds.values()) expect(b.equipment.B).toEqual({ items: [], gp: 50 });
+    expect(en.backgrounds.get("acolyte")!.equipment.A!.gp).toBe(8);
+    expect(en.backgrounds.get("criminal")!.equipment.A).toEqual({ items: [{ item: "dagger", qty: 2 }, { item: "thieves_tools", qty: 1 }, { item: "crowbar", qty: 1 }, { item: "pouch", qty: 2 }, { item: "travelers_clothes", qty: 1 }], gp: 16 });
+    expect(en.backgrounds.get("sage")!.equipment.A!.items).toContainEqual({ item: "parchment", qty: 8 });
+    expect(en.backgrounds.get("soldier")!.equipment.A!.items).toContainEqual({ item: "arrows", qty: 1 }); // 20 frecce = 1 confezione da 20
+  });
+  it("lo stesso equipaggiamento in IT e EN (note a parte)", () => {
+    for (const [id, b] of en.backgrounds) expect(rsIt.backgrounds.get(id)!.equipment.A!.items.map((x) => [x.item, x.qty])).toEqual(b.equipment.A!.items.map((x) => [x.item, x.qty]));
+    expect(rsIt.backgrounds.get("acolyte")!.equipment.A!.items.find((x) => x.item === "book")!.note).toBe("preghiere");
+    expect(en.backgrounds.get("acolyte")!.equipment.A!.items.find((x) => x.item === "book")!.note).toBe("prayers");
+  });
+  it("talenti: categorie e prerequisiti", () => {
+    const cats: Record<string, number> = {};
+    for (const f of en.feats.values()) cats[f.category] = (cats[f.category] ?? 0) + 1;
+    expect(cats).toEqual({ origin: 4, general: 2, fighting_style: 4, epic_boon: 7 });
+    expect(en.feats.get("grappler")).toMatchObject({ prerequisites: ["level>=4", "ability:str>=13 || ability:dex>=13"], abilityIncrease: ["str", "dex"] });
+    expect(en.feats.get("ability_score_improvement")).toMatchObject({ repeatable: true, prerequisites: ["level>=4"] });
+    expect(en.feats.get("boon_of_spell_recall")!.prerequisites).toEqual(["level>=19", "hasFeature:spellcasting"]);
+    expect(en.feats.get("defense")!.prerequisites).toEqual(["hasFeature:fighting_style"]);
+    expect(en.feats.get("magic_initiate")!.repeatable).toBe(true);
+    expect(en.feats.get("skilled")!.repeatable).toBe(true);
+    expect(rsIt.feats.get("grappler")!.name.it).toBe("Lottatore");
+    expect(en.feats.get("archery")!.name.it).toBe("Archery");
   });
 });

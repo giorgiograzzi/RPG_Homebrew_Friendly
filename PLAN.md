@@ -47,7 +47,7 @@ Nasce dall'app privata `giorgiograzzi/Prova_creazione_dnd_character` (non si toc
 ### Step 2 — Estrazione dati SRD (IT + EN)  ☐
 Riscrittura degli estrattori in `scripts/` perché leggano **solo** i due PDF SRD e scrivano JSON tracciati in `data/srd/it/` e `data/srd/en/` (stessi id in entrambe). Un sotto-passo = un commit = un blocco di dati.
 - **2a Fondamenti** ☑: abilità, linguaggi, taglie, tipi di danno, PX/competenza, armi (+ proprietà e maestrie), armature, strumenti, equipaggiamento, monete.
-- **2b Background e talenti**: i background dell'SRD, talenti (origine, generali, stili di combattimento, doni epici se presenti).
+- **2b Background e talenti** ☑: 4 background (Accolito, Criminale, Sapiente, Soldato) e 17 talenti (4 Origini, 2 Generali, 4 Stile di combattimento, 7 Doni epici), `scripts/extract-origins.ts`, verifica incrociata IT/EN.
 - **2c Specie**: le specie dell'SRD con scelte interne (lignaggi ecc.).
 - **2d Classi e sottoclassi**: le 12 classi (tabelle 1-20) e la sottoclasse che l'SRD include per ciascuna.
 - **2e Incantesimi**: tutti quelli dell'SRD (livello, scuola, classi, tempo, gittata, componenti, durata, testo, livelli superiori) + liste per classe + tabelle slot.

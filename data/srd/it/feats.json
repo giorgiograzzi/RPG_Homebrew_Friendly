@@ -1,0 +1,336 @@
+{
+ "kind": "feats",
+ "entries": [
+  {
+   "id": "alert",
+   "name": "Allerta",
+   "category": "origin",
+   "prerequisites": [],
+   "repeatable": false,
+   "effects": [
+    {
+     "op": "initiativeBonus",
+     "value": "pb"
+    }
+   ],
+   "description": "Aggiungi il bonus di competenza ai tiri di iniziativa. Subito dopo aver tirato l'iniziativa puoi scambiare il risultato con quello di un alleato consenziente (non se uno dei due è incapacitato).",
+   "origin": "srd"
+  },
+  {
+   "id": "magic_initiate",
+   "name": "Iniziato alla magia",
+   "category": "origin",
+   "prerequisites": [],
+   "repeatable": true,
+   "choices": [
+    {
+     "id": "magic_initiate_list",
+     "label": "Lista",
+     "count": 1,
+     "options": [
+      {
+       "id": "cleric",
+       "name": "Chierico"
+      },
+      {
+       "id": "druid",
+       "name": "Druido"
+      },
+      {
+       "id": "wizard",
+       "name": "Mago"
+      }
+     ]
+    },
+    {
+     "id": "magic_initiate_ability",
+     "label": "Caratteristica da incantatore",
+     "count": 1,
+     "options": [
+      {
+       "id": "int",
+       "name": "Intelligenza"
+      },
+      {
+       "id": "wis",
+       "name": "Saggezza"
+      },
+      {
+       "id": "cha",
+       "name": "Carisma"
+      }
+     ]
+    },
+    {
+     "id": "magic_initiate_cantrips",
+     "label": "Trucchetti",
+     "count": 2,
+     "source": "cantrips",
+     "abilityFrom": "magic_initiate_ability",
+     "filter": {
+      "level": 0,
+      "classFrom": "magic_initiate_list"
+     }
+    },
+    {
+     "id": "magic_initiate_spell",
+     "label": "Incantesimo di 1° livello",
+     "count": 1,
+     "source": "freespells",
+     "abilityFrom": "magic_initiate_ability",
+     "filter": {
+      "level": 1,
+      "classFrom": "magic_initiate_list"
+     }
+    }
+   ],
+   "description": "Impari due trucchetti e un incantesimo di 1° livello dalla lista di chierico, druido o mago (caratteristica da incantatore: Intelligenza, Saggezza o Carisma, a scelta). L'incantesimo è sempre preparato e lo lanci una volta gratis per riposo lungo, oppure con uno slot. A ogni livello puoi cambiarne uno. Ripetibile, con una lista diversa.",
+   "origin": "srd"
+  },
+  {
+   "id": "savage_attacker",
+   "name": "Aggressore selvaggio",
+   "category": "origin",
+   "prerequisites": [],
+   "repeatable": false,
+   "description": "Una volta per turno, quando colpisci con un'arma, tira due volte i danni dell'arma e usa il risultato che preferisci.",
+   "origin": "srd"
+  },
+  {
+   "id": "skilled",
+   "name": "Abile",
+   "category": "origin",
+   "prerequisites": [],
+   "repeatable": true,
+   "choices": [
+    {
+     "id": "skilled_picks",
+     "label": "3 abilità o strumenti",
+     "count": 3,
+     "source": "skillsTools"
+    }
+   ],
+   "description": "Ottieni competenza in tre abilità o strumenti a scelta. Ripetibile.",
+   "origin": "srd"
+  },
+  {
+   "id": "ability_score_improvement",
+   "name": "Aumento dei punteggi di caratteristica",
+   "category": "general",
+   "prerequisites": [
+    "level>=4"
+   ],
+   "repeatable": true,
+   "description": "Aumenta una caratteristica di 2, oppure due caratteristiche di 1, fino a un massimo di 20. Ripetibile.",
+   "origin": "srd"
+  },
+  {
+   "id": "grappler",
+   "name": "Lottatore",
+   "category": "general",
+   "prerequisites": [
+    "level>=4",
+    "ability:str>=13 || ability:dex>=13"
+   ],
+   "repeatable": false,
+   "abilityIncrease": [
+    "str",
+    "dex"
+   ],
+   "description": "Forza o Destrezza +1 (max 20). Con un colpo senz'armi nell'azione Attacco puoi infliggere danni e afferrare insieme (una volta per turno). Hai Vantaggio ai tiri per colpire contro chi stai afferrando, e spostarlo non costa movimento extra se è di taglia pari o inferiore alla tua.",
+   "origin": "srd"
+  },
+  {
+   "id": "archery",
+   "name": "Tiro",
+   "category": "fighting_style",
+   "prerequisites": [
+    "hasFeature:fighting_style"
+   ],
+   "repeatable": false,
+   "effects": [
+    {
+     "op": "attackBonus",
+     "value": 2,
+     "attackType": "ranged"
+    }
+   ],
+   "description": "+2 ai tiri per colpire con le armi a distanza.",
+   "origin": "srd"
+  },
+  {
+   "id": "defense",
+   "name": "Difesa",
+   "category": "fighting_style",
+   "prerequisites": [
+    "hasFeature:fighting_style"
+   ],
+   "repeatable": false,
+   "effects": [
+    {
+     "op": "acBonus",
+     "value": 1,
+     "when": "wearingArmor:any"
+    }
+   ],
+   "description": "+1 alla Classe Armatura finché indossi un'armatura leggera, media o pesante.",
+   "origin": "srd"
+  },
+  {
+   "id": "great_weapon_fighting",
+   "name": "Combattere con armi possenti",
+   "category": "fighting_style",
+   "prerequisites": [
+    "hasFeature:fighting_style"
+   ],
+   "repeatable": false,
+   "description": "Quando tiri i danni di un attacco da mischia con un'arma impugnata a due mani (proprietà A due mani o Versatile), un 1 o un 2 conta come 3.",
+   "origin": "srd"
+  },
+  {
+   "id": "two_weapon_fighting",
+   "name": "Combattere con due armi",
+   "category": "fighting_style",
+   "prerequisites": [
+    "hasFeature:fighting_style"
+   ],
+   "repeatable": false,
+   "description": "Quando fai l'attacco extra con un'arma Leggera, aggiungi il modificatore di caratteristica ai danni (se non è già stato aggiunto).",
+   "origin": "srd"
+  },
+  {
+   "id": "boon_of_combat_prowess",
+   "name": "Dono delle abilità di combattimento",
+   "category": "epic_boon",
+   "prerequisites": [
+    "level>=19"
+   ],
+   "repeatable": false,
+   "abilityIncrease": [
+    "str",
+    "dex",
+    "con",
+    "int",
+    "wis",
+    "cha"
+   ],
+   "description": "+1 a una caratteristica (max 30). Mira impareggiabile: quando manchi con un tiro per colpire puoi colpire comunque; non puoi riusarlo fino all'inizio del tuo prossimo turno.",
+   "origin": "srd"
+  },
+  {
+   "id": "boon_of_dimensional_travel",
+   "name": "Dono del viaggio dimensionale",
+   "category": "epic_boon",
+   "prerequisites": [
+    "level>=19"
+   ],
+   "repeatable": false,
+   "abilityIncrease": [
+    "str",
+    "dex",
+    "con",
+    "int",
+    "wis",
+    "cha"
+   ],
+   "description": "+1 a una caratteristica (max 30). Dopo l'azione Attacco o Magia puoi teletrasportarti fino a 9 metri (30 piedi) in uno spazio libero che vedi.",
+   "origin": "srd"
+  },
+  {
+   "id": "boon_of_fate",
+   "name": "Dono del fato",
+   "category": "epic_boon",
+   "prerequisites": [
+    "level>=19"
+   ],
+   "repeatable": false,
+   "abilityIncrease": [
+    "str",
+    "dex",
+    "con",
+    "int",
+    "wis",
+    "cha"
+   ],
+   "description": "+1 a una caratteristica (max 30). Quando tu o una creatura entro 18 metri (60 piedi) fate una prova con d20, puoi tirare 2d4 e applicare il risultato come bonus o penalità. Si ricarica quando tiri l'iniziativa o con un riposo breve o lungo.",
+   "origin": "srd"
+  },
+  {
+   "id": "boon_of_irresistible_offense",
+   "name": "Dono dell'offensiva irresistibile",
+   "category": "epic_boon",
+   "prerequisites": [
+    "level>=19"
+   ],
+   "repeatable": false,
+   "abilityIncrease": [
+    "str",
+    "dex"
+   ],
+   "description": "Forza o Destrezza +1 (max 30). I tuoi danni contundenti, perforanti e taglienti ignorano la resistenza. Con un 20 al tiro per colpire infliggi danni extra pari al punteggio aumentato, dello stesso tipo dell'attacco.",
+   "origin": "srd"
+  },
+  {
+   "id": "boon_of_spell_recall",
+   "name": "Dono del richiamo degli incantesimi",
+   "category": "epic_boon",
+   "prerequisites": [
+    "level>=19",
+    "hasFeature:spellcasting"
+   ],
+   "repeatable": false,
+   "abilityIncrease": [
+    "int",
+    "wis",
+    "cha"
+   ],
+   "description": "Intelligenza, Saggezza o Carisma +1 (max 30). Quando lanci un incantesimo con uno slot di livello da 1 a 4, tira 1d4: se esce il livello dello slot, non viene consumato.",
+   "origin": "srd"
+  },
+  {
+   "id": "boon_of_the_night_spirit",
+   "name": "Dono dello spirito notturno",
+   "category": "epic_boon",
+   "prerequisites": [
+    "level>=19"
+   ],
+   "repeatable": false,
+   "abilityIncrease": [
+    "str",
+    "dex",
+    "con",
+    "int",
+    "wis",
+    "cha"
+   ],
+   "description": "+1 a una caratteristica (max 30). In oscurità o luce fioca puoi diventare invisibile come azione bonus (finisce quando agisci) e hai resistenza a tutti i danni tranne psichici e radiosi.",
+   "origin": "srd"
+  },
+  {
+   "id": "boon_of_truesight",
+   "name": "Dono della vista pura",
+   "category": "epic_boon",
+   "prerequisites": [
+    "level>=19"
+   ],
+   "repeatable": false,
+   "abilityIncrease": [
+    "str",
+    "dex",
+    "con",
+    "int",
+    "wis",
+    "cha"
+   ],
+   "effects": [
+    {
+     "op": "sense",
+     "kind": "truesight",
+     "range": 60
+    }
+   ],
+   "description": "+1 a una caratteristica (max 30). Hai vista pura entro 18 metri (60 piedi).",
+   "origin": "srd"
+  }
+ ]
+}
