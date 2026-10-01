@@ -36,10 +36,10 @@ export function leftoverOddChars(s: string): string[] {
   return [...found];
 }
 
-/** Testo "da leggere" (descrizioni): unisce le parole spezzate a fine riga ("Trem-⏎bling") e le righe. */
+/** Testo "da leggere" (descrizioni): unisce le parole spezzate a fine riga ("Trem-⏎bling", "compe - ⏎tenza") e le righe. */
 export function joinProse(s: string): string {
   return s
-    .replace(/(\p{L}) ?-\n(\p{Ll})/gu, "$1$2")
+    .replace(/(\p{L}) ?-[ \t]*\n(\p{Ll})/gu, "$1$2")
     .replace(/\s*\n\s*/g, " ")
     .replace(/ {2,}/g, " ")
     .trim();

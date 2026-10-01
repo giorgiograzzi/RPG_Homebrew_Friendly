@@ -37,6 +37,7 @@ describe("fixEnGlyphs: mappa dei glifi del PDF inglese", () => {
 describe("joinProse", () => {
   it("unisce parole spezzate e righe", () => {
     expect(joinProse("a Diffi -\nculty Class and Trem-\nbling\nthing")).toBe("a Difficulty Class and Trembling thing");
+    expect(joinProse("la compe - \ntenza in due")).toBe("la competenza in due");
   });
   it("non unisce un trattino seguito da maiuscola o cifra", () => {
     expect(joinProse("Half-\nOrc and 5-\n10")).toBe("Half- Orc and 5- 10");

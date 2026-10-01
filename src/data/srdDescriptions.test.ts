@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { leftoverOddChars } from "../../scripts/lib/srd-clean";
 
 // Voci dello step 2a che devono avere una descrizione breve in entrambe le lingue
-const KINDS = ["skills", "sizes", "damageTypes", "weaponProperties", "masteries", "tools"] as const;
+const KINDS = ["skills", "sizes", "damageTypes", "weaponProperties", "masteries", "tools", "backgrounds", "feats"] as const;
 const load = (lang: "it" | "en", kind: string) =>
   (JSON.parse(readFileSync(`data/srd/${lang}/${kind}.json`, "utf8")) as { entries: { id: string; description?: string }[] }).entries;
 

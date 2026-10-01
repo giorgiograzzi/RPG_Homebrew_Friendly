@@ -32,6 +32,14 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 - [ ] 🟡 `loadRuleset` legge solo `data/srd/it` fino allo step 3 (selezione lingua).
 - [ ] 🟢 Le munizioni hanno `amount` (pezzi per confezione); peso e costo sono della confezione.
 
+### Dati SRD (step 2b)
+- [ ] 🟡 PDF IT (pag. 93): nell'equipaggiamento del Sapiente manca una virgola ("libro (storia) pergamena (8 fogli)"). L'estrattore la ricostruisce (parentesi + parola minuscola) e il risultato coincide con l'EN: ricontrollare a occhio la pagina.
+- [ ] 🟡 Equipaggiamento dei background: `"$holy_symbol"` (Accolito: "simbolo sacro", uno a scelta tra amuleto/emblema/reliquiario) e `"$tool"` (Soldato: lo stesso gioco scelto) sono segnaposto: il motore (`src/engine/creation/equipment.ts`) deve saperli risolvere (step 4). `"gaming"` come strumento = scelta di un gioco.
+- [ ] 🟡 `featConfig` dei background (Accolito: lista chierico; Sapiente: lista mago) è nei dati ma il motore non lo legge ancora: precompilare la scelta `magic_initiate_list` (step 4).
+- [ ] 🟡 Prerequisiti `hasFeature:fighting_style` e `hasFeature:spellcasting` dei talenti: verificare che i privilegi esistano quando arrivano le classi (2d); `brokenReferences` oggi non li controlla.
+- [ ] 🟡 Effetti di gioco dei talenti: solo Allerta (bonus a iniziativa), Tiro, Difesa e Dono della vista pura hanno effetti numerici; Combattere con armi possenti/due armi e Aumento dei punteggi sono gestiti dal motore per id. Restano a testo: Aggressore selvaggio, Lottatore, Dono del fato (ricarica), Dono delle abilità di combattimento, ecc.
+- [ ] 🟢 Le "Abile"/"Iniziato alla magia" sono ripetibili: il motore le gestisce con scelte separate per acquisizione (verificare in step 4/5).
+
 ### Codice e struttura
 - [ ] 🟡 Scheda PDF: tolta in step 1 (usava il modello ufficiale). Resta `src/export/sheetData.ts`; il pulsante "Stampa scheda" torna con il nuovo generatore (step 7). Chiavi `wizard.sheet.*` in `it.json` ancora presenti.
 - [x] `scripts/extract-*.ts` e `validate-data.ts` (citavano fonti non SRD) rimossi in step 1; `validate:data` ed `extract:data` (script npm) tornano con la riscrittura in step 2.

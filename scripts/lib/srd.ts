@@ -63,6 +63,18 @@ export function splitTop(s: string): string[] {
 export const rowStart = (name: string) =>
   new RegExp(`^${name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/ /g, "[ \\n]+")}(?: {3,}|[ \\n]*\\n)`, "m");
 
+// Testi bilingui scritti nel codice ({ it, en }) diventano la stringa della lingua del file, a qualsiasi profondità
+export function localize(v: unknown, l: Lang): unknown {
+  if (Array.isArray(v)) return v.map((x) => localize(x, l));
+  if (v && typeof v === "object") {
+    const o = v as Record<string, unknown>;
+    const k = Object.keys(o);
+    if (k.length === 2 && k.includes("it") && k.includes("en") && typeof o.it === "string" && typeof o.en === "string") return o[l];
+    return Object.fromEntries(Object.entries(o).map(([a, b]) => [a, localize(b, l)]));
+  }
+  return v;
+}
+
 export interface Entry { id: string; name: { en: string; it: string }; [k: string]: unknown }
 
 // Scrive i file data/srd/<lingua>/<kind>.json con lo stesso contenuto, il nome e la descrizione nella lingua del file
@@ -71,7 +83,7 @@ export function writeKind(kind: string, entries: Entry[]) {
     mkdirSync(OUT(l), { recursive: true });
     const out = entries.map((e) => {
       const d = DESCRIPTIONS[kind]?.[e.id] ?? GROUP_DESCRIPTIONS[String(e.group)];
-      return { ...e, name: e.name[l].replace(/’/g, "'"), ...(d ? { description: d[l] } : {}), origin: "srd" };
+      return { ...(localize({ ...e, name: undefined }, l) as object), name: e.name[l].replace(/’/g, "'"), ...(d ? { description: d[l] } : {}), origin: "srd" };
     });
     writeFileSync(`${OUT(l)}/${kind}.json`, JSON.stringify({ kind, entries: out }, null, 1) + "\n");
   }

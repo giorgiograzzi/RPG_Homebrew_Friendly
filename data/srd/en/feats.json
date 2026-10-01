@@ -1,0 +1,336 @@
+{
+ "kind": "feats",
+ "entries": [
+  {
+   "id": "alert",
+   "name": "Alert",
+   "category": "origin",
+   "prerequisites": [],
+   "repeatable": false,
+   "effects": [
+    {
+     "op": "initiativeBonus",
+     "value": "pb"
+    }
+   ],
+   "description": "Add your Proficiency Bonus to Initiative rolls. Right after rolling Initiative, you can swap your result with a willing ally's (not if either of you is Incapacitated).",
+   "origin": "srd"
+  },
+  {
+   "id": "magic_initiate",
+   "name": "Magic Initiate",
+   "category": "origin",
+   "prerequisites": [],
+   "repeatable": true,
+   "choices": [
+    {
+     "id": "magic_initiate_list",
+     "label": "Spell list",
+     "count": 1,
+     "options": [
+      {
+       "id": "cleric",
+       "name": "Cleric"
+      },
+      {
+       "id": "druid",
+       "name": "Druid"
+      },
+      {
+       "id": "wizard",
+       "name": "Wizard"
+      }
+     ]
+    },
+    {
+     "id": "magic_initiate_ability",
+     "label": "Spellcasting ability",
+     "count": 1,
+     "options": [
+      {
+       "id": "int",
+       "name": "Intelligence"
+      },
+      {
+       "id": "wis",
+       "name": "Wisdom"
+      },
+      {
+       "id": "cha",
+       "name": "Charisma"
+      }
+     ]
+    },
+    {
+     "id": "magic_initiate_cantrips",
+     "label": "Cantrips",
+     "count": 2,
+     "source": "cantrips",
+     "abilityFrom": "magic_initiate_ability",
+     "filter": {
+      "level": 0,
+      "classFrom": "magic_initiate_list"
+     }
+    },
+    {
+     "id": "magic_initiate_spell",
+     "label": "1st-level spell",
+     "count": 1,
+     "source": "freespells",
+     "abilityFrom": "magic_initiate_ability",
+     "filter": {
+      "level": 1,
+      "classFrom": "magic_initiate_list"
+     }
+    }
+   ],
+   "description": "You learn two cantrips and one 1st-level spell from the Cleric, Druid, or Wizard list (spellcasting ability: Intelligence, Wisdom, or Charisma, your choice). The spell is always prepared and you cast it once for free per Long Rest, or with a spell slot. You can swap one when you gain a level. Repeatable, with a different list.",
+   "origin": "srd"
+  },
+  {
+   "id": "savage_attacker",
+   "name": "Savage Attacker",
+   "category": "origin",
+   "prerequisites": [],
+   "repeatable": false,
+   "description": "Once per turn when you hit with a weapon, roll the weapon's damage dice twice and use either result.",
+   "origin": "srd"
+  },
+  {
+   "id": "skilled",
+   "name": "Skilled",
+   "category": "origin",
+   "prerequisites": [],
+   "repeatable": true,
+   "choices": [
+    {
+     "id": "skilled_picks",
+     "label": "3 skills or tools",
+     "count": 3,
+     "source": "skillsTools"
+    }
+   ],
+   "description": "You gain proficiency in any three skills or tools of your choice. Repeatable.",
+   "origin": "srd"
+  },
+  {
+   "id": "ability_score_improvement",
+   "name": "Ability Score Improvement",
+   "category": "general",
+   "prerequisites": [
+    "level>=4"
+   ],
+   "repeatable": true,
+   "description": "Increase one ability score by 2, or two ability scores by 1, up to a maximum of 20. Repeatable.",
+   "origin": "srd"
+  },
+  {
+   "id": "grappler",
+   "name": "Grappler",
+   "category": "general",
+   "prerequisites": [
+    "level>=4",
+    "ability:str>=13 || ability:dex>=13"
+   ],
+   "repeatable": false,
+   "abilityIncrease": [
+    "str",
+    "dex"
+   ],
+   "description": "Strength or Dexterity +1 (max 20). When you hit with an Unarmed Strike during the Attack action, you can deal damage and grapple at once (once per turn). You have Advantage on attacks against a creature you're grappling, and moving it costs no extra movement if it's your size or smaller.",
+   "origin": "srd"
+  },
+  {
+   "id": "archery",
+   "name": "Archery",
+   "category": "fighting_style",
+   "prerequisites": [
+    "hasFeature:fighting_style"
+   ],
+   "repeatable": false,
+   "effects": [
+    {
+     "op": "attackBonus",
+     "value": 2,
+     "attackType": "ranged"
+    }
+   ],
+   "description": "+2 to attack rolls with Ranged weapons.",
+   "origin": "srd"
+  },
+  {
+   "id": "defense",
+   "name": "Defense",
+   "category": "fighting_style",
+   "prerequisites": [
+    "hasFeature:fighting_style"
+   ],
+   "repeatable": false,
+   "effects": [
+    {
+     "op": "acBonus",
+     "value": 1,
+     "when": "wearingArmor:any"
+    }
+   ],
+   "description": "+1 to Armor Class while wearing Light, Medium, or Heavy armor.",
+   "origin": "srd"
+  },
+  {
+   "id": "great_weapon_fighting",
+   "name": "Great Weapon Fighting",
+   "category": "fighting_style",
+   "prerequisites": [
+    "hasFeature:fighting_style"
+   ],
+   "repeatable": false,
+   "description": "When you roll damage for a melee attack with a weapon held in two hands (Two-Handed or Versatile), a 1 or 2 on a damage die counts as a 3.",
+   "origin": "srd"
+  },
+  {
+   "id": "two_weapon_fighting",
+   "name": "Two-Weapon Fighting",
+   "category": "fighting_style",
+   "prerequisites": [
+    "hasFeature:fighting_style"
+   ],
+   "repeatable": false,
+   "description": "When you make the extra attack with a Light weapon, add your ability modifier to its damage (if not already added).",
+   "origin": "srd"
+  },
+  {
+   "id": "boon_of_combat_prowess",
+   "name": "Boon of Combat Prowess",
+   "category": "epic_boon",
+   "prerequisites": [
+    "level>=19"
+   ],
+   "repeatable": false,
+   "abilityIncrease": [
+    "str",
+    "dex",
+    "con",
+    "int",
+    "wis",
+    "cha"
+   ],
+   "description": "+1 to one ability score (max 30). Peerless Aim: when you miss with an attack roll, you can hit instead; you can't use this again until the start of your next turn.",
+   "origin": "srd"
+  },
+  {
+   "id": "boon_of_dimensional_travel",
+   "name": "Boon of Dimensional Travel",
+   "category": "epic_boon",
+   "prerequisites": [
+    "level>=19"
+   ],
+   "repeatable": false,
+   "abilityIncrease": [
+    "str",
+    "dex",
+    "con",
+    "int",
+    "wis",
+    "cha"
+   ],
+   "description": "+1 to one ability score (max 30). After taking the Attack or Magic action, you can teleport up to 30 feet to an unoccupied space you can see.",
+   "origin": "srd"
+  },
+  {
+   "id": "boon_of_fate",
+   "name": "Boon of Fate",
+   "category": "epic_boon",
+   "prerequisites": [
+    "level>=19"
+   ],
+   "repeatable": false,
+   "abilityIncrease": [
+    "str",
+    "dex",
+    "con",
+    "int",
+    "wis",
+    "cha"
+   ],
+   "description": "+1 to one ability score (max 30). When you or another creature within 60 feet makes a D20 Test, you can roll 2d4 and apply the result as a bonus or penalty. It recharges when you roll Initiative or finish a Short or Long Rest.",
+   "origin": "srd"
+  },
+  {
+   "id": "boon_of_irresistible_offense",
+   "name": "Boon of Irresistible Offense",
+   "category": "epic_boon",
+   "prerequisites": [
+    "level>=19"
+   ],
+   "repeatable": false,
+   "abilityIncrease": [
+    "str",
+    "dex"
+   ],
+   "description": "Strength or Dexterity +1 (max 30). Your Bludgeoning, Piercing, and Slashing damage ignores Resistance. On a 20 on the attack roll, you deal extra damage equal to the increased score, of the attack's type.",
+   "origin": "srd"
+  },
+  {
+   "id": "boon_of_spell_recall",
+   "name": "Boon of Spell Recall",
+   "category": "epic_boon",
+   "prerequisites": [
+    "level>=19",
+    "hasFeature:spellcasting"
+   ],
+   "repeatable": false,
+   "abilityIncrease": [
+    "int",
+    "wis",
+    "cha"
+   ],
+   "description": "Intelligence, Wisdom, or Charisma +1 (max 30). When you cast a spell with a level 1-4 slot, roll 1d4: if the result equals the slot's level, the slot isn't expended.",
+   "origin": "srd"
+  },
+  {
+   "id": "boon_of_the_night_spirit",
+   "name": "Boon of the Night Spirit",
+   "category": "epic_boon",
+   "prerequisites": [
+    "level>=19"
+   ],
+   "repeatable": false,
+   "abilityIncrease": [
+    "str",
+    "dex",
+    "con",
+    "int",
+    "wis",
+    "cha"
+   ],
+   "description": "+1 to one ability score (max 30). In Dim Light or Darkness you can become Invisible as a Bonus Action (it ends when you act), and you have Resistance to all damage except Psychic and Radiant.",
+   "origin": "srd"
+  },
+  {
+   "id": "boon_of_truesight",
+   "name": "Boon of Truesight",
+   "category": "epic_boon",
+   "prerequisites": [
+    "level>=19"
+   ],
+   "repeatable": false,
+   "abilityIncrease": [
+    "str",
+    "dex",
+    "con",
+    "int",
+    "wis",
+    "cha"
+   ],
+   "effects": [
+    {
+     "op": "sense",
+     "kind": "truesight",
+     "range": 60
+    }
+   ],
+   "description": "+1 to one ability score (max 30). You have Truesight out to 60 feet.",
+   "origin": "srd"
+  }
+ ]
+}

@@ -1,0 +1,213 @@
+{
+ "kind": "backgrounds",
+ "entries": [
+  {
+   "id": "acolyte",
+   "name": "Acolyte",
+   "abilityOptions": [
+    "int",
+    "wis",
+    "cha"
+   ],
+   "skills": [
+    "insight",
+    "religion"
+   ],
+   "tool": "calligraphers_supplies",
+   "feat": "magic_initiate",
+   "featConfig": {
+    "list": "cleric"
+   },
+   "equipment": {
+    "A": {
+     "items": [
+      {
+       "item": "calligraphers_supplies",
+       "qty": 1
+      },
+      {
+       "item": "book",
+       "qty": 1,
+       "note": "prayers"
+      },
+      {
+       "item": "$holy_symbol",
+       "qty": 1
+      },
+      {
+       "item": "parchment",
+       "qty": 10
+      },
+      {
+       "item": "robe",
+       "qty": 1
+      }
+     ],
+     "gp": 8
+    },
+    "B": {
+     "items": [],
+     "gp": 50
+    }
+   },
+   "description": "A life of service in a temple or religious community.",
+   "origin": "srd"
+  },
+  {
+   "id": "criminal",
+   "name": "Criminal",
+   "abilityOptions": [
+    "dex",
+    "con",
+    "int"
+   ],
+   "skills": [
+    "sleight_of_hand",
+    "stealth"
+   ],
+   "tool": "thieves_tools",
+   "feat": "alert",
+   "equipment": {
+    "A": {
+     "items": [
+      {
+       "item": "dagger",
+       "qty": 2
+      },
+      {
+       "item": "thieves_tools",
+       "qty": 1
+      },
+      {
+       "item": "crowbar",
+       "qty": 1
+      },
+      {
+       "item": "pouch",
+       "qty": 2
+      },
+      {
+       "item": "travelers_clothes",
+       "qty": 1
+      }
+     ],
+     "gp": 16
+    },
+    "B": {
+     "items": [],
+     "gp": 50
+    }
+   },
+   "description": "You got by on odd jobs, theft, and scams at the edge of the law.",
+   "origin": "srd"
+  },
+  {
+   "id": "sage",
+   "name": "Sage",
+   "abilityOptions": [
+    "con",
+    "int",
+    "wis"
+   ],
+   "skills": [
+    "arcana",
+    "history"
+   ],
+   "tool": "calligraphers_supplies",
+   "feat": "magic_initiate",
+   "featConfig": {
+    "list": "wizard"
+   },
+   "equipment": {
+    "A": {
+     "items": [
+      {
+       "item": "quarterstaff",
+       "qty": 1
+      },
+      {
+       "item": "calligraphers_supplies",
+       "qty": 1
+      },
+      {
+       "item": "book",
+       "qty": 1,
+       "note": "history"
+      },
+      {
+       "item": "parchment",
+       "qty": 8
+      },
+      {
+       "item": "robe",
+       "qty": 1
+      }
+     ],
+     "gp": 8
+    },
+    "B": {
+     "items": [],
+     "gp": 50
+    }
+   },
+   "description": "Years of study among books, archives, and teachers.",
+   "origin": "srd"
+  },
+  {
+   "id": "soldier",
+   "name": "Soldier",
+   "abilityOptions": [
+    "str",
+    "dex",
+    "con"
+   ],
+   "skills": [
+    "athletics",
+    "intimidation"
+   ],
+   "tool": "gaming",
+   "feat": "savage_attacker",
+   "equipment": {
+    "A": {
+     "items": [
+      {
+       "item": "spear",
+       "qty": 1
+      },
+      {
+       "item": "shortbow",
+       "qty": 1
+      },
+      {
+       "item": "arrows",
+       "qty": 1
+      },
+      {
+       "item": "$tool",
+       "qty": 1
+      },
+      {
+       "item": "healers_kit",
+       "qty": 1
+      },
+      {
+       "item": "quiver",
+       "qty": 1
+      },
+      {
+       "item": "travelers_clothes",
+       "qty": 1
+      }
+     ],
+     "gp": 14
+    },
+    "B": {
+     "items": [],
+     "gp": 50
+    }
+   },
+   "description": "A life in the ranks of an army or militia, between training and battle.",
+   "origin": "srd"
+  }
+ ]
+}
