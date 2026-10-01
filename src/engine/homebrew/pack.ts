@@ -76,7 +76,7 @@ export function validateEntry(kind: HbKind, data: unknown, rs: Ruleset): { ok: t
     if (c.caster !== "none") {
       if (!cc.spellAbility) errors.push("Una classe incantatrice ha bisogno della caratteristica da incantatore.");
       if (c.caster === "pact" ? !cc.pactSlots : !c.spellSlots) errors.push("Una classe incantatrice ha bisogno della progressione degli slot.");
-      if (!c.table.preparati) errors.push("Una classe incantatrice ha bisogno della colonna \"preparati\" nella tabella.");
+      if (!c.table.prepared) errors.push("Una classe incantatrice ha bisogno della colonna \"prepared\" nella tabella.");
     }
   }
   if (kind === "subclasses") {

@@ -32,12 +32,12 @@ export async function classSection(l: Lang, id: string): Promise<string> {
   return text.slice(starts[k]!.at, starts[k + 1]?.at ?? text.length);
 }
 
-const VALUE = /^(?:[+−-]?\d+(?:[.,]\d+)?(?: (?:m|ft\.?))?|—|\d+d\d+|\d+)(?= |$)/;
+const VALUE = /^(?:[+−-]?\d+(?:[.,]\d+)?(?: (?:m|ft\.?))?|—|\d*d\d+|\d+)(?= |$)/;
 function value(l: Lang, tok: string): number | string {
   if (tok === "—") return 0;
   const m = /^([+−-]?\d+(?:[.,]\d+)?) (m|ft\.?)$/.exec(tok);
   if (m) { const n = Number(m[1]!.replace(",", ".").replace("−", "-")); return l === "it" ? Math.round((n * 10) / 3) : n; } // metri → piedi
-  if (/^\d+d\d+$/.test(tok)) return tok;
+  if (/^\d*d\d+$/.test(tok)) return tok;
   return Number(tok.replace(",", ".").replace(/^\+/, ""));
 }
 const pbAt = (n: number) => 2 + Math.floor((n - 1) / 4);
@@ -52,10 +52,10 @@ function rowLabels(def: ClassDef, l: Lang, n: number): string[] {
 
 function parseTable(def: ClassDef, l: Lang, sec: string, errors: string[]): Table {
   const k = def.columns.length;
-  const head = sec.indexOf(nz(l, l === "it" ? "Livello Bonus di competenza Privilegi di classe" : "Level Proficiency Bonus Class Features"));
   const cols: (number | string)[][] = def.columns.map(() => []);
-  if (head < 0) { errors.push(`${l}/${def.id}: intestazione della tabella dei livelli non trovata`); return {}; }
-  let pos = sec.indexOf(" 1 +2 ", head);
+  // la tabella inizia alla riga del 1° livello (l'intestazione cambia da classe a classe: negli incantatori è mescolata)
+  const coreEnd = sec.indexOf(l === "it" ? "diventare un" : "becoming a");
+  let pos = sec.indexOf(" 1 +2 ", Math.max(0, coreEnd));
   if (pos < 0) { errors.push(`${l}/${def.id}: prima riga della tabella non trovata`); return {}; }
   pos += 1;
   for (let n = 1; n <= 20; n++) {
@@ -70,7 +70,8 @@ function parseTable(def: ClassDef, l: Lang, sec: string, errors: string[]): Tabl
       left.splice(left.indexOf(hit), 1); pos += hit.length;
       pos += /^(, | e | and )/.exec(sec.slice(pos))?.[0].length ?? 0;
     }
-    if (sec[pos] === " ") pos++;
+    if (total === 0 && sec[pos] === "—") pos += 2; // cella dei privilegi vuota
+    else if (sec[pos] === " ") pos++;
     for (let c = 0; c < k; c++) {
       const m = VALUE.exec(sec.slice(pos));
       if (!m) { errors.push(`${l}/${def.id}: riga ${n}: valore ${c + 1}/${k} non leggibile in "${sec.slice(pos, pos + 30)}"`); return {}; }
@@ -109,6 +110,9 @@ export async function verifyClass(def: ClassDef): Promise<ClassCheck> {
     const head = (lvl: number, name: string) => `${l === "it" ? "livello" : "level"} ${lvl}: ${name}`;
     const feats: FeatureDef[] = [...def.features.filter((x) => !x.tableOnly), ...def.subclass.features];
     for (const x of feats) has("privilegio", head(x.level, x.name[l]));
+    // elenchi di incantesimi: nel PDF compaiono con spazi e virgole irregolari ("Cure Wound s, "), si confrontano senza spazi né virgole
+    const compact = (x: string) => nz(l, x).replace(/[\s,]/g, "");
+    for (const p of def.subclass.checkPhrases?.[l] ?? []) if (!compact(sec).includes(compact(p))) errors.push(`${w}: elenco "${p}" non trovato nel PDF`);
     has("sottoclasse", def.subclass.heading[l]);
     tables.push(parseTable(def, l, sec, errors));
   }

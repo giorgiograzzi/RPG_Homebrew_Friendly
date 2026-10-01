@@ -19,7 +19,7 @@ export const choiceSchema = z.object({
   id,
   label: text,
   count: z.number().int().min(1).default(1),
-  countFrom: z.string().optional(), // colonna della tabella di classe o sottoclasse che dà il numero di scelte (es. "trucchetti")
+  countFrom: z.string().optional(), // colonna della tabella di classe o sottoclasse che dà il numero di scelte (es. "cantrips")
   countFormula: z.string().refine(isValidFormula, "formula non valida").optional(), // numero di scelte da formula (es. "pb", "4 + 2 * classLevel:wizard")
   // Caratteristica da incantatore degli incantesimi scelti/concessi: fissa oppure da un'altra scelta
   ability: ability.optional(),

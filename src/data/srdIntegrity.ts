@@ -17,6 +17,16 @@ export const idsByKind = (lang: SrdLang): Record<string, string[]> => {
   return out;
 };
 
+// Id degli incantesimi concessi (op "grantSpell") ovunque dentro una voce: effetti, tratti, opzioni delle scelte
+export function grantedSpells(x: unknown): string[] {
+  if (Array.isArray(x)) return x.flatMap(grantedSpells);
+  if (x && typeof x === "object") {
+    const o = x as Record<string, unknown>;
+    return [...(o.op === "grantSpell" && typeof o.spell === "string" ? [o.spell] : []), ...Object.values(o).flatMap(grantedSpells)];
+  }
+  return [];
+}
+
 // Riferimenti incrociati tra le voci (un id citato deve esistere)
 export function brokenReferences(rs: Ruleset): string[] {
   const p: string[] = [];
@@ -34,15 +44,9 @@ export function brokenReferences(rs: Ruleset): string[] {
     if (!rs.tools.has(b.tool) && !["artisan", "gaming", "musical"].includes(b.tool)) p.push(`backgrounds/${b.id} → tools/${b.tool} non esiste`);
     for (const [opt, set] of Object.entries(b.equipment)) for (const it of set.items) if (!it.item.startsWith("$") && !gear(it.item)) p.push(`backgrounds/${b.id}/${opt} → ${it.item} non esiste`);
   }
-  // Incantesimi concessi dalle specie: si controllano quando i dati degli incantesimi ci sono (step 2e)
-  if (rs.spells.size > 0) {
-    const walk = (where: string, effects: { op: string; spell?: string }[]) => { for (const e of effects) if (e.op === "grantSpell") need(where, "spells", e.spell); };
-    for (const sp of rs.species.values()) {
-      walk(`species/${sp.id}`, sp.effects);
-      for (const t of sp.traits) walk(`species/${sp.id}/${t.id}`, t.effects);
-      for (const c of sp.choices) for (const o of c.options ?? []) walk(`species/${sp.id}/${c.id}/${o.id}`, o.effects);
-    }
-  }
+  // Incantesimi concessi da specie, classi, sottoclassi e talenti: si controllano quando i dati degli incantesimi ci sono (step 2e)
+  if (rs.spells.size > 0) for (const [kind, map] of [["species", rs.species], ["classes", rs.classes], ["subclasses", rs.subclasses], ["feats", rs.feats]] as const)
+    for (const e of map.values()) for (const sp of grantedSpells(e)) need(`${kind}/${e.id}`, "spells", sp);
   for (const i of rs.items.values()) for (const c of i.contents ?? []) need(`items/${i.id}`, "items", c.item);
   return p;
 }

@@ -79,7 +79,7 @@ export function resolveCount(slot: Slot, rs: Ruleset, ctx: Ctx): number {
     const sub = slot.subclassId ? rs.subclasses.get(slot.subclassId) : undefined;
     const col = sub?.table[c.countFrom] ?? cls?.table[c.countFrom];
     n = Number(col?.[lv - 1] ?? 0);
-    if (c.countFrom === "trucchetti") for (const e of ctx.active) if (e.effect.op === "extraCantrips" && e.classId === slot.classId) n += e.effect.count;
+    if (c.countFrom === "cantrips") for (const e of ctx.active) if (e.effect.op === "extraCantrips" && e.classId === slot.classId) n += e.effect.count;
   }
   return Math.max(0, n);
 }
