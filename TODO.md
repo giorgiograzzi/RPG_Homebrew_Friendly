@@ -45,6 +45,15 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 - [ ] 🟡 `README` e doc dell'app privata citano il bunker, Cloudflare, porte e dominio personale: **non** portarli nella repo pubblica.
 - [ ] 🟢 Workflow CI GitHub Actions (step 9).
 
+### Frontend (step 5b)
+- [ ] 🔴 Tema Windows XP / Win95 (`src/ui/xp/`, ~266 classi in 31 file, popup "Prompt di MS-DOS", font Tahoma, icona "Start") da sostituire con il tema neutro mobile-first + desktop. Decisione presa: neutro, moderno, chiaro/scuro.
+- [ ] 🟡 Scegliere la palette/accento del nuovo tema (proposta: neutri + un solo colore d'accento) e il nome visibile dell'app; Giorgio conferma.
+- [ ] 🟡 Su desktop la Scheda va in colonne affiancate (non a 7 tab): progettare quali blocchi vanno insieme.
+- [ ] 🟡 `index.html` ha `theme-color` blu XP; il manifest PWA e le icone usano i colori vecchi (step 5b-5 e 9).
+- [ ] 🟡 `src/ui/xp/contrast.test.ts` verifica i colori XP: va riscritto sui nuovi token.
+- [ ] 🟡 Un solo punto di adattamento schermo oggi (`max-width: 720px`): introdurre breakpoint 640 / 1024.
+- [ ] 🟢 Valutare interruttore tema (sistema / chiaro / scuro) e dimensione testo in Impostazioni.
+
 ### Prodotto
 - [ ] 🟡 Con l'SRD le opzioni sono meno: pensare a un messaggio chiaro in creazione ("contenuto non presente: aggiungilo come homebrew") e a un modo semplice per importare pacchetti homebrew dell'utente.
 - [ ] 🟡 Verifica in app che cambiare lingua non perda scelte del personaggio (id stabili).
