@@ -1,0 +1,969 @@
+{
+ "kind": "species",
+ "entries": [
+  {
+   "id": "dragonborn",
+   "name": "Dragonide",
+   "description": "Discendenti di draghi: soffio di energia, resistenza e, dal 5° livello, ali spettrali.",
+   "sizes": [
+    "medium"
+   ],
+   "speed": 30,
+   "effects": [
+    {
+     "op": "sense",
+     "kind": "darkvision",
+     "range": 60
+    }
+   ],
+   "choices": [
+    {
+     "id": "draconic_ancestry",
+     "label": "Discendenza draconica",
+     "count": 1,
+     "options": [
+      {
+       "id": "black",
+       "name": "Nero",
+       "effects": [
+        {
+         "op": "resistance",
+         "types": [
+          "acid"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "blue",
+       "name": "Blu",
+       "effects": [
+        {
+         "op": "resistance",
+         "types": [
+          "lightning"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "brass",
+       "name": "Ottone",
+       "effects": [
+        {
+         "op": "resistance",
+         "types": [
+          "fire"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "bronze",
+       "name": "Bronzo",
+       "effects": [
+        {
+         "op": "resistance",
+         "types": [
+          "lightning"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "copper",
+       "name": "Rame",
+       "effects": [
+        {
+         "op": "resistance",
+         "types": [
+          "acid"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "gold",
+       "name": "Oro",
+       "effects": [
+        {
+         "op": "resistance",
+         "types": [
+          "fire"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "green",
+       "name": "Verde",
+       "effects": [
+        {
+         "op": "resistance",
+         "types": [
+          "poison"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "red",
+       "name": "Rosso",
+       "effects": [
+        {
+         "op": "resistance",
+         "types": [
+          "fire"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "silver",
+       "name": "Argento",
+       "effects": [
+        {
+         "op": "resistance",
+         "types": [
+          "cold"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "white",
+       "name": "Bianco",
+       "effects": [
+        {
+         "op": "resistance",
+         "types": [
+          "cold"
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "traits": [
+    {
+     "id": "breath_weapon",
+     "name": "Soffio",
+     "description": "Al posto di un attacco esali energia in un cono di 4,5 m o in una linea di 9 m × 1,5 m: TS su Destrezza (CD 8 + Cos + competenza), 1d10 danni del tipo della discendenza (metà se superato). I dadi salgono a 2d10 al 5°, 3d10 all'11°, 4d10 al 17°. Usi pari al bonus di competenza, si ricaricano con un riposo lungo.",
+     "level": 1,
+     "usage": {
+      "uses": "pb",
+      "recharge": "long_rest"
+     },
+     "origin": "srd"
+    },
+    {
+     "id": "draconic_flight",
+     "name": "Volo draconico",
+     "description": "Dal 5° livello, come azione bonus fai spuntare ali spettrali per 10 minuti: hai una velocità di volo pari alla tua velocità. Una volta per riposo lungo.",
+     "level": 5,
+     "usage": {
+      "uses": 1,
+      "recharge": "long_rest"
+     },
+     "activation": {
+      "resource": "draconic_flight",
+      "duration": "10 minuti"
+     },
+     "effects": [
+      {
+       "op": "setSpeed",
+       "mode": "fly",
+       "value": 30,
+       "when": "active:draconic_flight"
+      }
+     ],
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "dwarf",
+   "name": "Nano",
+   "description": "Resistenti e tenaci: scurovisione ampia, resistenza al veleno e punti ferita extra a ogni livello.",
+   "sizes": [
+    "medium"
+   ],
+   "speed": 30,
+   "effects": [
+    {
+     "op": "sense",
+     "kind": "darkvision",
+     "range": 120
+    },
+    {
+     "op": "resistance",
+     "types": [
+      "poison"
+     ]
+    },
+    {
+     "op": "saveAdvantage",
+     "against": "la condizione Avvelenato"
+    },
+    {
+     "op": "hpMaxPerLevel",
+     "value": 1
+    }
+   ],
+   "traits": [
+    {
+     "id": "dwarven_resilience",
+     "name": "Resilienza nanica",
+     "description": "Resistenza ai danni da veleno e Vantaggio ai tiri salvezza per evitare o terminare la condizione Avvelenato.",
+     "level": 1,
+     "origin": "srd"
+    },
+    {
+     "id": "dwarven_toughness",
+     "name": "Robustezza nanica",
+     "description": "I punti ferita massimi aumentano di 1, e di 1 a ogni livello acquisito.",
+     "level": 1,
+     "origin": "srd"
+    },
+    {
+     "id": "stonecunning",
+     "name": "Esperto minatore",
+     "description": "Come azione bonus ottieni percezione tellurica entro 18 m (60 piedi) per 10 minuti, se sei su pietra o la tocchi. Usi pari al bonus di competenza, si ricaricano con un riposo lungo.",
+     "level": 1,
+     "usage": {
+      "uses": "pb",
+      "recharge": "long_rest"
+     },
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "elf",
+   "name": "Elfo",
+   "description": "Longevi e agili, con un lignaggio magico (Drow, Elfo alto o Elfo dei boschi), sensi acuti e trance al posto del sonno.",
+   "sizes": [
+    "medium"
+   ],
+   "speed": 30,
+   "effects": [
+    {
+     "op": "sense",
+     "kind": "darkvision",
+     "range": 60
+    },
+    {
+     "op": "saveAdvantage",
+     "against": "la condizione Affascinato"
+    }
+   ],
+   "choices": [
+    {
+     "id": "spell_ability",
+     "label": "Caratteristica da incantatore",
+     "count": 1,
+     "options": [
+      {
+       "id": "int",
+       "name": "Intelligenza"
+      },
+      {
+       "id": "wis",
+       "name": "Saggezza"
+      },
+      {
+       "id": "cha",
+       "name": "Carisma"
+      }
+     ]
+    },
+    {
+     "id": "elven_lineage",
+     "label": "Lignaggio elfico",
+     "count": 1,
+     "options": [
+      {
+       "id": "drow",
+       "name": "Drow",
+       "description": "La scurovisione sale a 36 m (120 piedi).",
+       "effects": [
+        {
+         "op": "sense",
+         "kind": "darkvision",
+         "range": 120
+        },
+        {
+         "op": "grantSpell",
+         "spell": "dancing_lights",
+         "mode": "cantrip",
+         "abilityFrom": "spell_ability"
+        },
+        {
+         "op": "grantSpell",
+         "spell": "faerie_fire",
+         "mode": "alwaysPrepared",
+         "abilityFrom": "spell_ability",
+         "freeCast": {
+          "uses": 1,
+          "recharge": "long_rest"
+         },
+         "when": "level>=3"
+        },
+        {
+         "op": "grantSpell",
+         "spell": "darkness",
+         "mode": "alwaysPrepared",
+         "abilityFrom": "spell_ability",
+         "freeCast": {
+          "uses": 1,
+          "recharge": "long_rest"
+         },
+         "when": "level>=5"
+        }
+       ]
+      },
+      {
+       "id": "high_elf",
+       "name": "Elfo alto",
+       "description": "A ogni riposo lungo puoi sostituire il trucchetto Prestidigitazione con un altro trucchetto della lista del mago.",
+       "effects": [
+        {
+         "op": "grantSpell",
+         "spell": "prestidigitation",
+         "mode": "cantrip",
+         "abilityFrom": "spell_ability"
+        },
+        {
+         "op": "grantSpell",
+         "spell": "detect_magic",
+         "mode": "alwaysPrepared",
+         "abilityFrom": "spell_ability",
+         "freeCast": {
+          "uses": 1,
+          "recharge": "long_rest"
+         },
+         "when": "level>=3"
+        },
+        {
+         "op": "grantSpell",
+         "spell": "misty_step",
+         "mode": "alwaysPrepared",
+         "abilityFrom": "spell_ability",
+         "freeCast": {
+          "uses": 1,
+          "recharge": "long_rest"
+         },
+         "when": "level>=5"
+        }
+       ]
+      },
+      {
+       "id": "wood_elf",
+       "name": "Elfo dei boschi",
+       "effects": [
+        {
+         "op": "setSpeed",
+         "mode": "walk",
+         "value": 35
+        },
+        {
+         "op": "grantSpell",
+         "spell": "druidcraft",
+         "mode": "cantrip",
+         "abilityFrom": "spell_ability"
+        },
+        {
+         "op": "grantSpell",
+         "spell": "longstrider",
+         "mode": "alwaysPrepared",
+         "abilityFrom": "spell_ability",
+         "freeCast": {
+          "uses": 1,
+          "recharge": "long_rest"
+         },
+         "when": "level>=3"
+        },
+        {
+         "op": "grantSpell",
+         "spell": "pass_without_trace",
+         "mode": "alwaysPrepared",
+         "abilityFrom": "spell_ability",
+         "freeCast": {
+          "uses": 1,
+          "recharge": "long_rest"
+         },
+         "when": "level>=5"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "keen_senses",
+     "label": "Sensi acuti",
+     "count": 1,
+     "options": [
+      {
+       "id": "insight",
+       "name": "Intuizione",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "insight"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "perception",
+       "name": "Percezione",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "perception"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "survival",
+       "name": "Sopravvivenza",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "survival"
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "traits": [
+    {
+     "id": "fey_ancestry",
+     "name": "Retaggio fatato",
+     "description": "Vantaggio ai tiri salvezza per evitare o terminare la condizione Affascinato.",
+     "level": 1,
+     "origin": "srd"
+    },
+    {
+     "id": "trance",
+     "name": "Trance",
+     "description": "Non hai bisogno di dormire e la magia non può addormentarti. Fai un riposo lungo in 4 ore di meditazione restando cosciente.",
+     "level": 1,
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "gnome",
+   "name": "Gnomo",
+   "description": "Piccoli e ingegnosi: Vantaggio ai TS mentali e un lignaggio magico (Gnomo delle foreste o delle rocce).",
+   "sizes": [
+    "small"
+   ],
+   "speed": 30,
+   "effects": [
+    {
+     "op": "sense",
+     "kind": "darkvision",
+     "range": 60
+    },
+    {
+     "op": "saveAdvantage",
+     "abilities": [
+      "int",
+      "wis",
+      "cha"
+     ]
+    }
+   ],
+   "choices": [
+    {
+     "id": "spell_ability",
+     "label": "Caratteristica da incantatore",
+     "count": 1,
+     "options": [
+      {
+       "id": "int",
+       "name": "Intelligenza"
+      },
+      {
+       "id": "wis",
+       "name": "Saggezza"
+      },
+      {
+       "id": "cha",
+       "name": "Carisma"
+      }
+     ]
+    },
+    {
+     "id": "gnomish_lineage",
+     "label": "Lignaggio gnomesco",
+     "count": 1,
+     "options": [
+      {
+       "id": "forest_gnome",
+       "name": "Gnomo delle foreste",
+       "effects": [
+        {
+         "op": "grantSpell",
+         "spell": "minor_illusion",
+         "mode": "cantrip",
+         "abilityFrom": "spell_ability"
+        },
+        {
+         "op": "grantSpell",
+         "spell": "speak_with_animals",
+         "mode": "alwaysPrepared",
+         "abilityFrom": "spell_ability",
+         "freeCast": {
+          "uses": "pb",
+          "recharge": "long_rest"
+         }
+        }
+       ]
+      },
+      {
+       "id": "rock_gnome",
+       "name": "Gnomo delle rocce",
+       "effects": [
+        {
+         "op": "grantSpell",
+         "spell": "mending",
+         "mode": "cantrip",
+         "abilityFrom": "spell_ability"
+        },
+        {
+         "op": "grantSpell",
+         "spell": "prestidigitation",
+         "mode": "cantrip",
+         "abilityFrom": "spell_ability"
+        }
+       ],
+       "description": "Con 10 minuti di lancio di Prestidigitazione crei un piccolo congegno meccanico (CA 5, 1 PF) che ripete uno degli effetti dell'incantesimo quando qualcuno usa un'azione bonus per attivarlo a contatto. Fino a tre congegni, ciascuno dura 8 ore."
+      }
+     ]
+    }
+   ],
+   "traits": [],
+   "origin": "srd"
+  },
+  {
+   "id": "goliath",
+   "name": "Goliath",
+   "description": "Discendenti dei giganti: un dono del loro retaggio, costituzione robusta e, dal 5° livello, la Forma Grande.",
+   "sizes": [
+    "medium"
+   ],
+   "speed": 35,
+   "choices": [
+    {
+     "id": "giant_ancestry",
+     "label": "Discendenza gigantica",
+     "count": 1,
+     "options": [
+      {
+       "id": "clouds_jaunt",
+       "name": "Salta-nuvole (gigante delle nuvole)",
+       "description": "Come azione bonus ti teletrasporti fino a 9 m in uno spazio libero che vedi."
+      },
+      {
+       "id": "fires_burn",
+       "name": "Fuoco bruciante (gigante del fuoco)",
+       "description": "Quando colpisci e infliggi danni, infliggi anche 1d10 danni da fuoco."
+      },
+      {
+       "id": "frosts_chill",
+       "name": "Brivido gelante (gigante del gelo)",
+       "description": "Quando colpisci e infliggi danni, infliggi anche 1d6 danni da freddo e riduci la velocità del bersaglio di 3 m fino all'inizio del tuo turno."
+      },
+      {
+       "id": "hills_tumble",
+       "name": "Forza della collina (gigante delle colline)",
+       "description": "Quando colpisci una creatura Grande o più piccola e infliggi danni, puoi farla cadere Prona."
+      },
+      {
+       "id": "stones_endurance",
+       "name": "Resistenza della pietra (gigante delle pietre)",
+       "description": "Quando subisci danni, con una reazione tira 1d12, aggiungi il modificatore di Costituzione e riduci i danni di quel totale."
+      },
+      {
+       "id": "storms_thunder",
+       "name": "Tuono tempestoso (gigante delle tempeste)",
+       "description": "Quando una creatura entro 18 m ti infligge danni, con una reazione le infliggi 1d8 danni da tuono."
+      }
+     ]
+    }
+   ],
+   "traits": [
+    {
+     "id": "giant_ancestry_uses",
+     "name": "Discendenza gigantica: usi",
+     "description": "Puoi usare il dono scelto un numero di volte pari al bonus di competenza; gli usi tornano con un riposo lungo.",
+     "level": 1,
+     "usage": {
+      "uses": "pb",
+      "recharge": "long_rest"
+     },
+     "origin": "srd"
+    },
+    {
+     "id": "powerful_build",
+     "name": "Costituzione robusta",
+     "description": "Vantaggio alle prove di caratteristica per non essere afferrato; conti come una taglia più grande per la capacità di trasporto.",
+     "level": 1,
+     "origin": "srd"
+    },
+    {
+     "id": "large_form",
+     "name": "Forma Grande",
+     "description": "Dal 5° livello, come azione bonus diventi Grande per 10 minuti (se c'è spazio): Vantaggio alle prove di Forza e velocità +3 m (10 piedi). Una volta per riposo lungo.",
+     "level": 5,
+     "usage": {
+      "uses": 1,
+      "recharge": "long_rest"
+     },
+     "activation": {
+      "resource": "large_form",
+      "duration": "10 minuti"
+     },
+     "effects": [
+      {
+       "op": "speedBonus",
+       "value": 10,
+       "when": "active:large_form"
+      }
+     ],
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "halfling",
+   "name": "Halfling",
+   "description": "Piccoli e fortunati: coraggio, agilità tra le creature più grandi e furtività innata.",
+   "sizes": [
+    "small"
+   ],
+   "speed": 30,
+   "effects": [
+    {
+     "op": "saveAdvantage",
+     "against": "la condizione Spaventato"
+    }
+   ],
+   "traits": [
+    {
+     "id": "brave",
+     "name": "Coraggioso",
+     "description": "Vantaggio ai tiri salvezza per evitare o terminare la condizione Spaventato.",
+     "level": 1,
+     "origin": "srd"
+    },
+    {
+     "id": "halfling_nimbleness",
+     "name": "Agilità halfling",
+     "description": "Puoi attraversare lo spazio di una creatura più grande di te, ma non fermarti lì.",
+     "level": 1,
+     "origin": "srd"
+    },
+    {
+     "id": "luck",
+     "name": "Fortuna",
+     "description": "Quando ottieni 1 sul d20 di una prova con d20 puoi ritirare il dado e devi usare il nuovo risultato.",
+     "level": 1,
+     "origin": "srd"
+    },
+    {
+     "id": "naturally_stealthy",
+     "name": "Furtività innata",
+     "description": "Puoi Nascondersi anche se sei oscurato solo da una creatura più grande di te di almeno una taglia.",
+     "level": 1,
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "human",
+   "name": "Umano",
+   "description": "Versatili: Ispirazione eroica a ogni riposo lungo, una competenza in più e un talento Origini.",
+   "sizes": [
+    "medium",
+    "small"
+   ],
+   "speed": 30,
+   "choices": [
+    {
+     "id": "skillful",
+     "label": "Pluriabilità",
+     "count": 1,
+     "source": "skills"
+    },
+    {
+     "id": "versatile",
+     "label": "Versatile",
+     "count": 1,
+     "source": "feats:origin"
+    }
+   ],
+   "traits": [
+    {
+     "id": "resourceful",
+     "name": "Intraprendente",
+     "description": "Ottieni Ispirazione eroica ogni volta che completi un riposo lungo.",
+     "level": 1,
+     "origin": "srd"
+    },
+    {
+     "id": "skillful",
+     "name": "Pluriabilità",
+     "description": "Competenza in un'abilità a scelta.",
+     "level": 1,
+     "origin": "srd"
+    },
+    {
+     "id": "versatile",
+     "name": "Versatile",
+     "description": "Ottieni un talento Origini a scelta (consigliato: Abile).",
+     "level": 1,
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "orc",
+   "name": "Orco",
+   "description": "Resistenti e instancabili: scatto con punti ferita temporanei, scurovisione ampia e resistenza implacabile.",
+   "sizes": [
+    "medium"
+   ],
+   "speed": 30,
+   "effects": [
+    {
+     "op": "sense",
+     "kind": "darkvision",
+     "range": 120
+    }
+   ],
+   "traits": [
+    {
+     "id": "adrenaline_rush",
+     "name": "Scarica di adrenalina",
+     "description": "Puoi usare Scatto come azione bonus e ottieni punti ferita temporanei pari al bonus di competenza. Usi pari al bonus di competenza, si ricaricano con un riposo breve o lungo.",
+     "level": 1,
+     "usage": {
+      "uses": "pb",
+      "recharge": "short_rest"
+     },
+     "origin": "srd"
+    },
+    {
+     "id": "relentless_endurance",
+     "name": "Resistenza implacabile",
+     "description": "Quando scendi a 0 punti ferita senza morire sul colpo, puoi restare a 1 PF. Una volta per riposo lungo.",
+     "level": 1,
+     "usage": {
+      "uses": 1,
+      "recharge": "long_rest"
+     },
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "tiefling",
+   "name": "Tiefling",
+   "description": "Segnati da un retaggio immondo (Abissale, Ctonio o Infernale): resistenza, magie innate e Taumaturgia.",
+   "sizes": [
+    "medium",
+    "small"
+   ],
+   "speed": 30,
+   "effects": [
+    {
+     "op": "sense",
+     "kind": "darkvision",
+     "range": 60
+    },
+    {
+     "op": "grantSpell",
+     "spell": "thaumaturgy",
+     "mode": "cantrip",
+     "abilityFrom": "spell_ability"
+    }
+   ],
+   "choices": [
+    {
+     "id": "spell_ability",
+     "label": "Caratteristica da incantatore",
+     "count": 1,
+     "options": [
+      {
+       "id": "int",
+       "name": "Intelligenza"
+      },
+      {
+       "id": "wis",
+       "name": "Saggezza"
+      },
+      {
+       "id": "cha",
+       "name": "Carisma"
+      }
+     ]
+    },
+    {
+     "id": "fiendish_legacy",
+     "label": "Retaggio immondo",
+     "count": 1,
+     "options": [
+      {
+       "id": "abyssal",
+       "name": "Abissale",
+       "effects": [
+        {
+         "op": "resistance",
+         "types": [
+          "poison"
+         ]
+        },
+        {
+         "op": "grantSpell",
+         "spell": "poison_spray",
+         "mode": "cantrip",
+         "abilityFrom": "spell_ability"
+        },
+        {
+         "op": "grantSpell",
+         "spell": "ray_of_sickness",
+         "mode": "alwaysPrepared",
+         "abilityFrom": "spell_ability",
+         "freeCast": {
+          "uses": 1,
+          "recharge": "long_rest"
+         },
+         "when": "level>=3"
+        },
+        {
+         "op": "grantSpell",
+         "spell": "hold_person",
+         "mode": "alwaysPrepared",
+         "abilityFrom": "spell_ability",
+         "freeCast": {
+          "uses": 1,
+          "recharge": "long_rest"
+         },
+         "when": "level>=5"
+        }
+       ]
+      },
+      {
+       "id": "chthonic",
+       "name": "Ctonio",
+       "effects": [
+        {
+         "op": "resistance",
+         "types": [
+          "necrotic"
+         ]
+        },
+        {
+         "op": "grantSpell",
+         "spell": "chill_touch",
+         "mode": "cantrip",
+         "abilityFrom": "spell_ability"
+        },
+        {
+         "op": "grantSpell",
+         "spell": "false_life",
+         "mode": "alwaysPrepared",
+         "abilityFrom": "spell_ability",
+         "freeCast": {
+          "uses": 1,
+          "recharge": "long_rest"
+         },
+         "when": "level>=3"
+        },
+        {
+         "op": "grantSpell",
+         "spell": "ray_of_enfeeblement",
+         "mode": "alwaysPrepared",
+         "abilityFrom": "spell_ability",
+         "freeCast": {
+          "uses": 1,
+          "recharge": "long_rest"
+         },
+         "when": "level>=5"
+        }
+       ]
+      },
+      {
+       "id": "infernal",
+       "name": "Infernale",
+       "effects": [
+        {
+         "op": "resistance",
+         "types": [
+          "fire"
+         ]
+        },
+        {
+         "op": "grantSpell",
+         "spell": "fire_bolt",
+         "mode": "cantrip",
+         "abilityFrom": "spell_ability"
+        },
+        {
+         "op": "grantSpell",
+         "spell": "hellish_rebuke",
+         "mode": "alwaysPrepared",
+         "abilityFrom": "spell_ability",
+         "freeCast": {
+          "uses": 1,
+          "recharge": "long_rest"
+         },
+         "when": "level>=3"
+        },
+        {
+         "op": "grantSpell",
+         "spell": "darkness",
+         "mode": "alwaysPrepared",
+         "abilityFrom": "spell_ability",
+         "freeCast": {
+          "uses": 1,
+          "recharge": "long_rest"
+         },
+         "when": "level>=5"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "traits": [
+    {
+     "id": "otherworldly_presence",
+     "name": "Presenza ultraterrena",
+     "description": "Conosci il trucchetto Taumaturgia, lanciato con la stessa caratteristica del retaggio immondo.",
+     "level": 1,
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  }
+ ]
+}

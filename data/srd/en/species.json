@@ -1,0 +1,969 @@
+{
+ "kind": "species",
+ "entries": [
+  {
+   "id": "dragonborn",
+   "name": "Dragonborn",
+   "description": "Descended from dragons: breath of energy, resistance, and from level 5 spectral wings.",
+   "sizes": [
+    "medium"
+   ],
+   "speed": 30,
+   "effects": [
+    {
+     "op": "sense",
+     "kind": "darkvision",
+     "range": 60
+    }
+   ],
+   "choices": [
+    {
+     "id": "draconic_ancestry",
+     "label": "Draconic Ancestry",
+     "count": 1,
+     "options": [
+      {
+       "id": "black",
+       "name": "Black",
+       "effects": [
+        {
+         "op": "resistance",
+         "types": [
+          "acid"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "blue",
+       "name": "Blue",
+       "effects": [
+        {
+         "op": "resistance",
+         "types": [
+          "lightning"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "brass",
+       "name": "Brass",
+       "effects": [
+        {
+         "op": "resistance",
+         "types": [
+          "fire"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "bronze",
+       "name": "Bronze",
+       "effects": [
+        {
+         "op": "resistance",
+         "types": [
+          "lightning"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "copper",
+       "name": "Copper",
+       "effects": [
+        {
+         "op": "resistance",
+         "types": [
+          "acid"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "gold",
+       "name": "Gold",
+       "effects": [
+        {
+         "op": "resistance",
+         "types": [
+          "fire"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "green",
+       "name": "Green",
+       "effects": [
+        {
+         "op": "resistance",
+         "types": [
+          "poison"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "red",
+       "name": "Red",
+       "effects": [
+        {
+         "op": "resistance",
+         "types": [
+          "fire"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "silver",
+       "name": "Silver",
+       "effects": [
+        {
+         "op": "resistance",
+         "types": [
+          "cold"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "white",
+       "name": "White",
+       "effects": [
+        {
+         "op": "resistance",
+         "types": [
+          "cold"
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "traits": [
+    {
+     "id": "breath_weapon",
+     "name": "Breath Weapon",
+     "description": "In place of an attack, exhale energy in a 15-ft Cone or 30-ft × 5-ft Line: Dexterity save (DC 8 + Con + Proficiency), 1d10 damage of your ancestry's type (half on a save). Dice rise to 2d10 at 5th, 3d10 at 11th, 4d10 at 17th. Uses equal your Proficiency Bonus; regained on a Long Rest.",
+     "level": 1,
+     "usage": {
+      "uses": "pb",
+      "recharge": "long_rest"
+     },
+     "origin": "srd"
+    },
+    {
+     "id": "draconic_flight",
+     "name": "Draconic Flight",
+     "description": "From level 5, as a Bonus Action sprout spectral wings for 10 minutes: you have a Fly Speed equal to your Speed. Once per Long Rest.",
+     "level": 5,
+     "usage": {
+      "uses": 1,
+      "recharge": "long_rest"
+     },
+     "activation": {
+      "resource": "draconic_flight",
+      "duration": "10 minutes"
+     },
+     "effects": [
+      {
+       "op": "setSpeed",
+       "mode": "fly",
+       "value": 30,
+       "when": "active:draconic_flight"
+      }
+     ],
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "dwarf",
+   "name": "Dwarf",
+   "description": "Hardy and tough: wide Darkvision, poison resistance, and extra Hit Points every level.",
+   "sizes": [
+    "medium"
+   ],
+   "speed": 30,
+   "effects": [
+    {
+     "op": "sense",
+     "kind": "darkvision",
+     "range": 120
+    },
+    {
+     "op": "resistance",
+     "types": [
+      "poison"
+     ]
+    },
+    {
+     "op": "saveAdvantage",
+     "against": "the Poisoned condition"
+    },
+    {
+     "op": "hpMaxPerLevel",
+     "value": 1
+    }
+   ],
+   "traits": [
+    {
+     "id": "dwarven_resilience",
+     "name": "Dwarven Resilience",
+     "description": "Resistance to Poison damage and Advantage on saves to avoid or end the Poisoned condition.",
+     "level": 1,
+     "origin": "srd"
+    },
+    {
+     "id": "dwarven_toughness",
+     "name": "Dwarven Toughness",
+     "description": "Your Hit Point maximum increases by 1, and by 1 again each time you gain a level.",
+     "level": 1,
+     "origin": "srd"
+    },
+    {
+     "id": "stonecunning",
+     "name": "Stonecunning",
+     "description": "As a Bonus Action gain Tremorsense out to 60 feet for 10 minutes while on or touching stone. Uses equal your Proficiency Bonus; regained on a Long Rest.",
+     "level": 1,
+     "usage": {
+      "uses": "pb",
+      "recharge": "long_rest"
+     },
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "elf",
+   "name": "Elf",
+   "description": "Long-lived and graceful, with a magical lineage (Drow, High Elf, or Wood Elf), keen senses, and Trance in place of sleep.",
+   "sizes": [
+    "medium"
+   ],
+   "speed": 30,
+   "effects": [
+    {
+     "op": "sense",
+     "kind": "darkvision",
+     "range": 60
+    },
+    {
+     "op": "saveAdvantage",
+     "against": "the Charmed condition"
+    }
+   ],
+   "choices": [
+    {
+     "id": "spell_ability",
+     "label": "Spellcasting ability",
+     "count": 1,
+     "options": [
+      {
+       "id": "int",
+       "name": "Intelligence"
+      },
+      {
+       "id": "wis",
+       "name": "Wisdom"
+      },
+      {
+       "id": "cha",
+       "name": "Charisma"
+      }
+     ]
+    },
+    {
+     "id": "elven_lineage",
+     "label": "Elven Lineage",
+     "count": 1,
+     "options": [
+      {
+       "id": "drow",
+       "name": "Drow",
+       "description": "Your Darkvision range increases to 120 feet.",
+       "effects": [
+        {
+         "op": "sense",
+         "kind": "darkvision",
+         "range": 120
+        },
+        {
+         "op": "grantSpell",
+         "spell": "dancing_lights",
+         "mode": "cantrip",
+         "abilityFrom": "spell_ability"
+        },
+        {
+         "op": "grantSpell",
+         "spell": "faerie_fire",
+         "mode": "alwaysPrepared",
+         "abilityFrom": "spell_ability",
+         "freeCast": {
+          "uses": 1,
+          "recharge": "long_rest"
+         },
+         "when": "level>=3"
+        },
+        {
+         "op": "grantSpell",
+         "spell": "darkness",
+         "mode": "alwaysPrepared",
+         "abilityFrom": "spell_ability",
+         "freeCast": {
+          "uses": 1,
+          "recharge": "long_rest"
+         },
+         "when": "level>=5"
+        }
+       ]
+      },
+      {
+       "id": "high_elf",
+       "name": "High Elf",
+       "description": "Whenever you finish a Long Rest, you can replace Prestidigitation with another cantrip from the Wizard list.",
+       "effects": [
+        {
+         "op": "grantSpell",
+         "spell": "prestidigitation",
+         "mode": "cantrip",
+         "abilityFrom": "spell_ability"
+        },
+        {
+         "op": "grantSpell",
+         "spell": "detect_magic",
+         "mode": "alwaysPrepared",
+         "abilityFrom": "spell_ability",
+         "freeCast": {
+          "uses": 1,
+          "recharge": "long_rest"
+         },
+         "when": "level>=3"
+        },
+        {
+         "op": "grantSpell",
+         "spell": "misty_step",
+         "mode": "alwaysPrepared",
+         "abilityFrom": "spell_ability",
+         "freeCast": {
+          "uses": 1,
+          "recharge": "long_rest"
+         },
+         "when": "level>=5"
+        }
+       ]
+      },
+      {
+       "id": "wood_elf",
+       "name": "Wood Elf",
+       "effects": [
+        {
+         "op": "setSpeed",
+         "mode": "walk",
+         "value": 35
+        },
+        {
+         "op": "grantSpell",
+         "spell": "druidcraft",
+         "mode": "cantrip",
+         "abilityFrom": "spell_ability"
+        },
+        {
+         "op": "grantSpell",
+         "spell": "longstrider",
+         "mode": "alwaysPrepared",
+         "abilityFrom": "spell_ability",
+         "freeCast": {
+          "uses": 1,
+          "recharge": "long_rest"
+         },
+         "when": "level>=3"
+        },
+        {
+         "op": "grantSpell",
+         "spell": "pass_without_trace",
+         "mode": "alwaysPrepared",
+         "abilityFrom": "spell_ability",
+         "freeCast": {
+          "uses": 1,
+          "recharge": "long_rest"
+         },
+         "when": "level>=5"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "keen_senses",
+     "label": "Keen Senses",
+     "count": 1,
+     "options": [
+      {
+       "id": "insight",
+       "name": "Insight",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "insight"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "perception",
+       "name": "Perception",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "perception"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "survival",
+       "name": "Survival",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "survival"
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "traits": [
+    {
+     "id": "fey_ancestry",
+     "name": "Fey Ancestry",
+     "description": "Advantage on saves to avoid or end the Charmed condition.",
+     "level": 1,
+     "origin": "srd"
+    },
+    {
+     "id": "trance",
+     "name": "Trance",
+     "description": "You don't need sleep and magic can't put you to sleep. You finish a Long Rest in 4 hours of trancelike meditation, staying conscious.",
+     "level": 1,
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "gnome",
+   "name": "Gnome",
+   "description": "Small and inventive: Advantage on mental saves and a magical lineage (Forest or Rock Gnome).",
+   "sizes": [
+    "small"
+   ],
+   "speed": 30,
+   "effects": [
+    {
+     "op": "sense",
+     "kind": "darkvision",
+     "range": 60
+    },
+    {
+     "op": "saveAdvantage",
+     "abilities": [
+      "int",
+      "wis",
+      "cha"
+     ]
+    }
+   ],
+   "choices": [
+    {
+     "id": "spell_ability",
+     "label": "Spellcasting ability",
+     "count": 1,
+     "options": [
+      {
+       "id": "int",
+       "name": "Intelligence"
+      },
+      {
+       "id": "wis",
+       "name": "Wisdom"
+      },
+      {
+       "id": "cha",
+       "name": "Charisma"
+      }
+     ]
+    },
+    {
+     "id": "gnomish_lineage",
+     "label": "Gnomish Lineage",
+     "count": 1,
+     "options": [
+      {
+       "id": "forest_gnome",
+       "name": "Forest Gnome",
+       "effects": [
+        {
+         "op": "grantSpell",
+         "spell": "minor_illusion",
+         "mode": "cantrip",
+         "abilityFrom": "spell_ability"
+        },
+        {
+         "op": "grantSpell",
+         "spell": "speak_with_animals",
+         "mode": "alwaysPrepared",
+         "abilityFrom": "spell_ability",
+         "freeCast": {
+          "uses": "pb",
+          "recharge": "long_rest"
+         }
+        }
+       ]
+      },
+      {
+       "id": "rock_gnome",
+       "name": "Rock Gnome",
+       "effects": [
+        {
+         "op": "grantSpell",
+         "spell": "mending",
+         "mode": "cantrip",
+         "abilityFrom": "spell_ability"
+        },
+        {
+         "op": "grantSpell",
+         "spell": "prestidigitation",
+         "mode": "cantrip",
+         "abilityFrom": "spell_ability"
+        }
+       ],
+       "description": "Spending 10 minutes casting Prestidigitation creates a Tiny clockwork device (AC 5, 1 HP) that repeats one of the spell's effects when someone uses a Bonus Action to touch-activate it. Up to three devices, each lasting 8 hours."
+      }
+     ]
+    }
+   ],
+   "traits": [],
+   "origin": "srd"
+  },
+  {
+   "id": "goliath",
+   "name": "Goliath",
+   "description": "Descended from giants: a boon of your ancestry, powerful build, and from level 5 Large Form.",
+   "sizes": [
+    "medium"
+   ],
+   "speed": 35,
+   "choices": [
+    {
+     "id": "giant_ancestry",
+     "label": "Giant Ancestry",
+     "count": 1,
+     "options": [
+      {
+       "id": "clouds_jaunt",
+       "name": "Cloud's Jaunt (Cloud Giant)",
+       "description": "As a Bonus Action, teleport up to 30 feet to an unoccupied space you can see."
+      },
+      {
+       "id": "fires_burn",
+       "name": "Fire's Burn (Fire Giant)",
+       "description": "When you hit and deal damage, also deal 1d10 Fire damage."
+      },
+      {
+       "id": "frosts_chill",
+       "name": "Frost's Chill (Frost Giant)",
+       "description": "When you hit and deal damage, also deal 1d6 Cold damage and reduce the target's Speed by 10 feet until the start of your next turn."
+      },
+      {
+       "id": "hills_tumble",
+       "name": "Hill's Tumble (Hill Giant)",
+       "description": "When you hit a Large or smaller creature and deal damage, you can give it the Prone condition."
+      },
+      {
+       "id": "stones_endurance",
+       "name": "Stone's Endurance (Stone Giant)",
+       "description": "When you take damage, use a Reaction to roll 1d12, add your Constitution modifier, and reduce the damage by that total."
+      },
+      {
+       "id": "storms_thunder",
+       "name": "Storm's Thunder (Storm Giant)",
+       "description": "When a creature within 60 feet damages you, use a Reaction to deal 1d8 Thunder damage to it."
+      }
+     ]
+    }
+   ],
+   "traits": [
+    {
+     "id": "giant_ancestry_uses",
+     "name": "Giant Ancestry: uses",
+     "description": "You can use your chosen boon a number of times equal to your Proficiency Bonus; uses return on a Long Rest.",
+     "level": 1,
+     "usage": {
+      "uses": "pb",
+      "recharge": "long_rest"
+     },
+     "origin": "srd"
+    },
+    {
+     "id": "powerful_build",
+     "name": "Powerful Build",
+     "description": "Advantage on ability checks to end the Grappled condition; you count as one size larger for carrying capacity.",
+     "level": 1,
+     "origin": "srd"
+    },
+    {
+     "id": "large_form",
+     "name": "Large Form",
+     "description": "From level 5, as a Bonus Action become Large for 10 minutes (if there's room): Advantage on Strength checks and Speed +10 feet. Once per Long Rest.",
+     "level": 5,
+     "usage": {
+      "uses": 1,
+      "recharge": "long_rest"
+     },
+     "activation": {
+      "resource": "large_form",
+      "duration": "10 minutes"
+     },
+     "effects": [
+      {
+       "op": "speedBonus",
+       "value": 10,
+       "when": "active:large_form"
+      }
+     ],
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "halfling",
+   "name": "Halfling",
+   "description": "Small and lucky: courage, nimbleness among larger creatures, and natural stealth.",
+   "sizes": [
+    "small"
+   ],
+   "speed": 30,
+   "effects": [
+    {
+     "op": "saveAdvantage",
+     "against": "the Frightened condition"
+    }
+   ],
+   "traits": [
+    {
+     "id": "brave",
+     "name": "Brave",
+     "description": "Advantage on saves to avoid or end the Frightened condition.",
+     "level": 1,
+     "origin": "srd"
+    },
+    {
+     "id": "halfling_nimbleness",
+     "name": "Halfling Nimbleness",
+     "description": "You can move through the space of any creature larger than you, but can't stop there.",
+     "level": 1,
+     "origin": "srd"
+    },
+    {
+     "id": "luck",
+     "name": "Luck",
+     "description": "When you roll a 1 on the d20 of a D20 Test, you can reroll it and must use the new roll.",
+     "level": 1,
+     "origin": "srd"
+    },
+    {
+     "id": "naturally_stealthy",
+     "name": "Naturally Stealthy",
+     "description": "You can Hide even when obscured only by a creature at least one size larger than you.",
+     "level": 1,
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "human",
+   "name": "Human",
+   "description": "Versatile: Heroic Inspiration every Long Rest, an extra skill, and an Origin feat.",
+   "sizes": [
+    "medium",
+    "small"
+   ],
+   "speed": 30,
+   "choices": [
+    {
+     "id": "skillful",
+     "label": "Skillful",
+     "count": 1,
+     "source": "skills"
+    },
+    {
+     "id": "versatile",
+     "label": "Versatile",
+     "count": 1,
+     "source": "feats:origin"
+    }
+   ],
+   "traits": [
+    {
+     "id": "resourceful",
+     "name": "Resourceful",
+     "description": "You gain Heroic Inspiration whenever you finish a Long Rest.",
+     "level": 1,
+     "origin": "srd"
+    },
+    {
+     "id": "skillful",
+     "name": "Skillful",
+     "description": "Proficiency in one skill of your choice.",
+     "level": 1,
+     "origin": "srd"
+    },
+    {
+     "id": "versatile",
+     "name": "Versatile",
+     "description": "You gain an Origin feat of your choice (Skilled is recommended).",
+     "level": 1,
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "orc",
+   "name": "Orc",
+   "description": "Tireless and tough: a Dash that grants Temporary Hit Points, wide Darkvision, and Relentless Endurance.",
+   "sizes": [
+    "medium"
+   ],
+   "speed": 30,
+   "effects": [
+    {
+     "op": "sense",
+     "kind": "darkvision",
+     "range": 120
+    }
+   ],
+   "traits": [
+    {
+     "id": "adrenaline_rush",
+     "name": "Adrenaline Rush",
+     "description": "You can Dash as a Bonus Action and gain Temporary Hit Points equal to your Proficiency Bonus. Uses equal your Proficiency Bonus; regained on a Short or Long Rest.",
+     "level": 1,
+     "usage": {
+      "uses": "pb",
+      "recharge": "short_rest"
+     },
+     "origin": "srd"
+    },
+    {
+     "id": "relentless_endurance",
+     "name": "Relentless Endurance",
+     "description": "When reduced to 0 Hit Points but not killed outright, you can drop to 1 instead. Once per Long Rest.",
+     "level": 1,
+     "usage": {
+      "uses": 1,
+      "recharge": "long_rest"
+     },
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "tiefling",
+   "name": "Tiefling",
+   "description": "Marked by a fiendish legacy (Abyssal, Chthonic, or Infernal): a resistance, innate spells, and Thaumaturgy.",
+   "sizes": [
+    "medium",
+    "small"
+   ],
+   "speed": 30,
+   "effects": [
+    {
+     "op": "sense",
+     "kind": "darkvision",
+     "range": 60
+    },
+    {
+     "op": "grantSpell",
+     "spell": "thaumaturgy",
+     "mode": "cantrip",
+     "abilityFrom": "spell_ability"
+    }
+   ],
+   "choices": [
+    {
+     "id": "spell_ability",
+     "label": "Spellcasting ability",
+     "count": 1,
+     "options": [
+      {
+       "id": "int",
+       "name": "Intelligence"
+      },
+      {
+       "id": "wis",
+       "name": "Wisdom"
+      },
+      {
+       "id": "cha",
+       "name": "Charisma"
+      }
+     ]
+    },
+    {
+     "id": "fiendish_legacy",
+     "label": "Fiendish Legacy",
+     "count": 1,
+     "options": [
+      {
+       "id": "abyssal",
+       "name": "Abyssal",
+       "effects": [
+        {
+         "op": "resistance",
+         "types": [
+          "poison"
+         ]
+        },
+        {
+         "op": "grantSpell",
+         "spell": "poison_spray",
+         "mode": "cantrip",
+         "abilityFrom": "spell_ability"
+        },
+        {
+         "op": "grantSpell",
+         "spell": "ray_of_sickness",
+         "mode": "alwaysPrepared",
+         "abilityFrom": "spell_ability",
+         "freeCast": {
+          "uses": 1,
+          "recharge": "long_rest"
+         },
+         "when": "level>=3"
+        },
+        {
+         "op": "grantSpell",
+         "spell": "hold_person",
+         "mode": "alwaysPrepared",
+         "abilityFrom": "spell_ability",
+         "freeCast": {
+          "uses": 1,
+          "recharge": "long_rest"
+         },
+         "when": "level>=5"
+        }
+       ]
+      },
+      {
+       "id": "chthonic",
+       "name": "Chthonic",
+       "effects": [
+        {
+         "op": "resistance",
+         "types": [
+          "necrotic"
+         ]
+        },
+        {
+         "op": "grantSpell",
+         "spell": "chill_touch",
+         "mode": "cantrip",
+         "abilityFrom": "spell_ability"
+        },
+        {
+         "op": "grantSpell",
+         "spell": "false_life",
+         "mode": "alwaysPrepared",
+         "abilityFrom": "spell_ability",
+         "freeCast": {
+          "uses": 1,
+          "recharge": "long_rest"
+         },
+         "when": "level>=3"
+        },
+        {
+         "op": "grantSpell",
+         "spell": "ray_of_enfeeblement",
+         "mode": "alwaysPrepared",
+         "abilityFrom": "spell_ability",
+         "freeCast": {
+          "uses": 1,
+          "recharge": "long_rest"
+         },
+         "when": "level>=5"
+        }
+       ]
+      },
+      {
+       "id": "infernal",
+       "name": "Infernal",
+       "effects": [
+        {
+         "op": "resistance",
+         "types": [
+          "fire"
+         ]
+        },
+        {
+         "op": "grantSpell",
+         "spell": "fire_bolt",
+         "mode": "cantrip",
+         "abilityFrom": "spell_ability"
+        },
+        {
+         "op": "grantSpell",
+         "spell": "hellish_rebuke",
+         "mode": "alwaysPrepared",
+         "abilityFrom": "spell_ability",
+         "freeCast": {
+          "uses": 1,
+          "recharge": "long_rest"
+         },
+         "when": "level>=3"
+        },
+        {
+         "op": "grantSpell",
+         "spell": "darkness",
+         "mode": "alwaysPrepared",
+         "abilityFrom": "spell_ability",
+         "freeCast": {
+          "uses": 1,
+          "recharge": "long_rest"
+         },
+         "when": "level>=5"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "traits": [
+    {
+     "id": "otherworldly_presence",
+     "name": "Otherworldly Presence",
+     "description": "You know the Thaumaturgy cantrip, cast with the same ability as your Fiendish Legacy.",
+     "level": 1,
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  }
+ ]
+}
