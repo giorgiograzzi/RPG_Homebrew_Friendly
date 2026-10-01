@@ -4,7 +4,7 @@ import { brokenReferences, idsByKind, loadSrd, SRD_LANGS } from "./srdIntegrity"
 // Conteggi presi dalle tabelle dell'SRD 5.2.1 (armi: 10 semplici da mischia + 4 semplici a distanza + 18 da guerra da mischia + 6 da guerra a distanza)
 const COUNTS: Record<string, number> = {
   skills: 18, languages: 19, sizes: 6, damageTypes: 13, weaponProperties: 10, masteries: 8, coins: 5,
-  weapons: 38, armors: 13, tools: 37, items: 94, backgrounds: 4, feats: 17, species: 9,
+  weapons: 38, armors: 13, tools: 37, items: 94, backgrounds: 4, feats: 17, species: 9, classes: 4, subclasses: 4,
 };
 
 describe.each(SRD_LANGS)("dati SRD (%s)", (lang) => {
@@ -151,5 +151,70 @@ describe("specie: valori controllati sul PDF (SRD 5.2.1)", () => {
     expect(shape(rsIt)).toEqual(shape(en));
     expect(rsIt.species.get("dwarf")!.name.it).toBe("Nano");
     expect(rsIt.species.get("elf")!.choices.find((c) => c.id === "elven_lineage")!.options!.find((o) => o.id === "high_elf")!.name.it).toBe("Elfo alto");
+  });
+});
+
+describe("classi (blocco 1: Barbaro, Guerriero, Monaco, Ladro): valori controllati sul PDF (SRD 5.2.1)", () => {
+  const [rsIt, en] = [loadSrd("it"), loadSrd("en")];
+  const cls = (id: string) => en.classes.get(id)!;
+  const levels = (id: string, fid: string) => cls(id).features.filter((x) => x.id.startsWith(fid)).map((x) => x.level);
+  it("tratti fondamentali", () => {
+    expect(["barbarian", "fighter", "monk", "rogue"].map((id) => [id, cls(id).hitDie, cls(id).primaryAbility.join("/"), cls(id).saves.join("/"), cls(id).skillChoices.count])).toEqual([
+      ["barbarian", 12, "str", "str/con", 2], ["fighter", 10, "str/dex", "str/con", 2], ["monk", 8, "dex/wis", "str/dex", 2], ["rogue", 8, "dex", "dex/int", 4]]);
+    expect(cls("rogue").weaponProficiency).toEqual(["simple", "martial[finesse|light]"]);
+    expect(cls("monk").weaponProficiency).toEqual(["simple", "martial[light]"]);
+    expect(cls("fighter").armorTraining).toEqual(["light", "medium", "heavy", "shield"]);
+    expect(cls("monk").armorTraining).toEqual([]);
+  });
+  it("equipaggiamento di partenza", () => {
+    expect(cls("barbarian").equipment.A).toEqual({ items: [{ item: "greataxe", qty: 1 }, { item: "handaxe", qty: 4 }, { item: "explorers_pack", qty: 1 }], gp: 15 });
+    expect(cls("fighter").equipment.C).toEqual({ items: [], gp: 155 });
+    expect(cls("rogue").equipment.B).toEqual({ items: [], gp: 100 });
+    expect(cls("monk").equipment.A!.items).toContainEqual({ item: "$tool", qty: 1 });
+  });
+  it("tabelle dei livelli", () => {
+    expect(cls("barbarian").table.rages).toEqual([2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6]);
+    expect(cls("barbarian").table.rage_damage![0]).toBe(2); expect(cls("barbarian").table.rage_damage![8]).toBe(3); expect(cls("barbarian").table.rage_damage![15]).toBe(4);
+    expect(cls("fighter").table.second_wind).toEqual([2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4]);
+    expect(cls("fighter").table.weapon_mastery![0]).toBe(3); expect(cls("fighter").table.weapon_mastery![19]).toBe(6);
+    expect(cls("monk").table.martial_arts![0]).toBe("1d6"); expect(cls("monk").table.martial_arts![4]).toBe("1d8"); expect(cls("monk").table.martial_arts![10]).toBe("1d10"); expect(cls("monk").table.martial_arts![16]).toBe("1d12");
+    expect(cls("monk").table.focus_points).toEqual([0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]);
+    expect(cls("monk").table.unarmored_movement).toEqual([0, 10, 10, 10, 10, 15, 15, 15, 15, 20, 20, 20, 20, 25, 25, 25, 25, 30, 30, 30]); // piedi
+    expect(cls("rogue").table.sneak_attack![0]).toBe("1d6"); expect(cls("rogue").table.sneak_attack![18]).toBe("10d6"); expect(cls("rogue").table.sneak_attack![19]).toBe("10d6");
+  });
+  it("livelli dei privilegi", () => {
+    expect(levels("barbarian", "ability_score_improvement")).toEqual([4, 8, 12, 16]);
+    expect(levels("fighter", "ability_score_improvement")).toEqual([4, 6, 8, 12, 14, 16]);
+    expect(levels("rogue", "ability_score_improvement")).toEqual([4, 8, 10, 12, 16]);
+    expect(levels("monk", "ability_score_improvement")).toEqual([4, 8, 12, 16]);
+    for (const id of ["barbarian", "fighter", "monk", "rogue"]) {
+      expect(cls(id).subclassLevel).toBe(3);
+      expect(cls(id).features.find((x) => x.id === `${id}_subclass`)!.level).toBe(3);
+      expect(cls(id).features.find((x) => x.id === "epic_boon")!.level).toBe(19);
+    }
+    expect(["extra_attack", "two_extra_attacks", "three_extra_attacks"].map((id) => cls("fighter").features.find((x) => x.id === id)!.level)).toEqual([5, 11, 20]);
+    expect(cls("monk").features.find((x) => x.id === "extra_attack")!.level).toBe(5);
+    expect(cls("barbarian").features.find((x) => x.id === "rage")!.usage).toEqual({ uses: { table: cls("barbarian").table.rages }, recharge: "long_rest", partialShortRest: 1 });
+  });
+  it("ogni privilegio ha nome e descrizione in IT e EN", () => {
+    const all = (rs: typeof en) => [...rs.classes.values()].flatMap((c) => c.features).concat([...rs.subclasses.values()].flatMap((s) => s.features));
+    const [a, b] = [all(rsIt), all(en)];
+    expect(a.length).toBe(b.length);
+    for (const [i, x] of a.entries()) { expect(x.description.trim().length, x.id).toBeGreaterThan(10); expect(x.description, x.id).not.toBe(b[i]!.description); expect(x.name.it, x.id).not.toBe(""); }
+  });
+  it("sottoclassi", () => {
+    const sub = (id: string) => [...en.subclasses.values()].find((s) => s.classId === id)!;
+    expect(["barbarian", "fighter", "monk", "rogue"].map((id) => [sub(id).id, sub(id).features.map((x) => x.level).join(",")])).toEqual([
+      ["berserker", "3,6,10,14"], ["champion", "3,3,7,10,15,18"], ["open_hand", "3,6,11,17"], ["thief", "3,3,9,13,17"]]);
+    expect(en.subclasses.get("champion")!.features.find((x) => x.id === "improved_critical")!.effects).toEqual([{ op: "critRange", min: 19 }]);
+    expect(rsIt.subclasses.get("thief")!.name.it).toBe("Furfante");
+    expect(en.subclasses.get("open_hand")!.name.it).toBe("Warrior of the Open Hand");
+  });
+  it("stessa struttura in IT e EN (nomi e testi a parte)", () => {
+    const shape = (rs: typeof en) => [...rs.classes.values()].map((c) => ({ id: c.id, hitDie: c.hitDie, table: c.table, equipment: c.equipment, features: c.features.map((x) => [x.id, x.level, x.usage, x.effects, (x.choices ?? []).map((k) => [k.id, k.count, k.countFrom, k.source])]) }));
+    expect(shape(rsIt)).toEqual(shape(en));
+    expect(rsIt.classes.get("barbarian")!.name.it).toBe("Barbaro");
+    expect(rsIt.classes.get("rogue")!.features.find((x) => x.id === "sneak_attack")!.name.it).toBe("Attacco furtivo");
+    expect(rsIt.classes.get("barbarian")!.features.find((x) => x.id === "primal_knowledge")!.choices[0]!.options![1]!.name.it).toBe("Atletica");
   });
 });

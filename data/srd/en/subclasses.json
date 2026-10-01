@@ -1,0 +1,202 @@
+{
+ "kind": "subclasses",
+ "entries": [
+  {
+   "id": "berserker",
+   "classId": "barbarian",
+   "name": "Path of the Berserker",
+   "description": "Channel Rage into violent fury: extra damage, immunity to fear and charm, retaliation, and an intimidating presence.",
+   "features": [
+    {
+     "level": 3,
+     "id": "frenzy",
+     "name": "Frenzy",
+     "description": "If you use Reckless Attack while raging, the first target you hit on your turn with a Strength-based attack takes extra damage: roll a number of d6s equal to your Rage Damage bonus.",
+     "origin": "srd"
+    },
+    {
+     "level": 6,
+     "id": "mindless_rage",
+     "name": "Mindless Rage",
+     "description": "You can't be Charmed or Frightened while raging; if you are when you enter your Rage, the condition ends.",
+     "origin": "srd"
+    },
+    {
+     "level": 10,
+     "id": "retaliation",
+     "name": "Retaliation",
+     "description": "When you take damage from a creature within 5 feet, you can use your Reaction to make one melee attack against it with a weapon or Unarmed Strike.",
+     "origin": "srd"
+    },
+    {
+     "level": 14,
+     "id": "intimidating_presence",
+     "name": "Intimidating Presence",
+     "description": "As a Bonus Action, each creature of your choice in a 30-foot Emanation must succeed on a Wisdom save (DC 8 + Strength + Proficiency) or be Frightened for 1 minute (repeats the save at the end of its turns). Once per Long Rest, or by expending a Rage use.",
+     "usage": {
+      "uses": 1,
+      "recharge": "long_rest"
+     },
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "champion",
+   "classId": "fighter",
+   "name": "Champion",
+   "description": "Physical excellence in combat: more frequent critical hits, athleticism, and resilience.",
+   "features": [
+    {
+     "level": 3,
+     "id": "improved_critical",
+     "name": "Improved Critical",
+     "description": "Weapon and Unarmed Strike attack rolls score a Critical Hit on a 19 or 20.",
+     "effects": [
+      {
+       "op": "critRange",
+       "min": 19
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 3,
+     "id": "remarkable_athlete",
+     "name": "Remarkable Athlete",
+     "description": "Advantage on Initiative rolls and Strength (Athletics) checks. After you score a Critical Hit you can move up to half your Speed without Opportunity Attacks.",
+     "origin": "srd"
+    },
+    {
+     "level": 7,
+     "id": "additional_fighting_style",
+     "name": "Additional Fighting Style",
+     "description": "You gain another Fighting Style feat of your choice.",
+     "choices": [
+      {
+       "id": "fighter_additional_fighting_style",
+       "label": "Additional Fighting Style",
+       "count": 1,
+       "source": "feats:fighting_style"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 10,
+     "id": "heroic_warrior",
+     "name": "Heroic Warrior",
+     "description": "During combat, you can give yourself Heroic Inspiration whenever you start your turn without it.",
+     "origin": "srd"
+    },
+    {
+     "level": 15,
+     "id": "superior_critical",
+     "name": "Superior Critical",
+     "description": "Weapon and Unarmed Strike attack rolls score a Critical Hit on an 18-20.",
+     "effects": [
+      {
+       "op": "critRange",
+       "min": 18
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 18,
+     "id": "survivor",
+     "name": "Survivor",
+     "description": "Advantage on Death Saving Throws; a 18-20 counts as a 20. At the start of your turn, if you are Bloodied and have at least 1 Hit Point, you regain 5 + your Constitution modifier Hit Points.",
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "open_hand",
+   "classId": "monk",
+   "name": "Warrior of the Open Hand",
+   "description": "Master of unarmed combat: pushes, topples opponents, and heals themself.",
+   "features": [
+    {
+     "level": 3,
+     "id": "open_hand_technique",
+     "name": "Open Hand Technique",
+     "description": "When you hit with an attack from Flurry of Blows you can impose one effect: Addle (no Opportunity Attacks until its next turn), Push (Strength save or pushed up to 15 feet), or Topple (Dexterity save or Prone).",
+     "origin": "srd"
+    },
+    {
+     "level": 6,
+     "id": "wholeness_of_body",
+     "name": "Wholeness of Body",
+     "description": "As a Bonus Action roll your Martial Arts die and regain Hit Points equal to the roll + your Wisdom modifier (minimum 1). Uses equal your Wisdom modifier (minimum 1) per Long Rest.",
+     "usage": {
+      "uses": "max(1, mod:wis)",
+      "recharge": "long_rest"
+     },
+     "origin": "srd"
+    },
+    {
+     "level": 11,
+     "id": "fleet_step",
+     "name": "Fleet Step",
+     "description": "When you take a Bonus Action other than Step of the Wind, you can also use Step of the Wind right after it.",
+     "origin": "srd"
+    },
+    {
+     "level": 17,
+     "id": "quivering_palm",
+     "name": "Quivering Palm",
+     "description": "When you hit with an Unarmed Strike you can spend 4 Focus Points to start imperceptible vibrations (lasting days equal to your Monk level). With an action (or by forgoing an attack) you end them: Constitution save, 10d12 Force damage on a failure, half on a success. One creature at a time.",
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "thief",
+   "classId": "rogue",
+   "name": "Thief",
+   "description": "Treasure hunter and burglar: fast hands, climbing, magic items, and a double first turn.",
+   "features": [
+    {
+     "level": 3,
+     "id": "fast_hands",
+     "name": "Fast Hands",
+     "description": "As a Bonus Action: a Dexterity (Sleight of Hand) check to pick a lock, disarm a trap with Thieves' Tools, or pick a pocket; or take the Utilize or Magic action to use a magic item.",
+     "origin": "srd"
+    },
+    {
+     "level": 3,
+     "id": "second_story_work",
+     "name": "Second-Story Work",
+     "description": "You gain a Climb Speed equal to your Speed, and you use Dexterity instead of Strength to determine your jump distance.",
+     "origin": "srd"
+    },
+    {
+     "level": 9,
+     "id": "supreme_sneak",
+     "name": "Supreme Sneak",
+     "description": "New Cunning Strike option: Stealth Attack (1d6): if you're Invisible from the Hide action, the attack doesn't end that condition if you end the turn behind Three-Quarters or Total Cover.",
+     "origin": "srd"
+    },
+    {
+     "level": 13,
+     "id": "use_magic_device",
+     "name": "Use Magic Device",
+     "description": "Charges: when you use a magic item property that expends charges, roll 1d6; on a 6 no charge is expended. Scrolls: you can use any spell scroll with Intelligence (cantrips and level 1 without a check; higher needs an Intelligence (Arcana) check DC 10 + spell level, else it crumbles). You can attune to up to four magic items.",
+     "origin": "srd"
+    },
+    {
+     "level": 17,
+     "id": "thiefs_reflexes",
+     "name": "Thief's Reflexes",
+     "description": "You take two turns during the first round of any combat: the first at your normal Initiative and the second at your Initiative minus 10.",
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  }
+ ]
+}

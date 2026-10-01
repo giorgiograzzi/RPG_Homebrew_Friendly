@@ -1,0 +1,2232 @@
+{
+ "kind": "classes",
+ "entries": [
+  {
+   "id": "barbarian",
+   "name": "Barbaro",
+   "description": "Guerriero feroce che attinge a un'ira primordiale: resistenza ai danni, forza bruta e attacchi devastanti.",
+   "hitDie": 12,
+   "primaryAbility": [
+    "str"
+   ],
+   "saves": [
+    "str",
+    "con"
+   ],
+   "skillChoices": {
+    "count": 2,
+    "from": [
+     "animal_handling",
+     "athletics",
+     "intimidation",
+     "nature",
+     "perception",
+     "survival"
+    ]
+   },
+   "armorTraining": [
+    "light",
+    "medium",
+    "shield"
+   ],
+   "weaponProficiency": [
+    "simple",
+    "martial"
+   ],
+   "caster": "none",
+   "multiclass": {
+    "weapons": [
+     "martial"
+    ],
+    "armor": [
+     "shield"
+    ],
+    "skills": 0,
+    "toolChoices": 0,
+    "tools": []
+   },
+   "equipment": {
+    "A": {
+     "items": [
+      {
+       "item": "greataxe",
+       "qty": 1
+      },
+      {
+       "item": "handaxe",
+       "qty": 4
+      },
+      {
+       "item": "explorers_pack",
+       "qty": 1
+      }
+     ],
+     "gp": 15
+    },
+    "B": {
+     "items": [],
+     "gp": 75
+    }
+   },
+   "choices": [
+    {
+     "id": "barbarian_skills",
+     "label": "Abilità di classe",
+     "count": 2,
+     "options": [
+      {
+       "id": "animal_handling",
+       "name": "Addestrare animali",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "animal_handling"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "athletics",
+       "name": "Atletica",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "athletics"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "intimidation",
+       "name": "Intimidire",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "intimidation"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "nature",
+       "name": "Natura",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "nature"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "perception",
+       "name": "Percezione",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "perception"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "survival",
+       "name": "Sopravvivenza",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "survival"
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "features": [
+    {
+     "level": 1,
+     "id": "rage",
+     "name": "Ira",
+     "description": "Come azione bonus (senza armatura pesante) entri in ira; gli usi sono nella colonna Ire (ne recuperi 1 con un riposo breve, tutti con uno lungo). In ira: resistenza ai danni contundenti, perforanti e taglienti; bonus ai danni degli attacchi basati su Forza (colonna Danni dell'ira); Vantaggio alle prove e ai tiri salvezza su Forza; niente concentrazione né incantesimi. L'ira dura fino alla fine del tuo prossimo turno e si prolunga se attacchi, costringi un nemico a un tiro salvezza o usi un'azione bonus (massimo 10 minuti); finisce se indossi un'armatura pesante o sei incapacitato.",
+     "effects": [
+      {
+       "op": "resistance",
+       "types": [
+        "bludgeoning",
+        "piercing",
+        "slashing"
+       ],
+       "when": "active:rage"
+      },
+      {
+       "op": "saveAdvantage",
+       "abilities": [
+        "str"
+       ],
+       "when": "active:rage"
+      },
+      {
+       "op": "damageBonus",
+       "value": 2,
+       "attackType": "any",
+       "when": "classLevel:barbarian>=1 && active:rage && attackAbility:str"
+      },
+      {
+       "op": "damageBonus",
+       "value": 1,
+       "attackType": "any",
+       "when": "classLevel:barbarian>=9 && active:rage && attackAbility:str"
+      },
+      {
+       "op": "damageBonus",
+       "value": 1,
+       "attackType": "any",
+       "when": "classLevel:barbarian>=16 && active:rage && attackAbility:str"
+      }
+     ],
+     "usage": {
+      "uses": {
+       "table": [
+        2,
+        2,
+        3,
+        3,
+        3,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        5,
+        5,
+        5,
+        5,
+        5,
+        6,
+        6,
+        6,
+        6
+       ]
+      },
+      "recharge": "long_rest",
+      "partialShortRest": 1
+     },
+     "activation": {
+      "resource": "rage",
+      "requires": "!wearingArmor:heavy",
+      "duration": "10 minuti"
+     },
+     "origin": "srd"
+    },
+    {
+     "level": 1,
+     "id": "unarmored_defense",
+     "name": "Difesa senza armatura",
+     "description": "Senza armatura la CA base è 10 + Des + Cos; puoi usare uno scudo.",
+     "effects": [
+      {
+       "op": "acFormula",
+       "formula": "10 + mod:dex + mod:con",
+       "shieldAllowed": true,
+       "when": "wearingArmor:none"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 1,
+     "id": "weapon_mastery",
+     "name": "Padronanza d'armi",
+     "description": "Puoi usare le proprietà di padronanza di 2 tipi di armi da mischia semplici o da guerra (altri con i livelli, colonna Padronanza d'armi); a ogni riposo lungo puoi cambiarne uno.",
+     "choices": [
+      {
+       "id": "weapon_mastery_pick",
+       "label": "Padronanza d'armi",
+       "countFrom": "weapon_mastery",
+       "source": "weaponMastery",
+       "weaponFilter": {
+        "kind": "melee"
+       }
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 2,
+     "id": "danger_sense",
+     "name": "Percezione del pericolo",
+     "description": "Vantaggio ai tiri salvezza su Destrezza, a meno che tu sia incapacitato.",
+     "effects": [
+      {
+       "op": "saveAdvantage",
+       "abilities": [
+        "dex"
+       ]
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 2,
+     "id": "reckless_attack",
+     "name": "Attacco irruento",
+     "description": "Con il primo attacco del tuo turno puoi attaccare con irruenza: Vantaggio ai tiri per colpire con Forza fino all'inizio del tuo prossimo turno, ma anche i tiri contro di te hanno Vantaggio.",
+     "origin": "srd"
+    },
+    {
+     "level": 3,
+     "id": "barbarian_subclass",
+     "name": "Sottoclasse del barbaro",
+     "description": "Scegli una sottoclasse; ottieni i suoi privilegi ai livelli indicati.",
+     "origin": "srd"
+    },
+    {
+     "level": 3,
+     "id": "primal_knowledge",
+     "name": "Conoscenza primordiale",
+     "description": "Competenza in un'altra abilità della lista del barbaro. In ira puoi fare prove di Acrobazia, Intimidire, Percezione, Furtività o Sopravvivenza usando Forza.",
+     "choices": [
+      {
+       "id": "barbarian_primal_knowledge",
+       "label": "Competenza aggiuntiva",
+       "count": 1,
+       "options": [
+        {
+         "id": "animal_handling",
+         "name": "Addestrare animali",
+         "effects": [
+          {
+           "op": "grantSkillProficiency",
+           "skills": [
+            "animal_handling"
+           ]
+          }
+         ]
+        },
+        {
+         "id": "athletics",
+         "name": "Atletica",
+         "effects": [
+          {
+           "op": "grantSkillProficiency",
+           "skills": [
+            "athletics"
+           ]
+          }
+         ]
+        },
+        {
+         "id": "intimidation",
+         "name": "Intimidire",
+         "effects": [
+          {
+           "op": "grantSkillProficiency",
+           "skills": [
+            "intimidation"
+           ]
+          }
+         ]
+        },
+        {
+         "id": "nature",
+         "name": "Natura",
+         "effects": [
+          {
+           "op": "grantSkillProficiency",
+           "skills": [
+            "nature"
+           ]
+          }
+         ]
+        },
+        {
+         "id": "perception",
+         "name": "Percezione",
+         "effects": [
+          {
+           "op": "grantSkillProficiency",
+           "skills": [
+            "perception"
+           ]
+          }
+         ]
+        },
+        {
+         "id": "survival",
+         "name": "Sopravvivenza",
+         "effects": [
+          {
+           "op": "grantSkillProficiency",
+           "skills": [
+            "survival"
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 4,
+     "id": "ability_score_improvement_4",
+     "name": "Aumento dei punteggi di caratteristica",
+     "description": "Ottieni il talento Aumento dei punteggi di caratteristica o un altro talento di cui hai i prerequisiti.",
+     "choices": [
+      {
+       "id": "asi_barbarian_4",
+       "label": "Aumento dei punteggi di caratteristica",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 8,
+     "id": "ability_score_improvement_8",
+     "name": "Aumento dei punteggi di caratteristica",
+     "description": "Ottieni il talento Aumento dei punteggi di caratteristica o un altro talento di cui hai i prerequisiti.",
+     "choices": [
+      {
+       "id": "asi_barbarian_8",
+       "label": "Aumento dei punteggi di caratteristica",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 12,
+     "id": "ability_score_improvement_12",
+     "name": "Aumento dei punteggi di caratteristica",
+     "description": "Ottieni il talento Aumento dei punteggi di caratteristica o un altro talento di cui hai i prerequisiti.",
+     "choices": [
+      {
+       "id": "asi_barbarian_12",
+       "label": "Aumento dei punteggi di caratteristica",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 16,
+     "id": "ability_score_improvement_16",
+     "name": "Aumento dei punteggi di caratteristica",
+     "description": "Ottieni il talento Aumento dei punteggi di caratteristica o un altro talento di cui hai i prerequisiti.",
+     "choices": [
+      {
+       "id": "asi_barbarian_16",
+       "label": "Aumento dei punteggi di caratteristica",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 5,
+     "id": "extra_attack",
+     "name": "Attacco extra",
+     "description": "Attacchi due volte con l'azione Attacco.",
+     "origin": "srd"
+    },
+    {
+     "level": 5,
+     "id": "fast_movement",
+     "name": "Movimento veloce",
+     "description": "Velocità +3 m (10 piedi) se non indossi un'armatura pesante.",
+     "effects": [
+      {
+       "op": "speedBonus",
+       "value": 10,
+       "when": "!wearingArmor:heavy"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 7,
+     "id": "feral_instinct",
+     "name": "Istinto ferino",
+     "description": "Vantaggio ai tiri per l'iniziativa.",
+     "origin": "srd"
+    },
+    {
+     "level": 7,
+     "id": "instinctive_pounce",
+     "name": "Balzo istintivo",
+     "description": "Come parte dell'azione bonus per entrare in ira puoi muoverti fino a metà della tua velocità.",
+     "origin": "srd"
+    },
+    {
+     "level": 9,
+     "id": "brutal_strike",
+     "name": "Colpo brutale",
+     "description": "Se usi Attacco irruento puoi rinunciare al Vantaggio di un attacco basato su Forza: se colpisce infligge 1d10 danni extra e un effetto: Colpo violento (spingi il bersaglio di 4,5 m e ti muovi fino a metà velocità verso di lui senza attacchi di opportunità) o Colpo spaccaossa (velocità del bersaglio −4,5 m fino al tuo prossimo turno).",
+     "origin": "srd"
+    },
+    {
+     "level": 11,
+     "id": "relentless_rage",
+     "name": "Ira implacabile",
+     "description": "In ira, se scendi a 0 PF senza morire sul colpo, fai un tiro salvezza su Costituzione (CD 10): se lo superi, i PF diventano il doppio del tuo livello da barbaro. La CD sale di 5 a ogni uso dopo il primo e torna a 10 con un riposo breve o lungo.",
+     "origin": "srd"
+    },
+    {
+     "level": 13,
+     "id": "improved_brutal_strike",
+     "name": "Colpo brutale migliorato",
+     "description": "Nuovi effetti per Colpo brutale: Colpo sbalorditivo (il bersaglio ha Svantaggio al prossimo tiro salvezza e niente attacchi di opportunità fino al tuo prossimo turno) e Colpo di scissione (+5 al prossimo tiro per colpire di un'altra creatura contro il bersaglio).",
+     "origin": "srd"
+    },
+    {
+     "level": 15,
+     "id": "persistent_rage",
+     "name": "Ira persistente",
+     "description": "Quando tiri l'iniziativa recuperi tutti gli usi dell'ira (una volta per riposo lungo). L'ira dura 10 minuti senza doverla prolungare e finisce solo se sei privo di sensi o indossi un'armatura pesante.",
+     "origin": "srd"
+    },
+    {
+     "level": 17,
+     "id": "improved_brutal_strike_17",
+     "name": "Colpo brutale migliorato",
+     "description": "I danni extra di Colpo brutale salgono a 2d10 e puoi usare due effetti diversi.",
+     "origin": "srd"
+    },
+    {
+     "level": 18,
+     "id": "indomitable_might",
+     "name": "Potenza indomabile",
+     "description": "Se il totale di una prova o di un tiro salvezza su Forza è inferiore al tuo punteggio di Forza, puoi usare il punteggio al suo posto.",
+     "origin": "srd"
+    },
+    {
+     "level": 19,
+     "id": "epic_boon",
+     "name": "Dono epico",
+     "description": "Ottieni un Dono epico o un altro talento di cui hai i prerequisiti. Consigliato: Dono dell'offensiva irresistibile.",
+     "choices": [
+      {
+       "id": "epic_boon_barbarian",
+       "label": "Dono epico",
+       "count": 1,
+       "source": "feats:epic_boon"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 20,
+     "id": "primal_champion",
+     "name": "Campione primordiale",
+     "description": "Forza e Costituzione +4 (massimo 25).",
+     "effects": [
+      {
+       "op": "abilityScoreIncrease",
+       "abilities": [
+        "str",
+        "con"
+       ],
+       "amount": 4,
+       "cap": 25
+      }
+     ],
+     "origin": "srd"
+    }
+   ],
+   "table": {
+    "rages": [
+     2,
+     2,
+     3,
+     3,
+     3,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     5,
+     5,
+     5,
+     5,
+     5,
+     6,
+     6,
+     6,
+     6
+    ],
+    "rage_damage": [
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     3,
+     3,
+     3,
+     3,
+     3,
+     3,
+     3,
+     4,
+     4,
+     4,
+     4,
+     4
+    ],
+    "weapon_mastery": [
+     2,
+     2,
+     2,
+     3,
+     3,
+     3,
+     3,
+     3,
+     3,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4
+    ]
+   },
+   "subclassLevel": 3,
+   "origin": "srd"
+  },
+  {
+   "id": "fighter",
+   "name": "Guerriero",
+   "description": "Maestro delle armi e delle armature: più attacchi, Recuperare energie e azioni aggiuntive.",
+   "hitDie": 10,
+   "primaryAbility": [
+    "str",
+    "dex"
+   ],
+   "saves": [
+    "str",
+    "con"
+   ],
+   "skillChoices": {
+    "count": 2,
+    "from": [
+     "acrobatics",
+     "animal_handling",
+     "athletics",
+     "history",
+     "insight",
+     "intimidation",
+     "persuasion",
+     "perception",
+     "survival"
+    ]
+   },
+   "armorTraining": [
+    "light",
+    "medium",
+    "heavy",
+    "shield"
+   ],
+   "weaponProficiency": [
+    "simple",
+    "martial"
+   ],
+   "caster": "none",
+   "multiclass": {
+    "weapons": [
+     "martial"
+    ],
+    "armor": [
+     "light",
+     "medium",
+     "shield"
+    ],
+    "skills": 0,
+    "toolChoices": 0,
+    "tools": []
+   },
+   "equipment": {
+    "A": {
+     "items": [
+      {
+       "item": "chain_mail",
+       "qty": 1
+      },
+      {
+       "item": "greatsword",
+       "qty": 1
+      },
+      {
+       "item": "flail",
+       "qty": 1
+      },
+      {
+       "item": "javelin",
+       "qty": 8
+      },
+      {
+       "item": "dungeoneers_pack",
+       "qty": 1
+      }
+     ],
+     "gp": 4
+    },
+    "B": {
+     "items": [
+      {
+       "item": "studded_leather_armor",
+       "qty": 1
+      },
+      {
+       "item": "scimitar",
+       "qty": 1
+      },
+      {
+       "item": "shortsword",
+       "qty": 1
+      },
+      {
+       "item": "longbow",
+       "qty": 1
+      },
+      {
+       "item": "arrows",
+       "qty": 1
+      },
+      {
+       "item": "quiver",
+       "qty": 1
+      },
+      {
+       "item": "dungeoneers_pack",
+       "qty": 1
+      }
+     ],
+     "gp": 11
+    },
+    "C": {
+     "items": [],
+     "gp": 155
+    }
+   },
+   "choices": [
+    {
+     "id": "fighter_skills",
+     "label": "Abilità di classe",
+     "count": 2,
+     "options": [
+      {
+       "id": "acrobatics",
+       "name": "Acrobazia",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "acrobatics"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "animal_handling",
+       "name": "Addestrare animali",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "animal_handling"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "athletics",
+       "name": "Atletica",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "athletics"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "history",
+       "name": "Storia",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "history"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "insight",
+       "name": "Intuizione",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "insight"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "intimidation",
+       "name": "Intimidire",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "intimidation"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "persuasion",
+       "name": "Persuasione",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "persuasion"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "perception",
+       "name": "Percezione",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "perception"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "survival",
+       "name": "Sopravvivenza",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "survival"
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "features": [
+    {
+     "level": 1,
+     "id": "fighting_style",
+     "name": "Stile di combattimento",
+     "description": "Ottieni un talento Stile di combattimento a tua scelta (consigliato: Difesa). A ogni livello da guerriero puoi sostituirlo con un altro.",
+     "choices": [
+      {
+       "id": "fighter_fighting_style",
+       "label": "Stile di combattimento",
+       "count": 1,
+       "source": "feats:fighting_style"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 1,
+     "id": "second_wind",
+     "name": "Recuperare energie",
+     "description": "Come azione bonus recuperi 1d10 + livello da guerriero PF. Gli usi sono nella colonna Recuperare energie: ne recuperi 1 con un riposo breve, tutti con uno lungo.",
+     "usage": {
+      "uses": {
+       "table": [
+        2,
+        2,
+        2,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+       ]
+      },
+      "recharge": "long_rest",
+      "partialShortRest": 1
+     },
+     "origin": "srd"
+    },
+    {
+     "level": 1,
+     "id": "weapon_mastery",
+     "name": "Padronanza d'armi",
+     "description": "Puoi usare le proprietà di padronanza di 3 tipi di armi semplici o da guerra (altri con i livelli, colonna Padronanza d'armi); a ogni riposo lungo puoi cambiarne uno.",
+     "choices": [
+      {
+       "id": "weapon_mastery_pick",
+       "label": "Padronanza d'armi",
+       "countFrom": "weapon_mastery",
+       "source": "weaponMastery"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 2,
+     "id": "action_surge",
+     "name": "Azione impetuosa",
+     "description": "Nel tuo turno puoi fare un'azione aggiuntiva (non quella di Magia). Una volta per riposo breve o lungo; due volte dal 17° livello, ma una sola nello stesso turno.",
+     "usage": {
+      "uses": {
+       "table": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        2,
+        2,
+        2,
+        2
+       ]
+      },
+      "recharge": "short_rest"
+     },
+     "origin": "srd"
+    },
+    {
+     "level": 2,
+     "id": "tactical_mind",
+     "name": "Mente tattica",
+     "description": "Quando fallisci una prova di caratteristica puoi spendere un uso di Recuperare energie: tira 1d10 e sommalo alla prova. Se fallisce comunque, l'uso non viene speso.",
+     "origin": "srd"
+    },
+    {
+     "level": 3,
+     "id": "fighter_subclass",
+     "name": "Sottoclasse del guerriero",
+     "description": "Scegli una sottoclasse; ottieni i suoi privilegi ai livelli indicati.",
+     "origin": "srd"
+    },
+    {
+     "level": 4,
+     "id": "ability_score_improvement_4",
+     "name": "Aumento dei punteggi di caratteristica",
+     "description": "Ottieni il talento Aumento dei punteggi di caratteristica o un altro talento di cui hai i prerequisiti.",
+     "choices": [
+      {
+       "id": "asi_fighter_4",
+       "label": "Aumento dei punteggi di caratteristica",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 6,
+     "id": "ability_score_improvement_6",
+     "name": "Aumento dei punteggi di caratteristica",
+     "description": "Ottieni il talento Aumento dei punteggi di caratteristica o un altro talento di cui hai i prerequisiti.",
+     "choices": [
+      {
+       "id": "asi_fighter_6",
+       "label": "Aumento dei punteggi di caratteristica",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 8,
+     "id": "ability_score_improvement_8",
+     "name": "Aumento dei punteggi di caratteristica",
+     "description": "Ottieni il talento Aumento dei punteggi di caratteristica o un altro talento di cui hai i prerequisiti.",
+     "choices": [
+      {
+       "id": "asi_fighter_8",
+       "label": "Aumento dei punteggi di caratteristica",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 12,
+     "id": "ability_score_improvement_12",
+     "name": "Aumento dei punteggi di caratteristica",
+     "description": "Ottieni il talento Aumento dei punteggi di caratteristica o un altro talento di cui hai i prerequisiti.",
+     "choices": [
+      {
+       "id": "asi_fighter_12",
+       "label": "Aumento dei punteggi di caratteristica",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 14,
+     "id": "ability_score_improvement_14",
+     "name": "Aumento dei punteggi di caratteristica",
+     "description": "Ottieni il talento Aumento dei punteggi di caratteristica o un altro talento di cui hai i prerequisiti.",
+     "choices": [
+      {
+       "id": "asi_fighter_14",
+       "label": "Aumento dei punteggi di caratteristica",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 16,
+     "id": "ability_score_improvement_16",
+     "name": "Aumento dei punteggi di caratteristica",
+     "description": "Ottieni il talento Aumento dei punteggi di caratteristica o un altro talento di cui hai i prerequisiti.",
+     "choices": [
+      {
+       "id": "asi_fighter_16",
+       "label": "Aumento dei punteggi di caratteristica",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 5,
+     "id": "extra_attack",
+     "name": "Attacco extra",
+     "description": "Attacchi due volte con l'azione Attacco.",
+     "origin": "srd"
+    },
+    {
+     "level": 5,
+     "id": "tactical_shift",
+     "name": "Spostamento tattico",
+     "description": "Quando attivi Recuperare energie ti muovi fino a metà della velocità senza provocare attacchi di opportunità.",
+     "origin": "srd"
+    },
+    {
+     "level": 9,
+     "id": "indomitable",
+     "name": "Indomabile",
+     "description": "Se fallisci un tiro salvezza puoi ripeterlo con un bonus pari al tuo livello da guerriero; devi usare il nuovo risultato. Una volta per riposo lungo; 2 volte dal 13° livello, 3 dal 17°.",
+     "usage": {
+      "uses": {
+       "table": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        2,
+        2,
+        2,
+        2,
+        3,
+        3,
+        3,
+        3
+       ]
+      },
+      "recharge": "long_rest"
+     },
+     "origin": "srd"
+    },
+    {
+     "level": 9,
+     "id": "tactical_master",
+     "name": "Signore delle tattiche",
+     "description": "Con un'arma di cui usi la padronanza puoi sostituirne la proprietà con Spinta, Fiaccare o Lentezza.",
+     "origin": "srd"
+    },
+    {
+     "level": 11,
+     "id": "two_extra_attacks",
+     "name": "Due attacchi extra",
+     "description": "Attacchi tre volte con l'azione Attacco.",
+     "origin": "srd"
+    },
+    {
+     "level": 13,
+     "id": "studied_attacks",
+     "name": "Attacchi studiati",
+     "description": "Se manchi una creatura con un tiro per colpire, hai Vantaggio al tuo prossimo tiro per colpire contro di essa prima della fine del tuo turno successivo.",
+     "origin": "srd"
+    },
+    {
+     "level": 19,
+     "id": "epic_boon",
+     "name": "Dono epico",
+     "description": "Ottieni un Dono epico o un altro talento di cui hai i prerequisiti. Consigliato: Dono delle abilità di combattimento.",
+     "choices": [
+      {
+       "id": "epic_boon_fighter",
+       "label": "Dono epico",
+       "count": 1,
+       "source": "feats:epic_boon"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 20,
+     "id": "three_extra_attacks",
+     "name": "Tre attacchi extra",
+     "description": "Attacchi quattro volte con l'azione Attacco.",
+     "origin": "srd"
+    }
+   ],
+   "table": {
+    "second_wind": [
+     2,
+     2,
+     2,
+     3,
+     3,
+     3,
+     3,
+     3,
+     3,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4
+    ],
+    "weapon_mastery": [
+     3,
+     3,
+     3,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     6,
+     6,
+     6,
+     6,
+     6
+    ]
+   },
+   "subclassLevel": 3,
+   "origin": "srd"
+  },
+  {
+   "id": "monk",
+   "name": "Monaco",
+   "description": "Artista marziale agile: colpi senz'armi, punti concentrazione e movimento straordinario.",
+   "hitDie": 8,
+   "primaryAbility": [
+    "dex",
+    "wis"
+   ],
+   "saves": [
+    "str",
+    "dex"
+   ],
+   "skillChoices": {
+    "count": 2,
+    "from": [
+     "acrobatics",
+     "athletics",
+     "history",
+     "insight",
+     "religion",
+     "stealth"
+    ]
+   },
+   "armorTraining": [],
+   "weaponProficiency": [
+    "simple",
+    "martial[light]"
+   ],
+   "caster": "none",
+   "multiclass": {
+    "weapons": [],
+    "armor": [],
+    "skills": 0,
+    "toolChoices": 0,
+    "tools": []
+   },
+   "equipment": {
+    "A": {
+     "items": [
+      {
+       "item": "spear",
+       "qty": 1
+      },
+      {
+       "item": "dagger",
+       "qty": 5
+      },
+      {
+       "item": "$tool",
+       "qty": 1
+      },
+      {
+       "item": "explorers_pack",
+       "qty": 1
+      }
+     ],
+     "gp": 11
+    },
+    "B": {
+     "items": [],
+     "gp": 50
+    }
+   },
+   "choices": [
+    {
+     "id": "monk_skills",
+     "label": "Abilità di classe",
+     "count": 2,
+     "options": [
+      {
+       "id": "acrobatics",
+       "name": "Acrobazia",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "acrobatics"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "athletics",
+       "name": "Atletica",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "athletics"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "history",
+       "name": "Storia",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "history"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "insight",
+       "name": "Intuizione",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "insight"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "religion",
+       "name": "Religione",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "religion"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "stealth",
+       "name": "Furtività",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "stealth"
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "monk_tools",
+     "label": "Strumento",
+     "count": 1,
+     "source": "tools:artisan_musical"
+    }
+   ],
+   "features": [
+    {
+     "level": 1,
+     "id": "martial_arts",
+     "name": "Arti marziali",
+     "description": "Senza armatura né scudo e con soli colpi senz'armi o armi da monaco (armi da mischia semplici o da guerra Leggere): colpo senz'armi bonus come azione bonus; dado di Arti marziali al posto dei danni normali (colonna Arti marziali); puoi usare Destrezza al posto di Forza per tiri per colpire e danni e per la CD di afferrare e spingere.",
+     "origin": "srd"
+    },
+    {
+     "level": 1,
+     "id": "unarmored_defense",
+     "name": "Difesa senza armatura",
+     "description": "Senza armatura né scudo la CA base è 10 + Des + Sag.",
+     "effects": [
+      {
+       "op": "acFormula",
+       "formula": "10 + mod:dex + mod:wis",
+       "shieldAllowed": false,
+       "when": "wearingArmor:none"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 2,
+     "id": "monks_focus",
+     "name": "Concentrazione da monaco",
+     "description": "Ottieni punti concentrazione (colonna Punti concentrazione) che torni ad avere con un riposo breve o lungo. Li spendi per Raffica di colpi (2 colpi senz'armi come azione bonus), Difesa paziente (Disimpegno e Schivata come azione bonus) e Passo del vento (Disimpegno e Scatto come azione bonus, salto doppio). CD dei tuoi tiri salvezza: 8 + Sag + competenza. Senza spendere punti puoi comunque usare Disimpegno o Scatto come azione bonus.",
+     "usage": {
+      "uses": {
+       "table": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+       ]
+      },
+      "recharge": "short_rest"
+     },
+     "origin": "srd"
+    },
+    {
+     "level": 2,
+     "id": "unarmored_movement",
+     "name": "Movimento senza armatura",
+     "description": "Velocità +3 m (10 piedi) senza armatura né scudo; il bonus cresce con i livelli (colonna Movimento senza armatura).",
+     "effects": [
+      {
+       "op": "speedBonus",
+       "value": 10,
+       "when": "classLevel:monk>=2 && wearingArmor:none && !shield"
+      },
+      {
+       "op": "speedBonus",
+       "value": 5,
+       "when": "classLevel:monk>=6 && wearingArmor:none && !shield"
+      },
+      {
+       "op": "speedBonus",
+       "value": 5,
+       "when": "classLevel:monk>=10 && wearingArmor:none && !shield"
+      },
+      {
+       "op": "speedBonus",
+       "value": 5,
+       "when": "classLevel:monk>=14 && wearingArmor:none && !shield"
+      },
+      {
+       "op": "speedBonus",
+       "value": 5,
+       "when": "classLevel:monk>=18 && wearingArmor:none && !shield"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 2,
+     "id": "uncanny_metabolism",
+     "name": "Metabolismo straordinario",
+     "description": "Quando tiri l'iniziativa recuperi tutti i punti concentrazione spesi e recuperi PF pari al tuo livello da monaco + un tiro del dado di Arti marziali. Una volta per riposo lungo.",
+     "usage": {
+      "uses": 1,
+      "recharge": "long_rest"
+     },
+     "origin": "srd"
+    },
+    {
+     "level": 3,
+     "id": "deflect_attacks",
+     "name": "Devia attacchi",
+     "description": "Con la reazione, quando un tiro per colpire che include danni contundenti, perforanti o taglienti ti colpisce, riduci i danni di 1d10 + Des + livello da monaco. Se scendono a 0 puoi spendere 1 punto concentrazione per rimandare l'energia a una creatura visibile (entro 1,5 m se in mischia, 18 m a distanza): tiro salvezza su Destrezza o subisce due tiri del dado di Arti marziali + Des.",
+     "origin": "srd"
+    },
+    {
+     "level": 3,
+     "id": "monk_subclass",
+     "name": "Sottoclasse del monaco",
+     "description": "Scegli una sottoclasse; ottieni i suoi privilegi ai livelli indicati.",
+     "origin": "srd"
+    },
+    {
+     "level": 4,
+     "id": "ability_score_improvement_4",
+     "name": "Aumento dei punteggi di caratteristica",
+     "description": "Ottieni il talento Aumento dei punteggi di caratteristica o un altro talento di cui hai i prerequisiti.",
+     "choices": [
+      {
+       "id": "asi_monk_4",
+       "label": "Aumento dei punteggi di caratteristica",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 8,
+     "id": "ability_score_improvement_8",
+     "name": "Aumento dei punteggi di caratteristica",
+     "description": "Ottieni il talento Aumento dei punteggi di caratteristica o un altro talento di cui hai i prerequisiti.",
+     "choices": [
+      {
+       "id": "asi_monk_8",
+       "label": "Aumento dei punteggi di caratteristica",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 12,
+     "id": "ability_score_improvement_12",
+     "name": "Aumento dei punteggi di caratteristica",
+     "description": "Ottieni il talento Aumento dei punteggi di caratteristica o un altro talento di cui hai i prerequisiti.",
+     "choices": [
+      {
+       "id": "asi_monk_12",
+       "label": "Aumento dei punteggi di caratteristica",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 16,
+     "id": "ability_score_improvement_16",
+     "name": "Aumento dei punteggi di caratteristica",
+     "description": "Ottieni il talento Aumento dei punteggi di caratteristica o un altro talento di cui hai i prerequisiti.",
+     "choices": [
+      {
+       "id": "asi_monk_16",
+       "label": "Aumento dei punteggi di caratteristica",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 4,
+     "id": "slow_fall",
+     "name": "Caduta lenta",
+     "description": "Con la reazione, quando cadi, riduci i danni da caduta di 5 × il tuo livello da monaco.",
+     "origin": "srd"
+    },
+    {
+     "level": 5,
+     "id": "extra_attack",
+     "name": "Attacco extra",
+     "description": "Attacchi due volte con l'azione Attacco.",
+     "origin": "srd"
+    },
+    {
+     "level": 5,
+     "id": "stunning_strike",
+     "name": "Colpo stordente",
+     "description": "Una volta per turno, se colpisci con un'arma da monaco o un colpo senz'armi, puoi spendere 1 punto concentrazione: tiro salvezza su Costituzione, se fallito il bersaglio è stordito fino al tuo prossimo turno; se superato, la sua velocità è dimezzata e il prossimo attacco contro di lui ha Vantaggio.",
+     "origin": "srd"
+    },
+    {
+     "level": 6,
+     "id": "empowered_strikes",
+     "name": "Colpi potenziati",
+     "description": "I tuoi colpi senz'armi possono infliggere danni da Forza invece del loro tipo normale.",
+     "origin": "srd"
+    },
+    {
+     "level": 7,
+     "id": "evasion",
+     "name": "Elusione",
+     "description": "Se un effetto ti permette un tiro salvezza su Destrezza per dimezzare i danni, non subisci danni se lo superi e solo la metà se lo fallisci (non se sei incapacitato).",
+     "origin": "srd"
+    },
+    {
+     "level": 9,
+     "id": "acrobatic_movement",
+     "name": "Movimento acrobatico",
+     "description": "Senza armatura né scudo ti muovi sulle superfici verticali e liquide durante il tuo turno senza cadere.",
+     "origin": "srd"
+    },
+    {
+     "level": 10,
+     "id": "heightened_focus",
+     "name": "Concentrazione superiore",
+     "description": "Raffica di colpi infligge 3 colpi; Difesa paziente dà PF temporanei pari a due tiri del dado di Arti marziali; Passo del vento permette di portare con te una creatura consenziente entro 1,5 m (Grande o più piccola).",
+     "origin": "srd"
+    },
+    {
+     "level": 10,
+     "id": "self_restoration",
+     "name": "Autorigenerazione",
+     "description": "A fine turno puoi rimuovere da te le condizioni affascinato, spaventato o avvelenato; rinunciare a cibo e bevande non ti dà livelli di indebolimento.",
+     "origin": "srd"
+    },
+    {
+     "level": 13,
+     "id": "deflect_energy",
+     "name": "Deviare energia",
+     "description": "Devia attacchi funziona contro attacchi che infliggono qualsiasi tipo di danno.",
+     "origin": "srd"
+    },
+    {
+     "level": 14,
+     "id": "disciplined_survivor",
+     "name": "Esperto di sopravvivenza disciplinato",
+     "description": "Competenza in tutti i tiri salvezza. Quando ne fallisci uno puoi spendere 1 punto concentrazione per ripeterlo (usi il nuovo risultato).",
+     "effects": [
+      {
+       "op": "grantSaveProficiency",
+       "abilities": [
+        "str",
+        "dex",
+        "con",
+        "int",
+        "wis",
+        "cha"
+       ]
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 15,
+     "id": "perfect_focus",
+     "name": "Concentrazione perfetta",
+     "description": "Quando tiri l'iniziativa senza usare Metabolismo straordinario, recuperi punti concentrazione fino ad averne 4 (se ne hai 3 o meno).",
+     "origin": "srd"
+    },
+    {
+     "level": 18,
+     "id": "superior_defense",
+     "name": "Difesa superiore",
+     "description": "All'inizio del turno puoi spendere 3 punti concentrazione: per 1 minuto (o finché sei incapacitato) hai resistenza a tutti i danni tranne quelli da Forza.",
+     "origin": "srd"
+    },
+    {
+     "level": 19,
+     "id": "epic_boon",
+     "name": "Dono epico",
+     "description": "Ottieni un Dono epico o un altro talento di cui hai i prerequisiti. Consigliato: Dono dell'offensiva irresistibile.",
+     "choices": [
+      {
+       "id": "epic_boon_monk",
+       "label": "Dono epico",
+       "count": 1,
+       "source": "feats:epic_boon"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 20,
+     "id": "body_and_mind",
+     "name": "Corpo e mente",
+     "description": "Destrezza e Saggezza +4 (massimo 25).",
+     "effects": [
+      {
+       "op": "abilityScoreIncrease",
+       "abilities": [
+        "dex",
+        "wis"
+       ],
+       "amount": 4,
+       "cap": 25
+      }
+     ],
+     "origin": "srd"
+    }
+   ],
+   "table": {
+    "martial_arts": [
+     "1d6",
+     "1d6",
+     "1d6",
+     "1d6",
+     "1d8",
+     "1d8",
+     "1d8",
+     "1d8",
+     "1d8",
+     "1d8",
+     "1d10",
+     "1d10",
+     "1d10",
+     "1d10",
+     "1d10",
+     "1d10",
+     "1d12",
+     "1d12",
+     "1d12",
+     "1d12"
+    ],
+    "focus_points": [
+     0,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18,
+     19,
+     20
+    ],
+    "unarmored_movement": [
+     0,
+     10,
+     10,
+     10,
+     10,
+     15,
+     15,
+     15,
+     15,
+     20,
+     20,
+     20,
+     20,
+     25,
+     25,
+     25,
+     25,
+     30,
+     30,
+     30
+    ]
+   },
+   "subclassLevel": 3,
+   "origin": "srd"
+  },
+  {
+   "id": "rogue",
+   "name": "Ladro",
+   "description": "Specialista di furtività e precisione: Attacco furtivo, maestria nelle abilità e schivate prodigiose.",
+   "hitDie": 8,
+   "primaryAbility": [
+    "dex"
+   ],
+   "saves": [
+    "dex",
+    "int"
+   ],
+   "skillChoices": {
+    "count": 4,
+    "from": [
+     "acrobatics",
+     "athletics",
+     "deception",
+     "insight",
+     "intimidation",
+     "investigation",
+     "perception",
+     "persuasion",
+     "sleight_of_hand",
+     "stealth"
+    ]
+   },
+   "armorTraining": [
+    "light"
+   ],
+   "weaponProficiency": [
+    "simple",
+    "martial[finesse|light]"
+   ],
+   "toolProficiency": [
+    "thieves_tools"
+   ],
+   "caster": "none",
+   "multiclass": {
+    "weapons": [],
+    "armor": [
+     "light"
+    ],
+    "skills": 1,
+    "toolChoices": 0,
+    "tools": [
+     "thieves_tools"
+    ]
+   },
+   "equipment": {
+    "A": {
+     "items": [
+      {
+       "item": "leather_armor",
+       "qty": 1
+      },
+      {
+       "item": "dagger",
+       "qty": 2
+      },
+      {
+       "item": "shortsword",
+       "qty": 1
+      },
+      {
+       "item": "shortbow",
+       "qty": 1
+      },
+      {
+       "item": "arrows",
+       "qty": 1
+      },
+      {
+       "item": "quiver",
+       "qty": 1
+      },
+      {
+       "item": "thieves_tools",
+       "qty": 1
+      },
+      {
+       "item": "burglars_pack",
+       "qty": 1
+      }
+     ],
+     "gp": 8
+    },
+    "B": {
+     "items": [],
+     "gp": 100
+    }
+   },
+   "choices": [
+    {
+     "id": "rogue_skills",
+     "label": "Abilità di classe",
+     "count": 4,
+     "options": [
+      {
+       "id": "acrobatics",
+       "name": "Acrobazia",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "acrobatics"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "athletics",
+       "name": "Atletica",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "athletics"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "deception",
+       "name": "Inganno",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "deception"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "insight",
+       "name": "Intuizione",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "insight"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "intimidation",
+       "name": "Intimidire",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "intimidation"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "investigation",
+       "name": "Indagare",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "investigation"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "perception",
+       "name": "Percezione",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "perception"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "persuasion",
+       "name": "Persuasione",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "persuasion"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "sleight_of_hand",
+       "name": "Rapidità di mano",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "sleight_of_hand"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "stealth",
+       "name": "Furtività",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "stealth"
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "features": [
+    {
+     "level": 1,
+     "id": "expertise",
+     "name": "Maestria",
+     "description": "Maestria in due abilità in cui hai competenza (consigliate Rapidità di mano e Furtività). Al 6° livello altre due.",
+     "choices": [
+      {
+       "id": "rogue_expertise_1",
+       "label": "Maestria",
+       "count": 2,
+       "source": "expertise"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 1,
+     "id": "sneak_attack",
+     "name": "Attacco furtivo",
+     "description": "Una volta per turno infliggi danni extra (colonna Attacco furtivo) a una creatura che colpisci con un'arma accurata o a distanza se hai Vantaggio, oppure se un alleato non incapacitato è entro 1,5 m dal bersaglio (e non hai Svantaggio). I danni sono dello stesso tipo dell'arma.",
+     "origin": "srd"
+    },
+    {
+     "level": 1,
+     "id": "thieves_cant",
+     "name": "Gergo ladresco",
+     "description": "Conosci il Gergo ladresco e un'altra lingua a tua scelta.",
+     "choices": [
+      {
+       "id": "rogue_language",
+       "label": "Lingua aggiuntiva",
+       "count": 1,
+       "source": "languages:standard"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 1,
+     "id": "weapon_mastery",
+     "name": "Padronanza d'armi",
+     "description": "Puoi usare le proprietà di padronanza di 2 tipi di armi in cui hai competenza (per esempio pugnali e archi corti); a ogni riposo lungo puoi cambiarne uno.",
+     "choices": [
+      {
+       "id": "weapon_mastery_pick",
+       "label": "Padronanza d'armi",
+       "count": 2,
+       "source": "weaponMastery"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 2,
+     "id": "cunning_action",
+     "name": "Azione scaltra",
+     "description": "Nel tuo turno puoi usare come azione bonus Scatto, Disimpegno o Nascondersi.",
+     "origin": "srd"
+    },
+    {
+     "level": 3,
+     "id": "rogue_subclass",
+     "name": "Sottoclasse del ladro",
+     "description": "Scegli una sottoclasse; ottieni i suoi privilegi ai livelli indicati.",
+     "origin": "srd"
+    },
+    {
+     "level": 3,
+     "id": "steady_aim",
+     "name": "Mira ferma",
+     "description": "Come azione bonus ottieni Vantaggio al prossimo tiro per colpire del turno; solo se non ti sei mosso nel turno, e dopo l'uso la tua velocità è 0 fino alla fine del turno.",
+     "origin": "srd"
+    },
+    {
+     "level": 4,
+     "id": "ability_score_improvement_4",
+     "name": "Aumento dei punteggi di caratteristica",
+     "description": "Ottieni il talento Aumento dei punteggi di caratteristica o un altro talento di cui hai i prerequisiti.",
+     "choices": [
+      {
+       "id": "asi_rogue_4",
+       "label": "Aumento dei punteggi di caratteristica",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 8,
+     "id": "ability_score_improvement_8",
+     "name": "Aumento dei punteggi di caratteristica",
+     "description": "Ottieni il talento Aumento dei punteggi di caratteristica o un altro talento di cui hai i prerequisiti.",
+     "choices": [
+      {
+       "id": "asi_rogue_8",
+       "label": "Aumento dei punteggi di caratteristica",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 10,
+     "id": "ability_score_improvement_10",
+     "name": "Aumento dei punteggi di caratteristica",
+     "description": "Ottieni il talento Aumento dei punteggi di caratteristica o un altro talento di cui hai i prerequisiti.",
+     "choices": [
+      {
+       "id": "asi_rogue_10",
+       "label": "Aumento dei punteggi di caratteristica",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 12,
+     "id": "ability_score_improvement_12",
+     "name": "Aumento dei punteggi di caratteristica",
+     "description": "Ottieni il talento Aumento dei punteggi di caratteristica o un altro talento di cui hai i prerequisiti.",
+     "choices": [
+      {
+       "id": "asi_rogue_12",
+       "label": "Aumento dei punteggi di caratteristica",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 16,
+     "id": "ability_score_improvement_16",
+     "name": "Aumento dei punteggi di caratteristica",
+     "description": "Ottieni il talento Aumento dei punteggi di caratteristica o un altro talento di cui hai i prerequisiti.",
+     "choices": [
+      {
+       "id": "asi_rogue_16",
+       "label": "Aumento dei punteggi di caratteristica",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 5,
+     "id": "cunning_strike",
+     "name": "Colpo astuto",
+     "description": "Quando infliggi Attacco furtivo puoi rinunciare a dadi per aggiungere un effetto: Inciampo (1d6: tiro salvezza su Destrezza o prono, se Grande o più piccolo), Ritirata (1d6: muoviti fino a metà velocità senza attacchi di opportunità), Veleno (1d6: tiro salvezza su Costituzione o avvelenato per 1 minuto; servono sostanze da avvelenatore). CD 8 + Des + competenza.",
+     "origin": "srd"
+    },
+    {
+     "level": 5,
+     "id": "uncanny_dodge",
+     "name": "Schivata prodigiosa",
+     "description": "Con la reazione, quando un attaccante che vedi ti colpisce, dimezzi i danni (per difetto).",
+     "origin": "srd"
+    },
+    {
+     "level": 6,
+     "id": "expertise_6",
+     "name": "Maestria",
+     "description": "Maestria in altre due abilità in cui hai competenza.",
+     "choices": [
+      {
+       "id": "rogue_expertise_6",
+       "label": "Maestria",
+       "count": 2,
+       "source": "expertise"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 7,
+     "id": "evasion",
+     "name": "Elusione",
+     "description": "Se un effetto ti permette un tiro salvezza su Destrezza per dimezzare i danni, non subisci danni se lo superi e solo la metà se lo fallisci (non se sei incapacitato).",
+     "origin": "srd"
+    },
+    {
+     "level": 7,
+     "id": "reliable_talent",
+     "name": "Dote affidabile",
+     "description": "Nelle prove con un'abilità o uno strumento in cui hai competenza, un d20 da 9 in giù conta come 10.",
+     "origin": "srd"
+    },
+    {
+     "level": 11,
+     "id": "improved_cunning_strike",
+     "name": "Colpo astuto migliorato",
+     "description": "Puoi usare fino a due effetti di Colpo astuto, pagando i dadi di ciascuno.",
+     "origin": "srd"
+    },
+    {
+     "level": 14,
+     "id": "devious_strikes",
+     "name": "Colpi infidi",
+     "description": "Nuove opzioni di Colpo astuto: Atterramento (6d6: tiro salvezza su Costituzione o privo di sensi), Confusione (2d6: tiro salvezza su Costituzione o nel turno successivo solo muoversi, azione o azione bonus), Rabbuio (3d6: tiro salvezza su Destrezza o accecato).",
+     "origin": "srd"
+    },
+    {
+     "level": 15,
+     "id": "slippery_mind",
+     "name": "Mente sfuggente",
+     "description": "Competenza nei tiri salvezza su Saggezza e Carisma.",
+     "effects": [
+      {
+       "op": "grantSaveProficiency",
+       "abilities": [
+        "wis",
+        "cha"
+       ]
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 18,
+     "id": "elusive",
+     "name": "Inafferrabile",
+     "description": "Nessun tiro per colpire ha Vantaggio contro di te, a meno che tu sia incapacitato.",
+     "origin": "srd"
+    },
+    {
+     "level": 19,
+     "id": "epic_boon",
+     "name": "Dono epico",
+     "description": "Ottieni un Dono epico o un altro talento di cui hai i prerequisiti. Consigliato: Dono dello spirito notturno.",
+     "choices": [
+      {
+       "id": "epic_boon_rogue",
+       "label": "Dono epico",
+       "count": 1,
+       "source": "feats:epic_boon"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 20,
+     "id": "stroke_of_luck",
+     "name": "Colpo di fortuna",
+     "description": "Se fallisci una prova con d20 puoi trasformare il risultato in 20. Una volta per riposo breve o lungo.",
+     "usage": {
+      "uses": 1,
+      "recharge": "short_rest"
+     },
+     "origin": "srd"
+    }
+   ],
+   "table": {
+    "sneak_attack": [
+     "1d6",
+     "1d6",
+     "2d6",
+     "2d6",
+     "3d6",
+     "3d6",
+     "4d6",
+     "4d6",
+     "5d6",
+     "5d6",
+     "6d6",
+     "6d6",
+     "7d6",
+     "7d6",
+     "8d6",
+     "8d6",
+     "9d6",
+     "9d6",
+     "10d6",
+     "10d6"
+    ]
+   },
+   "subclassLevel": 3,
+   "origin": "srd"
+  }
+ ]
+}

@@ -99,7 +99,7 @@ export function computeAttacks(x: Ctx, profs: Profs, cs: ConditionState, untrain
     const riders: string[] = [];
     const rogue = x.classLevels.rogue;
     if (rogue && feat.has("sneak_attack") && w && (w.properties.includes("finesse") || kind === "ranged")) {
-      riders.push(`Attacco furtivo ${rs.classes.get("rogue")?.table.attacco_furtivo?.[rogue - 1] ?? "?"} (1 volta per turno; con Vantaggio o con un alleato adiacente al bersaglio)`);
+      riders.push(`Attacco furtivo ${rs.classes.get("rogue")?.table.sneak_attack?.[rogue - 1] ?? "?"} (1 volta per turno; con Vantaggio o con un alleato adiacente al bersaglio)`);
     }
 
     const mast = w && rs.masteries.get(w.mastery);

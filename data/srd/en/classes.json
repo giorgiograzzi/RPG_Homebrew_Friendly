@@ -1,0 +1,2232 @@
+{
+ "kind": "classes",
+ "entries": [
+  {
+   "id": "barbarian",
+   "name": "Barbarian",
+   "description": "A fierce warrior who channels primal Rage: damage resistance, raw strength, and devastating strikes.",
+   "hitDie": 12,
+   "primaryAbility": [
+    "str"
+   ],
+   "saves": [
+    "str",
+    "con"
+   ],
+   "skillChoices": {
+    "count": 2,
+    "from": [
+     "animal_handling",
+     "athletics",
+     "intimidation",
+     "nature",
+     "perception",
+     "survival"
+    ]
+   },
+   "armorTraining": [
+    "light",
+    "medium",
+    "shield"
+   ],
+   "weaponProficiency": [
+    "simple",
+    "martial"
+   ],
+   "caster": "none",
+   "multiclass": {
+    "weapons": [
+     "martial"
+    ],
+    "armor": [
+     "shield"
+    ],
+    "skills": 0,
+    "toolChoices": 0,
+    "tools": []
+   },
+   "equipment": {
+    "A": {
+     "items": [
+      {
+       "item": "greataxe",
+       "qty": 1
+      },
+      {
+       "item": "handaxe",
+       "qty": 4
+      },
+      {
+       "item": "explorers_pack",
+       "qty": 1
+      }
+     ],
+     "gp": 15
+    },
+    "B": {
+     "items": [],
+     "gp": 75
+    }
+   },
+   "choices": [
+    {
+     "id": "barbarian_skills",
+     "label": "Class skills",
+     "count": 2,
+     "options": [
+      {
+       "id": "animal_handling",
+       "name": "Animal Handling",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "animal_handling"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "athletics",
+       "name": "Athletics",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "athletics"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "intimidation",
+       "name": "Intimidation",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "intimidation"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "nature",
+       "name": "Nature",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "nature"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "perception",
+       "name": "Perception",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "perception"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "survival",
+       "name": "Survival",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "survival"
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "features": [
+    {
+     "level": 1,
+     "id": "rage",
+     "name": "Rage",
+     "description": "As a Bonus Action (not in Heavy armor) you enter a Rage; uses are in the Rages column (regain one on a Short Rest, all on a Long Rest). While raging: Resistance to Bludgeoning, Piercing, and Slashing damage; a bonus to damage with Strength-based attacks (Rage Damage column); Advantage on Strength checks and saves; no Concentration or spells. It lasts until the end of your next turn and extends if you attack, force a save, or use a Bonus Action (up to 10 minutes); it ends if you don Heavy armor or are Incapacitated.",
+     "effects": [
+      {
+       "op": "resistance",
+       "types": [
+        "bludgeoning",
+        "piercing",
+        "slashing"
+       ],
+       "when": "active:rage"
+      },
+      {
+       "op": "saveAdvantage",
+       "abilities": [
+        "str"
+       ],
+       "when": "active:rage"
+      },
+      {
+       "op": "damageBonus",
+       "value": 2,
+       "attackType": "any",
+       "when": "classLevel:barbarian>=1 && active:rage && attackAbility:str"
+      },
+      {
+       "op": "damageBonus",
+       "value": 1,
+       "attackType": "any",
+       "when": "classLevel:barbarian>=9 && active:rage && attackAbility:str"
+      },
+      {
+       "op": "damageBonus",
+       "value": 1,
+       "attackType": "any",
+       "when": "classLevel:barbarian>=16 && active:rage && attackAbility:str"
+      }
+     ],
+     "usage": {
+      "uses": {
+       "table": [
+        2,
+        2,
+        3,
+        3,
+        3,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        5,
+        5,
+        5,
+        5,
+        5,
+        6,
+        6,
+        6,
+        6
+       ]
+      },
+      "recharge": "long_rest",
+      "partialShortRest": 1
+     },
+     "activation": {
+      "resource": "rage",
+      "requires": "!wearingArmor:heavy",
+      "duration": "10 minutes"
+     },
+     "origin": "srd"
+    },
+    {
+     "level": 1,
+     "id": "unarmored_defense",
+     "name": "Unarmored Defense",
+     "description": "Without armor your base AC is 10 + Dex + Con; you can use a Shield.",
+     "effects": [
+      {
+       "op": "acFormula",
+       "formula": "10 + mod:dex + mod:con",
+       "shieldAllowed": true,
+       "when": "wearingArmor:none"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 1,
+     "id": "weapon_mastery",
+     "name": "Weapon Mastery",
+     "description": "You can use the mastery properties of 2 kinds of Simple or Martial Melee weapons (more with levels, Weapon Mastery column); after a Long Rest you can change one.",
+     "choices": [
+      {
+       "id": "weapon_mastery_pick",
+       "label": "Weapon Mastery",
+       "countFrom": "weapon_mastery",
+       "source": "weaponMastery",
+       "weaponFilter": {
+        "kind": "melee"
+       }
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 2,
+     "id": "danger_sense",
+     "name": "Danger Sense",
+     "description": "Advantage on Dexterity saving throws unless you have the Incapacitated condition.",
+     "effects": [
+      {
+       "op": "saveAdvantage",
+       "abilities": [
+        "dex"
+       ]
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 2,
+     "id": "reckless_attack",
+     "name": "Reckless Attack",
+     "description": "On your first attack of the turn you can attack recklessly: Advantage on Strength-based attack rolls until the start of your next turn, but attack rolls against you have Advantage.",
+     "origin": "srd"
+    },
+    {
+     "level": 3,
+     "id": "barbarian_subclass",
+     "name": "Barbarian Subclass",
+     "description": "You gain a subclass of your choice; you gain its features at the levels shown.",
+     "origin": "srd"
+    },
+    {
+     "level": 3,
+     "id": "primal_knowledge",
+     "name": "Primal Knowledge",
+     "description": "Proficiency in another skill from the Barbarian list. While raging you can make Acrobatics, Intimidation, Perception, Stealth, or Survival checks using Strength.",
+     "choices": [
+      {
+       "id": "barbarian_primal_knowledge",
+       "label": "Extra proficiency",
+       "count": 1,
+       "options": [
+        {
+         "id": "animal_handling",
+         "name": "Animal Handling",
+         "effects": [
+          {
+           "op": "grantSkillProficiency",
+           "skills": [
+            "animal_handling"
+           ]
+          }
+         ]
+        },
+        {
+         "id": "athletics",
+         "name": "Athletics",
+         "effects": [
+          {
+           "op": "grantSkillProficiency",
+           "skills": [
+            "athletics"
+           ]
+          }
+         ]
+        },
+        {
+         "id": "intimidation",
+         "name": "Intimidation",
+         "effects": [
+          {
+           "op": "grantSkillProficiency",
+           "skills": [
+            "intimidation"
+           ]
+          }
+         ]
+        },
+        {
+         "id": "nature",
+         "name": "Nature",
+         "effects": [
+          {
+           "op": "grantSkillProficiency",
+           "skills": [
+            "nature"
+           ]
+          }
+         ]
+        },
+        {
+         "id": "perception",
+         "name": "Perception",
+         "effects": [
+          {
+           "op": "grantSkillProficiency",
+           "skills": [
+            "perception"
+           ]
+          }
+         ]
+        },
+        {
+         "id": "survival",
+         "name": "Survival",
+         "effects": [
+          {
+           "op": "grantSkillProficiency",
+           "skills": [
+            "survival"
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 4,
+     "id": "ability_score_improvement_4",
+     "name": "Ability Score Improvement",
+     "description": "You gain the Ability Score Improvement feat or another feat of your choice for which you qualify.",
+     "choices": [
+      {
+       "id": "asi_barbarian_4",
+       "label": "Ability Score Improvement",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 8,
+     "id": "ability_score_improvement_8",
+     "name": "Ability Score Improvement",
+     "description": "You gain the Ability Score Improvement feat or another feat of your choice for which you qualify.",
+     "choices": [
+      {
+       "id": "asi_barbarian_8",
+       "label": "Ability Score Improvement",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 12,
+     "id": "ability_score_improvement_12",
+     "name": "Ability Score Improvement",
+     "description": "You gain the Ability Score Improvement feat or another feat of your choice for which you qualify.",
+     "choices": [
+      {
+       "id": "asi_barbarian_12",
+       "label": "Ability Score Improvement",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 16,
+     "id": "ability_score_improvement_16",
+     "name": "Ability Score Improvement",
+     "description": "You gain the Ability Score Improvement feat or another feat of your choice for which you qualify.",
+     "choices": [
+      {
+       "id": "asi_barbarian_16",
+       "label": "Ability Score Improvement",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 5,
+     "id": "extra_attack",
+     "name": "Extra Attack",
+     "description": "You can attack twice when you take the Attack action.",
+     "origin": "srd"
+    },
+    {
+     "level": 5,
+     "id": "fast_movement",
+     "name": "Fast Movement",
+     "description": "Your Speed increases by 10 feet while you aren't wearing Heavy armor.",
+     "effects": [
+      {
+       "op": "speedBonus",
+       "value": 10,
+       "when": "!wearingArmor:heavy"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 7,
+     "id": "feral_instinct",
+     "name": "Feral Instinct",
+     "description": "Advantage on Initiative rolls.",
+     "origin": "srd"
+    },
+    {
+     "level": 7,
+     "id": "instinctive_pounce",
+     "name": "Instinctive Pounce",
+     "description": "As part of the Bonus Action to enter your Rage, you can move up to half your Speed.",
+     "origin": "srd"
+    },
+    {
+     "level": 9,
+     "id": "brutal_strike",
+     "name": "Brutal Strike",
+     "description": "If you use Reckless Attack you can forgo Advantage on one Strength-based attack: if it hits it deals 1d10 extra damage plus an effect: Forceful Blow (push the target 15 feet and move half your Speed toward it without Opportunity Attacks) or Hamstring Blow (target's Speed −15 feet until your next turn).",
+     "origin": "srd"
+    },
+    {
+     "level": 11,
+     "id": "relentless_rage",
+     "name": "Relentless Rage",
+     "description": "While raging, if you drop to 0 Hit Points without being killed outright, make a Constitution save (DC 10): on a success your Hit Points become twice your Barbarian level. The DC rises by 5 for each use after the first and resets to 10 after a Short or Long Rest.",
+     "origin": "srd"
+    },
+    {
+     "level": 13,
+     "id": "improved_brutal_strike",
+     "name": "Improved Brutal Strike",
+     "description": "New Brutal Strike effects: Staggering Blow (target has Disadvantage on its next save and can't make Opportunity Attacks until your next turn) and Sundering Blow (+5 to the next attack roll against the target by another creature).",
+     "origin": "srd"
+    },
+    {
+     "level": 15,
+     "id": "persistent_rage",
+     "name": "Persistent Rage",
+     "description": "When you roll Initiative you regain all expended Rage uses (once per Long Rest). Your Rage lasts 10 minutes without extending it and ends early only if you are Unconscious or don Heavy armor.",
+     "origin": "srd"
+    },
+    {
+     "level": 17,
+     "id": "improved_brutal_strike_17",
+     "name": "Improved Brutal Strike",
+     "description": "The extra damage of Brutal Strike rises to 2d10 and you can apply two different effects.",
+     "origin": "srd"
+    },
+    {
+     "level": 18,
+     "id": "indomitable_might",
+     "name": "Indomitable Might",
+     "description": "If your total for a Strength check or save is less than your Strength score, you can use the score instead.",
+     "origin": "srd"
+    },
+    {
+     "level": 19,
+     "id": "epic_boon",
+     "name": "Epic Boon",
+     "description": "You gain an Epic Boon feat or another feat of your choice for which you qualify. Recommended: Boon of Irresistible Offense.",
+     "choices": [
+      {
+       "id": "epic_boon_barbarian",
+       "label": "Epic Boon",
+       "count": 1,
+       "source": "feats:epic_boon"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 20,
+     "id": "primal_champion",
+     "name": "Primal Champion",
+     "description": "Your Strength and Constitution scores increase by 4, to a maximum of 25.",
+     "effects": [
+      {
+       "op": "abilityScoreIncrease",
+       "abilities": [
+        "str",
+        "con"
+       ],
+       "amount": 4,
+       "cap": 25
+      }
+     ],
+     "origin": "srd"
+    }
+   ],
+   "table": {
+    "rages": [
+     2,
+     2,
+     3,
+     3,
+     3,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     5,
+     5,
+     5,
+     5,
+     5,
+     6,
+     6,
+     6,
+     6
+    ],
+    "rage_damage": [
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     3,
+     3,
+     3,
+     3,
+     3,
+     3,
+     3,
+     4,
+     4,
+     4,
+     4,
+     4
+    ],
+    "weapon_mastery": [
+     2,
+     2,
+     2,
+     3,
+     3,
+     3,
+     3,
+     3,
+     3,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4
+    ]
+   },
+   "subclassLevel": 3,
+   "origin": "srd"
+  },
+  {
+   "id": "fighter",
+   "name": "Fighter",
+   "description": "A master of weapons and armor: more attacks, Second Wind, and extra actions.",
+   "hitDie": 10,
+   "primaryAbility": [
+    "str",
+    "dex"
+   ],
+   "saves": [
+    "str",
+    "con"
+   ],
+   "skillChoices": {
+    "count": 2,
+    "from": [
+     "acrobatics",
+     "animal_handling",
+     "athletics",
+     "history",
+     "insight",
+     "intimidation",
+     "persuasion",
+     "perception",
+     "survival"
+    ]
+   },
+   "armorTraining": [
+    "light",
+    "medium",
+    "heavy",
+    "shield"
+   ],
+   "weaponProficiency": [
+    "simple",
+    "martial"
+   ],
+   "caster": "none",
+   "multiclass": {
+    "weapons": [
+     "martial"
+    ],
+    "armor": [
+     "light",
+     "medium",
+     "shield"
+    ],
+    "skills": 0,
+    "toolChoices": 0,
+    "tools": []
+   },
+   "equipment": {
+    "A": {
+     "items": [
+      {
+       "item": "chain_mail",
+       "qty": 1
+      },
+      {
+       "item": "greatsword",
+       "qty": 1
+      },
+      {
+       "item": "flail",
+       "qty": 1
+      },
+      {
+       "item": "javelin",
+       "qty": 8
+      },
+      {
+       "item": "dungeoneers_pack",
+       "qty": 1
+      }
+     ],
+     "gp": 4
+    },
+    "B": {
+     "items": [
+      {
+       "item": "studded_leather_armor",
+       "qty": 1
+      },
+      {
+       "item": "scimitar",
+       "qty": 1
+      },
+      {
+       "item": "shortsword",
+       "qty": 1
+      },
+      {
+       "item": "longbow",
+       "qty": 1
+      },
+      {
+       "item": "arrows",
+       "qty": 1
+      },
+      {
+       "item": "quiver",
+       "qty": 1
+      },
+      {
+       "item": "dungeoneers_pack",
+       "qty": 1
+      }
+     ],
+     "gp": 11
+    },
+    "C": {
+     "items": [],
+     "gp": 155
+    }
+   },
+   "choices": [
+    {
+     "id": "fighter_skills",
+     "label": "Class skills",
+     "count": 2,
+     "options": [
+      {
+       "id": "acrobatics",
+       "name": "Acrobatics",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "acrobatics"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "animal_handling",
+       "name": "Animal Handling",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "animal_handling"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "athletics",
+       "name": "Athletics",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "athletics"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "history",
+       "name": "History",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "history"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "insight",
+       "name": "Insight",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "insight"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "intimidation",
+       "name": "Intimidation",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "intimidation"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "persuasion",
+       "name": "Persuasion",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "persuasion"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "perception",
+       "name": "Perception",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "perception"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "survival",
+       "name": "Survival",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "survival"
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "features": [
+    {
+     "level": 1,
+     "id": "fighting_style",
+     "name": "Fighting Style",
+     "description": "You gain a Fighting Style feat of your choice (Defense is recommended). Whenever you gain a Fighter level you can replace it with another.",
+     "choices": [
+      {
+       "id": "fighter_fighting_style",
+       "label": "Fighting Style",
+       "count": 1,
+       "source": "feats:fighting_style"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 1,
+     "id": "second_wind",
+     "name": "Second Wind",
+     "description": "As a Bonus Action you regain 1d10 + your Fighter level Hit Points. Uses are in the Second Wind column: regain one on a Short Rest, all on a Long Rest.",
+     "usage": {
+      "uses": {
+       "table": [
+        2,
+        2,
+        2,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+       ]
+      },
+      "recharge": "long_rest",
+      "partialShortRest": 1
+     },
+     "origin": "srd"
+    },
+    {
+     "level": 1,
+     "id": "weapon_mastery",
+     "name": "Weapon Mastery",
+     "description": "You can use the mastery properties of 3 kinds of Simple or Martial weapons (more with levels, Weapon Mastery column); after a Long Rest you can change one.",
+     "choices": [
+      {
+       "id": "weapon_mastery_pick",
+       "label": "Weapon Mastery",
+       "countFrom": "weapon_mastery",
+       "source": "weaponMastery"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 2,
+     "id": "action_surge",
+     "name": "Action Surge",
+     "description": "On your turn you can take one additional action (except the Magic action). Once per Short or Long Rest; twice from level 17, but only once per turn.",
+     "usage": {
+      "uses": {
+       "table": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        2,
+        2,
+        2,
+        2
+       ]
+      },
+      "recharge": "short_rest"
+     },
+     "origin": "srd"
+    },
+    {
+     "level": 2,
+     "id": "tactical_mind",
+     "name": "Tactical Mind",
+     "description": "When you fail an ability check you can expend a Second Wind use: roll 1d10 and add it to the check. If you still fail, the use isn't expended.",
+     "origin": "srd"
+    },
+    {
+     "level": 3,
+     "id": "fighter_subclass",
+     "name": "Fighter Subclass",
+     "description": "You gain a subclass of your choice; you gain its features at the levels shown.",
+     "origin": "srd"
+    },
+    {
+     "level": 4,
+     "id": "ability_score_improvement_4",
+     "name": "Ability Score Improvement",
+     "description": "You gain the Ability Score Improvement feat or another feat of your choice for which you qualify.",
+     "choices": [
+      {
+       "id": "asi_fighter_4",
+       "label": "Ability Score Improvement",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 6,
+     "id": "ability_score_improvement_6",
+     "name": "Ability Score Improvement",
+     "description": "You gain the Ability Score Improvement feat or another feat of your choice for which you qualify.",
+     "choices": [
+      {
+       "id": "asi_fighter_6",
+       "label": "Ability Score Improvement",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 8,
+     "id": "ability_score_improvement_8",
+     "name": "Ability Score Improvement",
+     "description": "You gain the Ability Score Improvement feat or another feat of your choice for which you qualify.",
+     "choices": [
+      {
+       "id": "asi_fighter_8",
+       "label": "Ability Score Improvement",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 12,
+     "id": "ability_score_improvement_12",
+     "name": "Ability Score Improvement",
+     "description": "You gain the Ability Score Improvement feat or another feat of your choice for which you qualify.",
+     "choices": [
+      {
+       "id": "asi_fighter_12",
+       "label": "Ability Score Improvement",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 14,
+     "id": "ability_score_improvement_14",
+     "name": "Ability Score Improvement",
+     "description": "You gain the Ability Score Improvement feat or another feat of your choice for which you qualify.",
+     "choices": [
+      {
+       "id": "asi_fighter_14",
+       "label": "Ability Score Improvement",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 16,
+     "id": "ability_score_improvement_16",
+     "name": "Ability Score Improvement",
+     "description": "You gain the Ability Score Improvement feat or another feat of your choice for which you qualify.",
+     "choices": [
+      {
+       "id": "asi_fighter_16",
+       "label": "Ability Score Improvement",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 5,
+     "id": "extra_attack",
+     "name": "Extra Attack",
+     "description": "You can attack twice when you take the Attack action.",
+     "origin": "srd"
+    },
+    {
+     "level": 5,
+     "id": "tactical_shift",
+     "name": "Tactical Shift",
+     "description": "Whenever you activate Second Wind you can move up to half your Speed without provoking Opportunity Attacks.",
+     "origin": "srd"
+    },
+    {
+     "level": 9,
+     "id": "indomitable",
+     "name": "Indomitable",
+     "description": "If you fail a saving throw you can reroll it with a bonus equal to your Fighter level; you must use the new roll. Once per Long Rest; twice from level 13, three times from level 17.",
+     "usage": {
+      "uses": {
+       "table": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        2,
+        2,
+        2,
+        2,
+        3,
+        3,
+        3,
+        3
+       ]
+      },
+      "recharge": "long_rest"
+     },
+     "origin": "srd"
+    },
+    {
+     "level": 9,
+     "id": "tactical_master",
+     "name": "Tactical Master",
+     "description": "When you attack with a weapon whose mastery you can use, you can replace its property with Push, Sap, or Slow.",
+     "origin": "srd"
+    },
+    {
+     "level": 11,
+     "id": "two_extra_attacks",
+     "name": "Two Extra Attacks",
+     "description": "You can attack three times when you take the Attack action.",
+     "origin": "srd"
+    },
+    {
+     "level": 13,
+     "id": "studied_attacks",
+     "name": "Studied Attacks",
+     "description": "If you miss a creature with an attack roll, you have Advantage on your next attack roll against it before the end of your next turn.",
+     "origin": "srd"
+    },
+    {
+     "level": 19,
+     "id": "epic_boon",
+     "name": "Epic Boon",
+     "description": "You gain an Epic Boon feat or another feat of your choice for which you qualify. Recommended: Boon of Combat Prowess.",
+     "choices": [
+      {
+       "id": "epic_boon_fighter",
+       "label": "Epic Boon",
+       "count": 1,
+       "source": "feats:epic_boon"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 20,
+     "id": "three_extra_attacks",
+     "name": "Three Extra Attacks",
+     "description": "You can attack four times when you take the Attack action.",
+     "origin": "srd"
+    }
+   ],
+   "table": {
+    "second_wind": [
+     2,
+     2,
+     2,
+     3,
+     3,
+     3,
+     3,
+     3,
+     3,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4
+    ],
+    "weapon_mastery": [
+     3,
+     3,
+     3,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     6,
+     6,
+     6,
+     6,
+     6
+    ]
+   },
+   "subclassLevel": 3,
+   "origin": "srd"
+  },
+  {
+   "id": "monk",
+   "name": "Monk",
+   "description": "An agile martial artist: Unarmed Strikes, Focus Points, and extraordinary movement.",
+   "hitDie": 8,
+   "primaryAbility": [
+    "dex",
+    "wis"
+   ],
+   "saves": [
+    "str",
+    "dex"
+   ],
+   "skillChoices": {
+    "count": 2,
+    "from": [
+     "acrobatics",
+     "athletics",
+     "history",
+     "insight",
+     "religion",
+     "stealth"
+    ]
+   },
+   "armorTraining": [],
+   "weaponProficiency": [
+    "simple",
+    "martial[light]"
+   ],
+   "caster": "none",
+   "multiclass": {
+    "weapons": [],
+    "armor": [],
+    "skills": 0,
+    "toolChoices": 0,
+    "tools": []
+   },
+   "equipment": {
+    "A": {
+     "items": [
+      {
+       "item": "spear",
+       "qty": 1
+      },
+      {
+       "item": "dagger",
+       "qty": 5
+      },
+      {
+       "item": "$tool",
+       "qty": 1
+      },
+      {
+       "item": "explorers_pack",
+       "qty": 1
+      }
+     ],
+     "gp": 11
+    },
+    "B": {
+     "items": [],
+     "gp": 50
+    }
+   },
+   "choices": [
+    {
+     "id": "monk_skills",
+     "label": "Class skills",
+     "count": 2,
+     "options": [
+      {
+       "id": "acrobatics",
+       "name": "Acrobatics",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "acrobatics"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "athletics",
+       "name": "Athletics",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "athletics"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "history",
+       "name": "History",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "history"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "insight",
+       "name": "Insight",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "insight"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "religion",
+       "name": "Religion",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "religion"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "stealth",
+       "name": "Stealth",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "stealth"
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "monk_tools",
+     "label": "Tool",
+     "count": 1,
+     "source": "tools:artisan_musical"
+    }
+   ],
+   "features": [
+    {
+     "level": 1,
+     "id": "martial_arts",
+     "name": "Martial Arts",
+     "description": "While wearing no armor or Shield and using only Unarmed Strikes or Monk weapons (Simple Melee and Light Martial Melee weapons): a Bonus Action Unarmed Strike; a Martial Arts die instead of normal damage (Martial Arts column); you can use Dexterity instead of Strength for attack and damage rolls and for the grapple and shove save DC.",
+     "origin": "srd"
+    },
+    {
+     "level": 1,
+     "id": "unarmored_defense",
+     "name": "Unarmored Defense",
+     "description": "Without armor or a Shield your base AC is 10 + Dex + Wis.",
+     "effects": [
+      {
+       "op": "acFormula",
+       "formula": "10 + mod:dex + mod:wis",
+       "shieldAllowed": false,
+       "when": "wearingArmor:none"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 2,
+     "id": "monks_focus",
+     "name": "Monk's Focus",
+     "description": "You gain Focus Points (Focus Points column) that return after a Short or Long Rest. You spend them on Flurry of Blows (two Unarmed Strikes as a Bonus Action), Patient Defense (Disengage and Dodge as a Bonus Action), and Step of the Wind (Disengage and Dash as a Bonus Action, doubled jump). Your save DC is 8 + Wis + Proficiency. Without spending points you can still Disengage or Dash as a Bonus Action.",
+     "usage": {
+      "uses": {
+       "table": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+       ]
+      },
+      "recharge": "short_rest"
+     },
+     "origin": "srd"
+    },
+    {
+     "level": 2,
+     "id": "unarmored_movement",
+     "name": "Unarmored Movement",
+     "description": "Your Speed increases by 10 feet while you aren't wearing armor or wielding a Shield; the bonus grows with levels (Unarmored Movement column).",
+     "effects": [
+      {
+       "op": "speedBonus",
+       "value": 10,
+       "when": "classLevel:monk>=2 && wearingArmor:none && !shield"
+      },
+      {
+       "op": "speedBonus",
+       "value": 5,
+       "when": "classLevel:monk>=6 && wearingArmor:none && !shield"
+      },
+      {
+       "op": "speedBonus",
+       "value": 5,
+       "when": "classLevel:monk>=10 && wearingArmor:none && !shield"
+      },
+      {
+       "op": "speedBonus",
+       "value": 5,
+       "when": "classLevel:monk>=14 && wearingArmor:none && !shield"
+      },
+      {
+       "op": "speedBonus",
+       "value": 5,
+       "when": "classLevel:monk>=18 && wearingArmor:none && !shield"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 2,
+     "id": "uncanny_metabolism",
+     "name": "Uncanny Metabolism",
+     "description": "When you roll Initiative you regain all expended Focus Points and heal Hit Points equal to your Monk level + a roll of your Martial Arts die. Once per Long Rest.",
+     "usage": {
+      "uses": 1,
+      "recharge": "long_rest"
+     },
+     "origin": "srd"
+    },
+    {
+     "level": 3,
+     "id": "deflect_attacks",
+     "name": "Deflect Attacks",
+     "description": "As a Reaction when an attack roll that includes Bludgeoning, Piercing, or Slashing damage hits you, reduce the damage by 1d10 + Dex + your Monk level. If reduced to 0 you can spend 1 Focus Point to redirect the force at a visible creature (within 5 feet for melee, 60 feet for ranged): Dexterity save or it takes two rolls of your Martial Arts die + Dex.",
+     "origin": "srd"
+    },
+    {
+     "level": 3,
+     "id": "monk_subclass",
+     "name": "Monk Subclass",
+     "description": "You gain a subclass of your choice; you gain its features at the levels shown.",
+     "origin": "srd"
+    },
+    {
+     "level": 4,
+     "id": "ability_score_improvement_4",
+     "name": "Ability Score Improvement",
+     "description": "You gain the Ability Score Improvement feat or another feat of your choice for which you qualify.",
+     "choices": [
+      {
+       "id": "asi_monk_4",
+       "label": "Ability Score Improvement",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 8,
+     "id": "ability_score_improvement_8",
+     "name": "Ability Score Improvement",
+     "description": "You gain the Ability Score Improvement feat or another feat of your choice for which you qualify.",
+     "choices": [
+      {
+       "id": "asi_monk_8",
+       "label": "Ability Score Improvement",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 12,
+     "id": "ability_score_improvement_12",
+     "name": "Ability Score Improvement",
+     "description": "You gain the Ability Score Improvement feat or another feat of your choice for which you qualify.",
+     "choices": [
+      {
+       "id": "asi_monk_12",
+       "label": "Ability Score Improvement",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 16,
+     "id": "ability_score_improvement_16",
+     "name": "Ability Score Improvement",
+     "description": "You gain the Ability Score Improvement feat or another feat of your choice for which you qualify.",
+     "choices": [
+      {
+       "id": "asi_monk_16",
+       "label": "Ability Score Improvement",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 4,
+     "id": "slow_fall",
+     "name": "Slow Fall",
+     "description": "As a Reaction when you fall, reduce the falling damage by five times your Monk level.",
+     "origin": "srd"
+    },
+    {
+     "level": 5,
+     "id": "extra_attack",
+     "name": "Extra Attack",
+     "description": "You can attack twice when you take the Attack action.",
+     "origin": "srd"
+    },
+    {
+     "level": 5,
+     "id": "stunning_strike",
+     "name": "Stunning Strike",
+     "description": "Once per turn when you hit with a Monk weapon or Unarmed Strike you can spend 1 Focus Point: Constitution save; on a failure the target is Stunned until the start of your next turn; on a success its Speed is halved and the next attack roll against it has Advantage.",
+     "origin": "srd"
+    },
+    {
+     "level": 6,
+     "id": "empowered_strikes",
+     "name": "Empowered Strikes",
+     "description": "Your Unarmed Strikes can deal Force damage instead of their normal type.",
+     "origin": "srd"
+    },
+    {
+     "level": 7,
+     "id": "evasion",
+     "name": "Evasion",
+     "description": "When an effect lets you make a Dexterity save to take half damage, you take none on a success and half on a failure (not if Incapacitated).",
+     "origin": "srd"
+    },
+    {
+     "level": 9,
+     "id": "acrobatic_movement",
+     "name": "Acrobatic Movement",
+     "description": "While not wearing armor or wielding a Shield you can move along vertical surfaces and across liquids on your turn without falling.",
+     "origin": "srd"
+    },
+    {
+     "level": 10,
+     "id": "heightened_focus",
+     "name": "Heightened Focus",
+     "description": "Flurry of Blows makes three strikes; Patient Defense grants Temporary Hit Points equal to two Martial Arts rolls; Step of the Wind lets you carry a willing Large or smaller creature within 5 feet along.",
+     "origin": "srd"
+    },
+    {
+     "level": 10,
+     "id": "self_restoration",
+     "name": "Self-Restoration",
+     "description": "At the end of each of your turns you can remove the Charmed, Frightened, or Poisoned condition from yourself; forgoing food and drink doesn't give you Exhaustion levels.",
+     "origin": "srd"
+    },
+    {
+     "level": 13,
+     "id": "deflect_energy",
+     "name": "Deflect Energy",
+     "description": "Deflect Attacks works against attacks that deal any damage type.",
+     "origin": "srd"
+    },
+    {
+     "level": 14,
+     "id": "disciplined_survivor",
+     "name": "Disciplined Survivor",
+     "description": "Proficiency in all saving throws. When you fail a saving throw you can spend 1 Focus Point to reroll it (you must use the new roll).",
+     "effects": [
+      {
+       "op": "grantSaveProficiency",
+       "abilities": [
+        "str",
+        "dex",
+        "con",
+        "int",
+        "wis",
+        "cha"
+       ]
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 15,
+     "id": "perfect_focus",
+     "name": "Perfect Focus",
+     "description": "When you roll Initiative and don't use Uncanny Metabolism, you regain Focus Points until you have 4 (if you have 3 or fewer).",
+     "origin": "srd"
+    },
+    {
+     "level": 18,
+     "id": "superior_defense",
+     "name": "Superior Defense",
+     "description": "At the start of your turn you can spend 3 Focus Points: for 1 minute (or until Incapacitated) you have Resistance to all damage except Force.",
+     "origin": "srd"
+    },
+    {
+     "level": 19,
+     "id": "epic_boon",
+     "name": "Epic Boon",
+     "description": "You gain an Epic Boon feat or another feat of your choice for which you qualify. Recommended: Boon of Irresistible Offense.",
+     "choices": [
+      {
+       "id": "epic_boon_monk",
+       "label": "Epic Boon",
+       "count": 1,
+       "source": "feats:epic_boon"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 20,
+     "id": "body_and_mind",
+     "name": "Body and Mind",
+     "description": "Your Dexterity and Wisdom scores increase by 4, to a maximum of 25.",
+     "effects": [
+      {
+       "op": "abilityScoreIncrease",
+       "abilities": [
+        "dex",
+        "wis"
+       ],
+       "amount": 4,
+       "cap": 25
+      }
+     ],
+     "origin": "srd"
+    }
+   ],
+   "table": {
+    "martial_arts": [
+     "1d6",
+     "1d6",
+     "1d6",
+     "1d6",
+     "1d8",
+     "1d8",
+     "1d8",
+     "1d8",
+     "1d8",
+     "1d8",
+     "1d10",
+     "1d10",
+     "1d10",
+     "1d10",
+     "1d10",
+     "1d10",
+     "1d12",
+     "1d12",
+     "1d12",
+     "1d12"
+    ],
+    "focus_points": [
+     0,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18,
+     19,
+     20
+    ],
+    "unarmored_movement": [
+     0,
+     10,
+     10,
+     10,
+     10,
+     15,
+     15,
+     15,
+     15,
+     20,
+     20,
+     20,
+     20,
+     25,
+     25,
+     25,
+     25,
+     30,
+     30,
+     30
+    ]
+   },
+   "subclassLevel": 3,
+   "origin": "srd"
+  },
+  {
+   "id": "rogue",
+   "name": "Rogue",
+   "description": "A specialist in stealth and precision: Sneak Attack, Expertise, and uncanny dodges.",
+   "hitDie": 8,
+   "primaryAbility": [
+    "dex"
+   ],
+   "saves": [
+    "dex",
+    "int"
+   ],
+   "skillChoices": {
+    "count": 4,
+    "from": [
+     "acrobatics",
+     "athletics",
+     "deception",
+     "insight",
+     "intimidation",
+     "investigation",
+     "perception",
+     "persuasion",
+     "sleight_of_hand",
+     "stealth"
+    ]
+   },
+   "armorTraining": [
+    "light"
+   ],
+   "weaponProficiency": [
+    "simple",
+    "martial[finesse|light]"
+   ],
+   "toolProficiency": [
+    "thieves_tools"
+   ],
+   "caster": "none",
+   "multiclass": {
+    "weapons": [],
+    "armor": [
+     "light"
+    ],
+    "skills": 1,
+    "toolChoices": 0,
+    "tools": [
+     "thieves_tools"
+    ]
+   },
+   "equipment": {
+    "A": {
+     "items": [
+      {
+       "item": "leather_armor",
+       "qty": 1
+      },
+      {
+       "item": "dagger",
+       "qty": 2
+      },
+      {
+       "item": "shortsword",
+       "qty": 1
+      },
+      {
+       "item": "shortbow",
+       "qty": 1
+      },
+      {
+       "item": "arrows",
+       "qty": 1
+      },
+      {
+       "item": "quiver",
+       "qty": 1
+      },
+      {
+       "item": "thieves_tools",
+       "qty": 1
+      },
+      {
+       "item": "burglars_pack",
+       "qty": 1
+      }
+     ],
+     "gp": 8
+    },
+    "B": {
+     "items": [],
+     "gp": 100
+    }
+   },
+   "choices": [
+    {
+     "id": "rogue_skills",
+     "label": "Class skills",
+     "count": 4,
+     "options": [
+      {
+       "id": "acrobatics",
+       "name": "Acrobatics",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "acrobatics"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "athletics",
+       "name": "Athletics",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "athletics"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "deception",
+       "name": "Deception",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "deception"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "insight",
+       "name": "Insight",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "insight"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "intimidation",
+       "name": "Intimidation",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "intimidation"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "investigation",
+       "name": "Investigation",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "investigation"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "perception",
+       "name": "Perception",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "perception"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "persuasion",
+       "name": "Persuasion",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "persuasion"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "sleight_of_hand",
+       "name": "Sleight of Hand",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "sleight_of_hand"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "stealth",
+       "name": "Stealth",
+       "effects": [
+        {
+         "op": "grantSkillProficiency",
+         "skills": [
+          "stealth"
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "features": [
+    {
+     "level": 1,
+     "id": "expertise",
+     "name": "Expertise",
+     "description": "Expertise in two skills you're proficient in (Sleight of Hand and Stealth are recommended). Two more at level 6.",
+     "choices": [
+      {
+       "id": "rogue_expertise_1",
+       "label": "Expertise",
+       "count": 2,
+       "source": "expertise"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 1,
+     "id": "sneak_attack",
+     "name": "Sneak Attack",
+     "description": "Once per turn you deal extra damage (Sneak Attack column) to a creature you hit with a Finesse or Ranged weapon if you have Advantage, or if a non-Incapacitated ally is within 5 feet of the target (and you don't have Disadvantage). The extra damage has the weapon's type.",
+     "origin": "srd"
+    },
+    {
+     "level": 1,
+     "id": "thieves_cant",
+     "name": "Thieves' Cant",
+     "description": "You know Thieves' Cant and one other language of your choice.",
+     "choices": [
+      {
+       "id": "rogue_language",
+       "label": "Extra language",
+       "count": 1,
+       "source": "languages:standard"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 1,
+     "id": "weapon_mastery",
+     "name": "Weapon Mastery",
+     "description": "You can use the mastery properties of 2 kinds of weapons you're proficient with (such as Daggers and Shortbows); after a Long Rest you can change one.",
+     "choices": [
+      {
+       "id": "weapon_mastery_pick",
+       "label": "Weapon Mastery",
+       "count": 2,
+       "source": "weaponMastery"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 2,
+     "id": "cunning_action",
+     "name": "Cunning Action",
+     "description": "On your turn you can take Dash, Disengage, or Hide as a Bonus Action.",
+     "origin": "srd"
+    },
+    {
+     "level": 3,
+     "id": "rogue_subclass",
+     "name": "Rogue Subclass",
+     "description": "You gain a subclass of your choice; you gain its features at the levels shown.",
+     "origin": "srd"
+    },
+    {
+     "level": 3,
+     "id": "steady_aim",
+     "name": "Steady Aim",
+     "description": "As a Bonus Action you gain Advantage on your next attack roll this turn; only if you haven't moved this turn, and your Speed becomes 0 until the end of the turn.",
+     "origin": "srd"
+    },
+    {
+     "level": 4,
+     "id": "ability_score_improvement_4",
+     "name": "Ability Score Improvement",
+     "description": "You gain the Ability Score Improvement feat or another feat of your choice for which you qualify.",
+     "choices": [
+      {
+       "id": "asi_rogue_4",
+       "label": "Ability Score Improvement",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 8,
+     "id": "ability_score_improvement_8",
+     "name": "Ability Score Improvement",
+     "description": "You gain the Ability Score Improvement feat or another feat of your choice for which you qualify.",
+     "choices": [
+      {
+       "id": "asi_rogue_8",
+       "label": "Ability Score Improvement",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 10,
+     "id": "ability_score_improvement_10",
+     "name": "Ability Score Improvement",
+     "description": "You gain the Ability Score Improvement feat or another feat of your choice for which you qualify.",
+     "choices": [
+      {
+       "id": "asi_rogue_10",
+       "label": "Ability Score Improvement",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 12,
+     "id": "ability_score_improvement_12",
+     "name": "Ability Score Improvement",
+     "description": "You gain the Ability Score Improvement feat or another feat of your choice for which you qualify.",
+     "choices": [
+      {
+       "id": "asi_rogue_12",
+       "label": "Ability Score Improvement",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 16,
+     "id": "ability_score_improvement_16",
+     "name": "Ability Score Improvement",
+     "description": "You gain the Ability Score Improvement feat or another feat of your choice for which you qualify.",
+     "choices": [
+      {
+       "id": "asi_rogue_16",
+       "label": "Ability Score Improvement",
+       "count": 1,
+       "source": "feats:general"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 5,
+     "id": "cunning_strike",
+     "name": "Cunning Strike",
+     "description": "When you deal Sneak Attack damage you can forgo dice to add an effect: Trip (1d6: Dexterity save or Prone, if Large or smaller), Withdraw (1d6: move up to half your Speed without Opportunity Attacks), Poison (1d6: Constitution save or Poisoned for 1 minute; requires a Poisoner's Kit). DC 8 + Dex + Proficiency.",
+     "origin": "srd"
+    },
+    {
+     "level": 5,
+     "id": "uncanny_dodge",
+     "name": "Uncanny Dodge",
+     "description": "As a Reaction when an attacker you can see hits you, you halve the attack's damage (rounded down).",
+     "origin": "srd"
+    },
+    {
+     "level": 6,
+     "id": "expertise_6",
+     "name": "Expertise",
+     "description": "Expertise in two more skills you're proficient in.",
+     "choices": [
+      {
+       "id": "rogue_expertise_6",
+       "label": "Expertise",
+       "count": 2,
+       "source": "expertise"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 7,
+     "id": "evasion",
+     "name": "Evasion",
+     "description": "When an effect lets you make a Dexterity save to take half damage, you take none on a success and half on a failure (not if Incapacitated).",
+     "origin": "srd"
+    },
+    {
+     "level": 7,
+     "id": "reliable_talent",
+     "name": "Reliable Talent",
+     "description": "When you make an ability check with a skill or tool you're proficient with, a d20 roll of 9 or lower counts as a 10.",
+     "origin": "srd"
+    },
+    {
+     "level": 11,
+     "id": "improved_cunning_strike",
+     "name": "Improved Cunning Strike",
+     "description": "You can use up to two Cunning Strike effects, paying the dice cost of each.",
+     "origin": "srd"
+    },
+    {
+     "level": 14,
+     "id": "devious_strikes",
+     "name": "Devious Strikes",
+     "description": "New Cunning Strike options: Knock Out (6d6: Constitution save or Unconscious), Obscure (3d6: Dexterity save or Blinded), Daze (2d6: Constitution save or limited to a move, action, or Bonus Action on its next turn).",
+     "origin": "srd"
+    },
+    {
+     "level": 15,
+     "id": "slippery_mind",
+     "name": "Slippery Mind",
+     "description": "Proficiency in Wisdom and Charisma saving throws.",
+     "effects": [
+      {
+       "op": "grantSaveProficiency",
+       "abilities": [
+        "wis",
+        "cha"
+       ]
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 18,
+     "id": "elusive",
+     "name": "Elusive",
+     "description": "No attack roll has Advantage against you unless you have the Incapacitated condition.",
+     "origin": "srd"
+    },
+    {
+     "level": 19,
+     "id": "epic_boon",
+     "name": "Epic Boon",
+     "description": "You gain an Epic Boon feat or another feat of your choice for which you qualify. Recommended: Boon of the Night Spirit.",
+     "choices": [
+      {
+       "id": "epic_boon_rogue",
+       "label": "Epic Boon",
+       "count": 1,
+       "source": "feats:epic_boon"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 20,
+     "id": "stroke_of_luck",
+     "name": "Stroke of Luck",
+     "description": "If you fail a D20 Test you can turn the roll into a 20. Once per Short or Long Rest.",
+     "usage": {
+      "uses": 1,
+      "recharge": "short_rest"
+     },
+     "origin": "srd"
+    }
+   ],
+   "table": {
+    "sneak_attack": [
+     "1d6",
+     "1d6",
+     "2d6",
+     "2d6",
+     "3d6",
+     "3d6",
+     "4d6",
+     "4d6",
+     "5d6",
+     "5d6",
+     "6d6",
+     "6d6",
+     "7d6",
+     "7d6",
+     "8d6",
+     "8d6",
+     "9d6",
+     "9d6",
+     "10d6",
+     "10d6"
+    ]
+   },
+   "subclassLevel": 3,
+   "origin": "srd"
+  }
+ ]
+}
