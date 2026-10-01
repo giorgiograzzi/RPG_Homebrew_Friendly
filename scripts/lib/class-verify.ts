@@ -106,6 +106,7 @@ export async function verifyClass(def: ClassDef): Promise<ClassCheck> {
       for (const it of eq.items) if (!core.includes(nz(l, l === "it" ? it.it : it.en))) errors.push(`${w}: equipaggiamento ${opt}: "${l === "it" ? it.it : it.en}" non trovato`);
     }
     for (const p of def.multiclassPhrases[l]) has("multiclasse", p);
+    for (const p of def.checkPhrases?.[l] ?? []) has("opzione", p);
     // intestazioni dei privilegi e della sottoclasse
     const head = (lvl: number, name: string) => `${l === "it" ? "livello" : "level"} ${lvl}: ${name}`;
     const feats: FeatureDef[] = [...def.features.filter((x) => !x.tableOnly), ...def.subclass.features];

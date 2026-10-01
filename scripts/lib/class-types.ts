@@ -28,6 +28,7 @@ export interface ClassDef {
   extraRows?: { level: number; label: Bi }[]; // voci della tabella che non sono privilegi (es. "Indomabile (due utilizzi)")
   features: FeatureDef[]; subclass: SubclassDef;
   caster?: { type: "full" | "half" | "third" | "pact"; ability: string; list: string };
+  checkPhrases?: { it: string[]; en: string[] }; // nomi che devono comparire nel PDF (es. le opzioni di un elenco: Metamagia, Suppliche occulte)
   // frasi del blocco "Tratti" nel PDF (dado vita, caratteristica primaria, ecc.) controllate in ogni lingua
   core: { primaryIt: string; primaryEn: string; savesIt: string; savesEn: string; skillsIt: string; skillsEn: string; weaponsIt: string; weaponsEn: string; armorIt: string; armorEn: string; toolsIt?: string; toolsEn?: string };
 }
@@ -57,3 +58,6 @@ export const skillOpts = (ids: string[]): Json[] => ids.map((id) => ({ id, name:
 // Colonne degli slot incantesimo (1°..n°) della tabella: diventano `spellSlots` e non restano nella tabella
 export const slotCols = (n: number): ColumnDef[] => Array.from({ length: n }, (_, i) => ({ id: `slot_${i + 1}`, name: B(`Slot di ${i + 1}° livello`, `Level ${i + 1} spell slots`) }));
 export const SLOT_COL = /^slot_(\d)$/;
+
+// Opzione di una scelta (Metamagia, Suppliche occulte...): `cost` in punti, `requires` = condizione del motore
+export const opt = (id: string, name: [string, string], description: [string, string], extra: Json = {}): Json => ({ id, name: B(...name), description: B(...description), ...extra });

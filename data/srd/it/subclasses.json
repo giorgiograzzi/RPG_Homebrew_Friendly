@@ -194,6 +194,259 @@
    "origin": "srd"
   },
   {
+   "id": "land",
+   "classId": "druid",
+   "name": "Circolo della Terra",
+   "description": "Mistico legato a un tipo di terra: incantesimi del circolo, Ausilio dalla terra e protezione dalla natura.",
+   "features": [
+    {
+     "level": 3,
+     "id": "circle_of_the_land_spells",
+     "name": "Incantesimi del Circolo della Terra",
+     "description": "Dopo un riposo lungo scegli un tipo di terra (arida, polare, temperata, tropicale): gli incantesimi elencati per il tuo livello e i livelli inferiori sono preparati. Arida: 3° Dardo di fuoco, Mani brucianti, Sfocatura; 5° Palla di fuoco; 7° Inaridire; 9° Muro di pietra. Polare: 3° Blocca persone, Nube di nebbia, Raggio di gelo; 5° Tempesta di nevischio; 7° Tempesta di ghiaccio; 9° Cono di freddo. Temperata: 3° Passo velato, Sonno, Stretta folgorante; 5° Fulmine; 7° Libertà di movimento; 9° Traslazione arborea. Tropicale: 3° Fiotto acido, Raggio di infermità, Ragnatela; 5° Nube maleodorante; 7° Metamorfosi; 9° Piaga degli insetti.",
+     "choices": [
+      {
+       "id": "land_type",
+       "label": "Tipo di terra",
+       "count": 1,
+       "options": [
+        {
+         "id": "arid",
+         "name": "Terra arida",
+         "effects": [
+          {
+           "op": "grantSpell",
+           "spell": "fire_bolt",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=3"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "burning_hands",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=3"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "blur",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=3"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "fireball",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=5"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "blight",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=7"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "wall_of_stone",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=9"
+          },
+          {
+           "op": "resistance",
+           "types": [
+            "fire"
+           ],
+           "when": "classLevel:druid>=10"
+          }
+         ]
+        },
+        {
+         "id": "polar",
+         "name": "Terra polare",
+         "effects": [
+          {
+           "op": "grantSpell",
+           "spell": "hold_person",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=3"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "fog_cloud",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=3"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "ray_of_frost",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=3"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "sleet_storm",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=5"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "ice_storm",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=7"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "cone_of_cold",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=9"
+          },
+          {
+           "op": "resistance",
+           "types": [
+            "cold"
+           ],
+           "when": "classLevel:druid>=10"
+          }
+         ]
+        },
+        {
+         "id": "temperate",
+         "name": "Terra temperata",
+         "effects": [
+          {
+           "op": "grantSpell",
+           "spell": "misty_step",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=3"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "sleep",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=3"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "shocking_grasp",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=3"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "lightning_bolt",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=5"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "freedom_of_movement",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=7"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "tree_stride",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=9"
+          },
+          {
+           "op": "resistance",
+           "types": [
+            "lightning"
+           ],
+           "when": "classLevel:druid>=10"
+          }
+         ]
+        },
+        {
+         "id": "tropical",
+         "name": "Terra tropicale",
+         "effects": [
+          {
+           "op": "grantSpell",
+           "spell": "acid_splash",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=3"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "ray_of_sickness",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=3"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "web",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=3"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "stinking_cloud",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=5"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "polymorph",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=7"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "insect_plague",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=9"
+          },
+          {
+           "op": "resistance",
+           "types": [
+            "poison"
+           ],
+           "when": "classLevel:druid>=10"
+          }
+         ]
+        }
+       ]
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 3,
+     "id": "lands_aid",
+     "name": "Ausilio dalla terra",
+     "description": "Azione di Magia, spendendo un uso di Forma selvatica: scegli un punto entro 18 m; in una sfera di 3 m le creature a tua scelta fanno un tiro salvezza su Costituzione o subiscono 2d6 danni necrotici (metà se superato), e una creatura a tua scelta recupera 2d6 PF. 3d6 al 10° livello, 4d6 al 14°.",
+     "origin": "srd"
+    },
+    {
+     "level": 6,
+     "id": "natural_recovery",
+     "name": "Recupero naturale",
+     "description": "Puoi lanciare senza slot uno degli incantesimi del Circolo che hai preparato (una volta per riposo lungo); dopo un riposo breve recuperi slot di livello totale pari a metà del livello da druido (per eccesso), nessuno oltre il 6°, una volta per riposo lungo.",
+     "usage": {
+      "uses": 1,
+      "recharge": "long_rest"
+     },
+     "origin": "srd"
+    },
+    {
+     "level": 10,
+     "id": "natures_ward",
+     "name": "Interdizione della Natura",
+     "description": "Sei immune alla condizione avvelenato e hai resistenza a un tipo di danno legato alla terra scelta (arida: fuoco; polare: freddo; temperata: fulmine; tropicale: veleno).",
+     "origin": "srd"
+    },
+    {
+     "level": 14,
+     "id": "natures_sanctuary",
+     "name": "Rifugio della Natura",
+     "description": "Azione di Magia, spendendo un uso di Forma selvatica: alberi e viticci spettrali in un cubo di 4,5 m entro 36 m per 1 minuto; tu e i tuoi alleati avete mezza copertura e gli alleati ottengono la resistenza di Interdizione della Natura. Azione bonus: sposta il cubo fino a 18 m.",
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  },
+  {
    "id": "champion",
    "classId": "fighter",
    "name": "Campione",
@@ -532,6 +785,371 @@
      "id": "thiefs_reflexes",
      "name": "Riflessi da furfante",
      "description": "Nel primo round di ogni combattimento fai due turni: il primo alla tua iniziativa, il secondo alla tua iniziativa meno 10.",
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "draconic",
+   "classId": "sorcerer",
+   "name": "Stregoneria draconica",
+   "description": "Magia innata del drago: resilienza, incantesimi draconici, affinità elementale, ali e un drago alleato.",
+   "features": [
+    {
+     "level": 3,
+     "id": "draconic_resilience",
+     "name": "Resilienza draconica",
+     "description": "I PF massimi aumentano di 3 e di 1 per ogni livello da stregone. Senza armatura la CA base è 10 + Des + Car.",
+     "effects": [
+      {
+       "op": "hpMaxBonus",
+       "value": 3
+      },
+      {
+       "op": "hpMaxPerLevel",
+       "value": 1,
+       "classId": "sorcerer"
+      },
+      {
+       "op": "acFormula",
+       "formula": "10 + mod:dex + mod:cha",
+       "shieldAllowed": true,
+       "when": "wearingArmor:none"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 3,
+     "id": "draconic_spells",
+     "name": "Incantesimi draconici",
+     "description": "Incantesimi sempre preparati: 3° Alterare se stesso, Globo cromatico, Comando, Soffio del drago; 5° Paura, Volare; 7° Occhio arcano, Charme sui mostri; 9° Conoscenza delle leggende, Richiama drago.",
+     "effects": [
+      {
+       "op": "grantSpell",
+       "spell": "alter_self",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:sorcerer>=3"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "chromatic_orb",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:sorcerer>=3"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "command",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:sorcerer>=3"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "dragons_breath",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:sorcerer>=3"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "fear",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:sorcerer>=5"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "fly",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:sorcerer>=5"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "arcane_eye",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:sorcerer>=7"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "charm_monster",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:sorcerer>=7"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "legend_lore",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:sorcerer>=9"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "summon_dragon",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:sorcerer>=9"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 6,
+     "id": "elemental_affinity",
+     "name": "Affinità elementale",
+     "description": "Scegli un tipo di danno draconico (acido, freddo, fulmine, fuoco o veleno): hai resistenza e, quando lanci un incantesimo di quel tipo, aggiungi Carisma a un tiro per i danni.",
+     "choices": [
+      {
+       "id": "sorcerer_elemental_affinity",
+       "label": "Affinità elementale",
+       "count": 1,
+       "options": [
+        {
+         "id": "acid",
+         "name": "Acido",
+         "effects": [
+          {
+           "op": "resistance",
+           "types": [
+            "acid"
+           ]
+          }
+         ]
+        },
+        {
+         "id": "cold",
+         "name": "Freddo",
+         "effects": [
+          {
+           "op": "resistance",
+           "types": [
+            "cold"
+           ]
+          }
+         ]
+        },
+        {
+         "id": "lightning",
+         "name": "Fulmine",
+         "effects": [
+          {
+           "op": "resistance",
+           "types": [
+            "lightning"
+           ]
+          }
+         ]
+        },
+        {
+         "id": "fire",
+         "name": "Fuoco",
+         "effects": [
+          {
+           "op": "resistance",
+           "types": [
+            "fire"
+           ]
+          }
+         ]
+        },
+        {
+         "id": "poison",
+         "name": "Veleno",
+         "effects": [
+          {
+           "op": "resistance",
+           "types": [
+            "poison"
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 14,
+     "id": "dragon_wings",
+     "name": "Ali di drago",
+     "description": "Azione bonus: ali draconiche per 1 ora (o finché le fai sparire) con velocità di volo di 18 m. Una volta per riposo lungo, o spendendo 3 punti stregoneria.",
+     "usage": {
+      "uses": 1,
+      "recharge": "long_rest"
+     },
+     "origin": "srd"
+    },
+    {
+     "level": 18,
+     "id": "dragon_companion",
+     "name": "Seguace draconico",
+     "description": "Puoi lanciare Richiama drago senza componenti materiali e una volta senza slot per riposo lungo; puoi lanciarlo senza concentrazione (durata 1 minuto).",
+     "effects": [
+      {
+       "op": "grantSpell",
+       "spell": "summon_dragon",
+       "mode": "alwaysPrepared",
+       "freeCast": {
+        "uses": 1,
+        "recharge": "long_rest"
+       }
+      }
+     ],
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "fiend",
+   "classId": "warlock",
+   "name": "Patrono immondo",
+   "description": "Un patto con i Piani Inferiori: punti ferita temporanei, incantesimi infernali, fortuna e Scagliare all'Inferno.",
+   "features": [
+    {
+     "level": 3,
+     "id": "dark_ones_blessing",
+     "name": "Benedizione dell'oscuro",
+     "description": "Quando riduci un nemico a 0 PF (o lo fa qualcun altro entro 3 m da te) ottieni PF temporanei pari a Carisma + livello da warlock (minimo 1).",
+     "origin": "srd"
+    },
+    {
+     "level": 3,
+     "id": "fiend_spells",
+     "name": "Incantesimi immondi",
+     "description": "Incantesimi sempre preparati: 3° Comando, Mani brucianti, Raggio rovente, Suggestione; 5° Nube maleodorante, Palla di fuoco; 7° Muro di fuoco, Scudo di fuoco; 9° Costrizione, Piaga degli insetti.",
+     "effects": [
+      {
+       "op": "grantSpell",
+       "spell": "command",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:warlock>=3"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "burning_hands",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:warlock>=3"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "scorching_ray",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:warlock>=3"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "suggestion",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:warlock>=3"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "stinking_cloud",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:warlock>=5"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "fireball",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:warlock>=5"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "wall_of_fire",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:warlock>=7"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "fire_shield",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:warlock>=7"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "geas",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:warlock>=9"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "insect_plague",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:warlock>=9"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 6,
+     "id": "dark_ones_own_luck",
+     "name": "Fortuna dell'Oscuro",
+     "description": "Dopo aver visto un tiro di una prova di caratteristica o di un tiro salvezza puoi aggiungere 1d10 (una volta per tiro). Usi pari a Carisma (minimo 1) per riposo lungo.",
+     "usage": {
+      "uses": "max(1, mod:cha)",
+      "recharge": "long_rest"
+     },
+     "origin": "srd"
+    },
+    {
+     "level": 10,
+     "id": "fiendish_resilience",
+     "name": "Resilienza immonda",
+     "description": "Dopo un riposo breve o lungo scegli un tipo di danno (tranne forza): hai resistenza finché non ne scegli un altro.",
+     "origin": "srd"
+    },
+    {
+     "level": 14,
+     "id": "hurl_through_hell",
+     "name": "Scagliare all'Inferno",
+     "description": "Una volta per turno, colpendo con un tiro per colpire puoi spedire il bersaglio nei Piani Inferiori: tiro salvezza su Carisma o, se non è un immondo, subisce 8d10 danni psichici ed è incapacitato fino alla fine del tuo turno successivo. Una volta per riposo lungo (o spendendo uno slot del Patto).",
+     "usage": {
+      "uses": 1,
+      "recharge": "long_rest"
+     },
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "evoker",
+   "classId": "wizard",
+   "name": "Invocatore",
+   "description": "Specialista di effetti elementali esplosivi: incantesimi di Invocazione potenziati e controllati.",
+   "features": [
+    {
+     "level": 3,
+     "id": "evocation_savant",
+     "name": "Invocatore sapiente",
+     "description": "Aggiungi gratis al libro due incantesimi da mago di Invocazione di livello 2 o inferiore; a ogni nuovo livello di slot ne aggiungi un altro.",
+     "origin": "srd"
+    },
+    {
+     "level": 3,
+     "id": "potent_cantrip",
+     "name": "Trucchetto potente",
+     "description": "Se manchi con un trucchetto o il bersaglio supera il tiro salvezza, subisce comunque metà dei danni (ma nessun effetto aggiuntivo).",
+     "origin": "srd"
+    },
+    {
+     "level": 6,
+     "id": "sculpt_spells",
+     "name": "Plasmare incantesimi",
+     "description": "Con un incantesimo di Invocazione che colpisce creature visibili ne scegli 1 + il livello dell'incantesimo: superano il tiro salvezza e non subiscono danni nemmeno dimezzati.",
+     "origin": "srd"
+    },
+    {
+     "level": 10,
+     "id": "empowered_evocation",
+     "name": "Invocazione potente",
+     "description": "Aggiungi Intelligenza a un tiro per i danni di un incantesimo da mago di Invocazione.",
+     "origin": "srd"
+    },
+    {
+     "level": 14,
+     "id": "overchannel",
+     "name": "Saturazione magica",
+     "description": "Con un incantesimo da mago con slot di 1°-5° livello che infligge danni puoi infliggere il massimo dei danni; la prima volta senza effetti avversi, poi 2d12 danni necrotici per livello dell'incantesimo (+1d12 a ogni uso) prima di un riposo lungo.",
      "origin": "srd"
     }
    ],

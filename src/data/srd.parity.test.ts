@@ -4,7 +4,7 @@ import { brokenReferences, grantedSpells, idsByKind, loadSrd, SRD_LANGS } from "
 // Conteggi presi dalle tabelle dell'SRD 5.2.1 (armi: 10 semplici da mischia + 4 semplici a distanza + 18 da guerra da mischia + 6 da guerra a distanza)
 const COUNTS: Record<string, number> = {
   skills: 18, languages: 19, sizes: 6, damageTypes: 13, weaponProperties: 10, masteries: 8, coins: 5,
-  weapons: 38, armors: 13, tools: 37, items: 94, backgrounds: 4, feats: 17, species: 9, classes: 8, subclasses: 8,
+  weapons: 38, armors: 13, tools: 37, items: 94, backgrounds: 4, feats: 17, species: 9, classes: 12, subclasses: 12,
 };
 
 describe.each(SRD_LANGS)("dati SRD (%s)", (lang) => {
@@ -275,3 +275,32 @@ describe("classi (blocco 2: Bardo, Chierico, Paladino, Ranger): valori controlla
   });
 });
 const levelsOf = (c: { features: { id: string; level: number }[] }, id: string) => c.features.filter((x) => x.id.startsWith(id)).map((x) => x.level);
+
+describe("classi (blocco 3: Druido, Stregone, Warlock, Mago): valori controllati sul PDF (SRD 5.2.1)", () => {
+  const [rsIt, en] = [loadSrd("it"), loadSrd("en")];
+  const cls = (id: string) => en.classes.get(id)!;
+  it("tratti fondamentali", () => {
+    expect(["druid", "sorcerer", "warlock", "wizard"].map((id) => [id, cls(id).hitDie, cls(id).caster, cls(id).spellAbility, cls(id).spellList])).toEqual([
+      ["druid", 8, "full", "wis", "druid"], ["sorcerer", 6, "full", "cha", "sorcerer"],
+      ["warlock", 8, "pact", "cha", "warlock"], ["wizard", 6, "full", "int", "wizard"]]);
+  });
+  it("slot incantesimo e magia del patto", () => {
+    expect(cls("druid").spellSlots).toEqual(cls("wizard").spellSlots);
+    expect(cls("sorcerer").spellSlots).toEqual(cls("wizard").spellSlots);
+    expect(cls("wizard").spellSlots![0]).toEqual([2]); expect(cls("wizard").spellSlots![19]).toEqual([4, 3, 3, 3, 3, 2, 2, 1, 1]);
+    expect(cls("warlock").spellSlots).toBeUndefined();
+    expect(cls("warlock").pactSlots![0]).toEqual({ count: 1, level: 1 });
+    expect(cls("warlock").pactSlots![19]).toEqual({ count: 4, level: 5 });
+  });
+  it("tabelle e scelte", () => {
+    expect(cls("sorcerer").table.sorcery_points![1]).toBe(2);
+    expect(cls("warlock").table.invocations![0]).toBe(1);
+    expect(cls("warlock").choices.filter((c) => c.countFrom).map((c) => c.countFrom)).toEqual(["cantrips", "prepared"]);
+    expect(cls("warlock").features.find((x) => x.id === "eldritch_invocations")!.choices[0]!.countFrom).toBe("invocations");
+    expect(cls("warlock").features.find((x) => x.id === "eldritch_invocations")!.choices[0]!.options!.length).toBe(28);
+    expect(cls("sorcerer").features.find((x) => x.id === "metamagic")!.choices[0]!.options!.length).toBe(10);
+  });
+  it("sottoclassi", () => {
+    expect(["land", "draconic", "fiend", "evoker"].map((id) => rsIt.subclasses.get(id)?.classId)).toEqual(["druid", "sorcerer", "warlock", "wizard"]);
+  });
+});

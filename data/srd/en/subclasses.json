@@ -194,6 +194,259 @@
    "origin": "srd"
   },
   {
+   "id": "land",
+   "classId": "druid",
+   "name": "Circle of the Land",
+   "description": "A mystic tied to a land type: circle spells, Land's Aid, and nature's protection.",
+   "features": [
+    {
+     "level": 3,
+     "id": "circle_of_the_land_spells",
+     "name": "Circle of the Land Spells",
+     "description": "After a Long Rest choose a land type (arid, polar, temperate, tropical): the spells listed for your level and lower are prepared. Arid: 3 Blur, Burning Hands, Fire Bolt; 5 Fireball; 7 Blight; 9 Wall of Stone. Polar: 3 Fog Cloud, Hold Person, Ray of Frost; 5 Sleet Storm; 7 Ice Storm; 9 Cone of Cold. Temperate: 3 Misty Step, Shocking Grasp, Sleep; 5 Lightning Bolt; 7 Freedom of Movement; 9 Tree Stride. Tropical: 3 Acid Splash, Ray of Sickness, Web; 5 Stinking Cloud; 7 Polymorph; 9 Insect Plague.",
+     "choices": [
+      {
+       "id": "land_type",
+       "label": "Land type",
+       "count": 1,
+       "options": [
+        {
+         "id": "arid",
+         "name": "Arid Land",
+         "effects": [
+          {
+           "op": "grantSpell",
+           "spell": "fire_bolt",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=3"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "burning_hands",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=3"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "blur",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=3"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "fireball",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=5"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "blight",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=7"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "wall_of_stone",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=9"
+          },
+          {
+           "op": "resistance",
+           "types": [
+            "fire"
+           ],
+           "when": "classLevel:druid>=10"
+          }
+         ]
+        },
+        {
+         "id": "polar",
+         "name": "Polar Land",
+         "effects": [
+          {
+           "op": "grantSpell",
+           "spell": "hold_person",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=3"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "fog_cloud",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=3"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "ray_of_frost",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=3"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "sleet_storm",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=5"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "ice_storm",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=7"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "cone_of_cold",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=9"
+          },
+          {
+           "op": "resistance",
+           "types": [
+            "cold"
+           ],
+           "when": "classLevel:druid>=10"
+          }
+         ]
+        },
+        {
+         "id": "temperate",
+         "name": "Temperate Land",
+         "effects": [
+          {
+           "op": "grantSpell",
+           "spell": "misty_step",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=3"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "sleep",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=3"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "shocking_grasp",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=3"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "lightning_bolt",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=5"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "freedom_of_movement",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=7"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "tree_stride",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=9"
+          },
+          {
+           "op": "resistance",
+           "types": [
+            "lightning"
+           ],
+           "when": "classLevel:druid>=10"
+          }
+         ]
+        },
+        {
+         "id": "tropical",
+         "name": "Tropical Land",
+         "effects": [
+          {
+           "op": "grantSpell",
+           "spell": "acid_splash",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=3"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "ray_of_sickness",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=3"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "web",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=3"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "stinking_cloud",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=5"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "polymorph",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=7"
+          },
+          {
+           "op": "grantSpell",
+           "spell": "insect_plague",
+           "mode": "alwaysPrepared",
+           "when": "classLevel:druid>=9"
+          },
+          {
+           "op": "resistance",
+           "types": [
+            "poison"
+           ],
+           "when": "classLevel:druid>=10"
+          }
+         ]
+        }
+       ]
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 3,
+     "id": "lands_aid",
+     "name": "Land's Aid",
+     "description": "Magic action, expending a Wild Shape use: choose a point within 60 feet; in a 10-foot-radius Sphere creatures of your choice make a Constitution save or take 2d6 Necrotic damage (half on a success), and one creature of your choice regains 2d6 Hit Points. 3d6 at level 10, 4d6 at level 14.",
+     "origin": "srd"
+    },
+    {
+     "level": 6,
+     "id": "natural_recovery",
+     "name": "Natural Recovery",
+     "description": "You can cast one of your Circle spells without a slot (once per Long Rest); after a Short Rest you recover slots with a combined level up to half your Druid level (rounded up), none above level 6, once per Long Rest.",
+     "usage": {
+      "uses": 1,
+      "recharge": "long_rest"
+     },
+     "origin": "srd"
+    },
+    {
+     "level": 10,
+     "id": "natures_ward",
+     "name": "Nature's Ward",
+     "description": "You have Immunity to the Poisoned condition and Resistance to a damage type tied to your chosen land (arid: Fire; polar: Cold; temperate: Lightning; tropical: Poison).",
+     "origin": "srd"
+    },
+    {
+     "level": 14,
+     "id": "natures_sanctuary",
+     "name": "Nature's Sanctuary",
+     "description": "Magic action, expending a Wild Shape use: spectral trees and vines fill a 15-foot Cube within 120 feet for 1 minute; you and your allies have Half Cover and allies gain the Resistance from Nature's Ward. Bonus Action: move the Cube up to 60 feet.",
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  },
+  {
    "id": "champion",
    "classId": "fighter",
    "name": "Champion",
@@ -532,6 +785,371 @@
      "id": "thiefs_reflexes",
      "name": "Thief's Reflexes",
      "description": "You take two turns during the first round of any combat: the first at your normal Initiative and the second at your Initiative minus 10.",
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "draconic",
+   "classId": "sorcerer",
+   "name": "Draconic Sorcery",
+   "description": "Innate dragon magic: resilience, draconic spells, elemental affinity, wings, and a dragon ally.",
+   "features": [
+    {
+     "level": 3,
+     "id": "draconic_resilience",
+     "name": "Draconic Resilience",
+     "description": "Your Hit Point maximum increases by 3, and by 1 again whenever you gain a Sorcerer level. While not wearing armor your base AC is 10 + Dex + Cha.",
+     "effects": [
+      {
+       "op": "hpMaxBonus",
+       "value": 3
+      },
+      {
+       "op": "hpMaxPerLevel",
+       "value": 1,
+       "classId": "sorcerer"
+      },
+      {
+       "op": "acFormula",
+       "formula": "10 + mod:dex + mod:cha",
+       "shieldAllowed": true,
+       "when": "wearingArmor:none"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 3,
+     "id": "draconic_spells",
+     "name": "Draconic Spells",
+     "description": "Always-prepared spells: level 3 Alter Self, Chromatic Orb, Command, Dragon's Breath; 5 Fear, Fly; 7 Arcane Eye, Charm Monster; 9 Legend Lore, Summon Dragon.",
+     "effects": [
+      {
+       "op": "grantSpell",
+       "spell": "alter_self",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:sorcerer>=3"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "chromatic_orb",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:sorcerer>=3"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "command",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:sorcerer>=3"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "dragons_breath",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:sorcerer>=3"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "fear",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:sorcerer>=5"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "fly",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:sorcerer>=5"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "arcane_eye",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:sorcerer>=7"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "charm_monster",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:sorcerer>=7"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "legend_lore",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:sorcerer>=9"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "summon_dragon",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:sorcerer>=9"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 6,
+     "id": "elemental_affinity",
+     "name": "Elemental Affinity",
+     "description": "Choose a draconic damage type (Acid, Cold, Lightning, Fire, or Poison): you gain Resistance to it and, when you cast a spell of that type, add your Charisma modifier to one damage roll.",
+     "choices": [
+      {
+       "id": "sorcerer_elemental_affinity",
+       "label": "Elemental Affinity",
+       "count": 1,
+       "options": [
+        {
+         "id": "acid",
+         "name": "Acid",
+         "effects": [
+          {
+           "op": "resistance",
+           "types": [
+            "acid"
+           ]
+          }
+         ]
+        },
+        {
+         "id": "cold",
+         "name": "Cold",
+         "effects": [
+          {
+           "op": "resistance",
+           "types": [
+            "cold"
+           ]
+          }
+         ]
+        },
+        {
+         "id": "lightning",
+         "name": "Lightning",
+         "effects": [
+          {
+           "op": "resistance",
+           "types": [
+            "lightning"
+           ]
+          }
+         ]
+        },
+        {
+         "id": "fire",
+         "name": "Fire",
+         "effects": [
+          {
+           "op": "resistance",
+           "types": [
+            "fire"
+           ]
+          }
+         ]
+        },
+        {
+         "id": "poison",
+         "name": "Poison",
+         "effects": [
+          {
+           "op": "resistance",
+           "types": [
+            "poison"
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 14,
+     "id": "dragon_wings",
+     "name": "Dragon Wings",
+     "description": "Bonus Action: dragon wings for 1 hour (or until dismissed) with a Fly Speed of 60 feet. Once per Long Rest, or by spending 3 Sorcery Points.",
+     "usage": {
+      "uses": 1,
+      "recharge": "long_rest"
+     },
+     "origin": "srd"
+    },
+    {
+     "level": 18,
+     "id": "dragon_companion",
+     "name": "Dragon Companion",
+     "description": "You can cast Summon Dragon without Material components and once without a slot per Long Rest; you can cast it without Concentration (duration 1 minute).",
+     "effects": [
+      {
+       "op": "grantSpell",
+       "spell": "summon_dragon",
+       "mode": "alwaysPrepared",
+       "freeCast": {
+        "uses": 1,
+        "recharge": "long_rest"
+       }
+      }
+     ],
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "fiend",
+   "classId": "warlock",
+   "name": "Fiend Patron",
+   "description": "A pact with the Lower Planes: Temporary Hit Points, fiery spells, luck, and Hurl Through Hell.",
+   "features": [
+    {
+     "level": 3,
+     "id": "dark_ones_blessing",
+     "name": "Dark One's Blessing",
+     "description": "When you reduce an enemy to 0 Hit Points (or an enemy within 10 feet of you drops to 0) you gain Temporary Hit Points equal to your Charisma modifier + Warlock level (minimum 1).",
+     "origin": "srd"
+    },
+    {
+     "level": 3,
+     "id": "fiend_spells",
+     "name": "Fiend Spells",
+     "description": "Always-prepared spells: level 3 Burning Hands, Command, Scorching Ray, Suggestion; 5 Fireball, Stinking Cloud; 7 Fire Shield, Wall of Fire; 9 Geas, Insect Plague.",
+     "effects": [
+      {
+       "op": "grantSpell",
+       "spell": "command",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:warlock>=3"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "burning_hands",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:warlock>=3"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "scorching_ray",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:warlock>=3"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "suggestion",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:warlock>=3"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "stinking_cloud",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:warlock>=5"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "fireball",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:warlock>=5"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "wall_of_fire",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:warlock>=7"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "fire_shield",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:warlock>=7"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "geas",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:warlock>=9"
+      },
+      {
+       "op": "grantSpell",
+       "spell": "insect_plague",
+       "mode": "alwaysPrepared",
+       "when": "classLevel:warlock>=9"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 6,
+     "id": "dark_ones_own_luck",
+     "name": "Dark One's Own Luck",
+     "description": "After seeing the roll of an ability check or saving throw you can add 1d10 to it (once per roll). Uses equal your Charisma modifier (minimum 1) per Long Rest.",
+     "usage": {
+      "uses": "max(1, mod:cha)",
+      "recharge": "long_rest"
+     },
+     "origin": "srd"
+    },
+    {
+     "level": 10,
+     "id": "fiendish_resilience",
+     "name": "Fiendish Resilience",
+     "description": "After a Short or Long Rest choose a damage type (except Force): you have Resistance to it until you choose a different one.",
+     "origin": "srd"
+    },
+    {
+     "level": 14,
+     "id": "hurl_through_hell",
+     "name": "Hurl Through Hell",
+     "description": "Once per turn when you hit with an attack roll you can send the target to the Lower Planes: Charisma save or, if it isn't a Fiend, it takes 8d10 Psychic damage and is Incapacitated until the end of your next turn. Once per Long Rest (or by expending a Pact Magic slot).",
+     "usage": {
+      "uses": 1,
+      "recharge": "long_rest"
+     },
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "evoker",
+   "classId": "wizard",
+   "name": "Evoker",
+   "description": "A specialist in explosive elemental effects: boosted and controlled Evocation spells.",
+   "features": [
+    {
+     "level": 3,
+     "id": "evocation_savant",
+     "name": "Evocation Savant",
+     "description": "Add two Wizard Evocation spells of level 2 or lower to your spellbook for free; whenever you gain access to a new slot level you add another.",
+     "origin": "srd"
+    },
+    {
+     "level": 3,
+     "id": "potent_cantrip",
+     "name": "Potent Cantrip",
+     "description": "When you miss with a cantrip or the target succeeds on its save, it still takes half the cantrip's damage (but suffers no additional effect).",
+     "origin": "srd"
+    },
+    {
+     "level": 6,
+     "id": "sculpt_spells",
+     "name": "Sculpt Spells",
+     "description": "When you cast an Evocation spell affecting creatures you can see, choose 1 + the spell's level of them: they automatically succeed on the save and take no damage even when it would be halved.",
+     "origin": "srd"
+    },
+    {
+     "level": 10,
+     "id": "empowered_evocation",
+     "name": "Empowered Evocation",
+     "description": "You add your Intelligence modifier to one damage roll of any Wizard Evocation spell.",
+     "origin": "srd"
+    },
+    {
+     "level": 14,
+     "id": "overchannel",
+     "name": "Overchannel",
+     "description": "When you cast a Wizard spell of level 1-5 that deals damage you can deal maximum damage; the first time with no ill effect, afterward 2d12 Necrotic damage per spell level (+1d12 for each further use) before a Long Rest.",
      "origin": "srd"
     }
    ],
