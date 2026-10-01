@@ -22,7 +22,7 @@ Nasce dall'app privata `giorgiograzzi/Prova_creazione_dnd_character` (non si toc
 ## Come lavoriamo (regole valide in ogni chat)
 1. **Un branch per step**: `step-N-nome-breve`. Un commit per sotto-passo.
 2. **Si chiude uno step solo se**: `npm run typecheck`, `npm test`, `npm run validate:data` sono verdi e i test dello step (elencati sotto) esistono e passano.
-3. **Merge solo dopo conferma di Giorgio.** A fine step: riepilogo breve (cosa è fatto, test, cosa resta) + richiesta "posso fare la PR / il merge?". Mai merge da solo.
+3. **PR e merge: li fa Claude** (autorizzato da Giorgio il 2026-10-01). A fine step: PR verso `main` con descrizione e test, poi merge (merge commit) **solo se**: `typecheck` ok, nessun test *nuovo* rosso (gli 8 file in attesa dei dati di step 2-4 sono noti), nessun conflitto, nessun file non libero. **Si ferma e chiede** se: c'è un conflitto non banale, un test nuovo fallisce, serve una decisione di Giorgio (palette, nome app, scelta di contenuto), la modifica esce dal piano, o tocca licenze/attribuzioni. Mai force-push su `main`. A ogni merge: riepilogo breve in chat.
 4. **Ad ogni step** si aggiorna: la riga *Stato* qui sopra, la casella dello step, e `TODO.md` (voci nuove e voci chiuse).
 5. **Nuova chat?** Leggi prima *Stato* qui e `TODO.md`, poi riparti dal primo step non chiuso.
 6. **Niente contenuto non SRD**: se un dato non si trova nel PDF SRD, non si inventa e non si scrive a memoria dal manuale: si segna in `TODO.md`. Test guardia nello step 1.
