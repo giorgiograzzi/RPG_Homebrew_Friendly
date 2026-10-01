@@ -4,7 +4,7 @@ PWA per creare e gestire personaggi, **italiano + inglese**, offline. Contiene *
 Nasce dall'app privata `giorgiograzzi/Prova_creazione_dnd_character` (non si tocca: resta com'è). Il codice si copia **senza cronologia git**, così i PDF non liberi non entrano mai qui.
 
 ## Stato
-**Step 0 chiuso (PR #2). Step 1: fatto, in attesa di merge. Step 2 → 10: da fare.** Ultimo step chiuso: 0.
+**Chiusi: step 0 (PR #2), 1 (PR #3), 2a (#4), correttore glifi + descrizioni 2a (#5), piano 5b (#6), 2b (#7), 2c (#8). In corso: step 2d (classi) — blocco 2d-1 fatto (Barbaro, Guerriero, Monaco, Ladro); restano 2d-2, 2d-3, 2e (incantesimi), 2f (condizioni e regole). Step 3 → 10: da fare.**
 
 ## Decisioni già prese (Giorgio)
 | Tema | Scelta |
