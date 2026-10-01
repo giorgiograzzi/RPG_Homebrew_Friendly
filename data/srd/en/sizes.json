@@ -7,6 +7,7 @@
    "extra": {
     "spaceFeet": 2.5
    },
+   "description": "Occupies a 2½ × 2½ ft space: four fit in one square.",
    "origin": "srd"
   },
   {
@@ -15,6 +16,7 @@
    "extra": {
     "spaceFeet": 5
    },
+   "description": "Occupies one 5 × 5 ft square.",
    "origin": "srd"
   },
   {
@@ -23,6 +25,7 @@
    "extra": {
     "spaceFeet": 5
    },
+   "description": "Occupies one 5 × 5 ft square.",
    "origin": "srd"
   },
   {
@@ -31,6 +34,7 @@
    "extra": {
     "spaceFeet": 10
    },
+   "description": "Occupies a 10 × 10 ft space (2 × 2 squares).",
    "origin": "srd"
   },
   {
@@ -39,6 +43,7 @@
    "extra": {
     "spaceFeet": 15
    },
+   "description": "Occupies a 15 × 15 ft space (3 × 3 squares).",
    "origin": "srd"
   },
   {
@@ -47,6 +52,7 @@
    "extra": {
     "spaceFeet": 20
    },
+   "description": "Occupies a 20 × 20 ft space (4 × 4 squares).",
    "origin": "srd"
   }
  ]

@@ -5,48 +5,56 @@
    "id": "cleave",
    "name": "Doppio fendente",
    "extra": {},
+   "description": "Se colpisci una creatura in mischia, puoi attaccare una seconda creatura entro 5 piedi dalla prima e alla tua portata. Se colpisce, subisce il danno dell'arma senza il modificatore (salvo negativo). Una volta per turno.",
    "origin": "srd"
   },
   {
    "id": "graze",
    "name": "Colpo di striscio",
    "extra": {},
+   "description": "Se manchi il bersaglio, gli infliggi danni pari al modificatore usato per l'attacco, dello stesso tipo dell'arma.",
    "origin": "srd"
   },
   {
    "id": "nick",
    "name": "Graffio",
    "extra": {},
+   "description": "L'attacco extra della proprietà Leggera si può fare con l'azione Attacco invece che con un'azione bonus. Una volta per turno.",
    "origin": "srd"
   },
   {
    "id": "push",
    "name": "Spinta",
    "extra": {},
+   "description": "Se colpisci una creatura Grande o più piccola, puoi spingerla fino a 10 piedi in linea retta lontano da te.",
    "origin": "srd"
   },
   {
    "id": "sap",
    "name": "Fiaccare",
    "extra": {},
+   "description": "Se colpisci, il bersaglio ha Svantaggio al suo prossimo tiro per colpire prima dell'inizio del tuo prossimo turno.",
    "origin": "srd"
   },
   {
    "id": "slow",
    "name": "Lentezza",
    "extra": {},
+   "description": "Se colpisci e infliggi danni, la Velocità del bersaglio cala di 10 piedi fino all'inizio del tuo prossimo turno (la riduzione non supera 10 piedi in totale).",
    "origin": "srd"
   },
   {
    "id": "topple",
    "name": "Rovesciamento",
    "extra": {},
+   "description": "Se colpisci, il bersaglio deve superare un tiro salvezza su Costituzione (CD 8 + modificatore dell'attacco + bonus di competenza) o cade a terra (condizione Prono).",
    "origin": "srd"
   },
   {
    "id": "vex",
    "name": "Vessazione",
    "extra": {},
+   "description": "Se colpisci e infliggi danni, hai Vantaggio al tuo prossimo tiro per colpire contro quella creatura prima della fine del tuo prossimo turno.",
    "origin": "srd"
   }
  ]

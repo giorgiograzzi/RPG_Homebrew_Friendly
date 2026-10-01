@@ -5,48 +5,56 @@
    "id": "cleave",
    "name": "Cleave",
    "extra": {},
+   "description": "On a melee hit, you can attack a second creature within 5 feet of the first and within your reach. On a hit it takes the weapon's damage without your ability modifier (unless negative). Once per turn.",
    "origin": "srd"
   },
   {
    "id": "graze",
    "name": "Graze",
    "extra": {},
+   "description": "If you miss, the target takes damage equal to the ability modifier you used for the attack, of the weapon's damage type.",
    "origin": "srd"
   },
   {
    "id": "nick",
    "name": "Nick",
    "extra": {},
+   "description": "The extra attack of the Light property can be made as part of the Attack action instead of as a Bonus Action. Once per turn.",
    "origin": "srd"
   },
   {
    "id": "push",
    "name": "Push",
    "extra": {},
+   "description": "On a hit against a Large or smaller creature, you can push it up to 10 feet straight away from you.",
    "origin": "srd"
   },
   {
    "id": "sap",
    "name": "Sap",
    "extra": {},
+   "description": "On a hit, the target has Disadvantage on its next attack roll before the start of your next turn.",
    "origin": "srd"
   },
   {
    "id": "slow",
    "name": "Slow",
    "extra": {},
+   "description": "On a hit that deals damage, the target's Speed drops by 10 feet until the start of your next turn (the reduction never exceeds 10 feet).",
    "origin": "srd"
   },
   {
    "id": "topple",
    "name": "Topple",
    "extra": {},
+   "description": "On a hit, the target must succeed on a Constitution saving throw (DC 8 + the attack's ability modifier + your Proficiency Bonus) or have the Prone condition.",
    "origin": "srd"
   },
   {
    "id": "vex",
    "name": "Vex",
    "extra": {},
+   "description": "On a hit that deals damage, you have Advantage on your next attack roll against that creature before the end of your next turn.",
    "origin": "srd"
   }
  ]

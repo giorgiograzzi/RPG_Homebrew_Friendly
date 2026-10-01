@@ -7,6 +7,7 @@
    "extra": {
     "ability": "dex"
    },
+   "description": "Restare in piedi in una situazione difficile o eseguire un'acrobazia.",
    "origin": "srd"
   },
   {
@@ -15,6 +16,7 @@
    "extra": {
     "ability": "wis"
    },
+   "description": "Calmare o addestrare un animale, o ottenere che si comporti in un certo modo.",
    "origin": "srd"
   },
   {
@@ -23,6 +25,7 @@
    "extra": {
     "ability": "int"
    },
+   "description": "Ricordare nozioni su incantesimi, oggetti magici e piani di esistenza.",
    "origin": "srd"
   },
   {
@@ -31,6 +34,7 @@
    "extra": {
     "ability": "str"
    },
+   "description": "Saltare più lontano del normale, restare a galla in acque agitate o rompere qualcosa.",
    "origin": "srd"
   },
   {
@@ -39,6 +43,7 @@
    "extra": {
     "ability": "cha"
    },
+   "description": "Dire una bugia convincente o travestirsi in modo credibile.",
    "origin": "srd"
   },
   {
@@ -47,6 +52,7 @@
    "extra": {
     "ability": "int"
    },
+   "description": "Ricordare nozioni su eventi storici, personaggi, nazioni e culture.",
    "origin": "srd"
   },
   {
@@ -55,6 +61,7 @@
    "extra": {
     "ability": "wis"
    },
+   "description": "Capire l'umore e le intenzioni di una persona.",
    "origin": "srd"
   },
   {
@@ -63,6 +70,7 @@
    "extra": {
     "ability": "cha"
    },
+   "description": "Ottenere ciò che vuoi incutendo timore o minacciando.",
    "origin": "srd"
   },
   {
@@ -71,6 +79,7 @@
    "extra": {
     "ability": "int"
    },
+   "description": "Trovare informazioni nascoste nei libri o dedurre come funziona qualcosa.",
    "origin": "srd"
   },
   {
@@ -79,6 +88,7 @@
    "extra": {
     "ability": "wis"
    },
+   "description": "Diagnosticare una malattia o stabilire cosa ha ucciso una creatura morta da poco.",
    "origin": "srd"
   },
   {
@@ -87,6 +97,7 @@
    "extra": {
     "ability": "int"
    },
+   "description": "Ricordare nozioni su terreni, piante, animali e clima.",
    "origin": "srd"
   },
   {
@@ -95,6 +106,7 @@
    "extra": {
     "ability": "wis"
    },
+   "description": "Accorgersi di qualcosa che sfugge facilmente, usando insieme i sensi.",
    "origin": "srd"
   },
   {
@@ -103,6 +115,7 @@
    "extra": {
     "ability": "cha"
    },
+   "description": "Recitare, raccontare una storia, suonare o ballare.",
    "origin": "srd"
   },
   {
@@ -111,6 +124,7 @@
    "extra": {
     "ability": "cha"
    },
+   "description": "Convincere qualcuno di qualcosa in modo onesto e cortese.",
    "origin": "srd"
   },
   {
@@ -119,6 +133,7 @@
    "extra": {
     "ability": "int"
    },
+   "description": "Ricordare nozioni su divinità, riti religiosi e simboli sacri.",
    "origin": "srd"
   },
   {
@@ -127,6 +142,7 @@
    "extra": {
     "ability": "dex"
    },
+   "description": "Borseggiare, nascondere un oggetto che si tiene in mano o fare giochi di prestigio.",
    "origin": "srd"
   },
   {
@@ -135,6 +151,7 @@
    "extra": {
     "ability": "dex"
    },
+   "description": "Passare inosservato muovendosi in silenzio e nascondendosi dietro qualcosa.",
    "origin": "srd"
   },
   {
@@ -143,6 +160,7 @@
    "extra": {
     "ability": "wis"
    },
+   "description": "Seguire tracce, cercare cibo, trovare un sentiero o evitare i pericoli naturali.",
    "origin": "srd"
   }
  ]

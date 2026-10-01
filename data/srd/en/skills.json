@@ -7,6 +7,7 @@
    "extra": {
     "ability": "dex"
    },
+   "description": "Keep your footing in a tricky spot or pull off an acrobatic stunt.",
    "origin": "srd"
   },
   {
@@ -15,6 +16,7 @@
    "extra": {
     "ability": "wis"
    },
+   "description": "Calm or train an animal, or get it to behave a certain way.",
    "origin": "srd"
   },
   {
@@ -23,6 +25,7 @@
    "extra": {
     "ability": "int"
    },
+   "description": "Recall lore about spells, magic items, and the planes of existence.",
    "origin": "srd"
   },
   {
@@ -31,6 +34,7 @@
    "extra": {
     "ability": "str"
    },
+   "description": "Jump farther than usual, stay afloat in rough water, or break something.",
    "origin": "srd"
   },
   {
@@ -39,6 +43,7 @@
    "extra": {
     "ability": "cha"
    },
+   "description": "Tell a convincing lie or wear a believable disguise.",
    "origin": "srd"
   },
   {
@@ -47,6 +52,7 @@
    "extra": {
     "ability": "int"
    },
+   "description": "Recall lore about historical events, people, nations, and cultures.",
    "origin": "srd"
   },
   {
@@ -55,6 +61,7 @@
    "extra": {
     "ability": "wis"
    },
+   "description": "Read a person's mood and intentions.",
    "origin": "srd"
   },
   {
@@ -63,6 +70,7 @@
    "extra": {
     "ability": "cha"
    },
+   "description": "Get what you want by awing or threatening someone.",
    "origin": "srd"
   },
   {
@@ -71,6 +79,7 @@
    "extra": {
     "ability": "int"
    },
+   "description": "Dig up obscure information in books or work out how something functions.",
    "origin": "srd"
   },
   {
@@ -79,6 +88,7 @@
    "extra": {
     "ability": "wis"
    },
+   "description": "Diagnose an illness or work out what killed someone recently dead.",
    "origin": "srd"
   },
   {
@@ -87,6 +97,7 @@
    "extra": {
     "ability": "int"
    },
+   "description": "Recall lore about terrain, plants, animals, and weather.",
    "origin": "srd"
   },
   {
@@ -95,6 +106,7 @@
    "extra": {
     "ability": "wis"
    },
+   "description": "Notice something easy to miss by using your senses together.",
    "origin": "srd"
   },
   {
@@ -103,6 +115,7 @@
    "extra": {
     "ability": "cha"
    },
+   "description": "Act, tell a story, play music, or dance.",
    "origin": "srd"
   },
   {
@@ -111,6 +124,7 @@
    "extra": {
     "ability": "cha"
    },
+   "description": "Convince someone of something honestly and graciously.",
    "origin": "srd"
   },
   {
@@ -119,6 +133,7 @@
    "extra": {
     "ability": "int"
    },
+   "description": "Recall lore about gods, religious rites, and holy symbols.",
    "origin": "srd"
   },
   {
@@ -127,6 +142,7 @@
    "extra": {
     "ability": "dex"
    },
+   "description": "Pick a pocket, hide a handheld object, or perform sleight of hand.",
    "origin": "srd"
   },
   {
@@ -135,6 +151,7 @@
    "extra": {
     "ability": "dex"
    },
+   "description": "Avoid notice by moving quietly and hiding behind things.",
    "origin": "srd"
   },
   {
@@ -143,6 +160,7 @@
    "extra": {
     "ability": "wis"
    },
+   "description": "Follow tracks, forage, find a trail, or avoid natural hazards.",
    "origin": "srd"
   }
  ]

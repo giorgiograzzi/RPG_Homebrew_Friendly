@@ -7,6 +7,7 @@
    "extra": {
     "spaceFeet": 2.5
    },
+   "description": "Occupa uno spazio di 2,5 × 2,5 piedi: ne entrano 4 in una casella.",
    "origin": "srd"
   },
   {
@@ -15,6 +16,7 @@
    "extra": {
     "spaceFeet": 5
    },
+   "description": "Occupa una casella di 5 × 5 piedi.",
    "origin": "srd"
   },
   {
@@ -23,6 +25,7 @@
    "extra": {
     "spaceFeet": 5
    },
+   "description": "Occupa una casella di 5 × 5 piedi.",
    "origin": "srd"
   },
   {
@@ -31,6 +34,7 @@
    "extra": {
     "spaceFeet": 10
    },
+   "description": "Occupa uno spazio di 10 × 10 piedi (2 × 2 caselle).",
    "origin": "srd"
   },
   {
@@ -39,6 +43,7 @@
    "extra": {
     "spaceFeet": 15
    },
+   "description": "Occupa uno spazio di 15 × 15 piedi (3 × 3 caselle).",
    "origin": "srd"
   },
   {
@@ -47,6 +52,7 @@
    "extra": {
     "spaceFeet": 20
    },
+   "description": "Occupa uno spazio di 20 × 20 piedi (4 × 4 caselle).",
    "origin": "srd"
   }
  ]
