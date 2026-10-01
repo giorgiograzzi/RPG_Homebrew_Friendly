@@ -107,3 +107,11 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 - [x] 🔴 Il PDF inglese in root ha un nome con `:` (`https::media.dndbeyond.com:…SRD_CC_v5.2.pdf`): rinominare in `docs/srd/SRD_5.2_en.pdf` (step 0) — su Windows/macOS i nomi con `:` danno problemi. → chiuso in step 0
 - [x] 🔴 Recuperare il PDF italiano dalla cronologia dell'app privata (`2b0a85e^:IT_SRD_CC_v5.2.1.pdf`) e metterlo in `docs/srd/` (step 0). → chiuso in step 0
 - [x] 🔴 Copiare l'app **senza cronologia** e senza `data/*.pdf`, `public/forms/`, `data/private` (step 0). → chiuso in step 0
+
+### Dati SRD (step 2d, blocco 3: Druido, Stregone, Warlock, Mago)
+- [ ] 🟡 Step 2e: gli incantesimi devono avere gli id usati qui: elenchi di sottoclasse (Circolo della Terra, Stregone Draconico, Warlock Immondo) e `contact_other_plane`, `speak_with_animals`; gli elenchi di classe vanno incrociati col PDF.
+- [ ] 🟡 Warlock: `pactSlots` (`[{count, level}]`) e invocazioni (28 opzioni, `requires` con `hasFeature:pact_of_*`) non ancora lette dal motore (step 4); scelta con `countFrom: "invocations"`.
+- [ ] 🟡 Stregone: Metamagia (10 opzioni con costo) e punti stregoneria solo come tabella/testo; Mago: `$spellbook` da risolvere nel motore (step 4).
+- [ ] 🟢 Scelte con più elenchi (Segreti magici, Scoperte magiche) e molti effetti di Druido/Stregone/Warlock/Mago ancora solo testuali.
+- [ ] 🟢 Circolo della Terra: scelta del terreno con incantesimi concessi per livello, da verificare nel motore.
+- [ ] 🟢 In EN gli elenchi di incantesimi nel PDF sono in ordine alfabetico (verifica con confronto compatto).

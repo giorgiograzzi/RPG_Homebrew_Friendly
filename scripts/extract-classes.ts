@@ -7,12 +7,14 @@ import { SLOT_COL, type FeatureDef, type ItemDef, type Table } from "./lib/class
 import { writeKind, type Entry, type Lang } from "./lib/srd";
 
 const skillNames = Object.fromEntries((["it", "en"] as Lang[]).map((l) => [l, Object.fromEntries((JSON.parse(readFileSync(`data/srd/${l}/skills.json`, "utf8")) as { entries: { id: string; name: string }[] }).entries.map((e) => [e.id, e.name]))])) as Record<Lang, Record<string, string>>;
-// "$skill:athletics" → nome della lingua del file; si risolve prima della localizzazione ({ it, en } → stringa)
+const damageNames = Object.fromEntries((["it", "en"] as Lang[]).map((l) => [l, Object.fromEntries((JSON.parse(readFileSync(`data/srd/${l}/damageTypes.json`, "utf8")) as { entries: { id: string; name: string }[] }).entries.map((e) => [e.id, e.name]))])) as Record<Lang, Record<string, string>>;
+// "$skill:athletics" / "$damage:fire" → nome della lingua del file; si risolve prima della localizzazione ({ it, en } → stringa)
 const resolve = (v: unknown): unknown => {
   if (Array.isArray(v)) return v.map(resolve);
   if (v && typeof v === "object") {
     const o = v as Record<string, unknown>;
     if (typeof o.it === "string" && typeof o.en === "string" && o.it.startsWith("$skill:")) return { it: skillNames.it[o.it.slice(7)] ?? o.it, en: skillNames.en[o.en.slice(7)] ?? o.en };
+    if (typeof o.it === "string" && typeof o.en === "string" && o.it.startsWith("$damage:")) return { it: damageNames.it[o.it.slice(8)] ?? o.it, en: damageNames.en[o.en.slice(8)] ?? o.en };
     return Object.fromEntries(Object.entries(o).map(([a, b]) => [a, resolve(b)]));
   }
   return v;
@@ -36,7 +38,9 @@ for (const d of CLASSES) {
   // slot incantesimo: colonne slot_N della tabella → spellSlots[livello][livello dell'incantesimo]; il resto resta nella tabella
   const slotKeys = Object.keys(table).filter((k) => SLOT_COL.test(k)).sort();
   const spellSlots = slotKeys.length ? Array.from({ length: 20 }, (_, i) => { const row = slotKeys.map((k) => Number(table[k]![i])); while (row.length && row.at(-1) === 0) row.pop(); return row; }) : undefined;
-  const classTable = Object.fromEntries(Object.entries(table).filter(([k]) => !SLOT_COL.test(k)));
+  // Warlock: slot del Patto = numero e livello degli slot per livello di classe (colonne pact_slots e pact_slot_level)
+  const pactSlots = table.pact_slots && table.pact_slot_level ? Array.from({ length: 20 }, (_, i) => ({ count: Number(table.pact_slots![i]), level: Number(table.pact_slot_level![i]) })) : undefined;
+  const classTable = Object.fromEntries(Object.entries(table).filter(([k]) => !SLOT_COL.test(k) && k !== "pact_slots" && k !== "pact_slot_level"));
   const spellChoices = d.caster ? [
     ...(classTable.cantrips ? [{ id: `${d.id}_cantrips`, label: { it: "Trucchetti", en: "Cantrips" }, count: 1, countFrom: "cantrips", source: `cantrips:${d.caster.list}` }] : []),
     { id: `${d.id}_prepared`, label: { it: "Incantesimi preparati", en: "Prepared spells" }, count: 1, countFrom: "prepared", source: `spells:${d.caster.list}` },
@@ -46,7 +50,7 @@ for (const d of CLASSES) {
     id: d.id, name: d.name, description: d.description, hitDie: d.hitDie, primaryAbility: d.primary, saves: d.saves,
     skillChoices: { count: d.skills.count, from: d.skills.from }, armorTraining: d.armor, weaponProficiency: d.weapons,
     ...(d.tools ? { toolProficiency: d.tools } : {}), caster: d.caster?.type ?? "none",
-    ...(d.caster ? { spellAbility: d.caster.ability, spellList: d.caster.list } : {}), ...(spellSlots ? { spellSlots } : {}),
+    ...(d.caster ? { spellAbility: d.caster.ability, spellList: d.caster.list } : {}), ...(spellSlots ? { spellSlots } : {}), ...(pactSlots ? { pactSlots } : {}),
     multiclass: { weapons: d.multiclass.weapons ?? [], armor: d.multiclass.armor ?? [], skills: d.multiclass.skills ?? 0, toolChoices: d.multiclass.toolChoices ?? 0, tools: d.multiclass.tools ?? [] },
     equipment: Object.fromEntries(Object.entries(d.equipment).map(([k, v]) => [k, eqSet(v)])),
     choices: [skillsChoice, ...(toolsChoice ? [toolsChoice] : []), ...spellChoices],
