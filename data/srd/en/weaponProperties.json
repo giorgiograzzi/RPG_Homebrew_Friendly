@@ -5,60 +5,70 @@
    "id": "ammunition",
    "name": "Ammunition",
    "extra": {},
+   "description": "You need ammunition to make a ranged attack, and each attack uses one piece. Drawing it is part of the attack (you need a free hand to load a one-handed weapon). After a fight, 1 minute recovers half the ammunition you used, rounded down.",
    "origin": "srd"
   },
   {
    "id": "finesse",
    "name": "Finesse",
    "extra": {},
+   "description": "Use your choice of Strength or Dexterity for the attack and damage rolls, but the same one for both.",
    "origin": "srd"
   },
   {
    "id": "heavy",
    "name": "Heavy",
    "extra": {},
+   "description": "You have Disadvantage on attack rolls if the weapon is Melee and your Strength is below 13, or Ranged and your Dexterity is below 13.",
    "origin": "srd"
   },
   {
    "id": "light",
    "name": "Light",
    "extra": {},
+   "description": "When you take the Attack action with a Light weapon, you can make one extra attack as a Bonus Action that turn with a different Light weapon. You don't add your ability modifier to that extra attack's damage unless it's negative.",
    "origin": "srd"
   },
   {
    "id": "loading",
    "name": "Loading",
    "extra": {},
+   "description": "You can fire only one piece of ammunition per action, Bonus Action, or Reaction, however many attacks you normally have.",
    "origin": "srd"
   },
   {
    "id": "range",
    "name": "Range",
    "extra": {},
+   "description": "Two numbers in parentheses: normal range and long range, in feet. Beyond normal range you have Disadvantage; beyond long range you can't attack.",
    "origin": "srd"
   },
   {
    "id": "reach",
    "name": "Reach",
    "extra": {},
+   "description": "Adds 5 feet to your reach when attacking with it and for Opportunity Attacks.",
    "origin": "srd"
   },
   {
    "id": "thrown",
    "name": "Thrown",
    "extra": {},
+   "description": "You can throw the weapon for a ranged attack and draw it as part of that attack. A Melee weapon uses the same modifier as a melee attack.",
    "origin": "srd"
   },
   {
    "id": "two_handed",
    "name": "Two-Handed",
    "extra": {},
+   "description": "Requires two hands to attack.",
    "origin": "srd"
   },
   {
    "id": "versatile",
    "name": "Versatile",
    "extra": {},
+   "description": "Can be used with one or two hands; the damage in parentheses applies when wielded two-handed in melee.",
    "origin": "srd"
   }
  ]

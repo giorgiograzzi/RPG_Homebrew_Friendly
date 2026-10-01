@@ -5,60 +5,70 @@
    "id": "ammunition",
    "name": "Munizioni",
    "extra": {},
+   "description": "Serve munizionamento per attaccare a distanza: ogni attacco ne consuma una. Estrarla fa parte dell'attacco (serve una mano libera per caricare un'arma a una mano). Dopo il combattimento, con 1 minuto recuperi metà delle munizioni usate (per difetto).",
    "origin": "srd"
   },
   {
    "id": "finesse",
    "name": "Accurata",
    "extra": {},
+   "description": "Per tiro per colpire e danni puoi usare il modificatore di Forza o di Destrezza, a scelta, ma lo stesso per entrambi.",
    "origin": "srd"
   },
   {
    "id": "heavy",
    "name": "Pesante",
    "extra": {},
+   "description": "Hai Svantaggio ai tiri per colpire se l'arma è da mischia e hai Forza inferiore a 13, o a distanza e hai Destrezza inferiore a 13.",
    "origin": "srd"
   },
   {
    "id": "light",
    "name": "Leggera",
    "extra": {},
+   "description": "Se con l'azione Attacco colpisci con un'arma Leggera, puoi fare un attacco extra come azione bonus nello stesso turno, con un'altra arma Leggera. Al danno dell'attacco extra non aggiungi il modificatore (salvo che sia negativo).",
    "origin": "srd"
   },
   {
    "id": "loading",
    "name": "Ricarica",
    "extra": {},
+   "description": "Con un'azione, azione bonus o reazione puoi sparare un solo proiettile, a prescindere da quanti attacchi avresti.",
    "origin": "srd"
   },
   {
    "id": "range",
    "name": "Gittata",
    "extra": {},
+   "description": "Due numeri tra parentesi: gittata normale e gittata lunga, in piedi. Oltre la normale hai Svantaggio; oltre la lunga non puoi attaccare.",
    "origin": "srd"
   },
   {
    "id": "reach",
    "name": "Portata",
    "extra": {},
+   "description": "Aggiunge 5 piedi alla tua portata quando attacchi con l'arma e per gli attacchi di opportunità.",
    "origin": "srd"
   },
   {
    "id": "thrown",
    "name": "Lancio",
    "extra": {},
+   "description": "Puoi lanciare l'arma per un attacco a distanza ed estrarla come parte dell'attacco. Se è da mischia, usi lo stesso modificatore che useresti in mischia.",
    "origin": "srd"
   },
   {
    "id": "two_handed",
    "name": "A due mani",
    "extra": {},
+   "description": "Richiede due mani per attaccare.",
    "origin": "srd"
   },
   {
    "id": "versatile",
    "name": "Versatile",
    "extra": {},
+   "description": "Si usa a una o a due mani; il danno tra parentesi vale se la impugni a due mani per un attacco da mischia.",
    "origin": "srd"
   }
  ]

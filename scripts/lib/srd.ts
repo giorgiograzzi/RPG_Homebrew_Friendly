@@ -1,5 +1,6 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { pdfPages } from "./pdf-text";
+import { DESCRIPTIONS, GROUP_DESCRIPTIONS } from "./descriptions";
 import { fixEnGlyphs } from "./srd-clean";
 
 export type Lang = "it" | "en";
@@ -64,11 +65,14 @@ export const rowStart = (name: string) =>
 
 export interface Entry { id: string; name: { en: string; it: string }; [k: string]: unknown }
 
-// Scrive i file data/srd/<lingua>/<kind>.json con lo stesso contenuto e il nome nella lingua del file
+// Scrive i file data/srd/<lingua>/<kind>.json con lo stesso contenuto, il nome e la descrizione nella lingua del file
 export function writeKind(kind: string, entries: Entry[]) {
   for (const l of LANGS) {
     mkdirSync(OUT(l), { recursive: true });
-    const out = entries.map((e) => ({ ...e, name: e.name[l].replace(/’/g, "'"), origin: "srd" }));
+    const out = entries.map((e) => {
+      const d = DESCRIPTIONS[kind]?.[e.id] ?? GROUP_DESCRIPTIONS[String(e.group)];
+      return { ...e, name: e.name[l].replace(/’/g, "'"), ...(d ? { description: d[l] } : {}), origin: "srd" };
+    });
     writeFileSync(`${OUT(l)}/${kind}.json`, JSON.stringify({ kind, entries: out }, null, 1) + "\n");
   }
   console.log(`${kind}: ${entries.length}`);

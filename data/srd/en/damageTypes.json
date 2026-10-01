@@ -5,78 +5,91 @@
    "id": "acid",
    "name": "Acid",
    "extra": {},
+   "description": "Corrosive liquids, digestive enzymes.",
    "origin": "srd"
   },
   {
    "id": "bludgeoning",
    "name": "Bludgeoning",
    "extra": {},
+   "description": "Blunt objects, constriction, falling.",
    "origin": "srd"
   },
   {
    "id": "cold",
    "name": "Cold",
    "extra": {},
+   "description": "Freezing water, icy blasts.",
    "origin": "srd"
   },
   {
    "id": "fire",
    "name": "Fire",
    "extra": {},
+   "description": "Flames, unbearable heat.",
    "origin": "srd"
   },
   {
    "id": "force",
    "name": "Force",
    "extra": {},
+   "description": "Pure magical energy.",
    "origin": "srd"
   },
   {
    "id": "lightning",
    "name": "Lightning",
    "extra": {},
+   "description": "Electricity.",
    "origin": "srd"
   },
   {
    "id": "necrotic",
    "name": "Necrotic",
    "extra": {},
+   "description": "Life-draining energy.",
    "origin": "srd"
   },
   {
    "id": "piercing",
    "name": "Piercing",
    "extra": {},
+   "description": "Fangs, puncturing objects.",
    "origin": "srd"
   },
   {
    "id": "poison",
    "name": "Poison",
    "extra": {},
+   "description": "Toxic gas, venom.",
    "origin": "srd"
   },
   {
    "id": "psychic",
    "name": "Psychic",
    "extra": {},
+   "description": "Mind-rending energy.",
    "origin": "srd"
   },
   {
    "id": "radiant",
    "name": "Radiant",
    "extra": {},
+   "description": "Holy energy, searing radiation.",
    "origin": "srd"
   },
   {
    "id": "slashing",
    "name": "Slashing",
    "extra": {},
+   "description": "Claws, cutting objects.",
    "origin": "srd"
   },
   {
    "id": "thunder",
    "name": "Thunder",
    "extra": {},
+   "description": "Concussive sound.",
    "origin": "srd"
   }
  ]

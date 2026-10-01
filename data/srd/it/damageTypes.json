@@ -5,78 +5,91 @@
    "id": "acid",
    "name": "Acido",
    "extra": {},
+   "description": "Liquidi corrosivi, enzimi digestivi.",
    "origin": "srd"
   },
   {
    "id": "bludgeoning",
    "name": "Contundente",
    "extra": {},
+   "description": "Oggetti contundenti, costrizione, cadute.",
    "origin": "srd"
   },
   {
    "id": "cold",
    "name": "Freddo",
    "extra": {},
+   "description": "Acqua gelida, soffi di ghiaccio.",
    "origin": "srd"
   },
   {
    "id": "fire",
    "name": "Fuoco",
    "extra": {},
+   "description": "Fiamme, calore insopportabile.",
    "origin": "srd"
   },
   {
    "id": "force",
    "name": "Forza",
    "extra": {},
+   "description": "Pura energia magica.",
    "origin": "srd"
   },
   {
    "id": "lightning",
    "name": "Fulmine",
    "extra": {},
+   "description": "Elettricità.",
    "origin": "srd"
   },
   {
    "id": "necrotic",
    "name": "Necrotico",
    "extra": {},
+   "description": "Energia che prosciuga la vita.",
    "origin": "srd"
   },
   {
    "id": "piercing",
    "name": "Perforante",
    "extra": {},
+   "description": "Zanne, oggetti che perforano.",
    "origin": "srd"
   },
   {
    "id": "poison",
    "name": "Veleno",
    "extra": {},
+   "description": "Gas tossici, veleni.",
    "origin": "srd"
   },
   {
    "id": "psychic",
    "name": "Psichico",
    "extra": {},
+   "description": "Energia che dilania la mente.",
    "origin": "srd"
   },
   {
    "id": "radiant",
    "name": "Radioso",
    "extra": {},
+   "description": "Energia sacra, radiazioni ustionanti.",
    "origin": "srd"
   },
   {
    "id": "slashing",
    "name": "Tagliente",
    "extra": {},
+   "description": "Artigli, oggetti taglienti.",
    "origin": "srd"
   },
   {
    "id": "thunder",
    "name": "Tuono",
    "extra": {},
+   "description": "Suono dirompente.",
    "origin": "srd"
   }
  ]
