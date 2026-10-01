@@ -115,3 +115,12 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 - [ ] 🟢 Scelte con più elenchi (Segreti magici, Scoperte magiche) e molti effetti di Druido/Stregone/Warlock/Mago ancora solo testuali.
 - [ ] 🟢 Circolo della Terra: scelta del terreno con incantesimi concessi per livello, da verificare nel motore.
 - [ ] 🟢 In EN gli elenchi di incantesimi nel PDF sono in ordine alfabetico (verifica con confronto compatto).
+
+### Dati SRD (step 2e: incantesimi)
+- [ ] 🟡 Il campo `summary` contiene il **testo completo** dell'SRD (CC-BY-4.0, con l'attribuzione dello step 8), non una riscrittura: per gli incantesimi serve il testo esatto delle regole. Il testo EN è ripulito dei glifi sbagliati e delle maiuscole F-K perse (inizio frase e `MID_FIXES` in `extract-spells.ts`).
+- [ ] 🟡 Incoerenze dell'SRD risolte nell'estrattore (`SCHOOL_FIX`, `LIST_OMISSIONS`, `LIST_NAME_FIX`): Sfera infuocata ha scuola Evocazione nelle liste e Conjuration nell'intestazione (usata Evocazione); Forza fantasmatica e Dardo mentale (Stregone) mancano dalle liste di classe ma sono nelle intestazioni (vale l'intestazione); refuso IT "Saltare" per "Salto" nelle liste.
+- [ ] 🟡 `materialCost` è il prezzo del primo componente (es. Clone: 1.000 mo il diamante, non i 2.000 del recipiente); `materialConsumed` vale per l'incantesimo intero. Per i casi con più prezzi il testo del componente resta completo in `material`.
+- [ ] 🟡 `resolution` è il primo effetto trovato (tiro salvezza o attacco con incantesimo); con più effetti c'è `resolutionRaw` (es. Mano arcana: attack_melee / save_str / save_dex). Il motore (step 4) deve decidere cosa mostrare.
+- [ ] 🟢 Testi con schede di statistiche (Evoca..., Trova cavalcatura) e tabelle (Spostamento, Sciame di meteore...) sono in un unico paragrafo, senza struttura.
+- [ ] 🟢 Tabelle slot per il multiclasse (`slotTables`): ancora da fare, in 2f.
+- [ ] 🟢 Estrazione: nel PDF le pagine hanno due colonne e alcuni blocchi sono fuori ordine nel flusso: per gli incantesimi si legge colonna sinistra poi destra (`pdfPagesColumns`).

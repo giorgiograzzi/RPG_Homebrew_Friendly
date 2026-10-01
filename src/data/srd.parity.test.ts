@@ -4,7 +4,7 @@ import { brokenReferences, grantedSpells, idsByKind, loadSrd, SRD_LANGS } from "
 // Conteggi presi dalle tabelle dell'SRD 5.2.1 (armi: 10 semplici da mischia + 4 semplici a distanza + 18 da guerra da mischia + 6 da guerra a distanza)
 const COUNTS: Record<string, number> = {
   skills: 18, languages: 19, sizes: 6, damageTypes: 13, weaponProperties: 10, masteries: 8, coins: 5,
-  weapons: 38, armors: 13, tools: 37, items: 94, backgrounds: 4, feats: 17, species: 9, classes: 12, subclasses: 12,
+  weapons: 38, armors: 13, tools: 37, items: 94, backgrounds: 4, feats: 17, species: 9, classes: 12, subclasses: 12, spells: 339,
 };
 
 describe.each(SRD_LANGS)("dati SRD (%s)", (lang) => {
@@ -302,5 +302,33 @@ describe("classi (blocco 3: Druido, Stregone, Warlock, Mago): valori controllati
   });
   it("sottoclassi", () => {
     expect(["land", "draconic", "fiend", "evoker"].map((id) => rsIt.subclasses.get(id)?.classId)).toEqual(["druid", "sorcerer", "warlock", "wizard"]);
+  });
+});
+
+describe("incantesimi: valori controllati sul PDF (SRD 5.2.1)", () => {
+  const [rsIt, en] = [loadSrd("it"), loadSrd("en")];
+  const sp = (id: string) => en.spells.get(id)!;
+  it("numero per livello", () => {
+    const perLevel = Array.from({ length: 10 }, (_, l) => [...en.spells.values()].filter((s) => s.level === l).length);
+    expect(perLevel).toEqual([27, 57, 57, 42, 34, 38, 31, 20, 17, 16]);
+  });
+  it("campi principali", () => {
+    expect(sp("fireball")).toMatchObject({ level: 3, school: "evocation", classes: ["sorcerer", "wizard"], range: "150 feet", resolution: "save_dex", concentration: false });
+    expect(rsIt.spells.get("fireball")).toMatchObject({ range: "45 metri", name: { it: "Palla di fuoco" } });
+    expect(sp("fire_bolt")).toMatchObject({ level: 0, resolution: "attack_ranged" });
+    expect(sp("shocking_grasp").resolution).toBe("attack_melee");
+    expect(sp("bless")).toMatchObject({ concentration: true, duration: "Concentration, up to 1 minute" });
+    expect(sp("alarm")).toMatchObject({ ritual: true, castingTime: { unit: "minute", amount: 1 } });
+    expect(sp("shield").castingTime.unit).toBe("reaction");
+    expect(sp("true_resurrection").components).toMatchObject({ m: true, materialCost: 25000, materialConsumed: true });
+    expect(sp("flaming_sphere").school).toBe("evocation");
+  });
+  it("incantesimi concessi dalle classi esistono con livello coerente", () => {
+    for (const id of ["speak_with_animals", "contact_other_plane", "alter_self", "chromatic_orb", "command", "dragons_breath", "fear", "fly", "arcane_eye", "charm_monster", "legend_lore", "summon_dragon", "burning_hands", "fireball", "geas", "insect_plague"]) expect(en.spells.has(id), id).toBe(true);
+    expect(sp("summon_dragon").level).toBe(5);
+    expect(sp("geas").level).toBe(5);
+  });
+  it("il testo non ha iniziali perse", () => {
+    for (const s of en.spells.values()) expect(`${s.summary} ${s.higherLevels ?? ""}`, s.id).not.toMatch(/(^|[.!?] )[a-z]/);
   });
 });
