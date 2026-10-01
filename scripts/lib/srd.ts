@@ -1,15 +1,17 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { pdfPages } from "./pdf-text";
+import { fixEnGlyphs } from "./srd-clean";
 
 export type Lang = "it" | "en";
 export const LANGS: Lang[] = ["it", "en"];
 export const SRD_PDF = (l: Lang) => `docs/srd/SRD_5.2.1_${l}.pdf`;
 export const OUT = (l: Lang) => `data/srd/${l}`;
 
-// Pagine dell'SRD (indice 1 = pagina 1 del PDF), lette una volta sola per lingua
+// Pagine dell'SRD (indice 1 = pagina 1 del PDF), lette una volta sola per lingua.
+// Il PDF inglese ha glifi con codici sbagliati: si correggono qui (vedi srd-clean.ts)
 const cache = new Map<Lang, string[]>();
 export async function srdPages(l: Lang): Promise<string[]> {
-  if (!cache.has(l)) cache.set(l, (await pdfPages(SRD_PDF(l))).map((t) => t.replace(/System Reference Document 5\.2\.1 \d+ ?/g, "")));
+  if (!cache.has(l)) cache.set(l, (await pdfPages(SRD_PDF(l))).map((t) => (l === "en" ? fixEnGlyphs(t) : t).replace(/System Reference Document 5\.2\.1 \d+ ?/g, "")));
   return cache.get(l)!;
 }
 export const pageText = async (l: Lang, from: number, to = from) => (await srdPages(l)).slice(from - 1, to).join("\n");
