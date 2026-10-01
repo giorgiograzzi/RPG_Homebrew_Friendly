@@ -1,0 +1,202 @@
+{
+ "kind": "subclasses",
+ "entries": [
+  {
+   "id": "berserker",
+   "classId": "barbarian",
+   "name": "Cammino del berserker",
+   "description": "Incanala l'ira in furia violenta: danni extra, immunità a paura e charme, ritorsioni e presenza intimidatoria.",
+   "features": [
+    {
+     "level": 3,
+     "id": "frenzy",
+     "name": "Frenesia",
+     "description": "Se usi Attacco irruento mentre sei in ira, il primo bersaglio che colpisci nel turno con un attacco basato su Forza subisce danni extra: tira tanti d6 quanto il tuo bonus Danni dell'ira.",
+     "origin": "srd"
+    },
+    {
+     "level": 6,
+     "id": "mindless_rage",
+     "name": "Ira incontenibile",
+     "description": "Non puoi essere affascinato o spaventato mentre sei in ira; se lo sei quando entri in ira, la condizione termina.",
+     "origin": "srd"
+    },
+    {
+     "level": 10,
+     "id": "retaliation",
+     "name": "Ritorsione",
+     "description": "Quando subisci danni da una creatura entro 1,5 m, puoi usare la reazione per attaccarla in mischia con un'arma o un colpo senz'armi.",
+     "origin": "srd"
+    },
+    {
+     "level": 14,
+     "id": "intimidating_presence",
+     "name": "Presenza intimidatoria",
+     "description": "Come azione bonus, ogni creatura a tua scelta in un'emanazione di 9 m deve superare un tiro salvezza su Saggezza (CD 8 + Forza + competenza) o è spaventata per 1 minuto (ripete il tiro a fine turno). Una volta per riposo lungo, o spendendo un uso dell'ira.",
+     "usage": {
+      "uses": 1,
+      "recharge": "long_rest"
+     },
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "champion",
+   "classId": "fighter",
+   "name": "Campione",
+   "description": "Eccellenza fisica nel combattimento: critici più frequenti, atletismo e resistenza.",
+   "features": [
+    {
+     "level": 3,
+     "id": "improved_critical",
+     "name": "Critico migliorato",
+     "description": "I tiri per colpire con armi e colpi senz'armi mettono a segno un critico con 19 o 20.",
+     "effects": [
+      {
+       "op": "critRange",
+       "min": 19
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 3,
+     "id": "remarkable_athlete",
+     "name": "Atleta straordinario",
+     "description": "Vantaggio all'iniziativa e alle prove di Forza (Atletica). Dopo un colpo critico puoi muoverti fino a metà velocità senza attacchi di opportunità.",
+     "origin": "srd"
+    },
+    {
+     "level": 7,
+     "id": "additional_fighting_style",
+     "name": "Stile di combattimento aggiuntivo",
+     "description": "Scegli un altro talento Stile di combattimento.",
+     "choices": [
+      {
+       "id": "fighter_additional_fighting_style",
+       "label": "Stile di combattimento aggiuntivo",
+       "count": 1,
+       "source": "feats:fighting_style"
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 10,
+     "id": "heroic_warrior",
+     "name": "Guerriero eroico",
+     "description": "In combattimento, a inizio turno senza Ispirazione eroica puoi ottenerla.",
+     "origin": "srd"
+    },
+    {
+     "level": 15,
+     "id": "superior_critical",
+     "name": "Critico superiore",
+     "description": "I tiri per colpire con armi e colpi senz'armi mettono a segno un critico con 18-20.",
+     "effects": [
+      {
+       "op": "critRange",
+       "min": 18
+      }
+     ],
+     "origin": "srd"
+    },
+    {
+     "level": 18,
+     "id": "survivor",
+     "name": "Sopravvissuto",
+     "description": "Vantaggio ai tiri salvezza contro morte; con 18-20 conta come un 20. A inizio turno, se sei sanguinante e hai almeno 1 PF, recuperi 5 + Costituzione PF.",
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "open_hand",
+   "classId": "monk",
+   "name": "Guerriero della Mano Aperta",
+   "description": "Maestro del combattimento senz'armi: spinge, sbilancia e guarisce se stesso.",
+   "features": [
+    {
+     "level": 3,
+     "id": "open_hand_technique",
+     "name": "Tecnica della mano aperta",
+     "description": "Quando colpisci con un attacco di Raffica di colpi puoi imporre un effetto: Disorientamento (niente attacchi di opportunità fino al suo prossimo turno), Spinta (tiro salvezza su Forza o è spinto di 4,5 m) o Rovesciamento (tiro salvezza su Destrezza o cade prono).",
+     "origin": "srd"
+    },
+    {
+     "level": 6,
+     "id": "wholeness_of_body",
+     "name": "Integrità del corpo",
+     "description": "Come azione bonus tira il dado di Arti marziali e recuperi PF pari al risultato + Sag (minimo 1). Usi pari al modificatore di Saggezza (minimo 1) per riposo lungo.",
+     "usage": {
+      "uses": "max(1, mod:wis)",
+      "recharge": "long_rest"
+     },
+     "origin": "srd"
+    },
+    {
+     "level": 11,
+     "id": "fleet_step",
+     "name": "Passo lesto",
+     "description": "Quando fai un'azione bonus diversa da Passo del vento, puoi usare subito anche Passo del vento.",
+     "origin": "srd"
+    },
+    {
+     "level": 17,
+     "id": "quivering_palm",
+     "name": "Palmo tremante",
+     "description": "Se colpisci con un colpo senz'armi puoi spendere 4 punti concentrazione per innescare vibrazioni (durano giorni pari al tuo livello da monaco). Con un'azione (o rinunciando a un attacco) le fai cessare: tiro salvezza su Costituzione, 10d12 danni da forza se fallito, metà se superato. Una creatura alla volta.",
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  },
+  {
+   "id": "thief",
+   "classId": "rogue",
+   "name": "Furfante",
+   "description": "Cacciatore di tesori e scassinatore: mani veloci, arrampicata, oggetti magici e doppio turno.",
+   "features": [
+    {
+     "level": 3,
+     "id": "fast_hands",
+     "name": "Mani veloci",
+     "description": "Come azione bonus: una prova di Destrezza (Rapidità di mano) per scassinare, disattivare una trappola con gli arnesi da scasso o borseggiare; oppure l'azione Utilizzo o Magia per usare un oggetto magico.",
+     "origin": "srd"
+    },
+    {
+     "level": 3,
+     "id": "second_story_work",
+     "name": "Lavoro al secondo piano",
+     "description": "Velocità di scalata pari alla tua velocità; per la distanza dei salti usi Destrezza al posto di Forza.",
+     "origin": "srd"
+    },
+    {
+     "level": 9,
+     "id": "supreme_sneak",
+     "name": "Furtività suprema",
+     "description": "Nuova opzione di Colpo astuto: Attacco nascosto (1d6): se sei invisibile per l'azione Nascondersi, l'attacco non interrompe la condizione se finisci il turno dietro tre quarti di copertura o copertura totale.",
+     "origin": "srd"
+    },
+    {
+     "level": 13,
+     "id": "use_magic_device",
+     "name": "Usare oggetto magico",
+     "description": "Cariche: usando un oggetto magico che consuma cariche tira 1d6; con 6 non consumi la carica. Pergamene: puoi usare qualunque pergamena magica con Intelligenza (trucchetti e 1° livello senza prova; oltre, prova di Intelligenza (Arcano) CD 10 + livello, altrimenti la pergamena si disintegra). Sintonia con fino a 4 oggetti magici.",
+     "origin": "srd"
+    },
+    {
+     "level": 17,
+     "id": "thiefs_reflexes",
+     "name": "Riflessi da furfante",
+     "description": "Nel primo round di ogni combattimento fai due turni: il primo alla tua iniziativa, il secondo alla tua iniziativa meno 10.",
+     "origin": "srd"
+    }
+   ],
+   "origin": "srd"
+  }
+ ]
+}

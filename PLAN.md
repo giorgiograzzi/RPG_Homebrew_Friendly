@@ -49,7 +49,10 @@ Riscrittura degli estrattori in `scripts/` perché leggano **solo** i due PDF SR
 - **2a Fondamenti** ☑: abilità, linguaggi, taglie, tipi di danno, PX/competenza, armi (+ proprietà e maestrie), armature, strumenti, equipaggiamento, monete.
 - **2b Background e talenti** ☑: 4 background (Accolito, Criminale, Sapiente, Soldato) e 17 talenti (4 Origini, 2 Generali, 4 Stile di combattimento, 7 Doni epici), `scripts/extract-origins.ts`, verifica incrociata IT/EN.
 - **2c Specie** ☑: 9 specie (Dragonide, Nano, Elfo, Gnomo, Goliath, Halfling, Umano, Orco, Tiefling) con lignaggi, retaggi, discendenze e tratti, `scripts/extract-species.ts` (verifica sui PDF).
-- **2d Classi e sottoclassi**: le 12 classi (tabelle 1-20) e la sottoclasse che l'SRD include per ciascuna.
+- **2d Classi e sottoclassi** (3 blocchi, un commit/PR ciascuno): le 12 classi (tabelle 1-20) e la sottoclasse dell'SRD. `scripts/extract-classes.ts` verifica su IT ed EN tratti, equipaggiamento, tabella dei livelli e intestazioni.
+  - **2d-1** ☑: Barbaro, Guerriero, Monaco, Ladro (senza incantesimi di classe).
+  - **2d-2**: Paladino, Ranger, Bardo, Chierico.
+  - **2d-3**: Druido, Stregone, Warlock, Mago.
 - **2e Incantesimi**: tutti quelli dell'SRD (livello, scuola, classi, tempo, gittata, componenti, durata, testo, livelli superiori) + liste per classe + tabelle slot.
 - **2f Condizioni, riposi, morte e regole di gioco** usate dal motore (Esaurimento incluso).
 - **2g (opzionale, da decidere)**: oggetti magici dell'SRD.
