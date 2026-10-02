@@ -15,7 +15,7 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 ### Legale
 - [ ] 🔴 Dicitura CC-BY: copiare **testo esatto** dalla prima pagina di ciascun PDF (la versione IT e quella EN sono diverse).
 - [ ] 🟡 Font per la scheda PDF: usare solo font con licenza libera (es. OFL) e citarli in `ATTRIBUTION.md`.
-- [ ] 🟡 Icone/immagini: usare solo asset originali (le attuali in `public/icons/` vanno riviste: se sono generiche ok, altrimenti rifarle).
+- [ ] 🟡 Icone/immagini: l'icona dell'app è nuova (drago + d20, PR #28 e #29, `public/icons/`): Giorgio conferma che sia un disegno originale prima della release (step 10).
 - [ ] 🟡 Licenza delle dipendenze npm: controllare che siano tutte compatibili con MIT (report `npm ls` / license-checker).
 - [ ] 🟡 Rileggere il testo legale finale con calma prima della release (non sono un avvocato: è una verifica tecnica, non un parere legale).
 
@@ -89,7 +89,7 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 - [ ] 🔴 Tema Windows XP / Win95 (`src/ui/xp/`, ~266 classi in 31 file, popup "Prompt di MS-DOS", font Tahoma, icona "Start") da sostituire con il tema neutro mobile-first + desktop. Decisione presa: neutro, moderno, chiaro/scuro.
 - [ ] 🟡 Scegliere la palette/accento del nuovo tema (proposta: neutri + un solo colore d'accento) e il nome visibile dell'app; Giorgio conferma.
 - [ ] 🟡 Su desktop la Scheda va in colonne affiancate (non a 7 tab): progettare quali blocchi vanno insieme.
-- [ ] 🟡 `index.html` ha `theme-color` blu XP; il manifest PWA e le icone usano i colori vecchi (step 5b-5 e 9).
+- [x] `theme-color` di `index.html` e colori del manifest PWA aggiornati al tema neutro; icone nuove (#28, #29).
 - [ ] 🟡 `src/ui/xp/contrast.test.ts` verifica i colori XP: va riscritto sui nuovi token.
 - [ ] 🟡 Un solo punto di adattamento schermo oggi (`max-width: 720px`): introdurre breakpoint 640 / 1024.
 - [ ] 🟢 Valutare interruttore tema (sistema / chiaro / scuro) e dimensione testo in Impostazioni.
@@ -179,7 +179,7 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 - [ ] 🟡 Prossimi sotto-passi 5b-3 (schermate: scheda a colonne su desktop, wizard, homebrew), 5b-4 (accessibilità: rifinire bersagli, tastiera) e 5b-5 (pulizia): i controlli di layout sono in `npm run e2e` (`e2e/layout.mjs`: 3 viewport × IT/EN × chiaro/scuro; screenshot in `e2e/out/`, non tracciati).
 - [x] ~~Etichette scritte nel codice in italiano~~ → spostate in `it.json`/`en.json`; i messaggi e le etichette del motore usano `tr(it, en)` (`src/i18n/tr.ts`).
 - [ ] 🟢 Il cambio di aspetto (chiaro/scuro/automatico) è immediato; il cambio di lingua ricarica la pagina.
-- [ ] 🟢 Le icone dell'app (`public/icons`) sono state ridisegnate nei nuovi colori (d20 indaco) con il font di sistema; l'icona resta provvisoria finché non c'è un logo definitivo.
+- [x] Icone dell'app rifatte: nuova icona drago + d20 e favicon (#28), apple-touch-icon rinominata per la cache di iOS (#29).
 
 ### Interfaccia (step 5b-3)
 - [ ] 🟡 Nel motore restano in italiano solo alcune stringhe minori (riepiloghi dell'editor Homebrew in `src/homebrew/summary.ts` e `complex.ts`, etichette di spellbook/risorse): il controllo `npm run e2e` segnala testo italiano nelle schermate inglesi; oggi non ne trova nelle schermate controllate (Personaggi, wizard, scheda, Homebrew, Impostazioni).
