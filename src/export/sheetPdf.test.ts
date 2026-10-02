@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import * as pdfjs from "pdfjs-dist/legacy/build/pdf.mjs";
 import { loadSrd } from "../data/srdIntegrity";
@@ -37,7 +37,6 @@ describe("scheda PDF libera", () => {
     it(`mago di 5° livello in ${lang}: pagine, testi chiave, niente campi vuoti`, async () => {
       const { rs, ch } = make(lang, "wizard", 5, "Aria Ventosa");
       const bytes = await makeSheetPdf(ch, rs, lang, fonts);
-      writeFileSync(`/tmp/claude-0/pdfout/mago-${lang}.pdf`, bytes);
       const { n, pages, text } = await readPdf(bytes);
       const P = STRINGS[lang].pdf, S = STRINGS[lang];
       expect(n).toBeGreaterThanOrEqual(2);

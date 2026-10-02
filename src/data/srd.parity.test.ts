@@ -6,7 +6,7 @@ import { brokenReferences, grantedSpells, idsByKind, loadSrd, SRD_LANGS } from "
 // Conteggi presi dalle tabelle dell'SRD 5.2.1 (armi: 10 semplici da mischia + 4 semplici a distanza + 18 da guerra da mischia + 6 da guerra a distanza)
 const COUNTS: Record<string, number> = {
   skills: 18, languages: 19, sizes: 6, damageTypes: 13, weaponProperties: 10, masteries: 8, coins: 5,
-  weapons: 38, armors: 13, tools: 37, items: 94, backgrounds: 4, feats: 17, species: 9, classes: 12, subclasses: 12, spells: 339, conditions: 15, slotTables: 2, creation: 1,
+  weapons: 38, armors: 13, tools: 37, items: 352, backgrounds: 4, feats: 17, species: 9, classes: 12, subclasses: 12, spells: 339, conditions: 15, slotTables: 2, creation: 1,
 };
 
 describe.each(SRD_LANGS)("dati SRD (%s)", (lang) => {
@@ -69,6 +69,30 @@ describe("valori controllati sul PDF", () => {
     expect(rs.skills.get("sleight_of_hand")!.extra).toEqual({ ability: "dex" });
     expect(rs.coins.get("ep")!.extra).toMatchObject({ copper: 50 });
     expect(rs.sizes.get("gargantuan")!.extra).toEqual({ spaceFeet: 20 });
+  });
+});
+
+describe("oggetti magici (SRD 5.2.1, Magic Items A–Z)", () => {
+  const [en, ita] = [loadSrd("en"), loadSrd("it")]; // `it` è il test
+  const magic = (rs: typeof en) => [...rs.items.values()].filter((i) => i.magic);
+  it("258 voci in entrambe le lingue", () => { expect(magic(en)).toHaveLength(258); expect(magic(ita)).toHaveLength(258); });
+  it("tipo, rarità e sintonia", () => {
+    expect(en.items.get("amulet_of_health")).toMatchObject({ attunement: true, magic: { type: "wondrous", rarity: [{ rarity: "rare" }] } });
+    expect(en.items.get("potion_of_climbing")).toMatchObject({ attunement: false, magic: { type: "potion", rarity: [{ rarity: "common" }] } });
+    expect(en.items.get("weapon_plus")!.magic!.rarity.map((r) => [r.rarity, r.note])).toEqual([["uncommon", "+1"], ["rare", "+2"], ["very_rare", "+3"]]);
+    expect(en.items.get("holy_avenger")!.magic).toMatchObject({ type: "weapon", attunementBy: "a Paladin" });
+    expect(ita.items.get("holy_avenger")!.magic).toMatchObject({ attunementBy: "un paladino" });
+    expect(en.items.get("potions_of_healing")!.magic).toMatchObject({ varies: true, rarity: [] });
+    expect(ita.items.get("bag_of_holding")!.name.it).toBe("Borsa conservante");
+  });
+  it("testo presente e senza residui del PDF", () => {
+    for (const rs of [en, ita]) for (const i of magic(rs)) {
+      expect(i.description.length, i.id).toBeGreaterThan(40);
+      expect(i.description, i.id).not.toMatch(/[\u0000-\u0008\u007f-\u009f]/);
+    }
+  });
+  it("le tabelle sono righe con celle separate da |", () => {
+    expect(en.items.get("horn_of_valhalla")!.description).toContain("41–75 | Brass | 3 | Proficiency with all Simple weapons");
   });
 });
 

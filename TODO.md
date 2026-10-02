@@ -10,7 +10,7 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 - [ ] 🟡 Gli estrattori attuali leggono riepiloghi del Manuale del Giocatore (`01-05_*.pdf`) e regole di `scripts/lib/*-rules.ts` scritte su quei dati: vanno riscritti sull'SRD, non adattati a occhio.
 - [ ] 🟡 Le 48 sottoclassi e gli incantesimi/specie/background fuori SRD spariscono: verificare che i privilegi/talenti rimasti non citino id non più esistenti (`validate:data` sui riferimenti incrociati).
 - [ ] 🟡 Le voci `needsReview` dell'app privata non si portano dietro: ripartire da zero per i dubbi.
-- [ ] 🟢 Decidere se includere gli oggetti magici dell'SRD (step 2g).
+- [x] 🟢 Oggetti magici dell'SRD inclusi (step 2g). Da fare: effetti meccanici (CA, bonus, cariche) per gli oggetti più comuni; 8 paragrafi del testo sono spezzati male dove un rigo inizia con un titolo in linea.
 
 ### Legale
 - [ ] 🔴 Dicitura CC-BY: copiare **testo esatto** dalla prima pagina di ciascun PDF (la versione IT e quella EN sono diverse).
@@ -76,14 +76,14 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 - [ ] 🟡 Scheda PDF: tolta in step 1 (usava il modello ufficiale). Resta `src/export/sheetData.ts`; il pulsante "Stampa scheda" torna con il nuovo generatore (step 7). Chiavi `wizard.sheet.*` in `it.json` ancora presenti.
 - [x] `scripts/extract-*.ts` e `validate-data.ts` (citavano fonti non SRD) rimossi in step 1; `validate:data` ed `extract:data` (script npm) tornano con la riscrittura in step 2.
 - [ ] 🟡 `origin: "private"` (default in `src/engine/schema/content.ts` e nei test): con i dati SRD tracciati va sostituito con `"srd"` (step 2/4).
-- [ ] 🟡 `Dockerfile` e `.dockerignore` parlano ancora di `data/private` (step 9).
+- [x] `Dockerfile` e `.dockerignore` non parlano più di `data/private` (già sistemato in #20; ripulito `.dockerignore` in step 9).
 - [ ] 🟡 Dopo lo step 1 `npm test` ha 8 file che falliscono per mancanza di `data/` (stessi di prima): tornano verdi con gli step 2-4.
-- [ ] 🟡 `.env.example`: porta 8097 scelta per l'app privata; rivedere se serve (step 9).
+- [x] `.env.example`: porta predefinita 8098 (#21), configurabile con `PORT`.
 - [x] Commento in `scripts/extract-conditions.ts`: file rimosso in step 1.
 - [ ] 🟡 `ATTRIBUTION.md`: diciture trascritte dai PDF, riverificare a occhio (step 8).
 - [ ] 🟡 I test `*.private.test.ts` saltano i dati mancanti: rinominarli e farli girare sempre, sui dati SRD tracciati (step 4).
 - [ ] 🟡 `README` e doc dell'app privata citano il bunker, Cloudflare, porte e dominio personale: **non** portarli nella repo pubblica.
-- [ ] 🟢 Workflow CI GitHub Actions (step 9).
+- [x] Workflow CI GitHub Actions (step 9): job `check` (typecheck, test, validate:data, build), `e2e` (layout, smoke, offline) e `docker` (build immagine).
 
 ### Frontend (step 5b)
 - [ ] 🔴 Tema Windows XP / Win95 (`src/ui/xp/`, ~266 classi in 31 file, popup "Prompt di MS-DOS", font Tahoma, icona "Start") da sostituire con il tema neutro mobile-first + desktop. Decisione presa: neutro, moderno, chiaro/scuro.
@@ -140,7 +140,7 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 ### Lingue (step 3)
 - [ ] 🟡 Cambiare lingua ricarica la pagina (la lingua si legge una volta all'avvio; i personaggi stanno nel database e restano). Nello step 5b si può rendere il cambio immediato se serve.
 - [ ] 🟡 `en.json` traduce tutte le chiavi di `it.json` così com'è. Restano stringhe da riscrivere con la nuova interfaccia (5b) e dall'editor homebrew (step 6, dove va tolto «Parti da una voce ufficiale»): quando si cambia una stringa vanno aggiornate entrambe (il test di parità lo impone).
-- [ ] 🟢 Nome e descrizione del manifest PWA (`vite.config.ts`) e `index.html` sono ancora solo in italiano (step 9). `<html lang>` si imposta all'avvio.
+- [ ] 🟢 Nome e descrizione del manifest PWA (`vite.config.ts`) e `index.html` restano solo in italiano: un manifest è unico per sito, non si può avere per lingua senza server dedicato. `<html lang>` si imposta all'avvio. Da decidere in step 10 se renderli neutri/bilingui.
 - [ ] 🟢 Le unità (piedi/libbre) nei testi dell'interfaccia restano come nei dati; nei dati italiani le distanze sono in metri solo nel testo delle regole.
 
 ### Attribuzioni e nome (step 8)
@@ -187,4 +187,4 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 
 ### Interfaccia (step 5b-4/5b-5)
 - [ ] 🟢 Non fatto (non necessario ora): lettore di schermo provato solo in modo automatico (ruoli e nomi); un controllo a mano con VoiceOver/TalkBack prima della release (step 10).
-- [ ] 🟢 `npm run e2e` non è nel CI (serve Chromium): da aggiungere allo step 9 come job separato.
+- [x] `npm run e2e`, `e2e:smoke` ed `e2e:offline` girano nel CI come job separato (Chromium da `playwright install`). `playwright` è ora tra le devDependencies.
