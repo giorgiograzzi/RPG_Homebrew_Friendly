@@ -20,5 +20,13 @@ npm run extract:data   # rigenera data/srd/ dai PDF in docs/srd/ (verifica IT e 
 Tema originale neutro (indaco), chiaro/scuro, mobile-first con layout desktop a colonne da 1100px.
 Testo ≥ 16px, bersagli ≥ 48px, contrasto WCAG AA, uso da tastiera. Token in `src/ui/theme/theme.css`.
 
+## Deploy con Docker
+```
+git clone <repo> srd-personaggi && cd srd-personaggi
+cp .env.example .env        # facoltativo: cambia PORT (default 8097)
+docker compose up -d --build
+```
+L'app è statica (nginx): si aggiorna con `git pull && docker compose up -d --build`. Il service worker e `index.html` non vanno in cache, così un aggiornamento arriva subito.
+
 ## Licenze
 Codice: MIT (`LICENSE`). Contenuti SRD: CC-BY-4.0 (`ATTRIBUTION.md`).
