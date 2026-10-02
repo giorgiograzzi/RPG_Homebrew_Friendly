@@ -52,6 +52,10 @@ describe("scheda PDF libera", () => {
       for (const s of SKILLS) expect(text, s).toContain(rs.skills.get(s)!.name.it);
       // incantesimi: almeno un trucchetto e uno slot
       expect(text).toContain(P.slots);
+      // nessun taglio: tutti gli incantesimi del libro compaiono, anche nel dettaglio (sezione con il testo)
+      expect(text).toContain(P.spellDetails.toUpperCase());
+      const names = [...rs.spells.values()].filter((sp) => text.includes(sp.name.it)).length;
+      expect(names).toBeGreaterThan(8);
       // piè di pagina: dicitura CC-BY esatta della lingua e numerazione su ogni pagina
       pages.forEach((pg, i) => {
         expect(pg).toContain(SRD_NOTICE[lang].slice(0, 60));

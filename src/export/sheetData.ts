@@ -22,7 +22,7 @@ export interface SheetData {
   alignment: string; languages: string; equipment: string[]; attunement: string[];
   coins: { cp: string; sp: string; ep: string; gp: string; pp: string };
   spellAbility: string; spellMod: string; spellDc: string; spellAtk: string; slots: string[];
-  spells: { level: string; name: string; time: string; range: string; concentration: boolean; ritual: boolean; material: boolean; notes: string }[];
+  spells: { level: string; name: string; time: string; range: string; concentration: boolean; ritual: boolean; material: boolean; notes: string; meta: string; summary: string; higher: string }[];
 }
 
 export const sign = (n: number) => (n >= 0 ? `+${n}` : `${n}`);
@@ -65,7 +65,7 @@ export function buildSheetData(ch: Character, rs: Ruleset, lang: Lang = appLang)
     scores: sheet, skills,
     armor: { light: d.proficiencies.armor.includes("light"), medium: d.proficiencies.armor.includes("medium"), heavy: d.proficiencies.armor.includes("heavy"), shield: d.proficiencies.armor.includes("shield") },
     weapons: weaponNames.join(", "), tools: toolNames.join(", "),
-    attacks: d.attacks.slice(0, 5).map((a) => ({ name: a.label, bonus: sign(a.toHit.value), damage: a.damage.text, notes: a.notes.join(" · ") })),
+    attacks: d.attacks.slice(0, 8).map((a) => ({ name: a.label, bonus: sign(a.toHit.value), damage: a.damage.text, notes: a.notes.join(" · ") })),
     classFeatures: info(["class", "subclass"]), speciesTraits: info(["species"]), feats: info(["feat", "background"]),
     alignment: align ? creation?.alignments.find((x) => x.id === align)?.name.it ?? align : "",
     languages: d.languages.map((l) => nameOf(rs.languages, l)).join(", "),
@@ -74,13 +74,17 @@ export function buildSheetData(ch: Character, rs: Ruleset, lang: Lang = appLang)
     coins: { cp: String(ch.coins.cp), sp: String(ch.coins.sp), ep: String(ch.coins.ep), gp: String(ch.coins.gp), pp: String(ch.coins.pp) },
     spellAbility: sc ? AB[sc.ability] : "", spellMod: sc ? sign(d.mods[sc.ability].value) : "", spellDc: sc ? String(sc.dc.value) : "", spellAtk: sc ? sign(sc.attack.value) : "",
     slots: Array.from({ length: 9 }, (_, i) => (d.spellSlots.slots[i] ? String(d.spellSlots.slots[i]) : "")),
-    spells: book.slice(0, 30).map((e) => {
+    spells: book.map((e) => {
       const c = e.spell.castingTime;
       const time = c.unit === "minute" ? `${c.amount} ${P.minute}` : c.unit === "hour" ? `${c.amount} ${P.hour}` : `${c.amount > 1 ? `${c.amount} ` : ""}${TIME[c.unit] ?? c.unit}`;
       return {
         level: String(e.spell.level), name: e.spell.name.it, time, range: e.spell.range,
         concentration: e.spell.concentration, ritual: e.spell.ritual, material: !!e.spell.components.m,
         notes: [kindWord[e.sources[0]?.kind ?? ""] ?? "", e.spell.components.material ?? ""].filter(Boolean).join(" · "),
+        // scheda dettagliata: livello, tempo, gittata, componenti e durata; poi il testo
+        meta: [e.spell.level === 0 ? P.cantrip : `${e.spell.level}°`, time, e.spell.range, [e.spell.components.v && "V", e.spell.components.s && "S", e.spell.components.m && "M"].filter(Boolean).join(" ") + (e.spell.components.material ? ` (${e.spell.components.material})` : ""),
+          `${P.duration}: ${e.spell.duration}${e.spell.concentration ? " (C)" : ""}`].filter(Boolean).join(" · "),
+        summary: e.spell.summary, higher: e.spell.higherLevels ?? "",
       };
     }),
   };
