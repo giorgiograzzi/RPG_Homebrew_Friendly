@@ -1,39 +1,41 @@
 # PLAN2.md — Audit della creazione personaggio + piano di rifinitura
 
-Seconda fase dopo `PLAN.md` (step 0–8 chiusi; 9 e 10 ancora da fare). Nasce da un audit del 2026-10-02 su: modalità di creazione del giocatore, termini italiani rispetto al manuale (SRD 5.2.1 IT, `docs/srd/SRD_5.2.1_it.pdf`), prove a campione sul motore, parte "back" (archivio, backup, PWA).
+Seconda fase dopo `PLAN.md`. **Chiusa con la PR #33** (2026-10-02): resta solo lo step 10 di `PLAN.md` (rilettura legale e tag `v1.0.0`). L'app nel frattempo si chiama «Placet del Master». Nasce da un audit del 2026-10-02 su: modalità di creazione del giocatore, termini italiani rispetto al manuale (SRD 5.2.1 IT, `docs/srd/SRD_5.2.1_it.pdf`), prove a campione sul motore, parte "back" (archivio, backup, PWA).
 
 Come è stato fatto l'audit: lettura di `src/engine/creation/*`, `src/wizard/*`, `src/db/*`, `src/store/*`; confronto automatico dei nomi dei dati con il testo del PDF IT; prove con test usa-e-getta (non committati) su tutte le classi ai livelli 1, 2, 3, 4, 6, 8, 9, 12, 15, 17, 19, 20 e su alcuni scenari (cambio classe/specie/livello, metodi di punteggio, creazione senza nome).
 
-## 0. Stato di avanzamento
+## 0. Stato di avanzamento (aggiornato dopo la PR #33)
 | Step | Stato |
 |---|---|
-| P2-1 Test e CI | ✅ fatto (test PDF corretto, `.github/workflows/ci.yml`; `typecheck`, 595 test, `validate:data`, `build`, smoke Playwright verdi in locale; `docker compose build` non verificabile qui) |
-| P2-2 Archivio sicuro | ✅ fatto: `storage.persist()` + stato nelle Impostazioni, Dexie v2 (homebrew a righe, copie di sicurezza), avviso tra schede (BroadcastChannel), duplica / esporta uno solo / condividi, esporta dati grezzi |
-| P2-3 Lingua e terminologia | ✅ fatto: termini del manuale, metri/kg in italiano, messaggi del motore in `tr()`, test guardia `noItalianLeaks.test.ts` |
-| P2-4 Creazione completa | ✅ fatto: taglia a scelta, dettagli del personaggio (anche nel PDF), multiclasse alla creazione, riepilogo con abilità/competenze/privilegi, simbolo sacro e set da gioco scelti in creazione, sottoclasse tolta se il livello scende |
-| P2-5 Contenuti e decisioni | 🔶 fatto: metodi di punteggio tenuti (con nota nell'app), 28 oggetti con descrizione IT+EN, descrizioni mostrate nello zaino e nel negozio. Restano: oggetti magici SRD (2g), descrizioni di armi/armature, i tratti "solo a testo" (in `TODO.md`) |
-| P2-6 Release | 🔶 README e TODO aggiornati. Mancano: `docker compose build` e prova offline (in questo ambiente non c'è il daemon Docker), checklist legale finale, tag `v1.0.0` |
+| P2-1 Test e CI | ✅ chiuso: test PDF corretto; CI in `.github/workflows/ci.yml` (controlli, browser, Docker) |
+| P2-2 Archivio sicuro | ✅ chiuso: `storage.persist()` + stato nelle Impostazioni (su iOS con app installata dice che i dati non vengono cancellati da soli), Dexie v2 (homebrew a righe, copie di sicurezza), avviso tra schede, duplica / esporta uno solo / condividi, esporta dati grezzi |
+| P2-3 Lingua e terminologia | ✅ chiuso: termini del manuale, metri/kg in italiano, messaggi del motore in `tr()`, guardia `noItalianLeaks.test.ts` |
+| P2-4 Creazione completa | ✅ chiuso: taglia a scelta, dettagli del personaggio (anche PDF), multiclasse alla creazione, riepilogo completo, simbolo sacro e set da gioco in creazione, sottoclasse tolta se il livello scende |
+| P2-5 Contenuti e decisioni | ✅ chiuso: metodi di punteggio tenuti (con nota nell'app); oggetti magici SRD fatti nello step 2g (#30); 28 oggetti con descrizione IT+EN. Aperto solo il "nice to have" in `TODO.md` (descrizioni di armi/armature, tratti «solo a testo») |
+| P2-6 Release | 🔶 fatto: README e TODO, build Docker e uso offline provati da Giorgio sul bunker. **Mancano**: rilettura legale finale (nome «Placet del Master», dicitura, icone, privacy/cookie) e tag `v1.0.0` |
+
+Stato dei dati dopo PLAN2: schema personaggio **v2**, database Dexie **v2**. 606 test, `typecheck`, `validate:data`, `build`, smoke e offline verdi.
 
 Trovato e corretto durante P2-4: la scelta `weapon_mastery_pick` aveva lo stesso id in 5 classi, quindi un multiclasse (anche da level-up) con due di loro condivideva la scelta e si bloccava. Ora ogni classe ha il suo id (`<classe>_weapon_mastery`), con migrazione dello schema del personaggio da v1 a v2.
 
 ## 1. Cosa funziona (verificato)
-- `typecheck` pulito; `npm test`: 575 test su 577 passano (i 2 che falliscono sono il bug B1 qui sotto).
+- (Al momento dell'audit) `typecheck` pulito; `npm test`: 575 test su 577 passano (i 2 che falliscono erano il bug B1 qui sotto, ora corretto).
 - Tutti i nomi dei dati IT (classi, sottoclassi, specie, background, talenti, incantesimi, armi, armature, strumenti, abilità, condizioni, tipi di danno, maestrie, proprietà, privilegi e tratti) compaiono nel PDF italiano: **0 mancanti**. Le 12 voci "mancanti" tra gli oggetti sono nomi composti (es. «Focus arcano (cristallo)»), non errori.
 - Creazione: ogni classe a 12 livelli diversi (1→20) si completa, si chiude e non produce avvisi; le domande rimaste senza risposta sono zero.
 - Cambio classe: le scelte che non valgono più vengono tolte con richiesta di conferma. Rifare i tiri si blocca se disattivato. Senza nome non si chiude.
 
-## 2. Bug trovati
+## 2. Bug trovati (tutti corretti in #33)
 | # | Gravità | Dove | Cosa |
 |---|---|---|---|
-| B1 | 🔴 CI | `src/export/sheetPdf.test.ts:40` | Scrive in `/tmp/claude-0/pdfout/…`: la cartella non esiste altrove, quindi il test fallisce (2 test). Va tolto il `writeFileSync` o usata una cartella temporanea creata dal test. |
-| B2 | 🟡 | `wizard/Summary.tsx`, `sheet/StatusTab.tsx`, `sheet/StatsTab.tsx`, `pages/Equip.tsx` | L'interfaccia **italiana** mostra «ft» e «lb», mentre il manuale IT usa **metri e kg** (769 «m», 174 «kg», 0 «ft»/«lb» nel PDF). Manca una conversione per lingua (la nota esiste già nel `TODO.md`, sezione 2a/2c). Il PDF della scheda ha lo stesso problema. |
-| B3 | 🟡 | `engine/creation/*`, `compute/*`, `equipment/*`, `magic/*`, `play/*`, `db/*`, `store/app.ts` | Decine di messaggi scritti **solo in italiano** (non passano da `tr()`): «Supererebbe il massimo», «Tira i dadi per i punteggi», «Assegna i valori…», «Manca una scelta per l'equipaggiamento», «Arma Pesante con For/Des sotto 13», «Oggetto non nel tuo inventario», «Salvataggio fallito», «Senza nome», «(importato)»… Con l'app in inglese compaiono in italiano. |
-| B4 | 🟡 | `engine/creation/questions.ts` (`AB_IT`) | I nomi delle caratteristiche negli aumenti sono sempre in italiano (Forza, Destrezza…) anche in inglese. |
-| B5 | 🟡 | `engine/creation/questions.ts` (`equipmentName`), `wizard/Summary.tsx` | La valuta è scritta «mo» anche in inglese (dovrebbe essere «gp»). |
-| B6 | 🟡 | `engine/creation/decisions.ts` / `setStartLevel` | Abbassando il livello (es. 5→2) la sottoclasse scelta resta salvata anche sotto il livello della sottoclasse (3): non dà privilegi, ma resta nei dati e riappare risalendo. Meglio toglierla con la solita conferma. |
-| B7 | 🟢 | `it.json` | Testi rimasti da sviluppo: `characters.creationSoon`, `soon.sheet/equip/magic`, `wizard.sum.features/done/progress` non sono usati; `wizard.noCreation` cita «npm run extract:data… sul server» (testo da sviluppatore mostrato all'utente). |
+| B1 ✅ | 🔴 CI | `src/export/sheetPdf.test.ts:40` | Scrive in `/tmp/claude-0/pdfout/…`: la cartella non esiste altrove, quindi il test fallisce (2 test). Va tolto il `writeFileSync` o usata una cartella temporanea creata dal test. |
+| B2 ✅ | 🟡 | `wizard/Summary.tsx`, `sheet/StatusTab.tsx`, `sheet/StatsTab.tsx`, `pages/Equip.tsx` | L'interfaccia **italiana** mostra «ft» e «lb», mentre il manuale IT usa **metri e kg** (769 «m», 174 «kg», 0 «ft»/«lb» nel PDF). Manca una conversione per lingua (la nota esiste già nel `TODO.md`, sezione 2a/2c). Il PDF della scheda ha lo stesso problema. |
+| B3 ✅ | 🟡 | `engine/creation/*`, `compute/*`, `equipment/*`, `magic/*`, `play/*`, `db/*`, `store/app.ts` | Decine di messaggi scritti **solo in italiano** (non passano da `tr()`): «Supererebbe il massimo», «Tira i dadi per i punteggi», «Assegna i valori…», «Manca una scelta per l'equipaggiamento», «Arma Pesante con For/Des sotto 13», «Oggetto non nel tuo inventario», «Salvataggio fallito», «Senza nome», «(importato)»… Con l'app in inglese compaiono in italiano. |
+| B4 ✅ | 🟡 | `engine/creation/questions.ts` (`AB_IT`) | I nomi delle caratteristiche negli aumenti sono sempre in italiano (Forza, Destrezza…) anche in inglese. |
+| B5 ✅ | 🟡 | `engine/creation/questions.ts` (`equipmentName`), `wizard/Summary.tsx` | La valuta è scritta «mo» anche in inglese (dovrebbe essere «gp»). |
+| B6 ✅ | 🟡 | `engine/creation/decisions.ts` / `setStartLevel` | Abbassando il livello (es. 5→2) la sottoclasse scelta resta salvata anche sotto il livello della sottoclasse (3): non dà privilegi, ma resta nei dati e riappare risalendo. Meglio toglierla con la solita conferma. |
+| B7 ✅ | 🟢 | `it.json` | Testi rimasti da sviluppo: `characters.creationSoon`, `soon.sheet/equip/magic`, `wizard.sum.features/done/progress` non sono usati; `wizard.noCreation` cita «npm run extract:data… sul server» (testo da sviluppatore mostrato all'utente). |
 
-## 3. Termini italiani diversi dal manuale
+## 3. Termini italiani diversi dal manuale (tutti allineati in #33, tranne le maiuscole nelle etichette, che restano com'erano)
 | Nell'app (it.json) | Nel manuale IT | Dove |
 |---|---|---|
 | Esaurimento | **Indebolimento** (è il nome della condizione `exhaustion` nei dati stessi) | `play.exhaustion`, `play.longConfirm`, ConditionsTab |
@@ -47,6 +49,8 @@ Trovato e corretto durante P2-4: la scelta `weapon_mastery_pick` aveva lo stesso
 Da decidere con Giorgio: «Tiro dei dadi» e «Acquisto a punti» **non sono nell'SRD 5.2.1** (nel PDF c'è solo la serie standard, più la tabella «Serie standard per classe»). Sono regole note e non protette, ma il progetto dice «solo SRD»: tenerli come metodi "extra" con una nota, oppure toglierli. Vale anche per il metodo "Manuale" (che accetta 20 in tutto).
 
 ## 4. Lacune della creazione rispetto al manuale
+**Esito (#33):** chiuse le lacune 1 (taglia), 2 (dettagli), 3 (multiclasse), 4 (oggetti magici, via step 2g), 5 (riepilogo), 6 (set da gioco), 7 (simbolo sacro), 8 (descrizioni: solo 28 oggetti, il resto in `TODO.md`). La 9 resta com'è (tratti «solo a testo», in `TODO.md`).
+
 Il manuale (capitolo «Creare un personaggio») prevede: classe → origine (background, specie, lingue) → punteggi → allineamento → dettagli → equipaggiamento / livelli superiori. L'app copre tutto questo; mancano:
 1. **Taglia a scelta** (Umano e Tiefling: Media o Piccola). Non c'è nessuna domanda e nei dati calcolati non esiste una taglia: la scheda PDF stampa «Media / Piccola» insieme (`export/sheetData.ts:62`).
 2. **Dettagli del personaggio**: il passo "Dettagli" chiede solo il nome. Mancano aspetto, età/altezza/peso, tratti, ideali, legami, difetti, storia, nome del giocatore (esiste solo `notes` libero, nella scheda). Il PDF non ha dove metterli.
@@ -59,6 +63,8 @@ Il manuale (capitolo «Creare un personaggio») prevede: classe → origine (bac
 9. **Anteprima**: nei dati calcolati ci sono i sensi e le velocità in piedi; la Percezione tellurica, il Volo draconico "pari alla velocità" e altri tratti restano solo a testo (elenco già nel `TODO.md`).
 
 ## 5. "Back": cosa manca per funzionare meglio
+**Esito (#33):** chiusi persistenza, doppia scheda, homebrew a righe, Dexie v2, righe rovinate, esportazione singola/condivisione, duplica, copie di sicurezza, CI. Restano: salvataggio in chiusura su iOS (migliorabile ma non garantibile) e sincronizzazione tra dispositivi (fuori portata).
+
 L'app è statica (nessun server): il "back" è IndexedDB (Dexie) + store + backup. Mancano:
 - 🔴 **Archivio persistente**: nessuna chiamata a `navigator.storage.persist()` (nel codice non compare). Su iOS/Safari e con poco spazio il browser può cancellare l'archivio di una PWA non usata: i personaggi sparirebbero. Va richiesta all'avvio e mostrato lo stato nelle Impostazioni (con `storage.estimate()`).
 - 🟡 **Doppia scheda aperta**: nessun controllo tra due schede/finestre dello stesso browser (nessun `BroadcastChannel` né blocco): l'ultimo salvataggio sovrascrive l'altro in silenzio.
@@ -110,7 +116,7 @@ L'app è statica (nessun server): il "back" è IndexedDB (Dexie) + store + backu
 ### P2-6 — Release (ex step 10)
 - Passata finale sul `TODO.md`, README, controllo legale, tag `v1.0.0`, checklist firmata.
 
-## 7. Domande aperte per Giorgio
+## 7. Domande per Giorgio (risolte)
 1. ~~Teniamo "Tiro dei dadi", "Acquisto a punti" e "Manuale"?~~ **Deciso (Giorgio, 2026-10-02): sì, si tengono tutti e quattro i metodi** (nota nell'app, fatta in P2-4).
-2. Per i dettagli del personaggio (P2-4) bastano i campi del manuale o vuoi anche ritratto/immagine?
-3. Vuoi che P2-2 includa la sincronizzazione tra dispositivi, o restiamo sul file di backup?
+2. Per i dettagli del personaggio: fatti i campi del manuale; il ritratto resta un'idea futura.
+3. Sincronizzazione tra dispositivi: no, si resta sul file di backup (backup + condivisione da mobile).

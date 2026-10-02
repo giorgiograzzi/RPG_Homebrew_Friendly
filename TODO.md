@@ -5,13 +5,16 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 
 ## Aperti
 
-### PLAN2 (audit 2026-10-02)
-- [x] Test PDF che scriveva in `/tmp/claude-0`, CI, archivio sicuro, termini del manuale, unità, messaggi bilingui, taglia, dettagli, multiclasse alla creazione (vedi `PLAN2.md`).
-- [ ] 🟡 `docker compose build` e prova offline con rete spenta (step 9 di `PLAN.md`) da rifare a mano prima della release.
+### PLAN2 (audit 2026-10-02, chiuso con #33)
+- [x] Test PDF, CI, archivio sicuro, termini del manuale, unità, messaggi bilingui, taglia, dettagli, multiclasse alla creazione (vedi `PLAN2.md`).
+- [x] 🟡 Build Docker e uso offline: provati da Giorgio sul bunker; CI con `docker compose build` e `e2e:offline` (step 9).
+- [x] 🟡 Oggetti magici dell'SRD: fatti nello step 2g (#30).
+- [ ] 🔴 **Release (step 10)**: rilettura legale finale (nome «Placet del Master», dicitura CC-BY, icone, Privacy/Cookie Policy) e tag `v1.0.0`.
 - [ ] 🟡 Descrizioni: restano senza testo armi, armature e gli oggetti non elencati in `scripts/lib/descriptions.ts` (`items`); 28 oggetti con effetto sono già descritti.
-- [ ] 🟡 Oggetti magici dell'SRD (2g) non ancora nei dati: a livello 2+ l'app scrive «da concordare col DM».
-- [ ] 🟢 Sincronizzazione tra dispositivi: fuori portata (solo file di backup).
+- [ ] 🟡 Salvataggio in chiusura su iOS: il flush su `pagehide` è asincrono (attesa di 800 ms); valutare un salvataggio più immediato per PF e slot.
+- [ ] 🟢 Sincronizzazione tra dispositivi: fuori portata (solo file di backup / condividi).
 - [ ] 🟢 Guardia anti-italiano (`src/i18n/noItalianLeaks.test.ts`) copre messaggi con parole italiane comuni; resta escluso solo `engine/validate.ts` (messaggi per sviluppatori sui dati).
+- [ ] 🟢 Ritratto/immagine del personaggio (idea futura, non nel manuale).
 
 ### Fonti e dati
 - [ ] 🔴 **Censimento dell'SRD prima di estrarre**: dall'indice dei due PDF elencare esattamente cosa contiene (classi, sottoclassi, specie, background, talenti, incantesimi, oggetti magici) e scrivere i numeri attesi nei test. Non dare per scontato il contenuto: va verificato sul PDF.
