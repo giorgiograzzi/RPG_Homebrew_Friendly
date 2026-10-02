@@ -15,7 +15,7 @@ export default defineConfig({
   define: { __BUILD__: JSON.stringify(BUILD) },
   plugins: [
     react(),
-    // Config base: manifest e offline completo si rifiniscono allo step 19
+    // Manifest (nome, icone originali) e offline completo: verificato da e2e/offline.mjs
     VitePWA({
       // "prompt": l'app installata non si aggiorna da sola a metà uso, chiede (ReloadPrompt)
       registerType: "prompt",

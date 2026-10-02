@@ -3,8 +3,7 @@ dist
 .git
 .env
 *.log
-# PDF delle regole e schede di riferimento in data/: pesano decine di MB e non servono al build
+# PDF delle fonti (docs/srd) e PDF sparsi in data/: pesano decine di MB e non servono al build
 docs
 data/*.pdf
-data/https*
 # NON escludere data/ (dati di gioco che finiscono nel bundle)
