@@ -87,7 +87,7 @@ async function check(page, tag) {
 for (const [vpName, width, height] of VIEWPORTS.filter((v) => VP_SEL.includes(v[0]))) for (const lang of LANGS) for (const scheme of SCHEMES) {
   const ctx = await browser.newContext({ viewport: { width, height }, colorScheme: scheme, locale: lang === "it" ? "it-IT" : "en-US" });
   const page = await ctx.newPage();
-  await page.addInitScript(([l, s]) => { try { localStorage.setItem("lang", l); localStorage.setItem("theme", s); } catch { /* niente */ } }, [lang, scheme]);
+  await page.addInitScript(([l, s]) => { try { localStorage.setItem("lang", l); localStorage.setItem("theme", s); localStorage.setItem("cookie-notice", "1"); } catch { /* niente */ } }, [lang, scheme]);
   await page.goto(URL);
   await page.waitForSelector(".ui-app");
   await seed(page);

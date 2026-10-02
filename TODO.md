@@ -152,11 +152,11 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 - [ ] 🟢 Le unità (piedi/libbre) nei testi dell'interfaccia restano come nei dati; nei dati italiani le distanze sono in metri solo nel testo delle regole.
 
 ### Attribuzioni e nome (step 8)
-- [x] Nome definitivo: **Danger & Dragons** (app, `index.html`, manifest PWA, README, PDF). Non usare mai la sigla «D&D» (marchio WotC), nemmeno come nome breve.
+- [x] Nome definitivo: **Placet del Master** (prima «Danger & Dragons») (app, `index.html`, manifest PWA, README, PDF). Non usare mai la sigla «D&D» (marchio WotC), nemmeno come nome breve.
 - [x] Schermata «Informazioni e licenze» (menu): dicitura CC-BY nella lingua dell'app con link alla licenza, avviso «non ufficiale, non affiliato», MIT del codice, licenza del font, nota sull'homebrew.
 - [x] Dicitura + avviso anche su ogni pagina della scheda PDF, in `ATTRIBUTION.md` e nel README. `attribution.test.ts` confronta la dicitura con la prima pagina dei due PDF SRD (chiusa la voce «da verificare a occhio»).
 - [x] Corretto il pulsante «Sali di livello» tagliato su telefono (testata della scheda a capo).
-- [ ] 🟡 La sigla di «Danger & Dragons» è D&D. Va bene come nome, ma sarebbe prudente un parere legale/una ricerca marchi prima della pubblicazione (step 10).
+- [ ] 🟡 Il nome «Placet del Master» evoca l'originale. Va bene, ma sarebbe prudente un parere legale/una ricerca marchi prima della pubblicazione (step 10).
 - [ ] 🟢 Rinominare i file di export (`personaggi-srd-*.json` → `danger-and-dragons-*.json`) e il pacchetto npm `srd-personaggi-pwa`.
 
 ### Scheda PDF (step 7)
