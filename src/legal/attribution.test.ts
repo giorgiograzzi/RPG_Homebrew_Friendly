@@ -30,12 +30,12 @@ describe("attribuzioni: la dicitura CC-BY è quella dell'SRD", () => {
     for (const l of ["it", "en"] as const) { expect(SRD_NOTICE[l]).toContain(CC_BY_URL); expect(SRD_NOTICE[l]).toContain("5.2.1"); }
   });
   it("l'avviso nomina l'app e dice che non è ufficiale", () => {
-    expect(DISCLAIMER.it).toMatch(/Danger & Dragons.*non ufficiale/);
-    expect(DISCLAIMER.en).toMatch(/Danger & Dragons.*unofficial/);
+    expect(DISCLAIMER.it).toMatch(/Placet del Master.*non ufficiale/);
+    expect(DISCLAIMER.en).toMatch(/Placet del Master.*unofficial/);
   });
   it("il nome dell'app è lo stesso ovunque", () => {
-    expect(readFileSync("index.html", "utf8")).toContain("<title>Danger &amp; Dragons</title>");
-    expect(readFileSync("vite.config.ts", "utf8")).toContain('name: "Danger & Dragons"');
-    for (const l of ["it", "en"]) expect(JSON.parse(readFileSync(`src/i18n/${l}.json`, "utf8")).app.title).toBe("Danger & Dragons");
+    expect(readFileSync("index.html", "utf8")).toContain("<title>Placet del Master</title>");
+    expect(readFileSync("vite.config.ts", "utf8")).toContain('name: "Placet del Master"');
+    for (const l of ["it", "en"]) expect(JSON.parse(readFileSync(`src/i18n/${l}.json`, "utf8")).app.title).toBe("Placet del Master");
   });
 });

@@ -16,7 +16,7 @@ Nasce dall'app privata `giorgiograzzi/Prova_creazione_dnd_character` (non si toc
 | PDF scheda | scheda **originale** disegnata nel codice (pdf-lib); il PDF ufficiale WotC non c'è più |
 | Homebrew | tenuto; **tolta** "copia da voce ufficiale"; esempi solo SRD |
 | Licenze | codice MIT; contenuti SRD CC-BY 4.0 con la dicitura ufficiale nell'app e in `ATTRIBUTION.md` |
-| Nome | **Danger & Dragons** (scelto da Giorgio il 2026-10-02). Mai la sigla «D&D» né loghi WotC; nome breve della PWA: «Danger&Dragons» |
+| Nome | **Placet del Master** (prima «Danger & Dragons»; rinominato il 2026-10-02). Mai la sigla «D&D» né loghi WotC; nome breve della PWA: «Placet Master» |
 | Dati | **tracciati in git** (sono CC-BY): niente più `data/private` |
 
 ## Come lavoriamo (regole valide in ogni chat)
