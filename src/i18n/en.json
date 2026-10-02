@@ -33,6 +33,11 @@
   "settings": {
     "title": "Settings",
     "back": "Back",
+    "theme": "Appearance",
+    "themeHelp": "Light, dark or like your device.",
+    "themeAuto": "Automatic",
+    "themeLight": "Light",
+    "themeDark": "Dark",
     "language": "Language",
     "languageHelp": "Changes the app texts and the game data. Your characters are kept.",
     "languageAuto": "Automatic (browser language)",

@@ -2,7 +2,8 @@ import { useRef, useState } from "react";
 import type { ImportPreview, Resolution } from "../db/backup";
 import { getLangPref, setLangPref, strings as it, type LangPref } from "../i18n";
 import { backupDue } from "../store";
-import { Button, Check, Dialog, Field, Segmented } from "../ui/xp";
+import { Button, Check, Dialog, Field, Segmented } from "../ui/theme";
+import { getThemePref, setThemePref, type ThemePref } from "../ui/theme/mode";
 import { fmt, formatDate } from "../ui/format";
 import { InstallHint } from "../ui/InstallHint";
 import { useApp } from "../ui/useApp";
@@ -27,34 +28,43 @@ export function Settings({ onBack }: { onBack: () => void }) {
   const flush = useApp((x) => x.flush);
   const [importing, setImporting] = useState<{ preview: ImportPreview } | null>(null);
   const [message, setMessage] = useState("");
+  const [theme, setTheme] = useState<ThemePref>(getThemePref());
   const file = useRef<HTMLInputElement>(null);
   const previewImport = useApp((x) => x.previewImport);
 
   return (
     <>
-      <div className="xp-actions" style={{ justifyContent: "flex-start" }}>
+      <div className="ui-actions" style={{ justifyContent: "flex-start" }}>
         <Button onClick={onBack}>← {t.back}</Button>
       </div>
       <h2>{t.title}</h2>
-      <p className="xp-muted" role="status">{t.saveStatus[saveStatus]}</p>
+      <p className="ui-muted" role="status">{t.saveStatus[saveStatus]}</p>
 
-      <fieldset className="xp-group">
+      <fieldset className="ui-group">
+        <legend>{t.theme}</legend>
+        <span className="ui-help">{t.themeHelp}</span>
+        <Segmented label={t.theme} value={theme} onChange={(v: ThemePref) => { setThemePref(v); setTheme(v); }}
+          options={[{ value: "auto", label: t.themeAuto }, { value: "light", label: t.themeLight }, { value: "dark", label: t.themeDark }]} />
+        <div style={{ height: 12 }} />
+      </fieldset>
+
+      <fieldset className="ui-group">
         <legend>{t.language}</legend>
-        <span className="xp-help">{t.languageHelp}</span>
+        <span className="ui-help">{t.languageHelp}</span>
         <Segmented label={t.language} value={getLangPref()} onChange={(pref: LangPref) => { void flush().then(() => setLangPref(pref)); }}
           options={[{ value: "auto", label: t.languageAuto }, { value: "it", label: "Italiano" }, { value: "en", label: "English" }]} />
         <div style={{ height: 12 }} />
       </fieldset>
 
-      <fieldset className="xp-group">
+      <fieldset className="ui-group">
         <legend>{t.hand}</legend>
-        <span className="xp-help">{t.handHelp}</span>
+        <span className="ui-help">{t.handHelp}</span>
         <Segmented label={t.hand} value={s.hand} onChange={(hand) => void updateSettings({ hand })}
           options={[{ value: "left", label: t.left }, { value: "center", label: t.center }, { value: "right", label: t.right }]} />
         <div style={{ height: 12 }} />
       </fieldset>
 
-      <fieldset className="xp-group">
+      <fieldset className="ui-group">
         <legend>{it.tabs.sheet}</legend>
         <Field label={t.weaponSwap}>
           <Segmented label={t.weaponSwap} value={s.weaponSwap} onChange={(weaponSwap) => void updateSettings({ weaponSwap })}
@@ -65,16 +75,16 @@ export function Settings({ onBack }: { onBack: () => void }) {
 
       <InstallHint />
 
-      <fieldset className="xp-group">
+      <fieldset className="ui-group">
         <legend>{t.backup}</legend>
-        {backupDue(s) && <div className="xp-banner" role="alert">{t.backupDue}</div>}
+        {backupDue(s) && <div className="ui-banner" role="alert">{t.backupDue}</div>}
         <Field label={t.reminder}>
-          <select className="xp-select" value={s.backupReminderDays} onChange={(e) => void updateSettings({ backupReminderDays: Number(e.target.value) })}>
+          <select className="ui-select" value={s.backupReminderDays} onChange={(e) => void updateSettings({ backupReminderDays: Number(e.target.value) })}>
             {REMINDERS.map((n) => <option key={n} value={n}>{n === 0 ? t.reminderOff : fmt(t.reminderDays, { n })}</option>)}
           </select>
         </Field>
         <p>{t.lastBackup}: <strong>{s.lastBackupAt ? formatDate(s.lastBackupAt) : t.never}</strong></p>
-        <div className="xp-actions" style={{ justifyContent: "flex-start", flexWrap: "wrap" }}>
+        <div className="ui-actions" style={{ justifyContent: "flex-start", flexWrap: "wrap" }}>
           <Button variant="primary" onClick={() => void exportNow(exportAll)}>{t.exportNow}</Button>
           <Button onClick={() => file.current?.click()}>{t.importFile}</Button>
         </div>
@@ -98,18 +108,18 @@ export function ImportDialog({ preview, onClose, onDone }: { preview: ImportPrev
   const importable = preview.ok && preview.items.some((i) => i.status === "new" || i.status === "conflict");
   return (
     <Dialog title={it.import.title} onClose={onClose}>
-      {!preview.ok ? <div className="xp-error" role="alert"><strong>{it.import.error}.</strong> {preview.error}</div> : (
+      {!preview.ok ? <div className="ui-error" role="alert"><strong>{it.import.error}.</strong> {preview.error}</div> : (
         <>
           {preview.items.length === 0 && <p>{it.import.nothing}</p>}
-          <ul className="xp-list">
+          <ul className="ui-list">
             {preview.items.map((i) => (
               <li key={i.index} style={{ flexWrap: "wrap" }}>
                 <div className="grow">
                   <div className="name">{i.name || it.characters.unnamed}</div>
-                  <div className="xp-muted">{st[i.status]}{i.error ? `: ${i.error}` : ""}</div>
+                  <div className="ui-muted">{st[i.status]}{i.error ? `: ${i.error}` : ""}</div>
                 </div>
                 {i.status === "conflict" && (
-                  <select className="xp-select" style={{ width: "auto" }} aria-label={i.name} value={res[i.id] ?? "copy"} onChange={(e) => setRes({ ...res, [i.id]: e.target.value as Resolution })}>
+                  <select className="ui-select" style={{ width: "auto" }} aria-label={i.name} value={res[i.id] ?? "copy"} onChange={(e) => setRes({ ...res, [i.id]: e.target.value as Resolution })}>
                     {(["copy", "replace", "skip"] as const).map((r) => <option key={r} value={r}>{it.import.resolve[r]}</option>)}
                   </select>
                 )}
@@ -118,7 +128,7 @@ export function ImportDialog({ preview, onClose, onDone }: { preview: ImportPrev
           </ul>
         </>
       )}
-      <div className="xp-actions footer">
+      <div className="ui-actions footer">
         <Button onClick={onClose}>{it.import.cancel}</Button>
         {importable && <Button variant="primary" onClick={() => void commitImport(preview, res).then((n) => onDone(fmt(it.import.done, { n })))}>{it.import.apply}</Button>}
       </div>

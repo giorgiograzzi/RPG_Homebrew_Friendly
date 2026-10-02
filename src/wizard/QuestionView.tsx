@@ -3,7 +3,7 @@ import type { Question } from "../engine/creation";
 import { ABILITIES, type Ability } from "../engine/schema";
 import { strings as it } from "../i18n";
 import { fmt } from "../ui/format";
-import { Button } from "../ui/xp";
+import { Button } from "../ui/theme";
 import { togglePick } from "./logic";
 
 const t = it.wizard;
@@ -17,13 +17,13 @@ export function QuestionView({ q, onPick }: { q: Question; onPick: (key: string,
   return (
     <section className="wz-q" aria-labelledby={`q-${q.key}`}>
       <h3 id={`q-${q.key}`}>{q.label}</h3>
-      <div className="meta xp-muted">
+      <div className="meta ui-muted">
         {q.owner !== q.label && <span>{q.owner} · </span>}
         {q.disabled ? q.disabledReason : `${fmt(t.pick, { n: q.count })} · ${fmt(t.picked, { k: q.selected.length, n: q.count })}${q.complete ? " ✓" : ""}`}
       </div>
-      {q.options.length === 0 ? <p className="xp-muted">{t.noOptions}</p> : (
+      {q.options.length === 0 ? <p className="ui-muted">{t.noOptions}</p> : (
         <>
-          {q.options.length > 12 && <input className="xp-input" style={{ marginBottom: 8 }} type="search" placeholder={t.filter} aria-label={t.filter} value={filter} onChange={(e) => setFilter(e.target.value)} />}
+          {q.options.length > 12 && <input className="ui-input" style={{ marginBottom: 8 }} type="search" placeholder={t.filter} aria-label={t.filter} value={filter} onChange={(e) => setFilter(e.target.value)} />}
           <ul className={`wz-opts ${q.options.length > 12 ? "long" : ""}`} role={single ? "radiogroup" : "group"} aria-label={q.label}>
             {shown.map((o) => (
               <li key={o.id}>
@@ -54,21 +54,21 @@ export function AsiView({ q, draft, onDraft, onApply, errors }: {
   return (
     <section className="wz-q" aria-labelledby={`q-${q.key}`}>
       <h3 id={`q-${q.key}`}>{q.label}</h3>
-      <div className="meta xp-muted">{q.owner}{q.complete ? " ✓" : ""}</div>
+      <div className="meta ui-muted">{q.owner}{q.complete ? " ✓" : ""}</div>
       {ABILITIES.map((a) => {
         const opt = q.options.find((o) => o.id === a);
         const ok = allowed.includes(a) && opt?.enabled !== false;
         return (
           <div key={a} className="wz-score" style={{ gridTemplateColumns: "1fr auto auto auto" }}>
-            <span className="n">{AB[a]}{!ok && opt?.disabledReason ? <span className="xp-muted"> — {opt.disabledReason}</span> : null}</span>
+            <span className="n">{AB[a]}{!ok && opt?.disabledReason ? <span className="ui-muted"> — {opt.disabledReason}</span> : null}</span>
             <Button aria-label={`${AB[a]} −`} disabled={!ok || !(draft[a] ?? 0)} onClick={() => bump(a, -1)}>−</Button>
             <span className="v">{ok ? `+${draft[a] ?? 0}` : "—"}</span>
             <Button aria-label={`${AB[a]} +`} disabled={!ok || (draft[a] ?? 0) >= 2} onClick={() => bump(a, 1)}>+</Button>
           </div>
         );
       })}
-      {errors.length > 0 && <p className="xp-muted" role="status">{errors[0]}</p>}
-      <div className="xp-actions" style={{ marginTop: 8 }}>
+      {errors.length > 0 && <p className="ui-muted" role="status">{errors[0]}</p>}
+      <div className="ui-actions" style={{ marginTop: 8 }}>
         <Button variant="primary" disabled={errors.length > 0} onClick={onApply}>{t.asi.apply}</Button>
       </div>
     </section>

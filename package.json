@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
+    "e2e": "node e2e/layout.mjs",
     "validate:data": "tsx scripts/validate-data.ts",
     "extract:data": "tsx scripts/extract-foundations.ts && tsx scripts/extract-spells.ts && tsx scripts/extract-origins.ts && tsx scripts/extract-species.ts && tsx scripts/extract-classes.ts && tsx scripts/extract-rules.ts"
   },

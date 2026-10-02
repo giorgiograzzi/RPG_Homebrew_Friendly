@@ -6,7 +6,7 @@ import {
 import type { Sourced } from "../engine/types";
 import { strings as it } from "../i18n";
 import { fmt } from "../ui/format";
-import { Button, Check, Dialog } from "../ui/xp";
+import { Button, Check, Dialog } from "../ui/theme";
 import { concentrationDc, endConcentration } from "../engine/magic";
 import { RegainButton, RollDialog, SourcesDialog } from "./dialogs";
 import type { TabProps } from "./types";
@@ -58,7 +58,7 @@ export function StatusTab({ ch, rs, d, update, onSection }: TabProps & { onSecti
         </div>
         <div className={`pl-hpbar ${pct <= 25 ? "low" : ""}`} role="progressbar" aria-valuenow={s.hp} aria-valuemin={0} aria-valuemax={max}><div style={{ width: `${pct}%` }} /></div>
         {(dead || s.hp <= 0) && <b role="status">{dead ? t.dead : stable ? t.stable : dying ? t.dying : ""}</b>}
-        {note && <p className="xp-muted" role="status">{note}</p>}
+        {note && <p className="ui-muted" role="status">{note}</p>}
         <div className="pl-quick">
           <Button variant="danger" aria-label={`${t.damage} 5`} disabled={dead} onClick={() => damage(5)}>−5</Button>
           <Button variant="danger" aria-label={`${t.damage} 1`} disabled={dead} onClick={() => damage(1)}>−1</Button>
@@ -88,7 +88,7 @@ export function StatusTab({ ch, rs, d, update, onSection }: TabProps & { onSecti
 
       <Check checked={s.inspiration} onChange={(v) => update((c) => setInspiration(c, v))}>{t.inspiration}</Check>
 
-      <div className="xp-actions" style={{ justifyContent: "flex-start", flexWrap: "wrap", marginTop: 12 }}>
+      <div className="ui-actions" style={{ justifyContent: "flex-start", flexWrap: "wrap", marginTop: 12 }}>
         <Button onClick={() => setDlg({ kind: "short" })}>{t.shortRest}</Button>
         <Button onClick={() => setDlg({ kind: "long" })}>{t.longRest}</Button>
       </div>
@@ -139,7 +139,7 @@ export function StatusTab({ ch, rs, d, update, onSection }: TabProps & { onSecti
       {dlg?.kind === "long" && (
         <Dialog title={t.longRest} onClose={() => setDlg(null)}>
           <p>{t.longConfirm}</p>
-          <div className="xp-actions footer">
+          <div className="ui-actions footer">
             <Button onClick={() => setDlg(null)}>{it.wizard.confirmNo}</Button>
             <Button variant="primary" onClick={() => { update((c) => longRest(c, d)); setDlg(null); }}>{it.wizard.confirmYes}</Button>
           </div>
@@ -167,7 +167,7 @@ function HpDialog({ ch, update, dead, damage, heal, onClose }: Pick<TabProps, "c
         <Button disabled={!amt} onClick={() => { update((c) => setTempHp(c, amt)); done(); }}>{t.setTemp}</Button>
       </div>
       {s.hp <= 0 && <Check checked={crit} onChange={setCrit}>{t.crit}</Check>}
-      <div className="xp-actions footer"><Button onClick={onClose}>{t.close}</Button></div>
+      <div className="ui-actions footer"><Button onClick={onClose}>{t.close}</Button></div>
     </Dialog>
   );
 }
@@ -190,7 +190,7 @@ function SavesDialog({ ch, update, dead, dying, stable, onRollSave, onClose }: P
         <Button variant="primary" disabled={!dying} onClick={onRollSave}>{t.rollSave}</Button>
         <Button disabled={s.hp > 0 || dead} onClick={() => update(stabilize)}>{t.stabilize}</Button>
       </div>
-      <div className="xp-actions footer"><Button onClick={onClose}>{t.close}</Button></div>
+      <div className="ui-actions footer"><Button onClick={onClose}>{t.close}</Button></div>
     </Dialog>
   );
 }
@@ -200,9 +200,9 @@ function DeathSaveDialog({ onRoll, onClose }: { onRoll: (natural: number) => voi
   return (
     <Dialog title={t.rollSave} onClose={onClose}>
       <p className="pl-formula">d20</p>
-      <div className="xp-actions"><Button variant="primary" onClick={() => { const n = rollD20(0).natural; setLast(n); onRoll(n); }}>{last ? t.rollAgain : t.roll}</Button></div>
+      <div className="ui-actions"><Button variant="primary" onClick={() => { const n = rollD20(0).natural; setLast(n); onRoll(n); }}>{last ? t.rollAgain : t.roll}</Button></div>
       {last !== null && <div className="pl-result" role="status"><b>{last}</b><span>{last === 20 ? "Torni a 1 PF!" : last === 1 ? "2 fallimenti" : last >= 10 ? "Successo" : "Fallimento"}</span></div>}
-      <div className="xp-actions footer"><Button onClick={onClose}>{t.close}</Button></div>
+      <div className="ui-actions footer"><Button onClick={onClose}>{t.close}</Button></div>
     </Dialog>
   );
 }
@@ -213,7 +213,7 @@ function ShortRest({ ch, d, update, onClose }: Pick<TabProps, "ch" | "d" | "upda
   return (
     <Dialog title={t.shortRest} onClose={onClose}>
       <p>{t.hitDice}: <b>{d.hp.hitDiceRemaining}</b> · {t.hp}: <b>{ch.state.hp}/{d.hp.max.value}</b></p>
-      <div className="xp-actions">
+      <div className="ui-actions">
         <Button disabled={!die} onClick={() => {
           const roll = 1 + Math.floor(Math.random() * die!);
           const r = spendHitDie(ch, d, roll);
@@ -221,7 +221,7 @@ function ShortRest({ ch, d, update, onClose }: Pick<TabProps, "ch" | "d" | "upda
         }}>{die ? `${t.spend} (d${die})` : t.noDice}</Button>
       </div>
       <ul>{log.map((l, i) => <li key={i}>{l}</li>)}</ul>
-      <div className="xp-actions footer"><Button variant="primary" onClick={() => { update((c) => shortRest(c, d)); onClose(); }}>{t.endShort}</Button></div>
+      <div className="ui-actions footer"><Button variant="primary" onClick={() => { update((c) => shortRest(c, d)); onClose(); }}>{t.endShort}</Button></div>
     </Dialog>
   );
 }

@@ -5,7 +5,7 @@ import { ABILITIES, type Ability } from "../engine/schema";
 import type { Character } from "../engine/types";
 import { strings as it } from "../i18n";
 import { fmt } from "../ui/format";
-import { Button, Field, Segmented } from "../ui/xp";
+import { Button, Field, Segmented } from "../ui/theme";
 import { METHODS, chooseMethod, rerollScores, stepPointBuy, swapScore } from "./logic";
 import { setBaseScores } from "../engine/creation";
 
@@ -32,24 +32,24 @@ export function ScoresStep({ ch, rs, allowReroll, onChange, onError }: {
         <Segmented<Method> label={t.scores.method} value={(method ?? "") as Method} onChange={(m) => apply(chooseMethod(ch, rs, m, { allowReroll }))}
           options={METHODS.map((m) => ({ value: m, label: t.scores[m] }))} />
       </Field>
-      {method === "array" && <p className="xp-muted">{t.scores.arrayHelp}</p>}
-      {method === "roll" && <p className="xp-muted">{t.scores.rollHelp}</p>}
-      {method === "pointbuy" && pb && rules && <p className="xp-muted">{fmt(t.scores.pointbuyHelp, { n: pb.remaining, t: rules.pointBuy.budget, min: rules.pointBuy.min, max: rules.pointBuy.max })}</p>}
-      {method === "manual" && <p className="xp-muted">{t.scores.manualHelp}</p>}
+      {method === "array" && <p className="ui-muted">{t.scores.arrayHelp}</p>}
+      {method === "roll" && <p className="ui-muted">{t.scores.rollHelp}</p>}
+      {method === "pointbuy" && pb && rules && <p className="ui-muted">{fmt(t.scores.pointbuyHelp, { n: pb.remaining, t: rules.pointBuy.budget, min: rules.pointBuy.min, max: rules.pointBuy.max })}</p>}
+      {method === "manual" && <p className="ui-muted">{t.scores.manualHelp}</p>}
       {method === "roll" && (
-        <div className="xp-actions" style={{ justifyContent: "flex-start" }}>
+        <div className="ui-actions" style={{ justifyContent: "flex-start" }}>
           <Button disabled={!allowReroll} onClick={() => apply(rerollScores(ch, rs, allowReroll))}>{t.scores.reroll}</Button>
-          {!allowReroll && <span className="xp-muted">{t.scores.rerollOff}</span>}
+          {!allowReroll && <span className="ui-muted">{t.scores.rerollOff}</span>}
         </div>
       )}
-      {!method && <p className="xp-muted">{t.pick.replace("{n}", "1")} — {t.scores.method}</p>}
+      {!method && <p className="ui-muted">{t.pick.replace("{n}", "1")} — {t.scores.method}</p>}
       {method && (
         <div role="table" aria-label="Punteggi">
           {ABILITIES.map((a) => (
             <div key={a} className="wz-score" style={{ gridTemplateColumns: "minmax(0,1fr) auto" }}>
-              <span><span className="n">{AB[a]}</span><br /><span className="xp-muted">{t.scores.total} {totals[a]} · {t.scores.mod} {mod(totals[a])}</span></span>
+              <span><span className="n">{AB[a]}</span><br /><span className="ui-muted">{t.scores.total} {totals[a]} · {t.scores.mod} {mod(totals[a])}</span></span>
               {(method === "array" || method === "roll") && (
-                <select className="xp-select" style={{ width: 104 }} aria-label={`${AB[a]} base`} value={ch.baseScores[a]} onChange={(e) => setScores(swapScore(ch.baseScores, a, Number(e.target.value)))}>
+                <select className="ui-select" style={{ width: 104 }} aria-label={`${AB[a]} base`} value={ch.baseScores[a]} onChange={(e) => setScores(swapScore(ch.baseScores, a, Number(e.target.value)))}>
                   {values.map((v) => <option key={v} value={v}>{v}</option>)}
                 </select>
               )}

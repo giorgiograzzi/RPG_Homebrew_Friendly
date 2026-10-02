@@ -14,7 +14,7 @@ export default defineConfig({
       manifest: {
         id: "./", name: "Personaggi SRD 5.2", short_name: "PG SRD", description: "Crea e gestisci personaggi con le regole libere dell'SRD 5.2.1, in italiano e inglese, anche senza rete.",
         lang: "it", dir: "ltr", start_url: "./", scope: "./", display: "standalone", orientation: "any", categories: ["games", "entertainment"],
-        background_color: "#ece9d8", theme_color: "#0a3fb5",
+        background_color: "#f3f4f8", theme_color: "#4f46e5",
         icons: [
           { src: "icons/icon-192.png", sizes: "192x192", type: "image/png" },
           { src: "icons/icon-512.png", sizes: "512x512", type: "image/png" },

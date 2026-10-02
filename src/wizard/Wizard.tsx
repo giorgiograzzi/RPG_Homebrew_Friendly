@@ -7,7 +7,7 @@ import { STEPS, setStartLevel, type StepId } from "../engine/creation";
 import { HpField, LevelStep } from "./LevelStep";
 import { strings as it } from "../i18n";
 import { fmt } from "../ui/format";
-import { Button, Dialog, Field } from "../ui/xp";
+import { Button, Dialog, Field } from "../ui/theme";
 import { AsiView, QuestionView } from "./QuestionView";
 import { ScoresStep } from "./ScoresStep";
 import { HomebrewStep } from "./HomebrewStep";
@@ -55,14 +55,14 @@ export function Wizard({ ch, rs, allowReroll, onChange, onDone }: {
           <Summary ch={fin.ok ? fin.character : ch} rs={rs} />
           {needGaming && (
             <Field label={t.gamingSet}>
-              <select className="xp-select" value={gaming} onChange={(e) => setGaming(e.target.value)}>
+              <select className="ui-select" value={gaming} onChange={(e) => setGaming(e.target.value)}>
                 <option value="">{t.chooseOne}</option>
                 {[...rs.tools.values()].filter((x) => x.group === "gaming").map((x) => <option key={x.id} value={x.id}>{x.name.it}</option>)}
               </select>
             </Field>
           )}
-          {!fin.ok && <div className="xp-banner"><strong>{t.sum.errors}:</strong><ul>{fin.errors.map((e) => <li key={e}>{e}</li>)}</ul></div>}
-          <div className="xp-actions footer"><Button variant="primary" disabled={!fin.ok} onClick={() => onDone(fin.character)}>{t.finish}</Button></div>
+          {!fin.ok && <div className="ui-banner"><strong>{t.sum.errors}:</strong><ul>{fin.errors.map((e) => <li key={e}>{e}</li>)}</ul></div>}
+          <div className="ui-actions footer"><Button variant="primary" disabled={!fin.ok} onClick={() => onDone(fin.character)}>{t.finish}</Button></div>
         </>
       );
     }
@@ -81,14 +81,14 @@ export function Wizard({ ch, rs, allowReroll, onChange, onDone }: {
     const qs = stepQuestions(view);
     return (
       <>
-        {view === "class" && <p className="xp-muted">{fmt(t.level1, { n: ch.startLevel ?? ch.classes[0]?.level ?? 1 })}</p>}
+        {view === "class" && <p className="ui-muted">{fmt(t.level1, { n: ch.startLevel ?? ch.classes[0]?.level ?? 1 })}</p>}
         {qs.map((q) => q.kind === "abilityIncrease"
           ? <AsiBlock key={q.key} q={q} ch={ch} rs={rs} draft={drafts[q.key] ?? draftOf(q)} onDraft={(d) => setDrafts({ ...drafts, [q.key]: d })}
               onApply={(r) => { if (r.ok) { setErrors([]); onChange(r.character); setDrafts({ ...drafts, [q.key]: {} }); } else setErrors(r.errors); }} />
           : <QuestionView key={q.key} q={q} onPick={pick} />)}
         {view === "details" && (
           <Field label={t.name}>
-            <input className="xp-input" value={ch.name} placeholder={t.namePlaceholder} maxLength={60} onChange={(e) => onChange({ ...ch, name: e.target.value })} />
+            <input className="ui-input" value={ch.name} placeholder={t.namePlaceholder} maxLength={60} onChange={(e) => onChange({ ...ch, name: e.target.value })} />
           </Field>
         )}
       </>
@@ -109,11 +109,11 @@ export function Wizard({ ch, rs, allowReroll, onChange, onDone }: {
       </div>
       <div className="wz-bar" role="progressbar" aria-valuemin={0} aria-valuemax={STEPS.length} aria-valuenow={done}><div style={{ width: `${(done / STEPS.length) * 100}%` }} /></div>
       <h2>{view === "summary" ? t.summary : view === "homebrew" ? it.homebrew.title : `${fmt(t.step, { n: idx, t: STEPS.length - 1 })}: ${t.steps[view]}`}</h2>
-      {!rs.creation.get("creation") && <div className="xp-error" role="alert">{t.noCreation}</div>}
-      {errors.length > 0 && <div className="xp-error" role="alert">{errors.map((e) => <div key={e}>{e}</div>)}</div>}
-      {problems.length > 0 && view !== "scores" && <div className="xp-banner">{problems.join(" · ")}</div>}
+      {!rs.creation.get("creation") && <div className="ui-error" role="alert">{t.noCreation}</div>}
+      {errors.length > 0 && <div className="ui-error" role="alert">{errors.map((e) => <div key={e}>{e}</div>)}</div>}
+      {problems.length > 0 && view !== "scores" && <div className="ui-banner">{problems.join(" · ")}</div>}
       {body()}
-      <div className="xp-actions footer">
+      <div className="ui-actions footer">
         <Button disabled={idx === 0} onClick={() => go(VIEWS[idx - 1]!)}>← {t.back}</Button>
         {view !== "summary" && <Button variant="primary" onClick={() => go(VIEWS[idx + 1]!)}>{t.next} →</Button>}
       </div>
@@ -121,7 +121,7 @@ export function Wizard({ ch, rs, allowReroll, onChange, onDone }: {
         <Dialog title={t.confirmTitle} onClose={() => setConfirm(null)}>
           <p>{t.confirmText}</p>
           <ul>{removedText(confirm).map((x) => <li key={x}>{x}</li>)}</ul>
-          <div className="xp-actions footer">
+          <div className="ui-actions footer">
             <Button onClick={() => setConfirm(null)}>{t.confirmNo}</Button>
             <Button variant="primary" onClick={() => { onChange(confirm.character); setConfirm(null); }}>{t.confirmYes}</Button>
           </div>

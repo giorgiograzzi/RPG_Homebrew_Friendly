@@ -2,7 +2,7 @@ import { useState } from "react";
 import { setCondition, setExhaustion } from "../engine/play";
 import { strings as it } from "../i18n";
 import { fmt } from "../ui/format";
-import { Button } from "../ui/xp";
+import { Button } from "../ui/theme";
 import type { TabProps } from "./types";
 
 const t = it.play;
@@ -14,10 +14,10 @@ export function ConditionsTab({ ch, rs, d, update, onBack }: TabProps & { onBack
   const ex = rs.conditions.get("exhaustion");
   return (
     <>
-      <div className="xp-actions" style={{ justifyContent: "flex-start" }}><Button onClick={onBack}>← {t.toStatus}</Button></div>
+      <div className="ui-actions" style={{ justifyContent: "flex-start" }}><Button onClick={onBack}>← {t.toStatus}</Button></div>
       <h2>{t.conditionsTitle}</h2>
-      {cs.dead && <div className="xp-error" role="alert">{t.dead}</div>}
-      {cs.active.length === 0 ? <p className="xp-muted">{t.none}</p> : (cs.cannot.length > 0 && <p><b>{t.cannot}:</b> {cs.cannot.join(", ")}</p>)}
+      {cs.dead && <div className="ui-error" role="alert">{t.dead}</div>}
+      {cs.active.length === 0 ? <p className="ui-muted">{t.none}</p> : (cs.cannot.length > 0 && <p><b>{t.cannot}:</b> {cs.cannot.join(", ")}</p>)}
 
       {ex && (
         <section className="pl-hp">
@@ -27,8 +27,8 @@ export function ConditionsTab({ ch, rs, d, update, onBack }: TabProps & { onBack
             <span className="pl-pips">{Array.from({ length: 6 }, (_, i) => <span key={i} className={`pl-pip ${i < ch.state.exhaustion ? "on ko" : ""}`} />)}</span>
             <Button aria-label={`${t.exhaustion} +`} disabled={ch.state.exhaustion >= 6} onClick={() => update((c) => setExhaustion(c, c.state.exhaustion + 1))}>+</Button>
           </div>
-          {ch.state.exhaustion > 0 && <p className="xp-muted">{fmt(t.penalty, { n: cs.d20Penalty, s: -cs.speedPenalty })}</p>}
-          {ex.description && <p className="xp-muted">{ex.description}</p>}
+          {ch.state.exhaustion > 0 && <p className="ui-muted">{fmt(t.penalty, { n: cs.d20Penalty, s: -cs.speedPenalty })}</p>}
+          {ex.description && <p className="ui-muted">{ex.description}</p>}
         </section>
       )}
 
@@ -50,7 +50,7 @@ export function ConditionsTab({ ch, rs, d, update, onBack }: TabProps & { onBack
               </button>
               {c.requiresSource && !on && (
                 <div style={{ padding: "0 12px 8px" }}>
-                  <input className="xp-input" placeholder={t.source} aria-label={`${c.name.it}: ${t.source}`} value={sources[c.id] ?? ""} onChange={(e) => setSources({ ...sources, [c.id]: e.target.value })} />
+                  <input className="ui-input" placeholder={t.source} aria-label={`${c.name.it}: ${t.source}`} value={sources[c.id] ?? ""} onChange={(e) => setSources({ ...sources, [c.id]: e.target.value })} />
                 </div>
               )}
             </li>

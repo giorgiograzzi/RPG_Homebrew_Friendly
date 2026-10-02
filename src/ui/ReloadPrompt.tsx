@@ -1,6 +1,6 @@
 import { useRegisterSW } from "virtual:pwa-register/react";
 import { strings as it } from "../i18n";
-import { Button } from "./xp";
+import { Button } from "./theme";
 
 const CHECK_INTERVAL_MS = 60 * 60 * 1000;
 
@@ -27,7 +27,7 @@ export function ReloadPrompt() {
   return (
     <div className="pwa-toast" role="alert">
       <p>{needRefresh ? it.pwa.updateAvailable : it.pwa.offlineReady}</p>
-      <div className="xp-actions" style={{ justifyContent: "flex-start", flexWrap: "wrap" }}>
+      <div className="ui-actions" style={{ justifyContent: "flex-start", flexWrap: "wrap" }}>
         {needRefresh && <Button variant="primary" onClick={() => void updateServiceWorker(true)}>{it.pwa.update}</Button>}
         <Button onClick={close}>{needRefresh ? it.pwa.later : it.pwa.close}</Button>
       </div>

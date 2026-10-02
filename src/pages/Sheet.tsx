@@ -3,7 +3,7 @@ import { useRuleset } from "../data/ruleset";
 import { missingHomebrew } from "../engine/homebrew";
 import { fmt } from "../ui/format";
 import { strings as it } from "../i18n";
-import { Button, Dialog } from "../ui/xp";
+import { Button, Dialog } from "../ui/theme";
 import { useApp } from "../ui/useApp";
 import { PlaySheet } from "../sheet/PlaySheet";
 import type { SheetView } from "../sheet/sections";
@@ -21,8 +21,8 @@ export function Sheet({ section, onSection }: { section: SheetView; onSection: (
   // contenuti homebrew usati dal personaggio che qui non ci sono: avviso con l'elenco, mai un errore muto
   const missing = useMemo(() => (ch ? missingHomebrew(ch, rs) : []), [ch, rs]);
   if (!ch) return null;
-  const warning = missing.length > 0 ? <div className="xp-banner" role="alert">{fmt(it.homebrew.missing, { list: missing.join(", ") })}</div> : null;
-  if (rs.classes.size === 0) return <div className="xp-error" role="alert">{it.wizard.noData}</div>;
+  const warning = missing.length > 0 ? <div className="ui-banner" role="alert">{fmt(it.homebrew.missing, { list: missing.join(", ") })}</div> : null;
+  if (rs.classes.size === 0) return <div className="ui-error" role="alert">{it.wizard.noData}</div>;
 
   if (!isFinalized(ch)) {
     return <>{warning}<Wizard ch={ch} rs={rs} allowReroll={allowReroll} onChange={(c) => update(() => c)} onDone={(c) => { update(() => c); void flush(); }} /></>;
@@ -34,7 +34,7 @@ export function Sheet({ section, onSection }: { section: SheetView; onSection: (
       {reopen && (
         <Dialog title={it.wizard.sum.reopen} onClose={() => setReopen(false)}>
           <p>{it.wizard.sum.reopenConfirm}</p>
-          <div className="xp-actions footer">
+          <div className="ui-actions footer">
             <Button onClick={() => setReopen(false)}>{it.wizard.confirmNo}</Button>
             <Button variant="primary" onClick={() => { update(reopenCreation); setReopen(false); }}>{it.wizard.confirmYes}</Button>
           </div>

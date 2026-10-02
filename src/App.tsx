@@ -5,7 +5,7 @@ import { Homebrew } from "./pages/Homebrew";
 import { Sheet } from "./pages/Sheet";
 import { ImportDialog, Settings, exportNow } from "./pages/Settings";
 import type { ImportPreview } from "./db/backup";
-import { SectionBar, TabBar, icons, type IconName, type TabDef } from "./ui/xp";
+import { SectionBar, TabBar, icons, type IconName, type TabDef } from "./ui/theme";
 import { SHEET_SECTIONS, type SheetView } from "./sheet/sections";
 import { isFinalized } from "./wizard/logic";
 import { ReloadPrompt } from "./ui/ReloadPrompt";
@@ -55,20 +55,21 @@ export function App() {
 
   if (!ready) return null;
   return (
-    <div className={`xp-app hand-${hand}`}>
-      <header className="xp-title">
+    <div className={`ui-app hand-${hand}`}>
+      <header className="ui-title">
+        {inSheet && <button type="button" className="ui-title-btn ui-back" aria-label={it.play.back} title={it.play.back} onClick={() => { setSettings(false); setTab("characters"); }}><icons.back /></button>}
         <h1>{current ? current.name || it.characters.unnamed : it.app.title}</h1>
-        <span className="xp-status" role="status" aria-live="polite">{saveStatus === "error" ? it.settings.saveStatus.error : ""}</span>
-        <button type="button" className="xp-title-btn" aria-label={it.menu.open} aria-haspopup="menu" aria-expanded={menu} onClick={() => setMenu(!menu)}><Menu /></button>
+        <span className="ui-status" role="status" aria-live="polite">{saveStatus === "error" ? it.settings.saveStatus.error : ""}</span>
+        <button type="button" className="ui-title-btn" aria-label={it.menu.open} aria-haspopup="menu" aria-expanded={menu} onClick={() => setMenu(!menu)}><Menu /></button>
       </header>
       {menu && (
-        <div className="xp-menu" role="menu" onClick={() => setMenu(false)}>
+        <div className="ui-menu" role="menu" onClick={() => setMenu(false)}>
           <button type="button" role="menuitem" onClick={() => setSettings(true)}>{it.menu.settings}</button>
           <button type="button" role="menuitem" onClick={() => void exportNow(exportAll)}>{it.menu.export}</button>
           <button type="button" role="menuitem" onClick={pickFile}>{it.menu.import}</button>
         </div>
       )}
-      <main className="xp-body">
+      <main className="ui-body">
         {settings ? <Settings onBack={() => setSettings(false)} /> : (
           <>
             {shown === "characters" && <Characters onOpened={() => { setSection("status"); setTab("sheet"); }} />}

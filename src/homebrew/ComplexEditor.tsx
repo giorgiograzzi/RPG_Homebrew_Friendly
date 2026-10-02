@@ -4,7 +4,7 @@ import type { Ruleset } from "../engine/ruleset";
 import { ABILITIES, SKILLS } from "../engine/schema";
 import { strings as it } from "../i18n";
 import { fmt } from "../ui/format";
-import { Button, Check, Field } from "../ui/xp";
+import { Button, Check, Field } from "../ui/theme";
 import {
   CASTER_COLUMNS, backgroundFromData, backgroundToData, classFromData, classToData, emptyBackground, emptyClass, emptyFeature, emptySet, emptySpecies,
   emptySubclass, isCaster, slotSources, speciesFromData, speciesToData, subclassFromData, subclassToData,
@@ -42,15 +42,15 @@ function Text({ label, value, onChange, help, long, number }: { label: string; v
   return (
     <Field label={label} help={help}>
       {long
-        ? <textarea className="xp-input" rows={4} style={{ padding: 8 }} value={value} onChange={(e) => onChange(e.target.value)} />
-        : <input className="xp-input" type="text" inputMode={number ? "decimal" : undefined} value={value} onChange={(e) => onChange(e.target.value)} />}
+        ? <textarea className="ui-input" rows={4} style={{ padding: 8 }} value={value} onChange={(e) => onChange(e.target.value)} />
+        : <input className="ui-input" type="text" inputMode={number ? "decimal" : undefined} value={value} onChange={(e) => onChange(e.target.value)} />}
     </Field>
   );
 }
 function Pick({ label, value, onChange, options, help, empty }: { label: string; value: string; onChange: (v: string) => void; options: { id: string; label: string }[]; help?: string; empty?: string }) {
   return (
     <Field label={label} help={help}>
-      <select className="xp-select" value={value} onChange={(e) => onChange(e.target.value)}>
+      <select className="ui-select" value={value} onChange={(e) => onChange(e.target.value)}>
         {empty !== undefined && <option value="">{empty}</option>}
         {options.map((o) => <option key={o.id} value={o.id}>{o.label}</option>)}
       </select>
@@ -69,7 +69,7 @@ function useDraft<T>(kind: string, isNew: boolean, state: T, restore: (s: T) => 
   }, [state, saved, isNew, key]);
   const clear = () => { try { localStorage.removeItem(key); } catch { /* niente */ } };
   const banner = saved ? (
-    <div className="xp-banner" role="status">
+    <div className="ui-banner" role="status">
       {C.draftFound}{" "}
       <Button onClick={() => { restore(saved); setSaved(null); }}>{C.draftResume}</Button>{" "}
       <Button onClick={() => { clear(); setSaved(null); }}>{C.draftDiscard}</Button>
@@ -84,13 +84,13 @@ const RECHARGE = Object.entries(C.rechargeOpts).map(([id, label]) => ({ id, labe
 function FeatureCard({ f, set, onRemove, rs }: { f: FeatureDraft; set: (f: FeatureDraft) => void; onRemove: () => void; rs: Ruleset }) {
   const up = (p: Partial<FeatureDraft>) => set({ ...f, ...p });
   return (
-    <fieldset className="xp-group hb-feature">
+    <fieldset className="ui-group hb-feature">
       <legend>{f.name || C.newFeature}</legend>
       <Text label={F.name} value={f.name} onChange={(v) => up({ name: v })} />
       <Text label={C.featureLevel} value={f.level} number onChange={(v) => up({ level: v })} />
       <Text label={F.description} value={f.description} long onChange={(v) => up({ description: v })} />
       <EffectsEditor rows={f.rows} onChange={(rows) => up({ rows })} rs={rs} />
-      {f.advanced.length > 0 && <p className="xp-muted">{fmt(C.advanced, { n: f.advanced.length })}</p>}
+      {f.advanced.length > 0 && <p className="ui-muted">{fmt(C.advanced, { n: f.advanced.length })}</p>}
 
       <Check checked={f.usesOn} onChange={(v) => up({ usesOn: v })}>{C.usesOn}</Check>
       {f.usesOn && (
@@ -103,9 +103,9 @@ function FeatureCard({ f, set, onRemove, rs }: { f: FeatureDraft; set: (f: Featu
       {f.activatable && <Text label={C.duration} help={C.activatableHelp} value={f.duration} onChange={(v) => up({ duration: v })} />}
 
       <h4 style={{ margin: "8px 0 4px" }}>{C.choices}</h4>
-      {f.advancedChoices.length > 0 && <p className="xp-muted">{fmt(C.advancedChoices, { n: f.advancedChoices.length })}</p>}
+      {f.advancedChoices.length > 0 && <p className="ui-muted">{fmt(C.advancedChoices, { n: f.advancedChoices.length })}</p>}
       {f.choices.map((c, ci) => (
-        <fieldset key={ci} className="xp-group">
+        <fieldset key={ci} className="ui-group">
           <legend>{c.label || C.choiceLabel}</legend>
           <Text label={C.choiceLabel} value={c.label} onChange={(v) => up({ choices: f.choices.map((x, k) => (k === ci ? { ...x, label: v } : x)) })} />
           <Text label={C.choiceCount} value={c.count} number onChange={(v) => up({ choices: f.choices.map((x, k) => (k === ci ? { ...x, count: v } : x)) })} />
@@ -118,13 +118,13 @@ function FeatureCard({ f, set, onRemove, rs }: { f: FeatureDraft; set: (f: Featu
               <Button variant="danger" onClick={() => up({ choices: f.choices.map((x, k) => (k === ci ? { ...x, options: x.options.filter((_, j) => j !== oi) } : x)) })}>{C.removeOption}</Button>
             </div>
           ))}
-          <div className="xp-actions" style={{ justifyContent: "flex-start", flexWrap: "wrap" }}>
+          <div className="ui-actions" style={{ justifyContent: "flex-start", flexWrap: "wrap" }}>
             <Button onClick={() => up({ choices: f.choices.map((x, k) => (k === ci ? { ...x, options: [...x.options, { id: "", name: "", description: "", rows: [] }] } : x)) })}>{C.addOption}</Button>
             <Button variant="danger" onClick={() => up({ choices: f.choices.filter((_, k) => k !== ci) })}>{C.removeChoice}</Button>
           </div>
         </fieldset>
       ))}
-      <div className="xp-actions" style={{ justifyContent: "flex-start", flexWrap: "wrap" }}>
+      <div className="ui-actions" style={{ justifyContent: "flex-start", flexWrap: "wrap" }}>
         <Button onClick={() => up({ choices: [...f.choices, { id: "", label: "", count: "1", options: [{ id: "", name: "", description: "", rows: [] }, { id: "", name: "", description: "", rows: [] }] }] })}>{C.addChoice}</Button>
         <Button variant="danger" onClick={onRemove}>{C.removeFeature}</Button>
       </div>
@@ -136,9 +136,9 @@ function FeaturesEditor({ features, onChange, rs, level, title, help }: { featur
   return (
     <>
       <h3>{title}</h3>
-      {help && <p className="xp-muted">{help}</p>}
+      {help && <p className="ui-muted">{help}</p>}
       {features.map((f, i) => <FeatureCard key={i} f={f} rs={rs} set={(x) => onChange(features.map((y, k) => (k === i ? x : y)))} onRemove={() => onChange(features.filter((_, k) => k !== i))} />)}
-      <div className="xp-actions" style={{ justifyContent: "flex-start" }}><Button onClick={() => onChange([...features, emptyFeature(level)])}>{C.addFeature}</Button></div>
+      <div className="ui-actions" style={{ justifyContent: "flex-start" }}><Button onClick={() => onChange([...features, emptyFeature(level)])}>{C.addFeature}</Button></div>
     </>
   );
 }
@@ -155,13 +155,13 @@ function itemOptions(rs: Ruleset) {
 function SetEditor({ label, set, onChange, rs }: { label: string; set: SetDraft; onChange: (s: SetDraft) => void; rs: Ruleset }) {
   const groups = itemOptions(rs);
   return (
-    <fieldset className="xp-group">
+    <fieldset className="ui-group">
       <legend>{label}</legend>
       <Text label={C.gold} value={set.gp} number onChange={(v) => onChange({ ...set, gp: v })} />
       {set.items.map((row, i) => (
         <div key={i} className="hb-effect">
           <Field label={C.chooseItem}>
-            <select className="xp-select" value={row.item} onChange={(e) => onChange({ ...set, items: set.items.map((x, k) => (k === i ? { ...x, item: e.target.value } : x)) })}>
+            <select className="ui-select" value={row.item} onChange={(e) => onChange({ ...set, items: set.items.map((x, k) => (k === i ? { ...x, item: e.target.value } : x)) })}>
               <option value="">—</option>
               {groups.map((g) => <optgroup key={g.group} label={g.group}>{g.list.map((o) => <option key={o.id} value={o.id}>{o.label}</option>)}</optgroup>)}
             </select>
@@ -170,7 +170,7 @@ function SetEditor({ label, set, onChange, rs }: { label: string; set: SetDraft;
           <Button variant="danger" onClick={() => onChange({ ...set, items: set.items.filter((_, k) => k !== i) })}>{C.removeItem}</Button>
         </div>
       ))}
-      <div className="xp-actions" style={{ justifyContent: "flex-start" }}><Button onClick={() => onChange({ ...set, items: [...set.items, { item: "", qty: "1" }] })}>{C.addItem}</Button></div>
+      <div className="ui-actions" style={{ justifyContent: "flex-start" }}><Button onClick={() => onChange({ ...set, items: [...set.items, { item: "", qty: "1" }] })}>{C.addItem}</Button></div>
     </fieldset>
   );
 }
@@ -182,9 +182,9 @@ function ColumnsEditor({ columns, onChange, caster }: { columns: ColumnDraft[]; 
   return (
     <>
       <h3>{C.table}</h3>
-      <p className="xp-muted">{C.tableHelp}</p>
+      <p className="ui-muted">{C.tableHelp}</p>
       {missing.length > 0 && (
-        <div className="xp-banner">
+        <div className="ui-banner">
           {C.casterColumnsHelp}{" "}
           <Button onClick={() => onChange([...columns, ...missing.map(blank)])}>{C.addCasterColumns}</Button>
         </div>
@@ -197,7 +197,7 @@ function ColumnsEditor({ columns, onChange, caster }: { columns: ColumnDraft[]; 
                 <th scope="col">{C.levelShort}</th>
                 {columns.map((c, ci) => (
                   <th key={ci} scope="col">
-                    <input className="xp-input" aria-label={C.columnName} value={c.name} onChange={(e) => onChange(columns.map((x, k) => (k === ci ? { ...x, name: e.target.value } : x)))} />
+                    <input className="ui-input" aria-label={C.columnName} value={c.name} onChange={(e) => onChange(columns.map((x, k) => (k === ci ? { ...x, name: e.target.value } : x)))} />
                     <Button variant="danger" aria-label={C.removeColumn} onClick={() => onChange(columns.filter((_, k) => k !== ci))}>✕</Button>
                   </th>
                 ))}
@@ -209,7 +209,7 @@ function ColumnsEditor({ columns, onChange, caster }: { columns: ColumnDraft[]; 
                   <th scope="row">{lv + 1}</th>
                   {columns.map((c, ci) => (
                     <td key={ci}>
-                      <input className="xp-input" aria-label={`${c.name || C.columnName} ${lv + 1}`} value={c.values[lv] ?? ""}
+                      <input className="ui-input" aria-label={`${c.name || C.columnName} ${lv + 1}`} value={c.values[lv] ?? ""}
                         onChange={(e) => onChange(columns.map((x, k) => (k === ci ? { ...x, values: Array.from({ length: 20 }, (_, i) => (i === lv ? e.target.value : x.values[i] ?? "0")) } : x)))} />
                     </td>
                   ))}
@@ -219,7 +219,7 @@ function ColumnsEditor({ columns, onChange, caster }: { columns: ColumnDraft[]; 
           </table>
         </div>
       )}
-      <div className="xp-actions" style={{ justifyContent: "flex-start" }}><Button onClick={() => onChange([...columns, blank("")])}>{C.addColumn}</Button></div>
+      <div className="ui-actions" style={{ justifyContent: "flex-start" }}><Button onClick={() => onChange([...columns, blank("")])}>{C.addColumn}</Button></div>
     </>
   );
 }
@@ -241,25 +241,25 @@ function Shell({ p, id, data, pack, setPack, clear, children }: {
   void id;
   return (
     <>
-      <div className="xp-actions" style={{ justifyContent: "flex-start" }}><Button onClick={() => { clear(); p.onCancel(); }}>← {t.back}</Button></div>
+      <div className="ui-actions" style={{ justifyContent: "flex-start" }}><Button onClick={() => { clear(); p.onCancel(); }}>← {t.back}</Button></div>
       <h2>{p.initial ? t.edit : t.new}: {t.kinds[p.kind]}</h2>
       {children({ ok: result.ok, save })}
       <Field label={C.pack} help={C.packHelp}>
-        <input className="xp-input" list="hb-packs" value={pack} onChange={(e) => setPack(e.target.value)} />
+        <input className="ui-input" list="hb-packs" value={pack} onChange={(e) => setPack(e.target.value)} />
         <datalist id="hb-packs">{packs.map((x) => <option key={x} value={x} />)}</datalist>
       </Field>
-      <fieldset className="xp-group">
+      <fieldset className="ui-group">
         <legend>{t.preview}</legend>
         {result.ok ? (
           <>
             <p><strong>{result.data.name.it}</strong> <span className="hb-badge">{t.badge}</span></p>
-            {summarize(p.kind, result.data, p.rs).map((l, i) => <p key={i} className="xp-muted" style={{ margin: "2px 0" }}>{l}</p>)}
+            {summarize(p.kind, result.data, p.rs).map((l, i) => <p key={i} className="ui-muted" style={{ margin: "2px 0" }}>{l}</p>)}
             {String(result.data.description ?? "") && <p>{String(result.data.description)}</p>}
           </>
-        ) : <p className="xp-muted">{t.previewHelp}</p>}
+        ) : <p className="ui-muted">{t.previewHelp}</p>}
       </fieldset>
-      {!result.ok && tried && <div className="xp-error" role="alert"><strong>{t.errors}</strong><ul>{result.errors.map((e, i) => <li key={i}>{e}</li>)}</ul></div>}
-      <div className="xp-actions">
+      {!result.ok && tried && <div className="ui-error" role="alert"><strong>{t.errors}</strong><ul>{result.errors.map((e, i) => <li key={i}>{e}</li>)}</ul></div>}
+      <div className="ui-actions">
         <Button onClick={() => { clear(); p.onCancel(); }}>{t.cancel}</Button>
         <Button variant="primary" onClick={() => save()}>{t.save}</Button>
       </div>
@@ -366,7 +366,7 @@ function ClassForm(p: ComplexProps) {
                     <Pick label={C.spellList} value={d.spellList} help={C.spellListHelp} empty={C.spellListOwn} onChange={(v) => up({ spellList: v })}
                       options={Object.entries(it.homebrew.opts.classes).map(([i, label]) => ({ id: i, label }))} />
                     <Pick label={C.slotsFrom} value={d.slotsFrom} options={slotOpts} empty={C.slotsNone} help={C.slotsHelp} onChange={(v) => up({ slotsFrom: v })} />
-                    {slotOpts.length === 0 && <p className="xp-muted">{C.slotsNoSource}</p>}
+                    {slotOpts.length === 0 && <p className="ui-muted">{C.slotsNoSource}</p>}
                   </>
                 )}
                 <Text label={C.subclassLevel} value={d.subclassLevel} number onChange={(v) => up({ subclassLevel: v })} />
@@ -384,12 +384,12 @@ function ClassForm(p: ComplexProps) {
             {step === "subclasses" && (
               <>
                 <h3>{C.subclassList}</h3>
-                <p className="xp-muted">{C.subclassesHelp}</p>
-                {subs.length === 0 ? <p className="xp-muted">{C.noSubclasses}</p> : <ul>{subs.map((s) => <li key={s.data.id}>{s.data.name.it}</li>)}</ul>}
-                <div className="xp-actions" style={{ justifyContent: "flex-start" }}>
+                <p className="ui-muted">{C.subclassesHelp}</p>
+                {subs.length === 0 ? <p className="ui-muted">{C.noSubclasses}</p> : <ul>{subs.map((s) => <li key={s.data.id}>{s.data.name.it}</li>)}</ul>}
+                <div className="ui-actions" style={{ justifyContent: "flex-start" }}>
                   <Button disabled={!ok} onClick={() => save({ kind: "subclasses", classId: id })}>{C.newSubclass}</Button>
                 </div>
-                {!ok && <p className="xp-muted">{C.subclassNeedsValid}</p>}
+                {!ok && <p className="ui-muted">{C.subclassNeedsValid}</p>}
               </>
             )}
           </>

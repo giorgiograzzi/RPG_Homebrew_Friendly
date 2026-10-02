@@ -3,7 +3,7 @@ import { buildEffect, newHbId, readEffect, takenIds, validateEntry, type HbEntry
 import type { Ruleset } from "../engine/ruleset";
 import type { Effect } from "../engine/types";
 import { strings as it } from "../i18n";
-import { Button, Field } from "../ui/xp";
+import { Button, Field } from "../ui/theme";
 import { ComplexEditor, type Then } from "./ComplexEditor";
 import { isComplex, type EffectRow } from "./complex";
 import { FIELDS, dataToDraft, draftToData, emptyDraft, withDefaults, type Draft, type FlatKind } from "./forms";
@@ -45,29 +45,29 @@ function FlatEditor({ kind, initial, rs, existing, onSave, onCancel }: EditorPro
 
   return (
     <>
-      <div className="xp-actions" style={{ justifyContent: "flex-start" }}><Button onClick={onCancel}>← {t.back}</Button></div>
+      <div className="ui-actions" style={{ justifyContent: "flex-start" }}><Button onClick={onCancel}>← {t.back}</Button></div>
       <h2>{initial ? t.edit : t.new}: {t.kinds[kind]}</h2>
       {FIELDS[kind].filter((s) => !s.show || s.show(draft)).map((s) => <FieldInput key={s.key} spec={s} draft={draft} set={set} rs={rs} />)}
       {(kind === "feats" || kind === "items" || kind === "weapons" || kind === "armors") && <EffectsEditor rows={rows} onChange={setRows} rs={rs} help={kind === "feats" ? undefined : t.gearEffectsHelp} />}
-      {advanced.length > 0 && <p className="xp-muted">{it.homebrew.cx.advanced.replace("{n}", String(advanced.length))}</p>}
+      {advanced.length > 0 && <p className="ui-muted">{it.homebrew.cx.advanced.replace("{n}", String(advanced.length))}</p>}
       <Field label={it.homebrew.cx.pack} help={it.homebrew.cx.packHelp}>
-        <input className="xp-input" list="hb-packs-flat" value={pack} onChange={(e) => setPack(e.target.value)} />
+        <input className="ui-input" list="hb-packs-flat" value={pack} onChange={(e) => setPack(e.target.value)} />
         <datalist id="hb-packs-flat">{packs.map((x) => <option key={x} value={x} />)}</datalist>
       </Field>
 
-      <fieldset className="xp-group">
+      <fieldset className="ui-group">
         <legend>{t.preview}</legend>
         {result.ok ? (
           <>
             <p><strong>{result.data.name.it}</strong> <span className="hb-badge">{t.badge}</span></p>
-            {summarize(kind, result.data, rs).map((l, i) => <p key={i} className="xp-muted" style={{ margin: "2px 0" }}>{l}</p>)}
+            {summarize(kind, result.data, rs).map((l, i) => <p key={i} className="ui-muted" style={{ margin: "2px 0" }}>{l}</p>)}
             {String(result.data.description ?? "") && <p>{String(result.data.description)}</p>}
           </>
-        ) : <p className="xp-muted">{t.previewHelp}</p>}
+        ) : <p className="ui-muted">{t.previewHelp}</p>}
       </fieldset>
 
-      {!result.ok && tried && <div className="xp-error" role="alert"><strong>{t.errors}</strong><ul>{result.errors.map((e, i) => <li key={i}>{e}</li>)}</ul></div>}
-      <div className="xp-actions">
+      {!result.ok && tried && <div className="ui-error" role="alert"><strong>{t.errors}</strong><ul>{result.errors.map((e, i) => <li key={i}>{e}</li>)}</ul></div>}
+      <div className="ui-actions">
         <Button onClick={onCancel}>{t.cancel}</Button>
         <Button variant="primary" onClick={() => { setTried(true); if (result.ok) onSave({ kind, enabled: initial?.enabled ?? true, data: result.data, ...(pack.trim() ? { pack: pack.trim() } : {}) }); }}>{t.save}</Button>
       </div>
