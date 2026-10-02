@@ -58,6 +58,7 @@ export function App() {
   if (!ready) return null;
   return (
     <div className={`ui-app hand-${hand}`}>
+      <a className="ui-skip" href="#main" onClick={(e) => { e.preventDefault(); document.getElementById("main")?.focus(); }}>{it.app.skip}</a>
       <header className="ui-title">
         {inSheet && <button type="button" className="ui-title-btn ui-back" aria-label={it.play.back} title={it.play.back} onClick={() => { setSettings(false); setTab("characters"); }}><icons.back /></button>}
         <h1>{current ? current.name || it.characters.unnamed : it.app.title}</h1>
@@ -65,13 +66,13 @@ export function App() {
         <button type="button" className="ui-title-btn" aria-label={it.menu.open} aria-haspopup="menu" aria-expanded={menu} onClick={() => setMenu(!menu)}><Menu /></button>
       </header>
       {menu && (
-        <div className="ui-menu" role="menu" onClick={() => setMenu(false)}>
+        <div className="ui-menu" role="menu" onClick={() => setMenu(false)} onKeyDown={(e) => { if (e.key === "Escape") setMenu(false); }}>
           <button type="button" role="menuitem" onClick={() => setSettings(true)}>{it.menu.settings}</button>
           <button type="button" role="menuitem" onClick={() => void exportNow(exportAll)}>{it.menu.export}</button>
           <button type="button" role="menuitem" onClick={pickFile}>{it.menu.import}</button>
         </div>
       )}
-      <main className="ui-body">
+      <main className="ui-body" id="main" tabIndex={-1}>
         {settings ? <Settings onBack={() => setSettings(false)} /> : (
           <>
             {shown === "characters" && <Characters onOpened={() => { setSection("status"); setTab("sheet"); }} />}

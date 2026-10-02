@@ -44,7 +44,7 @@ export function ScoresStep({ ch, rs, allowReroll, onChange, onError }: {
       )}
       {!method && <p className="ui-muted">{t.pick.replace("{n}", "1")} — {t.scores.method}</p>}
       {method && (
-        <div role="table" aria-label={t.scores.table}>
+        <div role="group" aria-label={t.scores.table}>
           {ABILITIES.map((a) => (
             <div key={a} className="wz-score" style={{ gridTemplateColumns: "minmax(0,1fr) auto" }}>
               <span><span className="n">{AB[a]}</span><br /><span className="ui-muted">{t.scores.total} {totals[a]} · {t.scores.mod} {mod(totals[a])}</span></span>

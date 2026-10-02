@@ -1,4 +1,4 @@
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { strings } from "../../i18n";
 import { icons, type IconName } from "./icons";
@@ -40,11 +40,11 @@ export function Check({ checked, onChange, children }: { checked: boolean; onCha
 export interface TabDef { id: string; label: string; icon: IconName; disabled?: boolean }
 export function TabBar({ tabs, current, onSelect }: { tabs: TabDef[]; current: string; onSelect: (id: string) => void }) {
   return (
-    <nav className="ui-tabs" role="tablist">
+    <nav className="ui-tabs" aria-label={strings.app.nav}>
       {tabs.map((t) => {
         const Icon = icons[t.icon];
         return (
-          <button key={t.id} type="button" role="tab" className="ui-tab" aria-selected={t.id === current} disabled={t.disabled} onClick={() => onSelect(t.id)}>
+          <button key={t.id} type="button" className="ui-tab" aria-current={t.id === current ? "page" : undefined} disabled={t.disabled} onClick={() => onSelect(t.id)}>
             <Icon /><span>{t.label}</span>
           </button>
         );
@@ -72,15 +72,28 @@ export function SectionBar({ items, current, onSelect, onBack, backLabel }: { it
 // `titleAction` (opzionale): un interruttore con icona accanto al titolo, es. Homebrew / SRD
 export function Dialog({ title, children, onClose, titleAction }: { title: string; children: ReactNode; onClose: () => void; titleAction?: { label: string; icon: IconName; pressed: boolean; onClick: () => void } }) {
   const ActionIcon = titleAction ? icons[titleAction.icon] : null;
+  const box = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    // il focus entra nella finestra, resta dentro finché è aperta (Tab e Maiusc+Tab girano) e torna dov'era alla chiusura
+    const before = document.activeElement as HTMLElement | null;
+    const focusable = () => [...(box.current?.querySelectorAll<HTMLElement>('button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])') ?? [])].filter((e) => e.offsetParent !== null);
+    (focusable()[0] ?? box.current)?.focus();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") { e.stopPropagation(); onClose(); return; }
+      if (e.key !== "Tab") return;
+      const f = focusable();
+      if (!f.length) { e.preventDefault(); return; }
+      const [first, last] = [f[0]!, f[f.length - 1]!];
+      if (e.shiftKey && (document.activeElement === first || !box.current?.contains(document.activeElement))) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && (document.activeElement === last || !box.current?.contains(document.activeElement))) { e.preventDefault(); first.focus(); }
+    };
     document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
+    return () => { document.removeEventListener("keydown", onKey); before?.focus?.(); };
   }, [onClose]);
   // in un portale sul body: sopra intestazione e barra in basso, qualunque sia il contenitore da cui si apre
   return createPortal(
     <div className="ui-overlay" onClick={onClose}>
-      <div className="ui-dialog" role="dialog" aria-modal="true" aria-label={title} onClick={(e) => e.stopPropagation()}>
+      <div ref={box} tabIndex={-1} className="ui-dialog" role="dialog" aria-modal="true" aria-label={title} onClick={(e) => e.stopPropagation()}>
         <header className="ui-dialog-head">
           <span className="ui-dialog-name">{title}</span>
           {titleAction && ActionIcon && <button type="button" className="ui-icon-btn" aria-label={titleAction.label} title={titleAction.label} aria-pressed={titleAction.pressed} onClick={titleAction.onClick}><ActionIcon /></button>}

@@ -4,7 +4,7 @@ PWA per creare e gestire personaggi, **italiano + inglese**, offline. Contiene *
 Nasce dall'app privata `giorgiograzzi/Prova_creazione_dnd_character` (non si tocca: resta com'è). Il codice si copia **senza cronologia git**, così i PDF non liberi non entrano mai qui.
 
 ## Stato
-**Chiusi: step 0 (PR #2), 1 (#3), 2a (#4), correttore glifi + descrizioni 2a (#5), piano 5b (#6), 2b (#7), 2c (#8), 2d-1 (#9), 2d-2 (#10), 2d-3 (#11), 2e (#12), 2f (#13): step 2 (dati SRD) chiuso. 3 (#14). 4 (#15). 5b-1 e 5b-2 (#16). 5b-3 (#17). Step 5 in PR. 5b-4 → 10: da fare.**
+**Chiusi: step 0 (PR #2), 1 (#3), 2a (#4), correttore glifi + descrizioni 2a (#5), piano 5b (#6), 2b (#7), 2c (#8), 2d-1 (#9), 2d-2 (#10), 2d-3 (#11), 2e (#12), 2f (#13): step 2 (dati SRD) chiuso. 3 (#14). 4 (#15). 5b-1 e 5b-2 (#16). 5b-3 (#17). 5b-4/5b-5 (#18): step 5b chiuso. Step 5 in PR (#19). 6 → 10: da fare.**
 
 ## Decisioni già prese (Giorgio)
 | Tema | Scelta |
@@ -70,13 +70,13 @@ Riscrittura degli estrattori in `scripts/` perché leggano **solo** i due PDF SR
 - **Cosa**: verifica a mano e con test tutta l'interfaccia con i dati SRD in IT e EN: creazione, scheda, tab Equip/Magia, riposi, passaggio di livello, backup/ripristino.
 - **Test**: test store/db esistenti verdi; smoke test Playwright (Chromium già installato): crea un personaggio in IT, cambia in EN, sale di livello, esporta e reimporta il backup.
 
-### Step 5b — Frontend: tema neutro mobile-first + versione desktop  ☐
+### Step 5b — Frontend: tema neutro mobile-first + versione desktop  ☑
 Oggi l'interfaccia imita Windows XP / Win95 (`src/ui/xp/`, 313 righe di CSS, ~266 classi `xp-*`/`dos-*` in 31 file, un solo punto di adattamento a 720px). Si sostituisce con un tema originale, e si aggiunge un layout per schermi grandi. Si fa **dopo lo step 5** (l'app funziona con i dati SRD) e **prima di 7 e 8** (che aggiungono schermate: pulsante Stampa, Informazioni e licenze).
 - **5b-1 Fondamenta** ☑ (palette «indaco su grigio freddo» scelta da Giorgio il 2026-10-02): design token CSS (colori, spazi, raggi, ombre, tipografia) in `src/ui/theme/` al posto di `src/ui/xp/`; font di sistema (nessun font di terzi); chiaro/scuro con `prefers-color-scheme` + interruttore in Impostazioni; icone SVG originali; accento e palette neutri (scelta da confermare con Giorgio); rimuovere ogni riferimento a Windows/MS-DOS/Tahoma/"Start".
 - **5b-2 Guscio dell'app** ☑: mobile (<640px) con barra a schede in basso e finestre a tutto schermo/«bottom sheet»; tablet (640-1024px); desktop (≥1024px) con navigazione laterale, contenuto centrato con larghezza massima e popup come finestre modali; aree sicure iPhone (`env(safe-area-inset-*)`), `theme-color` coerente con il tema.
 - **5b-3 Schermate** ☑ (scheda a colonne da 1100px, wizard e Homebrew controllati su 3 viewport, messaggi del motore tradotti): Personaggi, wizard di creazione e level-up, Scheda (7 tab; su desktop Stato/Statistiche/Attacchi/Magia **affiancati in colonne** invece che a tab), Equip, Homebrew, Impostazioni. Ogni schermata prima in versione mobile, poi desktop.
-- **5b-4 Accessibilità e usabilità**: testo ≥16px e bersagli ≥48px (regola ereditata, da mantenere), contrasto WCAG AA in chiaro e scuro, focus visibile, navigazione da tastiera su desktop, `prefers-reduced-motion`, testi IT/EN senza troncamenti.
-- **5b-5 Pulizia**: eliminare `src/ui/xp/`, aggiornare `index.html` (colori), manifest PWA e icone provvisorie; stampa della scheda (CSS `@media print`) senza barre.
+- **5b-4 Accessibilità e usabilità** ☑ (focus nelle finestre, «vai al contenuto», navigazione con ruoli corretti, contrasto verificato sulle pagine vere): testo ≥16px e bersagli ≥48px (regola ereditata, da mantenere), contrasto WCAG AA in chiaro e scuro, focus visibile, navigazione da tastiera su desktop, `prefers-reduced-motion`, testi IT/EN senza troncamenti.
+- **5b-5 Pulizia** ☑: eliminare `src/ui/xp/`, aggiornare `index.html` (colori), manifest PWA e icone provvisorie; stampa della scheda (CSS `@media print`) senza barre.
 - **Test**: `contrast.test.ts` riscritto sui nuovi token (AA in chiaro e scuro); test Playwright con screenshot a 3 viewport (375×812, 768×1024, 1280×800) × IT/EN × chiaro/scuro; controlli automatici di **nessuno scroll orizzontale**, bersagli ≥48px e nessun testo tagliato; guardia nel test legale: niente `xp-`, `dos-`, "Windows", "MS-DOS", "Tahoma" in `src/` e `index.html`; `npm run build` ok e PWA ancora installabile.
 
 ### Step 6 — Homebrew adattato  ☐
