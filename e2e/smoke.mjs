@@ -57,10 +57,22 @@ const stepTabs = () => page.locator(".wz-steps button");
 
 try {
   // ── Creazione in italiano ────────────────────────────────────────────────
-  log("creazione in italiano");
   await page.goto(URL);
   await page.waitForSelector(".ui-app");
   expect((await page.locator("html").getAttribute("lang")) === "it", "la lingua iniziale non è l'italiano");
+  // avviso sui cookie: compare al primo accesso, con i link alle policy, e dopo «Ho capito» non torna
+  log("avviso sui cookie");
+  const banner = page.getByRole("region", { name: it.cookieNotice.label });
+  expect(await banner.isVisible(), "l'avviso sui cookie non compare al primo accesso");
+  await banner.getByRole("button", { name: it.cookieNotice.cookies }).click();
+  expect(await page.getByTestId("policy-cookies").isVisible(), "il link dell'avviso non apre la Cookie Policy");
+  await page.getByTestId("policy-cookies").getByRole("button", { name: it.legal.other.privacy }).click();
+  expect(await page.getByTestId("policy-privacy").isVisible(), "dalla Cookie Policy non si apre la Privacy Policy");
+  await page.getByTestId("policy-privacy").getByRole("button", { name: new RegExp(it.legal.back) }).first().click();
+  await banner.getByRole("button", { name: it.cookieNotice.ok }).click();
+  await page.reload(); await page.waitForSelector(".ui-app");
+  expect(!(await banner.count()), "l'avviso sui cookie riappare dopo «Ho capito»");
+  log("creazione in italiano");
   await page.getByRole("button", { name: new RegExp(`^\\+ ${it.characters.new}`) }).click();
   await wait(400);
   // passo 1: classe = Mago (tante scelte: libro incantesimi, trucchetti)
@@ -119,7 +131,7 @@ try {
 
   // ── Informazioni e licenze: dicitura CC-BY e avviso nella lingua dell'app ─────────
   log("informazioni e licenze");
-  expect((await page.title()) === "Danger & Dragons", `titolo pagina: ${await page.title()}`);
+  expect((await page.title()) === "Placet del Master", `titolo pagina: ${await page.title()}`);
   await page.locator(".ui-title-btn:not(.ui-back)").click();
   await page.getByRole("menuitem", { name: en.menu.about }).click();
   const notice = (await page.getByTestId("srd-notice").innerText()).replace(/\s+/g, " ");
@@ -127,6 +139,15 @@ try {
   expect((await page.getByTestId("disclaimer").innerText()) === DISCLAIMER.en, "avviso «non ufficiale» mancante");
   expect(await page.locator('.ui-body a[href="https://creativecommons.org/licenses/by/4.0/legalcode"]').count() >= 1, "manca il link alla licenza");
   await page.getByRole("button", { name: new RegExp(en.about.back) }).click();
+  // Privacy Policy e Cookie Policy: dal menu, nella lingua dell'app, con il contatto del titolare
+  for (const [item, id] of [[en.menu.privacy, "policy-privacy"], [en.menu.cookies, "policy-cookies"]]) {
+    await page.locator(".ui-title-btn:not(.ui-back)").click();
+    await page.getByRole("menuitem", { name: item }).click();
+    const doc = page.getByTestId(id);
+    expect(await doc.locator("h2").innerText() === item, `titolo della policy diverso da «${item}»`);
+    expect((await doc.innerText()).includes("giorgiograzzi1987@gmail.com"), `${id}: manca il contatto del titolare`);
+    await doc.getByRole("button", { name: new RegExp(en.legal.back) }).first().click();
+  }
 
   // ── Level-up ─────────────────────────────────────────────────────────────
   log("level-up");

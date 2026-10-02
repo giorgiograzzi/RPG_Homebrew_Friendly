@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "Danger & Dragons",
+    "title": "Placet del Master",
     "errorTitle": "Qualcosa non va",
     "reload": "Ricarica",
     "skip": "Vai al contenuto",
@@ -16,7 +16,9 @@
     "settings": "Impostazioni",
     "export": "Esporta backup",
     "import": "Importa backup",
-    "about": "Informazioni e licenze"
+    "about": "Informazioni e licenze",
+    "privacy": "Privacy Policy",
+    "cookies": "Cookie Policy"
   },
   "characters": {
     "title": "I tuoi personaggi",
@@ -79,6 +81,13 @@
       "other": "Dal menu del browser scegli «Installa app» oppure «Aggiungi alla schermata Home».",
       "offline": "Dopo il primo caricamento l'app funziona anche senza rete; i personaggi restano sul tuo dispositivo.",
       "done": "Installazione avviata."
+    },
+    "privacy": {
+      "title": "Privacy e cookie",
+      "text": "L'app non raccoglie dati personali e non imposta cookie: tutto resta sul tuo dispositivo.",
+      "privacy": "Privacy Policy",
+      "cookies": "Cookie Policy",
+      "showNotice": "Mostra di nuovo l'avviso sui cookie"
     }
   },
   "import": {
@@ -1062,5 +1071,22 @@
     "fontText": "Noto Sans, Copyright 2022 The Noto Project Authors, licenza SIL Open Font License 1.1 (https://openfontlicense.org).",
     "homebrew": "Contenuti homebrew",
     "homebrewText": "Quello che aggiungi come homebrew resta tuo e sta solo sul tuo dispositivo (o nei file che esporti): non fa parte dell'SRD."
+  },
+  "cookieNotice": {
+    "label": "Avviso sui cookie",
+    "text": "Questa app non usa cookie di profilazione né di terze parti: salva solo sul tuo dispositivo i dati tecnici che servono a farla funzionare (personaggi, lingua, aspetto).",
+    "ok": "Ho capito",
+    "cookies": "Cookie Policy",
+    "privacy": "Privacy Policy"
+  },
+  "legal": {
+    "back": "Indietro",
+    "updated": "Aggiornamento",
+    "controller": "Titolare del trattamento",
+    "other": {
+      "privacy": "Leggi anche la Privacy Policy",
+      "cookies": "Leggi anche la Cookie Policy"
+    },
+    "disclaimer": "Questi testi descrivono come funziona l'app; non sono una consulenza legale."
   }
 }

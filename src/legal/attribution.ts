@@ -8,7 +8,7 @@ export const SRD_NOTICE: Record<Lang, string> = {
 
 // Avviso «non ufficiale»: va sempre accanto alla dicitura (app, PDF, README, ATTRIBUTION.md)
 export const DISCLAIMER: Record<Lang, string> = {
-  en: "Danger & Dragons is an unofficial, fan-made app. It is not affiliated with, endorsed or sponsored by Wizards of the Coast.",
-  it: "Danger & Dragons è un'app non ufficiale, creata da appassionati. Non è affiliata, approvata né sponsorizzata da Wizards of the Coast.",
+  en: "Placet del Master is an unofficial, fan-made app. It is not affiliated with, endorsed or sponsored by Wizards of the Coast.",
+  it: "Placet del Master è un'app non ufficiale, creata da appassionati. Non è affiliata, approvata né sponsorizzata da Wizards of the Coast.",
 };
 export const CC_BY_URL = "https://creativecommons.org/licenses/by/4.0/legalcode";

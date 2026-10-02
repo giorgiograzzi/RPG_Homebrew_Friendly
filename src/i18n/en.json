@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "Danger & Dragons",
+    "title": "Placet del Master",
     "errorTitle": "Something went wrong",
     "reload": "Reload",
     "skip": "Skip to content",
@@ -16,7 +16,9 @@
     "settings": "Settings",
     "export": "Export backup",
     "import": "Import backup",
-    "about": "About and licenses"
+    "about": "About and licenses",
+    "privacy": "Privacy Policy",
+    "cookies": "Cookie Policy"
   },
   "characters": {
     "title": "Your characters",
@@ -79,6 +81,13 @@
       "other": "From the browser menu choose “Install app” or “Add to Home Screen”.",
       "offline": "After the first load the app also works without a network; your characters stay on your device.",
       "done": "Installation started."
+    },
+    "privacy": {
+      "title": "Privacy and cookies",
+      "text": "The app does not collect personal data and sets no cookies: everything stays on your device.",
+      "privacy": "Privacy Policy",
+      "cookies": "Cookie Policy",
+      "showNotice": "Show the cookie notice again"
     }
   },
   "import": {
@@ -1062,5 +1071,22 @@
     "fontText": "Noto Sans, Copyright 2022 The Noto Project Authors, SIL Open Font License 1.1 (https://openfontlicense.org).",
     "homebrew": "Homebrew content",
     "homebrewText": "What you add as homebrew stays yours and lives only on your device (or in the files you export): it is not part of the SRD."
+  },
+  "cookieNotice": {
+    "label": "Cookie notice",
+    "text": "This app uses no profiling or third-party cookies: it only saves on your device the technical data needed to make it work (characters, language, appearance).",
+    "ok": "Got it",
+    "cookies": "Cookie Policy",
+    "privacy": "Privacy Policy"
+  },
+  "legal": {
+    "back": "Back",
+    "updated": "Updated",
+    "controller": "Data controller",
+    "other": {
+      "privacy": "Also read the Privacy Policy",
+      "cookies": "Also read the Cookie Policy"
+    },
+    "disclaimer": "These texts describe how the app works; they are not legal advice."
   }
 }
