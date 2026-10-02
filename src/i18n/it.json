@@ -954,12 +954,6 @@
       "spellListOwn": "Una lista tutta tua",
       "spellListHelp": "Tua = solo gli incantesimi che includono questa classe (li scegli nella scheda dell'incantesimo). Oppure usa la lista di una classe ufficiale."
     },
-    "official": "Parti da una voce ufficiale",
-    "officialHelp": "Copia una voce ufficiale come punto di partenza: la modifichi e resta tua.",
-    "officialPick": "Scegli che cosa copiare",
-    "officialSearch": "Cerca",
-    "officialNone": "Nessuna voce ufficiale di questo tipo.",
-    "copy": "Copia",
     "allPacks": "Tutti i pacchetti",
     "noPack": "Senza pacchetto",
     "pack": "Pacchetto",

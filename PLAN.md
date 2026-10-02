@@ -4,7 +4,7 @@ PWA per creare e gestire personaggi, **italiano + inglese**, offline. Contiene *
 Nasce dall'app privata `giorgiograzzi/Prova_creazione_dnd_character` (non si tocca: resta com'è). Il codice si copia **senza cronologia git**, così i PDF non liberi non entrano mai qui.
 
 ## Stato
-**Chiusi: step 0 (PR #2), 1 (#3), 2a (#4), correttore glifi + descrizioni 2a (#5), piano 5b (#6), 2b (#7), 2c (#8), 2d-1 (#9), 2d-2 (#10), 2d-3 (#11), 2e (#12), 2f (#13): step 2 (dati SRD) chiuso. 3 (#14). 4 (#15). 5b-1 e 5b-2 (#16). 5b-3 (#17). 5b-4/5b-5 (#18): step 5b chiuso. Step 5 in PR (#19). 6 → 10: da fare.**
+**Chiusi: step 0 (PR #2), 1 (#3), 2a (#4), correttore glifi + descrizioni 2a (#5), piano 5b (#6), 2b (#7), 2c (#8), 2d-1 (#9), 2d-2 (#10), 2d-3 (#11), 2e (#12), 2f (#13): step 2 (dati SRD) chiuso. 3 (#14). 4 (#15). 5b-1 e 5b-2 (#16). 5b-3 (#17). 5b-4/5b-5 (#18): step 5b chiuso. Step 5 (#19). Step 6 in PR. 7 → 10: da fare.**
 
 ## Decisioni già prese (Giorgio)
 | Tema | Scelta |
@@ -62,7 +62,7 @@ Riscrittura degli estrattori in `scripts/` perché leggano **solo** i due PDF SR
 - **Cosa**: `loadRuleset(lang)` legge `data/srd/<lang>/`; `src/i18n/en.json` accanto a `it.json`; selettore lingua in Impostazioni (default = lingua del browser, fallback EN); la lingua cambia testi **e** dati senza perdere i personaggi (salvati per id).
 - **Test**: test che ogni chiave di `it.json` esiste in `en.json` e viceversa; test di cambio lingua (stesso personaggio, calcolo identico, nomi diversi); il ruleset si carica in entrambe le lingue; build con dati vuoti non si rompe.
 
-### Step 4 — Motore con dati SRD  ☑ (resta rosso solo `homebrew.content.test.ts`: aspetta i pacchetti di esempio SRD dello step 6)
+### Step 4 — Motore con dati SRD  ☑ (`homebrew.content.test.ts` rosso fino allo step 6: chiuso lì)
 - **Cosa**: adatta il motore ai dati ridotti (niente riferimenti a voci non SRD); i vecchi test `*.private.test.ts` diventano test normali (i dati ora sono tracciati) e vengono riscritti sui contenuti SRD.
 - **Test**: `npm test` verde per compute, creation, levelup, magic, play, equipment; test nuovo "ogni voce dei dati SRD è creabile": per ogni classe × sottoclasse × specie × background si crea un personaggio di livello 1 e uno di livello 5 senza errori.
 
@@ -79,7 +79,7 @@ Oggi l'interfaccia imita Windows XP / Win95 (`src/ui/xp/`, 313 righe di CSS, ~26
 - **5b-5 Pulizia** ☑: eliminare `src/ui/xp/`, aggiornare `index.html` (colori), manifest PWA e icone provvisorie; stampa della scheda (CSS `@media print`) senza barre.
 - **Test**: `contrast.test.ts` riscritto sui nuovi token (AA in chiaro e scuro); test Playwright con screenshot a 3 viewport (375×812, 768×1024, 1280×800) × IT/EN × chiaro/scuro; controlli automatici di **nessuno scroll orizzontale**, bersagli ≥48px e nessun testo tagliato; guardia nel test legale: niente `xp-`, `dos-`, "Windows", "MS-DOS", "Tahoma" in `src/` e `index.html`; `npm run build` ok e PWA ancora installabile.
 
-### Step 6 — Homebrew adattato  ☐
+### Step 6 — Homebrew adattato  ☑
 - **Cosa**: rimuovi "copia da voce ufficiale" (UI, logica in `src/homebrew/`, `presets`); riscrivi `data/homebrew/` (modello commentato + esempi) usando solo contenuti SRD o inventati; README homebrew che spiega come l'utente aggiunge i propri contenuti.
 - **Test**: gli esempi passano lo schema e si importano; test che l'editor non espone la copia da voce ufficiale; export/import di pacchetti e backup ancora verdi.
 

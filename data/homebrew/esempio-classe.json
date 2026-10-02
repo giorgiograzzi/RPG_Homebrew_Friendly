@@ -1,0 +1,486 @@
+{
+  "schemaVersion": 1,
+  "name": "Esempio: classe",
+  "classes": [
+    {
+      "id": "hb_custode_delle_rune",
+      "name": {
+        "it": "Custode delle Rune",
+        "en": "Rune Warden"
+      },
+      "description": "Classe inventata per l'esempio: un mezzo incantatore che incide rune sulle armi e sulla pelle.",
+      "hitDie": 8,
+      "primaryAbility": [
+        "wis"
+      ],
+      "saves": [
+        "con",
+        "wis"
+      ],
+      "skillChoices": {
+        "count": 2,
+        "from": "any"
+      },
+      "armorTraining": [
+        "light",
+        "medium",
+        "shield"
+      ],
+      "weaponProficiency": [
+        "simple"
+      ],
+      "caster": "half",
+      "spellAbility": "wis",
+      "spellList": "hb_custode_delle_rune",
+      "spellSlots": [
+        [
+          2
+        ],
+        [
+          2
+        ],
+        [
+          3
+        ],
+        [
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          4,
+          3,
+          2
+        ],
+        [
+          4,
+          3,
+          2
+        ],
+        [
+          4,
+          3,
+          3
+        ],
+        [
+          4,
+          3,
+          3
+        ],
+        [
+          4,
+          3,
+          3,
+          1
+        ],
+        [
+          4,
+          3,
+          3,
+          1
+        ],
+        [
+          4,
+          3,
+          3,
+          2
+        ],
+        [
+          4,
+          3,
+          3,
+          2
+        ],
+        [
+          4,
+          3,
+          3,
+          3
+        ],
+        [
+          4,
+          3,
+          3,
+          3
+        ]
+      ],
+      "subclassLevel": 3,
+      "equipment": {
+        "A": {
+          "items": [
+            {
+              "item": "dagger",
+              "qty": 2
+            },
+            {
+              "item": "rope",
+              "qty": 1
+            }
+          ],
+          "gp": 10
+        },
+        "B": {
+          "items": [],
+          "gp": 100
+        }
+      },
+      "table": {
+        "rune": [
+          1,
+          1,
+          2,
+          2,
+          2,
+          2,
+          3,
+          3,
+          3,
+          3,
+          3,
+          4,
+          4,
+          4,
+          4,
+          4,
+          5,
+          5,
+          5,
+          5
+        ],
+        "prepared": [
+          2,
+          3,
+          3,
+          4,
+          4,
+          5,
+          5,
+          6,
+          6,
+          7,
+          7,
+          8,
+          8,
+          9,
+          9,
+          10,
+          10,
+          11,
+          11,
+          12
+        ]
+      },
+      "choices": [
+        {
+          "id": "hb_custode_delle_rune_skills",
+          "label": "Abilità di classe",
+          "count": 2,
+          "source": "skills"
+        },
+        {
+          "id": "hb_custode_delle_rune_prepared",
+          "label": "Incantesimi preparati",
+          "count": 1,
+          "countFrom": "prepared",
+          "source": "spells:hb_custode_delle_rune"
+        }
+      ],
+      "features": [
+        {
+          "id": "hb_rune_incisione",
+          "name": {
+            "it": "Incisione runica",
+            "en": "Rune carving"
+          },
+          "level": 1,
+          "description": "Come azione bonus incidi una runa sulla tua arma per 1 minuto: +1 ai danni da mischia (+2 dal 9° livello). Usi come da tabella, si ricaricano con un riposo lungo.",
+          "usage": {
+            "uses": {
+              "table": [
+                1,
+                1,
+                2,
+                2,
+                2,
+                2,
+                3,
+                3,
+                3,
+                3,
+                3,
+                4,
+                4,
+                4,
+                4,
+                4,
+                5,
+                5,
+                5,
+                5
+              ]
+            },
+            "recharge": "long_rest"
+          },
+          "activation": {
+            "resource": "hb_rune_incisione",
+            "duration": "1 minuto"
+          },
+          "effects": [
+            {
+              "op": "damageBonus",
+              "value": 1,
+              "attackType": "melee",
+              "when": "active:hb_rune_incisione"
+            },
+            {
+              "op": "damageBonus",
+              "value": 1,
+              "attackType": "melee",
+              "when": "active:hb_rune_incisione && classLevel:hb_custode_delle_rune>=9"
+            }
+          ]
+        },
+        {
+          "id": "hb_rune_pelle",
+          "name": {
+            "it": "Runa sulla pelle",
+            "en": "Skin rune"
+          },
+          "level": 2,
+          "description": "+1 alla Classe Armatura finché indossi un'armatura.",
+          "effects": [
+            {
+              "op": "acBonus",
+              "value": 1,
+              "when": "wearingArmor:any"
+            }
+          ]
+        },
+        {
+          "id": "hb_rune_maestria",
+          "name": {
+            "it": "Maestria runica",
+            "en": "Rune mastery"
+          },
+          "level": 5,
+          "description": "+1 a tutti i tiri salvezza.",
+          "effects": [
+            {
+              "op": "saveBonus",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "subclasses": [
+    {
+      "id": "hb_via_della_fiamma",
+      "name": {
+        "it": "Via della Fiamma",
+        "en": "Way of the Flame"
+      },
+      "classId": "hb_custode_delle_rune",
+      "description": "Sottoclasse inventata per l'esempio: le rune diventano fuoco.",
+      "features": [
+        {
+          "id": "hb_fiamma_scudo",
+          "name": {
+            "it": "Scudo di fiamma",
+            "en": "Flame ward"
+          },
+          "level": 3,
+          "description": "Resistenza ai danni da fuoco.",
+          "effects": [
+            {
+              "op": "resistance",
+              "types": [
+                "fire"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "spells": [
+    {
+      "id": "hb_raggio_dell_alba",
+      "name": {
+        "it": "Raggio dell'alba",
+        "en": "Dawn ray"
+      },
+      "level": 1,
+      "school": "evocation",
+      "classes": [
+        "hb_custode_delle_rune"
+      ],
+      "castingTime": {
+        "unit": "action",
+        "amount": 1
+      },
+      "range": "18 metri",
+      "components": {
+        "v": true,
+        "s": true,
+        "m": false
+      },
+      "duration": "istantanea",
+      "resolution": "attack_ranged",
+      "summary": "Un raggio di luce dorata colpisce un bersaglio entro gittata: attacco a distanza con incantesimo, 2d6 danni radiosi."
+    },
+    {
+      "id": "hb_scudo_di_brace",
+      "name": {
+        "it": "Scudo di brace",
+        "en": "Ember ward"
+      },
+      "level": 1,
+      "school": "abjuration",
+      "classes": [
+        "hb_custode_delle_rune"
+      ],
+      "castingTime": {
+        "unit": "action",
+        "amount": 1
+      },
+      "range": "Incantatore",
+      "components": {
+        "v": true,
+        "s": true,
+        "m": false
+      },
+      "duration": "1 round",
+      "concentration": false,
+      "resolution": "none",
+      "summary": "Una barriera di braci ti avvolge: fino alla fine del tuo prossimo turno ottieni +2 alla Classe Armatura."
+    },
+    {
+      "id": "hb_parola_runica",
+      "name": {
+        "it": "Parola runica",
+        "en": "Runic word"
+      },
+      "level": 1,
+      "school": "enchantment",
+      "classes": [
+        "hb_custode_delle_rune"
+      ],
+      "castingTime": {
+        "unit": "action",
+        "amount": 1
+      },
+      "range": "9 metri",
+      "components": {
+        "v": true,
+        "s": true,
+        "m": false
+      },
+      "duration": "1 round",
+      "concentration": false,
+      "resolution": "save_wis",
+      "summary": "Pronunci una parola incisa nella pietra: un bersaglio entro gittata fa un TS su Saggezza o perde la reazione fino all'inizio del tuo turno successivo."
+    },
+    {
+      "id": "hb_luce_del_faro",
+      "name": {
+        "it": "Luce del faro",
+        "en": "Beacon light"
+      },
+      "level": 1,
+      "school": "evocation",
+      "classes": [
+        "hb_custode_delle_rune"
+      ],
+      "castingTime": {
+        "unit": "action",
+        "amount": 1
+      },
+      "range": "Incantatore",
+      "components": {
+        "v": true,
+        "s": true,
+        "m": false
+      },
+      "duration": "10 minuti",
+      "concentration": true,
+      "resolution": "none",
+      "summary": "Un fascio di luce illumina un cono di 9 metri per 10 minuti, come una torcia molto forte."
+    },
+    {
+      "id": "hb_catena_di_fiamma",
+      "name": {
+        "it": "Catena di fiamma",
+        "en": "Flame chain"
+      },
+      "level": 2,
+      "school": "evocation",
+      "classes": [
+        "hb_custode_delle_rune"
+      ],
+      "castingTime": {
+        "unit": "action",
+        "amount": 1
+      },
+      "range": "18 metri",
+      "components": {
+        "v": true,
+        "s": true,
+        "m": false
+      },
+      "duration": "istantanea",
+      "concentration": false,
+      "resolution": "save_dex",
+      "summary": "Una catena di fuoco avvolge un bersaglio: TS su Destrezza, 3d6 danni da fuoco se fallito, la metà se superato."
+    },
+    {
+      "id": "hb_sigillo_d_ambra",
+      "name": {
+        "it": "Sigillo d'ambra",
+        "en": "Amber seal"
+      },
+      "level": 2,
+      "school": "abjuration",
+      "classes": [
+        "hb_custode_delle_rune"
+      ],
+      "castingTime": {
+        "unit": "action",
+        "amount": 1
+      },
+      "range": "Contatto",
+      "components": {
+        "v": true,
+        "s": true,
+        "m": false
+      },
+      "duration": "1 ora",
+      "concentration": false,
+      "resolution": "none",
+      "summary": "Incidi un sigillo su una creatura consenziente: per 1 ora ha resistenza a un tipo di danno a tua scelta tra fuoco e freddo."
+    }
+  ]
+}

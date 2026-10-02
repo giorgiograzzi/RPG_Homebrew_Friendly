@@ -144,20 +144,6 @@ export function mergeEntries(existing: HbEntry[], incoming: HbEntry[]): { entrie
   return { entries: out, added, updated };
 }
 
-// Copia di una voce ufficiale come punto di partenza: stesso contenuto, id e nome nuovi, spenta finché non la si salva e attiva.
-// Le scelte di una classe prendono il prefisso del nuovo id; una classe incantatrice continua a usare la lista degli incantesimi di partenza.
-export function copyOfficial(kind: HbKind, official: Record<string, any>, rs: Ruleset, all: HbEntry[]): HbEntry {
-  const name = `${official.name.it} (copia)`;
-  const id = newHbId(name, takenIds(rs, all));
-  const d = structuredClone(official) as Record<string, any>;
-  const old = String(official.id);
-  d.id = id; d.name = { ...d.name, it: name }; d.origin = "homebrew"; delete d.needsReview;
-  const rename = (c: { id: string }) => ({ ...c, id: c.id.startsWith(`${old}_`) ? `${id}${c.id.slice(old.length)}` : c.id });
-  if ((kind === "classes" || kind === "subclasses") && Array.isArray(d.choices)) d.choices = d.choices.map(rename);
-  if (kind === "classes" && d.caster !== "none" && !d.spellList) d.spellList = old;
-  return { kind, enabled: false, data: d as HbData };
-}
-
 export function duplicateEntry(e: HbEntry, rs: Ruleset, all: HbEntry[]): HbEntry {
   const name = `${e.data.name.it} (copia)`;
   return { ...e, enabled: false, data: { ...e.data, id: newHbId(name, takenIds(rs, all)), name: { ...e.data.name, it: name } } };
