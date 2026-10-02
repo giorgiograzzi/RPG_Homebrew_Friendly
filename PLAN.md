@@ -4,7 +4,7 @@ PWA per creare e gestire personaggi, **italiano + inglese**, offline. Contiene *
 Nasce dall'app privata `giorgiograzzi/Prova_creazione_dnd_character` (non si tocca: resta com'è). Il codice si copia **senza cronologia git**, così i PDF non liberi non entrano mai qui.
 
 ## Stato
-**Chiusi: step 0 (PR #2), 1 (#3), 2a (#4), correttore glifi + descrizioni 2a (#5), piano 5b (#6), 2b (#7), 2c (#8), 2d-1 (#9), 2d-2 (#10), 2d-3 (#11): step 2d (classi) chiuso. 2e (incantesimi) in PR; resta 2f (condizioni e regole). Step 3 → 10: da fare.**
+**Chiusi: step 0 (PR #2), 1 (#3), 2a (#4), correttore glifi + descrizioni 2a (#5), piano 5b (#6), 2b (#7), 2c (#8), 2d-1 (#9), 2d-2 (#10), 2d-3 (#11), 2e (#12): step 2d e 2e chiusi. 2f (condizioni, slot multiclasse, creazione) in PR: chiude lo step 2 (dati). Step 3 → 10: da fare.**
 
 ## Decisioni già prese (Giorgio)
 | Tema | Scelta |
@@ -25,7 +25,7 @@ Nasce dall'app privata `giorgiograzzi/Prova_creazione_dnd_character` (non si toc
 3. **PR e merge: li fa Claude** (autorizzato da Giorgio il 2026-10-01). A fine step: PR verso `main` con descrizione e test, poi merge (merge commit) **solo se**: `typecheck` ok, nessun test *nuovo* rosso (gli 8 file in attesa dei dati di step 2-4 sono noti), nessun conflitto, nessun file non libero. **Si ferma e chiede** se: c'è un conflitto non banale, un test nuovo fallisce, serve una decisione di Giorgio (palette, nome app, scelta di contenuto), la modifica esce dal piano, o tocca licenze/attribuzioni. Mai force-push su `main`. A ogni merge: riepilogo breve in chat.
 4. **Ad ogni step** si aggiorna: la riga *Stato* qui sopra, la casella dello step, e `TODO.md` (voci nuove e voci chiuse).
 5. **Nuova chat?** Leggi prima *Stato* qui e `TODO.md`, poi riparti dal primo step non chiuso.
-6. **Niente contenuto non SRD**: se un dato non si trova nel PDF SRD, non si inventa e non si scrive a memoria dal manuale: si segna in `TODO.md`. Test guardia nello step 1.
+6. **Niente contenuto non SRD**: se un dato non si trova nel PDF SRD, non si inventa e non si scrive a memoria dal manuale: si segna in `TODO.md`. Test guardia in `src/legal/noProtected.test.ts` (parole vietate e specie/sottoclassi non SRD). Giorgio (2026-10-02): tutto deve riferirsi solo all'SRD 5.2.1, per poter pubblicare senza violare diritti.
 7. Convenzioni (ereditate): file < ~300 righe, commenti in italiano, motore in `src/engine` senza UI, testi in `src/i18n/*.json`.
 
 ## Fonti in repo
@@ -54,7 +54,7 @@ Riscrittura degli estrattori in `scripts/` perché leggano **solo** i due PDF SR
   - **2d-2** ☑: Bardo, Chierico, Paladino, Ranger (incantatori: slot, trucchetti e preparati dalla tabella).
   - **2d-3** ☑: Druido, Stregone, Warlock, Mago.
 - **2e Incantesimi** ☑ (339 incantesimi IT+EN; le tabelle slot multiclasse passano a 2f): tutti quelli dell'SRD (livello, scuola, classi, tempo, gittata, componenti, durata, testo, livelli superiori) + liste per classe + tabelle slot.
-- **2f Condizioni, riposi, morte e regole di gioco** usate dal motore (Esaurimento incluso).
+- **2f Condizioni, riposi, morte e regole di gioco** ☑ usate dal motore: 15 condizioni (Esaurimento incluso), tabella slot del multiclasse, regole di creazione (serie standard, costo in punti, serie per classe, tabella PE, fasce di partenza, 9 allineamenti). Riposi e morte restano costanti nel motore (da riverificare sull'SRD nello step 4).
 - **2g (opzionale, da decidere)**: oggetti magici dell'SRD.
 - **Test per ogni sotto-passo**: `npm run validate:data` (schema Zod + riferimenti incrociati) su entrambe le lingue; test "IT e EN hanno gli stessi id" (`src/data/srd.parity.test.ts`); **conteggi attesi** scritti nel test (es. n. di classi, specie, incantesimi) presi dall'indice del PDF; controllo a campione di ≥10 voci per blocco contro il PDF (riportato nel riepilogo); i dubbi vanno in `TODO.md`, non inventati.
 

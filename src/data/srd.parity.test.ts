@@ -1,10 +1,12 @@
 import { describe, expect, it } from "vitest";
+import { resolveConditions } from "../engine/compute/conditions";
+import { testCharacter } from "../engine/compute/testkit";
 import { brokenReferences, grantedSpells, idsByKind, loadSrd, SRD_LANGS } from "./srdIntegrity";
 
 // Conteggi presi dalle tabelle dell'SRD 5.2.1 (armi: 10 semplici da mischia + 4 semplici a distanza + 18 da guerra da mischia + 6 da guerra a distanza)
 const COUNTS: Record<string, number> = {
   skills: 18, languages: 19, sizes: 6, damageTypes: 13, weaponProperties: 10, masteries: 8, coins: 5,
-  weapons: 38, armors: 13, tools: 37, items: 94, backgrounds: 4, feats: 17, species: 9, classes: 12, subclasses: 12, spells: 339,
+  weapons: 38, armors: 13, tools: 37, items: 94, backgrounds: 4, feats: 17, species: 9, classes: 12, subclasses: 12, spells: 339, conditions: 15, slotTables: 2, creation: 1,
 };
 
 describe.each(SRD_LANGS)("dati SRD (%s)", (lang) => {
@@ -15,7 +17,7 @@ describe.each(SRD_LANGS)("dati SRD (%s)", (lang) => {
   });
   it("riferimenti incrociati", () => { expect(brokenReferences(rs)).toEqual([]); });
   it("tutte le voci sono marcate SRD", () => {
-    for (const k of Object.keys(COUNTS)) for (const e of (rs as unknown as Record<string, Map<string, { origin: string }>>)[k]!.values()) expect(e.origin).toBe("srd");
+    for (const k of Object.keys(COUNTS).filter((x) => x !== "creation")) for (const e of (rs as unknown as Record<string, Map<string, { origin: string }>>)[k]!.values()) expect(e.origin).toBe("srd");
   });
 });
 
@@ -330,5 +332,50 @@ describe("incantesimi: valori controllati sul PDF (SRD 5.2.1)", () => {
   });
   it("il testo non ha iniziali perse", () => {
     for (const s of en.spells.values()) expect(`${s.summary} ${s.higherLevels ?? ""}`, s.id).not.toMatch(/(^|[.!?] )[a-z]/);
+  });
+});
+
+describe("condizioni, slot multiclasse e creazione: valori controllati sul PDF (SRD 5.2.1)", () => {
+  const [rsIt, en] = [loadSrd("it"), loadSrd("en")];
+  const run = (state: object) => resolveConditions({ ...testCharacter(), state: { ...testCharacter().state, ...state } }, en);
+  it("condizioni", () => {
+    expect([...en.conditions.values()].filter((c) => c.stackable).map((c) => c.id)).toEqual(["exhaustion"]);
+    expect([...en.conditions.values()].filter((c) => c.requiresSource).map((c) => c.id).sort()).toEqual(["charmed", "frightened", "grappled"]);
+    expect(en.conditions.get("exhaustion")!.levels).toEqual({ min: 1, max: 6, deathAt: 6 });
+    expect(en.conditions.get("grappled")!.escape).toMatchObject({ action: true, check: [{ ability: "str", skill: "athletics" }, { ability: "dex", skill: "acrobatics" }] });
+    expect(rsIt.conditions.get("exhaustion")!.name.it).toBe("Indebolimento");
+    for (const c of en.conditions.values()) expect(c.description, c.id).not.toBe("");
+  });
+  it("il motore applica le condizioni con i dati veri", () => {
+    const u = run({ conditions: ["unconscious"] });
+    expect(u.active.sort()).toEqual(["incapacitated", "prone", "unconscious"]);
+    expect(u.attacksAgainstYou.autoCritical).toHaveLength(1);
+    expect(u.cannot).toEqual(expect.arrayContaining(["compiere azione", "parlare"]));
+    const p = run({ conditions: ["petrified", "poisoned"] });
+    expect(p.active).not.toContain("poisoned");
+    expect(p.resistAll).toHaveLength(1);
+    expect(run({ conditions: ["blinded"] }).attackRolls.mode).toBe("disadvantage");
+    expect(run({ conditions: ["invisible"] }).initiativeMode.mode).toBe("advantage");
+    expect(run({ exhaustion: 2 })).toMatchObject({ d20Penalty: -4, speedPenalty: -10, dead: false });
+    expect(run({ exhaustion: 6 }).dead).toBe(true);
+  });
+  it("slot del multiclasse", () => {
+    const full = en.slotTables.get("full_caster")!.slots;
+    expect(full[0]).toEqual([2]); expect(full[4]).toEqual([4, 3, 2]); expect(full[19]).toEqual([4, 3, 3, 3, 3, 2, 2, 1, 1]);
+    for (const id of ["bard", "cleric", "druid", "sorcerer", "wizard"]) expect(en.classes.get(id)!.spellSlots, id).toEqual(full);
+    for (const id of ["paladin", "ranger"]) expect(en.classes.get(id)!.spellSlots, id).toEqual(en.slotTables.get("half_caster")!.slots);
+    expect(rsIt.slotTables.get("full_caster")!.slots).toEqual(full);
+  });
+  it("regole di creazione", () => {
+    const c = en.creation.get("creation")!;
+    expect(c.standardArray).toEqual([15, 14, 13, 12, 10, 8]);
+    expect(c.pointBuy).toEqual({ budget: 27, min: 8, max: 15, costs: { 8: 0, 9: 1, 10: 2, 11: 3, 12: 4, 13: 5, 14: 7, 15: 9 } });
+    expect(c.xpThresholds).toEqual([0, 300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000, 85000, 100000, 120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000]);
+    expect(c.recommendedArrays.wizard).toEqual({ str: 8, dex: 12, con: 13, int: 15, wis: 14, cha: 10 });
+    expect(Object.keys(c.recommendedArrays)).toHaveLength(12);
+    expect(c.startingLevels.map((b) => [b.minLevel, b.maxLevel, b.gold, b.goldDice?.multiplier])).toEqual([[2, 4, 0, undefined], [5, 10, 500, 25], [11, 16, 5000, 250], [17, 20, 20000, 250]]);
+    expect(c.startingLevels[3]!.magicItems).toEqual({ common: 2, uncommon: 4, rare: 3, veryRare: 1 });
+    expect(c.alignments.map((a) => a.id)).toHaveLength(9);
+    expect(rsIt.creation.get("creation")!.alignments[0]!.name.it).toBe("Legale buono");
   });
 });

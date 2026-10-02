@@ -18,6 +18,9 @@ const FORBIDDEN: { name: string; re: RegExp; allow?: RegExp }[] = [
   { name: "D&D", re: /\bD\s*(&|&amp;)\s*D\b/i },
   { name: "edizione 2024 / 5.5", re: /\b2024\b|\b5\.5\s*\(|edizione 5\.5/i },
   { name: "bookPage", re: /bookPage/ },
+  // contenuti che non sono nell'SRD 5.2.1 (specie, classi e sottoclassi di altri manuali)
+  { name: "non SRD: sottoclassi e specie", re: /eldritch knight|cavaliere mistico|arcane trickster|mistificatore arcano|aasimar|artificer|artefice|tabaxi|warforged/i,
+    allow: /\.private\.test\.ts$/ }, // TODO step 4: i vecchi *.private.test.ts vanno riscritti sull'SRD e questa eccezione tolta
 ];
 
 function walk(p: string, out: string[] = []): string[] {
