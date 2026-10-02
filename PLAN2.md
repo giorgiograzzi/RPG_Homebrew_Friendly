@@ -99,6 +99,6 @@ L'app è statica (nessun server): il "back" è IndexedDB (Dexie) + store + backu
 - Passata finale sul `TODO.md`, README, controllo legale, tag `v1.0.0`, checklist firmata.
 
 ## 7. Domande aperte per Giorgio
-1. Teniamo "Tiro dei dadi", "Acquisto a punti" e "Manuale" anche se non sono nell'SRD 5.2.1?
+1. ~~Teniamo "Tiro dei dadi", "Acquisto a punti" e "Manuale"?~~ **Deciso (Giorgio, 2026-10-02): sì, si tengono tutti e quattro i metodi** (con una nota nell'app: solo la serie standard è nell'SRD).
 2. Per i dettagli del personaggio (P2-4) bastano i campi del manuale o vuoi anche ritratto/immagine?
 3. Vuoi che P2-2 includa la sincronizzazione tra dispositivi, o restiamo sul file di backup?
