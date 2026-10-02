@@ -20,7 +20,7 @@ export function download(text: string, name: string) {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 export const exportNow = async (exportAll: () => Promise<string>) =>
-  download(await exportAll(), `placet-del-master-${new Date().toISOString().slice(0, 10)}.json`);
+  download(await exportAll(), `placet-backup-${new Date().toISOString().slice(0, 10)}.json`);
 
 const isStandalone = () => { try { return window.matchMedia("(display-mode: standalone)").matches || (navigator as { standalone?: boolean }).standalone === true; } catch { return false; } };
 
