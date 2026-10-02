@@ -32,8 +32,8 @@ docker compose up -d --build
 ```
 L'app è statica (nginx): si aggiorna con `git pull && docker compose up -d --build`. Il service worker e `index.html` non vanno in cache, così un aggiornamento arriva subito.
 
-## Licenze
-Codice: MIT (`LICENSE`). Contenuti SRD: CC-BY-4.0 (`ATTRIBUTION.md`).
+## Privacy e cookie
+L'app non raccoglie dati personali e non imposta cookie: personaggi e impostazioni restano nel browser. Il testo di Privacy Policy e Cookie Policy (IT/EN) è in `src/legal/policies.ts`, si legge nell'app (menu → Privacy Policy / Cookie Policy) e il banner informativo è `src/ui/CookieBanner.tsx`. Se si aggiungono statistiche, servizi esterni o cookie vanno aggiornati i testi e il banner va reso con Accetta/Rifiuta. I testi non sono consulenza legale.
 
 ## Licenze
 Codice: MIT (`LICENSE`). Font della scheda PDF: Noto Sans, SIL OFL 1.1 (`docs/licenses/`). Dettagli in `ATTRIBUTION.md`.
