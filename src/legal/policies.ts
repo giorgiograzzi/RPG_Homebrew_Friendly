@@ -42,7 +42,7 @@ const PRIVACY_IT: Policy = {
   title: "Informativa sulla privacy",
   updated: "Ultimo aggiornamento: 2 ottobre 2026",
   intro: [
-    "Questa informativa spiega come Danger & Dragons (di seguito «l'App») tratta i dati personali, ai sensi degli artt. 13 e 14 del Regolamento (UE) 2016/679 («GDPR») e del D.Lgs. 196/2003 (Codice privacy) come modificato dal D.Lgs. 101/2018.",
+    "Questa informativa spiega come Placet del Master (di seguito «l'App») tratta i dati personali, ai sensi degli artt. 13 e 14 del Regolamento (UE) 2016/679 («GDPR») e del D.Lgs. 196/2003 (Codice privacy) come modificato dal D.Lgs. 101/2018.",
     "In sintesi: l'App funziona sul tuo dispositivo. Personaggi, homebrew e impostazioni restano nel tuo browser e non vengono inviati a nessun server, non esiste un account, non usiamo statistiche, pubblicità o strumenti di profilazione e l'App non imposta cookie.",
   ],
   sections: [
@@ -114,7 +114,7 @@ const PRIVACY_EN: Policy = {
   title: "Privacy Policy",
   updated: "Last updated: 2 October 2026",
   intro: [
-    "This policy explains how Danger & Dragons (the «App») handles personal data, under Articles 13 and 14 of Regulation (EU) 2016/679 («GDPR») and the Italian Privacy Code (Legislative Decree 196/2003, as amended by Legislative Decree 101/2018).",
+    "This policy explains how Placet del Master (the «App») handles personal data, under Articles 13 and 14 of Regulation (EU) 2016/679 («GDPR») and the Italian Privacy Code (Legislative Decree 196/2003, as amended by Legislative Decree 101/2018).",
     "In short: the App runs on your device. Characters, homebrew and settings stay in your browser and are not sent to any server, there is no account, we use no analytics, advertising or profiling tools, and the App sets no cookies.",
   ],
   sections: [
@@ -186,7 +186,7 @@ const COOKIES_IT: Policy = {
   title: "Cookie Policy",
   updated: "Ultimo aggiornamento: 2 ottobre 2026",
   intro: [
-    "Questa Cookie Policy spiega quali cookie e quali tecnologie simili usa Danger & Dragons (l'«App»), in conformità all'art. 122 del Codice privacy (D.Lgs. 196/2003), alla Direttiva 2002/58/CE (ePrivacy), al GDPR e alle «Linee guida cookie e altri strumenti di tracciamento» del Garante per la protezione dei dati personali (10 giugno 2021).",
+    "Questa Cookie Policy spiega quali cookie e quali tecnologie simili usa Placet del Master (l'«App»), in conformità all'art. 122 del Codice privacy (D.Lgs. 196/2003), alla Direttiva 2002/58/CE (ePrivacy), al GDPR e alle «Linee guida cookie e altri strumenti di tracciamento» del Garante per la protezione dei dati personali (10 giugno 2021).",
     "In sintesi: l'App non imposta alcun cookie e non usa cookie di profilazione, di analisi o di terze parti. Usa soltanto archivi tecnici del browser (IndexedDB, localStorage, cache) necessari a farla funzionare e a ricordare le tue scelte. Per questi strumenti la legge non richiede il consenso: per questo il banner è solo informativo.",
   ],
   sections: [
@@ -230,7 +230,7 @@ const COOKIES_EN: Policy = {
   title: "Cookie Policy",
   updated: "Last updated: 2 October 2026",
   intro: [
-    "This Cookie Policy explains which cookies and similar technologies Danger & Dragons (the «App») uses, in line with Art. 122 of the Italian Privacy Code (Legislative Decree 196/2003), Directive 2002/58/EC (ePrivacy), the GDPR and the Italian Data Protection Authority's «Guidelines on cookies and other tracking tools» (10 June 2021).",
+    "This Cookie Policy explains which cookies and similar technologies Placet del Master (the «App») uses, in line with Art. 122 of the Italian Privacy Code (Legislative Decree 196/2003), Directive 2002/58/EC (ePrivacy), the GDPR and the Italian Data Protection Authority's «Guidelines on cookies and other tracking tools» (10 June 2021).",
     "In short: the App sets no cookies and uses no profiling, analytics or third-party cookies. It only uses technical browser storage (IndexedDB, localStorage, cache) needed to make it work and remember your choices. The law does not require consent for these tools: that is why the banner is informational only.",
   ],
   sections: [
