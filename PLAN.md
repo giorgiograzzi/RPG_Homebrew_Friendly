@@ -95,7 +95,7 @@ Oggi l'interfaccia imita Windows XP / Win95 (`src/ui/xp/`, 313 righe di CSS, ~26
 - **Cosa**: adatta manifest/nome/icone (nuove, originali), Docker (il build non dipende più da `data/private`), workflow GitHub Actions: `typecheck`, `test`, `validate:data`, `build`.
 - **Test**: `docker compose build` ok; CI verde; build PWA offline verificato (Playwright con rete spenta dopo il primo caricamento).
 
-### Step 10 — Rifinitura e release  ☐
+### Step 10 — Rifinitura e release  ◐ (README, checklist `docs/RELEASE.md`, suite verde; restano le firme di Giorgio e il tag)
 - **Cosa**: passata finale sul `TODO.md`, README con istruzioni (uso, homebrew, lingue, licenze), controllo legale finale (rilettura della dicitura, del nome, dei loghi), tag `v1.0.0`.
 - **Test**: tutta la suite + guardia legale + smoke test; checklist finale firmata da Giorgio.
 
