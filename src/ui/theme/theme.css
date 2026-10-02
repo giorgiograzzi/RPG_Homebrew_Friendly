@@ -351,3 +351,8 @@ h1, h2, h3 { line-height: 1.25; }
   .ui-body { overflow: visible; padding: 0; }
   body { background: #fff; color: #000; }
 }
+
+/* salti rapidi nella scheda unica: restano in alto mentre si scorre */
+.pl-jump { position: sticky; top: -16px; z-index: 5; display: flex; gap: 6px; margin: -16px auto 12px; padding: 8px 0; background: var(--bg); border-bottom: 1px solid var(--border); }
+.pl-jump .ui-btn { flex: 1; padding: 0 8px; }
+#pl-status, #pl-features, #pl-stats { scroll-margin-top: 64px; }
