@@ -1,8 +1,10 @@
 import { computeCharacter } from "../engine/compute";
+import { tr } from "../i18n/tr";
 import type { Ruleset } from "../engine/ruleset";
 import type { Ability } from "../engine/schema";
 import type { Character } from "../engine/types";
 import { strings as it } from "../i18n";
+import { distance } from "../ui/units";
 
 const t = it.wizard;
 const AB = it.wizard.abilities as Record<Ability, string>;
@@ -20,10 +22,10 @@ export function Summary({ ch, rs }: { ch: Character; rs: Ruleset }) {
       <div className="wz-sum">
         <div>{t.sum.hp}<b>{d.hp.max.value}</b></div>
         <div>{t.sum.ac}<b>{d.ac.value}</b></div>
-        <div>{t.sum.speed}<b>{d.speed.walk.value} ft</b></div>
+        <div>{t.sum.speed}<b>{distance(d.speed.walk.value)}</b></div>
         <div>{t.sum.pb}<b>{sign(d.proficiencyBonus.value)}</b></div>
         <div>{t.sum.init}<b>{sign(d.initiative.value)}</b></div>
-        <div>{t.sum.gold}<b>{ch.coins.gp} mo</b></div>
+        <div>{t.sum.gold}<b>{ch.coins.gp} {tr("mo", "gp")}</b></div>
       </div>
       <div className="wz-sum">
         {(Object.keys(AB) as Ability[]).map((a) => <div key={a}>{AB[a]}<b>{d.scores[a].value} ({sign(d.mods[a].value)})</b></div>)}

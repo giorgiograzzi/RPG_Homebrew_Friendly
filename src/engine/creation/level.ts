@@ -3,6 +3,7 @@ import type { Ruleset } from "../ruleset";
 import type { Character } from "../types";
 import { validateDecisions } from "./decisions";
 import type { DecisionResult } from "./types";
+import { tr } from "../../i18n/tr";
 
 // Passo 0 della creazione: il livello di partenza (file 02 §6 "Partire a livello più alto"). Un personaggio creato al livello N ha i PX minimi
 // del livello N e tutti i privilegi, i talenti (ASI) e le scelte dei livelli 1..N.
@@ -14,7 +15,7 @@ export const levelBand = (rs: Ruleset, level: number) => rs.creation.get("creati
 // Cambia il livello di partenza. Se il livello scende, le scelte dei livelli persi (e quelle non più valide) vengono annullate a cascata:
 // `removed` le elenca perché l'interfaccia possa chiedere conferma prima di usare `character`.
 export function setStartLevel(ch: Character, rs: Ruleset, level: number): DecisionResult {
-  if (!Number.isInteger(level) || level < MIN_LEVEL || level > MAX_START_LEVEL) return { ok: false, errors: [`Il livello va da ${MIN_LEVEL} a ${MAX_START_LEVEL}`], character: ch, removed: [] };
+  if (!Number.isInteger(level) || level < MIN_LEVEL || level > MAX_START_LEVEL) return { ok: false, errors: [tr(`Il livello va da ${MIN_LEVEL} a ${MAX_START_LEVEL}`, `The level ranges from ${MIN_LEVEL} to ${MAX_START_LEVEL}`)], character: ch, removed: [] };
   const xp = xpThreshold(rs, level);
   let next: Character = { ...ch, startLevel: level, ...(xp !== undefined ? { xp } : {}) };
   // il tiro delle monete dipende dalla fascia di livello: se la fascia cambia, va rifatto

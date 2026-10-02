@@ -6,6 +6,7 @@ import { emptyCharacter } from "../engine/character";
 import { charactersUsing, mergeEntries, type HbEntry } from "../engine/homebrew";
 import type { Character } from "../engine/types";
 import { normalizeSettings, type AppSettings, DEFAULT_APP_SETTINGS } from "./settings";
+import { tr } from "../i18n/tr";
 
 // Scheduler iniettabile: nei test si controlla il tempo a mano
 export interface Scheduler { set(fn: () => void, ms: number): unknown; clear(handle: unknown): void }
@@ -65,7 +66,7 @@ export function createAppStore({ repo, scheduler = realScheduler, debounceMs = 8
         if (get().current === ch) set({ saveStatus: "saved", error: null });
         await refreshList();
       } catch (e) {
-        set({ saveStatus: "error", error: `Salvataggio fallito: ${e instanceof Error ? e.message : String(e)}` });
+        set({ saveStatus: "error", error: tr(`Salvataggio fallito: ${e instanceof Error ? e.message : String(e)}`, `Save failed: ${e instanceof Error ? e.message : String(e)}`) });
       }
     };
     const enqueueSave = () => { inFlight = inFlight.then(doSave); return inFlight; };
@@ -79,7 +80,7 @@ export function createAppStore({ repo, scheduler = realScheduler, debounceMs = 8
           const homebrew = (await repo.getSetting<HbEntry[]>("homebrew")) ?? [];
           set({ settings, homebrew: Array.isArray(homebrew) ? homebrew : [], list: await repo.list(), ready: true });
         } catch (e) {
-          set({ ready: true, error: `Archivio del browser non disponibile: ${e instanceof Error ? e.message : String(e)}` });
+          set({ ready: true, error: tr(`Archivio del browser non disponibile: ${e instanceof Error ? e.message : String(e)}`, `Browser storage not available: ${e instanceof Error ? e.message : String(e)}`) });
         }
       },
       async create() {
@@ -123,7 +124,7 @@ export function createAppStore({ repo, scheduler = realScheduler, debounceMs = 8
       },
       async homebrewUsers(ids) {
         await get().flush();
-        return charactersUsing(await allCharacters(), ids).map((c) => c.name || "Senza nome");
+        return charactersUsing(await allCharacters(), ids).map((c) => c.name || tr("Senza nome", "Unnamed"));
       },
       async exportAll() {
         await get().flush();

@@ -19,7 +19,7 @@ export function creationProgress(ch: Character, rs: Ruleset): { steps: StepStatu
     const missing = mine.filter((q) => !q.complete && !q.disabled).map((q) => q.key);
     const problems: string[] = [];
     if (step === "scores") problems.push(...scoreProblems(ch, rs));
-    if (step === "details" && !ch.name.trim()) problems.push("Dai un nome al personaggio");
+    if (step === "details" && !ch.name.trim()) problems.push(tr("Dai un nome al personaggio", "Give the character a name"));
     if (step === "class" && !ch.classes.length) problems.push(tr("Scegli una classe", "Choose a class"));
     // il livello (passo 0) parte da 1: non manca mai nulla
     return { step, complete: !missing.length && !problems.length, missing, problems };
@@ -37,7 +37,7 @@ export function classOptions(ch: Character, rs: Ruleset): OptionState[] {
     if (!ch.classes.length || o.selected) return o;
     if (!ok(c.multiclassRequirement)) return { ...o, enabled: false, disabledReason: `Richiede ${describeCondition(c.multiclassRequirement!, rs)}` };
     const blocker = ch.classes.map((x) => rs.classes.get(x.classId)).find((x) => x && !ok(x.multiclassRequirement));
-    if (blocker) return { ...o, enabled: false, disabledReason: `Per lasciare ${blocker.name.it} serve ${describeCondition(blocker.multiclassRequirement!, rs)}` };
+    if (blocker) return { ...o, enabled: false, disabledReason: tr(`Per lasciare ${blocker.name.it} serve ${describeCondition(blocker.multiclassRequirement!, rs)}`, `To leave ${blocker.name.it} you need ${describeCondition(blocker.multiclassRequirement!, rs)}`) };
     return o;
   });
 }

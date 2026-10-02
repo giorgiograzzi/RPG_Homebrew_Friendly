@@ -4,6 +4,7 @@ import { strings as it } from "../i18n";
 import { fmt } from "../ui/format";
 import { Button } from "../ui/theme";
 import type { TabProps } from "./types";
+import { distance } from "../ui/units";
 
 const t = it.play;
 
@@ -27,7 +28,7 @@ export function ConditionsTab({ ch, rs, d, update, onBack }: TabProps & { onBack
             <span className="pl-pips">{Array.from({ length: 6 }, (_, i) => <span key={i} className={`pl-pip ${i < ch.state.exhaustion ? "on ko" : ""}`} />)}</span>
             <Button aria-label={`${t.exhaustion} +`} disabled={ch.state.exhaustion >= 6} onClick={() => update((c) => setExhaustion(c, c.state.exhaustion + 1))}>+</Button>
           </div>
-          {ch.state.exhaustion > 0 && <p className="ui-muted">{fmt(t.penalty, { n: cs.d20Penalty, s: -cs.speedPenalty })}</p>}
+          {ch.state.exhaustion > 0 && <p className="ui-muted">{fmt(t.penalty, { n: cs.d20Penalty, s: distance(-cs.speedPenalty) })}</p>}
           {ex.description && <p className="ui-muted">{ex.description}</p>}
         </section>
       )}

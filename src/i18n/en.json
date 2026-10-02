@@ -26,13 +26,9 @@
     "open": "Open",
     "delete": "Delete",
     "confirmDelete": "Permanently delete this character?",
-    "creationSoon": "Guided creation comes with the next step: for now the character is empty.",
     "backupDue": "It has been a while since your last backup: export one now to keep your characters safe."
   },
   "soon": {
-    "sheet": "The playable sheet is coming.",
-    "equip": "Equipment is coming.",
-    "magic": "Spells are coming.",
     "needCharacter": "Open or create a character from the Characters tab."
   },
   "settings": {
@@ -153,7 +149,8 @@
       "bonus": "Bonus",
       "total": "Total",
       "mod": "Mod.",
-      "table": "Scores"
+      "table": "Scores",
+      "nonSrd": "Only the standard array is in SRD 5.2.1: rolling, point buy and manual are common extra methods."
     },
     "abilities": {
       "str": "Strength",
@@ -173,16 +170,13 @@
       "init": "Initiative",
       "languages": "Languages",
       "equipment": "Equipment",
-      "features": "Features",
       "spells": "Spells",
       "gold": "Coins",
       "errors": "It cannot be closed yet",
-      "done": "Creation complete",
       "reopen": "Edit the creation",
-      "reopenConfirm": "By reopening the creation you can change choices and level. Hit Points already rolled, equipment, coins and play state stay as they are now. Continue?",
-      "progress": "Level and advancement"
+      "reopenConfirm": "By reopening the creation you can change choices and level. Hit Points already rolled, equipment, coins and play state stay as they are now. Continue?"
     },
-    "noCreation": "The creation rules are missing: alignments, standard array and point buy are not available. Run “npm run extract:data” on the server, then rebuild.",
+    "noCreation": "The creation rules are missing: alignments and the standard array are not available. Reload the app; if it persists, update it.",
     "stepMissing": "Step “{s}”: some choices are missing",
     "levelStep": {
       "level": "Character level",
@@ -316,7 +310,7 @@
     "source": "Caused by…",
     "none": "No active conditions.",
     "cannot": "You can't",
-    "penalty": "d20 rolls: {n} · Speed: {s} ft",
+    "penalty": "d20 rolls: {n} · Speed: {s}",
     "coins": "Coins",
     "notes": "Notes",
     "notesHelp": "Free notes about the character.",

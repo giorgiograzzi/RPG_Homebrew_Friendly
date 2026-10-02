@@ -6,6 +6,7 @@ import type { Ruleset } from "../engine/ruleset";
 import { ABILITIES, type Ability } from "../engine/schema";
 import type { Character } from "../engine/types";
 import { lang as appLang, STRINGS, type Lang } from "../i18n";
+import { distance } from "../ui/units";
 
 // Dati del personaggio pronti da scrivere sulla scheda PDF (step 7): solo testi già formattati.
 // Niente calcoli qui: ogni numero arriva dal motore (computeCharacter), la scheda stampata coincide con quella dell'app.
@@ -59,7 +60,7 @@ export function buildSheetData(ch: Character, rs: Ruleset, lang: Lang = appLang)
     name: ch.name, klass: ch.classes.map((c) => nameOf(rs.classes, c.classId)).join(" / "), level: String(totalLevel),
     subclass: ch.classes.map((c) => (c.subclassId ? nameOf(rs.subclasses, c.subclassId) : "")).filter(Boolean).join(" / "),
     species: nameOf(rs.species, ch.speciesId), background: nameOf(rs.backgrounds, ch.backgroundId), xp: ch.xp !== undefined ? String(ch.xp) : "",
-    size: sizes.map((z) => nameOf(rs.sizes, z)).join(" / "), speed: `${d.speed.walk.value} ${P.ft}`, initiative: sign(d.initiative.value),
+    size: sizes.map((z) => nameOf(rs.sizes, z)).join(" / "), speed: distance(d.speed.walk.value, lang), initiative: sign(d.initiative.value),
     passive: String(d.passivePerception.value), pb: sign(d.proficiencyBonus.value), hpNow: String(Math.min(ch.state.hp, d.hp.max.value)), hpMax: String(d.hp.max.value),
     hitDiceUsed: ch.state.hitDiceUsed ? String(ch.state.hitDiceUsed) : "", hitDice: d.hp.hitDice.map((h) => `${h.total}d${h.die}`).join(" + "), ac: String(d.ac.value), shield: !!d.loadout.shield, inspiration: ch.state.inspiration,
     scores: sheet, skills,

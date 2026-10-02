@@ -26,13 +26,9 @@
     "open": "Apri",
     "delete": "Elimina",
     "confirmDelete": "Eliminare definitivamente questo personaggio?",
-    "creationSoon": "La creazione guidata arriva con il prossimo passo: per ora il personaggio è vuoto.",
     "backupDue": "È passato un po' dall'ultimo backup: esportalo adesso, così i personaggi sono al sicuro."
   },
   "soon": {
-    "sheet": "La scheda giocabile arriva presto.",
-    "equip": "L'equipaggiamento arriva presto.",
-    "magic": "Le magie arrivano presto.",
     "needCharacter": "Apri o crea un personaggio dalla scheda Personaggi."
   },
   "settings": {
@@ -112,7 +108,7 @@
       "class": "Classe",
       "background": "Background",
       "species": "Specie",
-      "languages": "Linguaggi",
+      "languages": "Lingue",
       "scores": "Punteggi",
       "alignment": "Allineamento",
       "details": "Dettagli"
@@ -138,7 +134,7 @@
     },
     "scores": {
       "method": "Metodo",
-      "array": "Array standard",
+      "array": "Serie standard",
       "roll": "Tiro dei dadi",
       "pointbuy": "Acquisto a punti",
       "manual": "Manuale",
@@ -153,7 +149,8 @@
       "bonus": "Bonus",
       "total": "Totale",
       "mod": "Mod.",
-      "table": "Punteggi"
+      "table": "Punteggi",
+      "nonSrd": "Solo la serie standard è nell'SRD 5.2.1: tiro dei dadi, acquisto a punti e manuale sono metodi aggiuntivi comuni."
     },
     "abilities": {
       "str": "Forza",
@@ -171,18 +168,15 @@
       "speed": "Velocità",
       "pb": "Bonus di competenza",
       "init": "Iniziativa",
-      "languages": "Linguaggi",
+      "languages": "Lingue",
       "equipment": "Equipaggiamento",
-      "features": "Privilegi",
       "spells": "Incantesimi",
       "gold": "Monete",
       "errors": "Non si può ancora chiudere",
-      "done": "Creazione completata",
       "reopen": "Modifica la creazione",
-      "reopenConfirm": "Riaprendo la creazione puoi cambiare scelte e livello. I Punti Ferita già tirati, l'equipaggiamento, le monete e lo stato di gioco restano quelli attuali. Continuare?",
-      "progress": "Livello e avanzamento"
+      "reopenConfirm": "Riaprendo la creazione puoi cambiare scelte e livello. I Punti Ferita già tirati, l'equipaggiamento, le monete e lo stato di gioco restano quelli attuali. Continuare?"
     },
-    "noCreation": "Mancano le regole di creazione: allineamenti, array standard e acquisto a punti non sono disponibili. Sul server lancia «npm run extract:data», poi rifai la build.",
+    "noCreation": "Mancano le regole di creazione: allineamenti e serie standard non sono disponibili. Ricarica l'app; se il problema resta, aggiornala.",
     "stepMissing": "Passo «{s}»: mancano delle scelte",
     "levelStep": {
       "level": "Livello del personaggio",
@@ -237,7 +231,7 @@
     "hp": "Punti Ferita",
     "temp": "PF temporanei",
     "tempShort": "PF temp",
-    "deathSaves": "Tiri su Morte",
+    "deathSaves": "Tiri salvezza contro morte",
     "amount": "Quantità",
     "damage": "Danno",
     "heal": "Cura",
@@ -255,7 +249,7 @@
     "ac": "Classe Armatura",
     "init": "Iniziativa",
     "speed": "Velocità",
-    "pb": "Bonus competenza",
+    "pb": "Bonus di competenza",
     "pp": "Percezione passiva",
     "hitDice": "Dadi Vita",
     "inspiration": "Ispirazione",
@@ -265,7 +259,7 @@
     "noDice": "Nessun Dado Vita rimasto",
     "healedBy": "Recuperi {n} PF (d{d} {r} + Cos)",
     "endShort": "Finisci il riposo",
-    "longConfirm": "Il riposo lungo ripristina PF, metà dei Dadi Vita, risorse e slot e toglie 1 livello di Esaurimento. Continuare?",
+    "longConfirm": "Il riposo lungo ripristina PF, metà dei Dadi Vita, risorse e slot e toglie 1 livello di Indebolimento. Continuare?",
     "resources": "Risorse",
     "slots": "Slot incantesimo",
     "slotLevel": "{n}° livello",
@@ -298,7 +292,7 @@
       "expertise": "◆"
     },
     "senses": "Sensi",
-    "languages": "Linguaggi",
+    "languages": "Lingue",
     "profs": "Competenze",
     "armor": "Armature",
     "weapons": "Armi",
@@ -311,12 +305,12 @@
     "hit": "Colpisci con {t}",
     "critHit": "Critico! Dadi del danno raddoppiati.",
     "conditionsTitle": "Condizioni",
-    "exhaustion": "Esaurimento",
+    "exhaustion": "Indebolimento",
     "exhaustionLevel": "Livello {n}",
     "source": "Causata da…",
     "none": "Nessuna condizione attiva.",
     "cannot": "Non puoi",
-    "penalty": "Tiri d20: {n} · Velocità: {s} ft",
+    "penalty": "Tiri d20: {n} · Velocità: {s}",
     "coins": "Monete",
     "notes": "Note",
     "notesHelp": "Appunti liberi sul personaggio.",
@@ -477,7 +471,7 @@
     },
     "time": {
       "action": "Azione",
-      "bonus_action": "Azione Bonus",
+      "bonus_action": "Azione bonus",
       "reaction": "Reazione",
       "minute": "minuti",
       "hour": "ore"
@@ -558,7 +552,7 @@
       "backgrounds": "Background",
       "classes": "Classe",
       "subclasses": "Sottoclasse",
-      "languages": "Linguaggio",
+      "languages": "Lingua",
       "damageTypes": "Tipo di danno",
       "conditions": "Condizione"
     },
@@ -572,7 +566,7 @@
       "backgrounds": "Background",
       "classes": "Classi",
       "subclasses": "Sottoclassi",
-      "languages": "Linguaggi",
+      "languages": "Lingue",
       "damageTypes": "Tipi di danno",
       "conditions": "Condizioni"
     },
@@ -1009,7 +1003,7 @@
     "armorShield": "Scudi",
     "weapons": "Armi",
     "tools": "Strumenti",
-    "languages": "Linguaggi",
+    "languages": "Lingue",
     "classFeatures": "Privilegi di classe",
     "speciesTraits": "Tratti di specie",
     "feats": "Talenti e background",

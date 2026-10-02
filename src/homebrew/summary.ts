@@ -3,6 +3,7 @@ import type { Effect } from "../engine/types";
 import type { Ruleset } from "../engine/ruleset";
 import { formatCost } from "../engine/equipment";
 import { strings as it } from "../i18n";
+import { tr } from "../i18n/tr";
 
 const O = it.homebrew.opts;
 const AB = it.wizard.abilities as Record<string, string>;
@@ -52,7 +53,7 @@ export function summarize(kind: HbKind, x: HbData, rs: Ruleset): string[] {
       ...(Object.keys(d.table ?? {}).length ? [`Tabella: ${Object.keys(d.table).join(", ")}`] : []),
     ];
     case "subclasses": return [`Sottoclasse di ${name(rs.classes, d.classId)}`, `Privilegi: ${levelsOf(d.features) || "nessuno"}`];
-    case "languages": return [`Linguaggio ${d.extra?.rarity === "rare" ? "raro" : "standard"}`];
+    case "languages": return [tr(`Lingua ${d.extra?.rarity === "rare" ? "rara" : "standard"}`, `${d.extra?.rarity === "rare" ? "Rare" : "Standard"} language`)];
     case "damageTypes": return [d.description || "Tipo di danno"];
     case "conditions": return [d.description || "Condizione", ...(d.requiresSource ? ["Serve sapere chi la causa"] : [])].filter(Boolean);
     case "spells": return [

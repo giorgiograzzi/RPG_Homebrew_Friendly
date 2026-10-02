@@ -30,7 +30,7 @@ export function computeRolls(x: Ctx, profs: Profs, notes: string[], cs: Conditio
     const parts: Part[] = [{ label: tr(`Mod ${a}`, `${a} mod`), value: x.mods[a] }];
     if (proficient) parts.push({ label: tr("Competenza", "Proficiency"), value: x.pb });
     const adv: string[] = [...cs.rolls.saves[a].adv], dis: string[] = [...cs.rolls.saves[a].dis];
-    if (cs.d20Penalty) parts.push({ label: tr("Esaurimento", "Exhaustion"), value: cs.d20Penalty });
+    if (cs.d20Penalty) parts.push({ label: tr("Indebolimento", "Exhaustion"), value: cs.d20Penalty });
     for (const { effect: e, label } of x.active) {
       if (e.op === "saveBonus" && (!e.ability || e.ability === a)) parts.push({ label, value: evalValue(e.value, x) });
       if (e.op === "saveAdvantage" && (!e.abilities || e.abilities.includes(a))) {
@@ -42,7 +42,7 @@ export function computeRolls(x: Ctx, profs: Profs, notes: string[], cs: Conditio
     saves[a] = { bonus: sum(parts), proficient, autoFail: cs.autoFailSaves[a] ?? [], ...combineMode(adv, dis) };
   }
   for (const { effect: e, label } of x.active) {
-    if (e.op === "saveAdvantage" && e.against) notes.push(`Vantaggio ai TS${e.abilities ? ` (${e.abilities.join("/")})` : ""} contro ${e.against} — ${label}`);
+    if (e.op === "saveAdvantage" && e.against) notes.push(tr(`Vantaggio ai TS${e.abilities ? ` (${e.abilities.join("/")})` : ""} contro ${e.against} — ${label}`, `Advantage on saves${e.abilities ? ` (${e.abilities.join("/")})` : ""} against ${e.against} — ${label}`));
   }
   const jack = x.collected.features.has("jack_of_all_trades"); // Factotum del Bardo
   const skills = {} as Derived["skills"];
@@ -56,7 +56,7 @@ export function computeRolls(x: Ctx, profs: Profs, notes: string[], cs: Conditio
     for (const { effect: e, label } of x.active) {
       if (e.op === "checkBonus" && (!e.skills || e.skills.includes(s))) parts.push({ label, value: evalValue(e.value, x) });
     }
-    if (cs.d20Penalty) parts.push({ label: tr("Esaurimento", "Exhaustion"), value: cs.d20Penalty });
+    if (cs.d20Penalty) parts.push({ label: tr("Indebolimento", "Exhaustion"), value: cs.d20Penalty });
     const adv: string[] = [...cs.rolls.checks.adv], dis: string[] = [...cs.rolls.checks.dis];
     if (untrained && (ab === "str" || ab === "dex")) dis.push(armorDis);
     if (s === "stealth" && x.bodyArmor?.stealthDisadvantage) dis.push(x.bodyArmor.name.it);

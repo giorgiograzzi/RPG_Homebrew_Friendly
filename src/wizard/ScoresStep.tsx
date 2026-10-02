@@ -32,6 +32,7 @@ export function ScoresStep({ ch, rs, allowReroll, onChange, onError }: {
         <Segmented<Method> label={t.scores.method} value={(method ?? "") as Method} onChange={(m) => apply(chooseMethod(ch, rs, m, { allowReroll }))}
           options={METHODS.map((m) => ({ value: m, label: t.scores[m] }))} />
       </Field>
+      {method && method !== "array" && <p className="ui-muted">{t.scores.nonSrd}</p>}
       {method === "array" && <p className="ui-muted">{t.scores.arrayHelp}</p>}
       {method === "roll" && <p className="ui-muted">{t.scores.rollHelp}</p>}
       {method === "pointbuy" && pb && rules && <p className="ui-muted">{fmt(t.scores.pointbuyHelp, { n: pb.remaining, t: rules.pointBuy.budget, min: rules.pointBuy.min, max: rules.pointBuy.max })}</p>}

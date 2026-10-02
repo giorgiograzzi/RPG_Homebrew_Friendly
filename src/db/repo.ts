@@ -1,6 +1,7 @@
 import Dexie, { type EntityTable } from "dexie";
 import type { Character } from "../engine/types";
 import { migrateCharacter } from "./migrations";
+import { tr } from "../i18n/tr";
 
 // Riga salvata: i dati restano nel formato con cui sono stati scritti, si migrano alla lettura
 export interface CharacterRow { id: string; name: string; updatedAt: number; data: unknown }
@@ -26,7 +27,7 @@ export function createRepo(dbName = "srd-personaggi") {
     },
     async load(id: string): Promise<LoadResult> {
       const row = await db.characters.get(id);
-      if (!row) return { ok: false, id, error: "Personaggio non trovato." };
+      if (!row) return { ok: false, id, error: tr("Personaggio non trovato.", "Character not found.") };
       const r = migrateCharacter(row.data);
       return r.ok ? { ok: true, character: r.character } : { ok: false, id, error: r.error };
     },

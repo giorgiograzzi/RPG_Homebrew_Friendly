@@ -21,7 +21,7 @@ export function recoverSlots(ch: Character, d: Pick<Derived, "spellSlots" | "res
   for (const l of levels) {
     const have = used[l] ?? 0;
     const asked = levels.filter((x) => x === l).length;
-    if (asked > have) return fail(ch, `Non hai abbastanza slot di ${l}° livello spesi`);
+    if (asked > have) return fail(ch, tr(`Non hai abbastanza slot di ${l}° livello spesi`, `You do not have enough spent level ${l} slots`));
   }
   for (const l of levels) { used[l] = (used[l] ?? 0) - 1; if (used[l] === 0) delete used[l]; }
   return { ok: true, errors: [], character: useResource({ ...ch, state: { ...ch.state, slotsUsed: used } }, resourceId, r.max.value, 1) };

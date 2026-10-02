@@ -81,14 +81,14 @@ const fail = (ch: Character, ...errors: string[]): DecisionResult => ({ ok: fals
 // nuovo ripulito e ciò che verrebbe annullato a cascata. L'interfaccia mostra l'avviso e, se l'utente annulla, tiene il personaggio di partenza.
 export function previewDecision(ch: Character, rs: Ruleset, key: string, picked: string[]): DecisionResult {
   const q = allQuestions(ch, rs).find((x) => x.key === key);
-  if (!q) return fail(ch, `Scelta non disponibile: ${key}`);
-  if (q.kind !== "choice") return fail(ch, "Gli aumenti di caratteristica si impostano con setAsi");
+  if (!q) return fail(ch, tr(`Scelta non disponibile: ${key}`, `Choice not available: ${key}`));
+  if (q.kind !== "choice") return fail(ch, tr("Gli aumenti di caratteristica si impostano con setAsi", "Ability score increases are set with setAsi"));
   if (q.disabled) return fail(ch, q.disabledReason ?? tr("Scelta alternativa già coperta", "Alternative choice already covered"));
-  if (picked.length > q.count) return fail(ch, `Puoi scegliere al massimo ${q.count} opzioni`);
+  if (picked.length > q.count) return fail(ch, tr(`Puoi scegliere al massimo ${q.count} opzioni`, `You can choose at most ${q.count} options`));
   if (new Set(picked).size !== picked.length) return fail(ch, "Opzioni ripetute");
   const errors = picked.flatMap((id) => {
     const o = q.options.find((x) => x.id === id);
-    return !o ? [`Opzione sconosciuta: ${id}`] : o.enabled ? [] : [`${o.name}: ${o.disabledReason ?? "non disponibile"}`];
+    return !o ? [tr(`Opzione sconosciuta: ${id}`, `Unknown option: ${id}`)] : o.enabled ? [] : [`${o.name}: ${o.disabledReason ?? tr("non disponibile", "not available")}`];
   });
   if (errors.length) return fail(ch, ...errors);
   let next = setKey(ch, key, picked);

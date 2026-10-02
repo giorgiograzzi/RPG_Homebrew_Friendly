@@ -53,7 +53,7 @@ export function computeAttacks(x: Ctx, profs: Profs, cs: ConditionState, untrain
       if (w.properties.includes("finesse")) cand.push(["dex", "Accurata"]);
       if (feat.has("martial_arts") && noArmorNoShield && isMonkWeapon(w)) cand.push(["dex", "Arti marziali"]);
     }
-    if (w && ch.pactWeapon === wf!.entry.itemId && feat.has("pact_of_the_blade")) cand.push(["cha", "arma del patto"]);
+    if (w && ch.pactWeapon === wf!.entry.itemId && feat.has("pact_of_the_blade")) cand.push(["cha", tr("arma del patto", "pact weapon")]);
     const [ability, why] = cand.reduce((b, c) => (x.mods[c[0]] > x.mods[b[0]] ? c : b));
     const c2 = buildCtx(ch, rs, asWeapon, { twoHanded: hands === 2, otherWeapon: others, ability });
 
@@ -61,7 +61,7 @@ export function computeAttacks(x: Ctx, profs: Profs, cs: ConditionState, untrain
     const parts: Part[] = [{ label: tr(`Mod ${AB_IT[ability]}`, `${AB_IT[ability]} mod`), value: x.mods[ability] }];
     if (proficient) parts.push({ label: tr("Competenza", "Proficiency"), value: x.pb });
     else parts.push({ label: tr("Senza competenza", "Not proficient"), value: 0 });
-    if (cs.d20Penalty) parts.push({ label: tr("Esaurimento", "Exhaustion"), value: cs.d20Penalty });
+    if (cs.d20Penalty) parts.push({ label: tr("Indebolimento", "Exhaustion"), value: cs.d20Penalty });
     const dmgParts: Part[] = [];
     if (!offhand || x.mods[ability] < 0 || feats.has("two_weapon_fighting")) dmgParts.push({ label: tr(`Mod ${AB_IT[ability]}`, `${AB_IT[ability]} mod`), value: x.mods[ability] });
     let crit = 20;
@@ -73,7 +73,7 @@ export function computeAttacks(x: Ctx, profs: Profs, cs: ConditionState, untrain
 
     const adv = [...cs.rolls.attack.adv], dis = [...cs.rolls.attack.dis];
     if (untrained && (ability === "str" || ability === "dex")) dis.push("Armatura senza addestramento");
-    if (w?.properties.includes("heavy") && ((kind === "melee" && x.scores.str < 13) || (kind === "ranged" && x.scores.dex < 13))) dis.push(`Arma Pesante con ${kind === "melee" ? "For" : "Des"} sotto 13`);
+    if (w?.properties.includes("heavy") && ((kind === "melee" && x.scores.str < 13) || (kind === "ranged" && x.scores.dex < 13))) dis.push(tr(`Arma Pesante con ${kind === "melee" ? "For" : "Des"} sotto 13`, `Heavy weapon with ${kind === "melee" ? "Str" : "Dex"} below 13`));
     const mode = combineMode(adv, dis);
 
     // dado di danno
@@ -89,18 +89,18 @@ export function computeAttacks(x: Ctx, profs: Profs, cs: ConditionState, untrain
     const dmgType = rs.damageTypes.get(type)?.name.it ?? type;
 
     const notes: string[] = [];
-    if (w?.properties.includes("loading")) notes.push("Ricarica: una sola munizione per azione, azione bonus o reazione");
-    if (kind === "ranged" && !feats.has("sharpshooter")) notes.push("Svantaggio oltre la gittata normale e con un nemico entro 5 ft");
+    if (w?.properties.includes("loading")) notes.push(tr("Ricarica: una sola munizione per azione, azione bonus o reazione", "Loading: only one piece of ammunition per action, bonus action or reaction"));
+    if (kind === "ranged" && !feats.has("sharpshooter")) notes.push(tr("Svantaggio oltre la gittata normale e con un nemico entro 1,5 m", "Disadvantage beyond normal range and with an enemy within 5 ft"));
     if (w?.properties.includes("thrown") && !thrown && w.kind === "melee") notes.push(tr("Da lancio: può essere scagliata (attacco a distanza)", "Thrown: can be hurled (ranged attack)"));
-    if (feats.has("great_weapon_fighting") && kind === "melee" && hands === 2 && (w!.properties.includes("two_handed") || w!.properties.includes("versatile"))) notes.push("Combattere con armi possenti: 1 e 2 sui dadi di danno contano 3");
+    if (feats.has("great_weapon_fighting") && kind === "melee" && hands === 2 && (w!.properties.includes("two_handed") || w!.properties.includes("versatile"))) notes.push(tr("Combattere con armi possenti: 1 e 2 sui dadi di danno contano 3", "Great Weapon Fighting: 1s and 2s on damage dice count as 3"));
     if (offhand) notes.push(tr("Attacco extra della proprietà Leggera (Azione Bonus; con Intaccare fa parte dell'azione di Attacco)", "Extra attack from the Light property (Bonus Action; with Nick it is part of the Attack action)"));
-    if (w?.twoHandedUnlessMounted) notes.push(ch.state.mounted ? "In sella: si impugna a una mano" : "A due mani se non in sella");
-    if (x.mods[ability] < 0 && offhand) notes.push("Mano secondaria: il modificatore negativo si applica al danno");
+    if (w?.twoHandedUnlessMounted) notes.push(ch.state.mounted ? tr("In sella: si impugna a una mano", "Mounted: wielded with one hand") : tr("A due mani se non in sella", "Two-handed unless mounted"));
+    if (x.mods[ability] < 0 && offhand) notes.push(tr("Mano secondaria: il modificatore negativo si applica al danno", "Off-hand: a negative modifier applies to damage"));
     if (!proficient) notes.push(tr("Non sei competente: niente bonus di competenza al tiro per colpire", "Not proficient: no proficiency bonus on the attack roll"));
     const riders: string[] = [];
     const rogue = x.classLevels.rogue;
     if (rogue && feat.has("sneak_attack") && w && (w.properties.includes("finesse") || kind === "ranged")) {
-      riders.push(`Attacco furtivo ${rs.classes.get("rogue")?.table.sneak_attack?.[rogue - 1] ?? "?"} (1 volta per turno; con Vantaggio o con un alleato adiacente al bersaglio)`);
+      riders.push(tr(`Attacco furtivo ${rs.classes.get("rogue")?.table.sneak_attack?.[rogue - 1] ?? "?"} (1 volta per turno; con Vantaggio o con un alleato adiacente al bersaglio)`, `Sneak Attack ${rs.classes.get("rogue")?.table.sneak_attack?.[rogue - 1] ?? "?"} (once per turn; with Advantage or with an ally adjacent to the target)`));
     }
 
     const mast = w && rs.masteries.get(w.mastery);

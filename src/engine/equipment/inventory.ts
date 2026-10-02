@@ -22,7 +22,7 @@ export function formatCost(cp: number): string {
 // Paga con le monete che hai: prima quelle più grandi che ci stanno, poi si "spezza" la più piccola che basta e si dà il resto.
 export function payCoins(coins: Coins, costCp: number): { ok: true; coins: Coins } | { ok: false; error: string } {
   if (costCp <= 0) return { ok: true, coins };
-  if (walletCp(coins) < costCp) return { ok: false, error: `Ti servono ${formatCost(costCp)}: hai ${formatCost(walletCp(coins))}` };
+  if (walletCp(coins) < costCp) return { ok: false, error: tr(`Ti servono ${formatCost(costCp)}: hai ${formatCost(walletCp(coins))}`, `You need ${formatCost(costCp)}: you have ${formatCost(walletCp(coins))}`) };
   const c: Coins = { ...coins };
   let need = costCp;
   for (const d of HIGH_TO_LOW) {
@@ -64,7 +64,7 @@ const fail = (ch: Character, e: string): Result => ({ ok: false, errors: [e], ch
 
 export function buyItem(ch: Character, rs: Ruleset, id: string, qty = 1): Result {
   const f = lookupItem(rs, id);
-  if (!f) return fail(ch, `Oggetto sconosciuto: ${id}`);
+  if (!f) return fail(ch, tr(`Oggetto sconosciuto: ${id}`, `Unknown item: ${id}`));
   const cost = (f.def as { cost?: number }).cost ?? 0;
   const pay = payCoins(ch.coins, cost * qty);
   if (!pay.ok) return fail(ch, pay.error);
@@ -87,9 +87,9 @@ export function setQty(ch: Character, id: string, qty: number): Character {
 // Sintonia: solo per gli oggetti che la richiedono, al massimo 3
 export function setAttuned(ch: Character, rs: Ruleset, id: string, on: boolean): Result {
   const f = lookupItem(rs, id);
-  if (!f || !ch.inventory.some((e) => e.itemId === id)) return fail(ch, "Oggetto non nel tuo inventario");
+  if (!f || !ch.inventory.some((e) => e.itemId === id)) return fail(ch, tr("Oggetto non nel tuo inventario", "Item not in your inventory"));
   if (on) {
-    if (!needsAttunement(f)) return fail(ch, `${f.def.name.it} non richiede sintonia`);
+    if (!needsAttunement(f)) return fail(ch, tr(`${f.def.name.it} non richiede sintonia`, `${f.def.name.it} does not require attunement`));
     if (ch.inventory.filter((e) => e.attuned).length >= 3) return fail(ch, tr("Sei già sintonizzato con 3 oggetti", "You are already attuned to 3 items"));
   }
   return { ok: true, errors: [], character: { ...ch, inventory: ch.inventory.map((e) => {

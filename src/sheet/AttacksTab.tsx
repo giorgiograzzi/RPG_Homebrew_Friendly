@@ -6,6 +6,7 @@ import type { Character } from "../engine/types";
 import { ChargeControls, DamageRoller, RollDialog, type ChargeRes } from "./dialogs";
 import type { TabProps } from "./types";
 import { sign } from "./util";
+import { tr } from "../i18n/tr";
 
 const t = it.play;
 
@@ -18,7 +19,7 @@ export function AttacksTab({ rs, d, update }: TabProps) {
       <ul className="pl-list">
         {d.attacks.map((a) => (
           <li key={`${a.id}-${a.offhand}-${a.thrown}-${a.hands}`}><button type="button" onClick={() => setSel(a)}>
-            <span className="nm">{a.label}<br /><span className="pl-sub">{dmgText(a, rs)}{d.resources[`item:${a.id}`] ? ` · ${t.charges} ${d.resources[`item:${a.id}`]!.remaining}/${d.resources[`item:${a.id}`]!.max.value}` : ""}{a.mastery ? ` · ${a.mastery.name}${a.mastery.active ? "" : " (non attiva)"}` : ""}</span></span>
+            <span className="nm">{a.label}<br /><span className="pl-sub">{dmgText(a, rs)}{d.resources[`item:${a.id}`] ? ` · ${t.charges} ${d.resources[`item:${a.id}`]!.remaining}/${d.resources[`item:${a.id}`]!.max.value}` : ""}{a.mastery ? ` · ${a.mastery.name}${a.mastery.active ? "" : ` (${tr("non attiva", "inactive")})`}` : ""}</span></span>
             <span className="val">{sign(a.toHit.value)}</span>
           </button></li>
         ))}
