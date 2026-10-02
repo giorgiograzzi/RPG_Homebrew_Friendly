@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 
-const OUT = "data/private";
+const OUT = "data/srd/it"; // gli id sono uguali nelle due lingue; i nomi italiani servono ai confronti con il PDF italiano
 const read = (k: string) => (JSON.parse(readFileSync(`${OUT}/${k}.json`, "utf8")) as { entries: any[] }).entries;
 
 // nome italiano → id, su armi, armature, strumenti e oggetti (dati dello step 4)

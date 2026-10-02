@@ -1,18 +1,15 @@
-import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { computeCharacter } from "../compute";
 import { fixedHp } from "../compute/constants";
 import { emptyCharacter } from "../character";
 import { creationProgress } from "../creation";
-import { buildRuleset } from "../ruleset";
+import { loadSrd } from "../../data/srdIntegrity";
 import type { Character } from "../types";
 import { autoComplete } from "../../wizard/logic";
 import { levelUp, totalLevel } from "./index";
 
-// Gira solo dove esistono i dati privati (non tracciati): test "golden" delle 12 classi ai livelli 1, 5, 11, 20
-const DIR = "data/private";
-describe.skipIf(!existsSync(`${DIR}/classes.json`))("avanzamento di livello con i dati veri (step 17)", () => {
-  const R = buildRuleset(readdirSync(DIR).filter((f) => f.endsWith(".json")).map((f) => JSON.parse(readFileSync(`${DIR}/${f}`, "utf8"))));
+describe("avanzamento di livello", () => {
+  const R = loadSrd("it");
   const CLASSES = [...R.classes.keys()];
   const PB: Record<number, number> = { 1: 2, 5: 3, 11: 4, 20: 6 };
   // Un personaggio creato al 1° livello (scelte automatiche) e portato al livello L, completando le scelte a ogni livello
@@ -61,16 +58,11 @@ describe.skipIf(!existsSync(`${DIR}/classes.json`))("avanzamento di livello con 
     for (const [L, atk] of [[1, 1], [5, 2], [11, 3], [20, 4]] as const) expect(computeCharacter(at("fighter", L), R).attacksPerAction).toBe(atk);
     for (const [L, rage] of [[1, 2], [5, 3], [11, 4], [20, 6]] as const) expect(computeCharacter(at("barbarian", L), R).resources.rage!.max.value).toBe(rage);
   });
-  it("terzo incantatore (Cavaliere mistico, Mistificatore arcano): slot dal 3° livello, tabella del file 04", () => {
-    const THIRD: Record<number, number[]> = { 5: [3], 11: [4, 3], 20: [4, 3, 3, 1] };
-    for (const [cid, sub] of [["fighter", "eldritch_knight"], ["rogue", "arcane_trickster"]] as const) {
-      for (const L of [5, 11, 20]) {
-        const c = at(cid, L);
-        expect(c.classes[0]!.subclassId).toBeTruthy();
-        const forced = { ...c, classes: [{ ...c.classes[0]!, subclassId: sub }] };
-        expect(computeCharacter(forced, R).spellSlots.slots.filter((n) => n > 0), `${sub} ${L}`).toEqual(THIRD[L]);
-      }
-      expect(computeCharacter({ ...at(cid, 3), classes: [{ ...at(cid, 3).classes[0]!, subclassId: sub }] }, R).spellSlots.slots.filter((n) => n > 0)).toEqual([2]);
+  it("Warlock: slot del Patto 1×1°, 2×3° al 5°, 3×5° all'11°, 4×5° al 20°", () => {
+    for (const [L, pact] of [[1, { count: 1, level: 1 }], [5, { count: 2, level: 3 }], [11, { count: 3, level: 5 }], [20, { count: 4, level: 5 }]] as const) {
+      const d = computeCharacter(at("warlock", L), R);
+      expect(d.spellSlots.pact, `warlock ${L}`).toMatchObject(pact);
+      expect(d.spellSlots.slots).toEqual([]); // niente slot normali
     }
   });
   it("multiclasse Guerriero → Mago: competenze parziali, niente TS del Mago, slot dal livello da incantatore", () => {
@@ -98,16 +90,5 @@ describe.skipIf(!existsSync(`${DIR}/classes.json`))("avanzamento di livello con 
     expect(d.proficiencies.armor.sort()).toEqual(["light", "medium", "shield"]); // "Ottieni": armature leggere, medie, scudi (non pesanti)
     expect(d.proficiencies.weapons).toContain("martial");
     expect(d.saves.str.proficient).toBe(false); // i TS del Guerriero non si aggiungono
-  });
-  it("Mente di ferro: Saggezza se non l'hai già, altrimenti Intelligenza o Carisma", () => {
-    const opt = (_c: Character, id: string) => R.subclasses.get("gloom_stalker")!.features.find((f) => f.id === "iron_mind")!.choices[0]!.options!.find((o) => o.id === id)!;
-    expect(opt({} as Character, "wis").requires).toBe("!saveProficient:wis");
-    // Ranger di partenza: TS For e Des, niente Saggezza → si può scegliere Saggezza, non Int/Car
-    const ranger = { ...emptyCharacter("gs"), classes: [{ classId: "ranger", level: 7, subclassId: "gloom_stalker", hpRolls: [] }] };
-    const q = (c: Character) => import("../creation").then((m) => m.allQuestions(c, R).find((x) => x.key === "iron_mind")!);
-    return q(ranger).then((x) => {
-      expect(x.options.find((o) => o.id === "wis")!.enabled).toBe(true);
-      expect(x.options.find((o) => o.id === "int")).toMatchObject({ enabled: false, disabledReason: expect.stringContaining("Saggezza") });
-    });
   });
 });

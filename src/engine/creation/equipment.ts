@@ -5,7 +5,8 @@ import { lookupItem } from "../equipment/loadout";
 type Set = { items: { item: string; qty: number; note?: string }[]; gp: number };
 
 // Equipaggiamento iniziale: opzione di classe (A/B/C) + opzione di background (A/B), dalle decisioni `equipment:class` e `equipment:background`.
-// $tool = lo strumento scelto per la competenza del background/classe; $instrument = lo strumento musicale scelto; $gaming_set = un set da gioco.
+// $tool = lo strumento scelto per la competenza del background/classe; $instrument = lo strumento musicale scelto; $gaming_set = un set da gioco;
+// $holy_symbol = simbolo sacro (amuleto); $spellbook = nessun oggetto (il libro è l'elenco degli incantesimi).
 // L'armatura e lo scudo arrivano indossati, il resto riposto. Non si vende l'equipaggiamento iniziale per avere monete (file 02 §6).
 export function startingEquipment(ch: Character, rs: Ruleset, opts: { gaming_set?: string; extraGold?: number } = {}): { inventory: Character["inventory"]; gp: number; pending: string[] } {
   const inv = new Map<string, number>();
@@ -19,13 +20,18 @@ export function startingEquipment(ch: Character, rs: Ruleset, opts: { gaming_set
     if (id === "$tool") return tool;
     if (id === "$instrument") return (first && ch.decisions[`${first.id}_tools`]?.[0]) || ch.decisions[`${bg?.id}_tool`]?.[0];
     if (id === "$gaming_set") return opts.gaming_set;
-    return id;
+    // il libro degli incantesimi non è un oggetto dell'SRD: il libro è l'elenco degli incantesimi del personaggio
+    if (id === "$spellbook") return "";
+    // simbolo sacro: l'SRD ne ha tre varianti dello stesso costo; si parte dall'amuleto (si cambia nello zaino)
+    if (id === "$holy_symbol") return "holy_symbol_amulet";
+    return id.startsWith("$") ? undefined : id;
   };
   const add = (set: Set | undefined) => {
     if (!set) return;
     gp += set.gp;
     for (const i of set.items) {
       const id = resolve(i.item);
+      if (id === "") continue;
       if (!id) { pending.push(i.item); continue; }
       inv.set(id, (inv.get(id) ?? 0) + i.qty);
     }

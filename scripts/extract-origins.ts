@@ -103,7 +103,9 @@ const backgrounds: Entry[] = BACKGROUNDS.map(([id, en, it]) => {
     return { item: x.item, qty: x.qty, ...(x.note || y.note ? { note: { it: x.note ?? "", en: y.note ?? "" } } : {}) };
   });
   return { id, name: { en, it }, abilityOptions: pi.abilities, skills: pi.skills, tool: pi.tool, feat: pi.feat, ...(pi.featConfig ? { featConfig: pi.featConfig } : {}),
-    equipment: { A: { items, gp: pi.equipment.A.gp }, B: pi.equipment.B } };
+    equipment: { A: { items, gp: pi.equipment.A.gp }, B: pi.equipment.B },
+    // strumento a scelta (gruppo): una scelta `<id>_tool` tra gli strumenti di quel gruppo
+    ...(["gaming", "musical", "artisan"].includes(pi.tool) ? { choices: [{ id: `${id}_tool`, label: { it: "Strumento", en: "Tool" }, count: 1, source: `tools:${pi.tool}` }] } : {}) };
 });
 
 // ---------- talenti: verifica sui PDF ----------

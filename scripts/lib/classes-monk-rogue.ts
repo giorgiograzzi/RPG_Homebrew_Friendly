@@ -1,5 +1,5 @@
 // Monaco e Ladro (SRD 5.2.1). Vedi classes-barbarian-fighter.ts per le convenzioni.
-import { asi, B, epicBoon, f, steps, subclassFeature, type ClassDef } from "./class-types";
+import { dieSteps, asi, B, epicBoon, f, steps, subclassFeature, type ClassDef } from "./class-types";
 
 // --- Monaco ---
 export const MONK: ClassDef = {
@@ -19,7 +19,9 @@ export const MONK: ClassDef = {
   },
   columns: [{ id: "martial_arts", name: B("Arti marziali", "Martial Arts") }, { id: "focus_points", name: B("Punti concentrazione", "Focus Points") }, { id: "unarmored_movement", name: B("Movimento senza armatura", "Unarmored Movement") }],
   features: [
-    f(1, "martial_arts", ["Arti marziali", "Martial Arts"], ["Senza armatura né scudo e con soli colpi senz'armi o armi da monaco (armi da mischia semplici o da guerra Leggere): colpo senz'armi bonus come azione bonus; dado di Arti marziali al posto dei danni normali (colonna Arti marziali); puoi usare Destrezza al posto di Forza per tiri per colpire e danni e per la CD di afferrare e spingere.", "While wearing no armor or Shield and using only Unarmed Strikes or Monk weapons (Simple Melee and Light Martial Melee weapons): a Bonus Action Unarmed Strike; a Martial Arts die instead of normal damage (Martial Arts column); you can use Dexterity instead of Strength for attack and damage rolls and for the grapple and shove save DC."]),
+    f(1, "martial_arts", ["Arti marziali", "Martial Arts"], ["Senza armatura né scudo e con soli colpi senz'armi o armi da monaco (armi da mischia semplici o da guerra Leggere): colpo senz'armi bonus come azione bonus; dado di Arti marziali al posto dei danni normali (colonna Arti marziali); puoi usare Destrezza al posto di Forza per tiri per colpire e danni e per la CD di afferrare e spingere.", "While wearing no armor or Shield and using only Unarmed Strikes or Monk weapons (Simple Melee and Light Martial Melee weapons): a Bonus Action Unarmed Strike; a Martial Arts die instead of normal damage (Martial Arts column); you can use Dexterity instead of Strength for attack and damage rolls and for the grapple and shove save DC."],
+      // il dado di Arti marziali sale ai livelli indicati dalla tabella (il motore prende il più alto)
+      { build: (t) => ({ effects: dieSteps("martial_arts", "monk")(t) }) }),
     f(1, "unarmored_defense", ["Difesa senza armatura", "Unarmored Defense"], ["Senza armatura né scudo la CA base è 10 + Des + Sag.", "Without armor or a Shield your base AC is 10 + Dex + Wis."],
       { effects: [{ op: "acFormula", formula: "10 + mod:dex + mod:wis", shieldAllowed: false, when: "wearingArmor:none" }] }),
     f(2, "monks_focus", ["Concentrazione da monaco", "Monk's Focus"], ["Ottieni punti concentrazione (colonna Punti concentrazione) che torni ad avere con un riposo breve o lungo. Li spendi per Raffica di colpi (2 colpi senz'armi come azione bonus), Difesa paziente (Disimpegno e Schivata come azione bonus) e Passo del vento (Disimpegno e Scatto come azione bonus, salto doppio). CD dei tuoi tiri salvezza: 8 + Sag + competenza. Senza spendere punti puoi comunque usare Disimpegno o Scatto come azione bonus.", "You gain Focus Points (Focus Points column) that return after a Short or Long Rest. You spend them on Flurry of Blows (two Unarmed Strikes as a Bonus Action), Patient Defense (Disengage and Dodge as a Bonus Action), and Step of the Wind (Disengage and Dash as a Bonus Action, doubled jump). Your save DC is 8 + Wis + Proficiency. Without spending points you can still Disengage or Dash as a Bonus Action."],

@@ -1,16 +1,14 @@
-import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { computeCharacter } from "../engine/compute";
 import { classOptions, creationProgress, hpIsRolled, levelBand, levelStartingGold, previewDecision, rollStartingGold, setHpMode, setStartLevel } from "../engine/creation";
-import { buildRuleset } from "../engine/ruleset";
+import { loadSrd } from "../data/srdIntegrity";
 import { emptyCharacter } from "../engine/character";
 import { autoComplete, finalizeCharacter, isFinalized, reopenCreation } from "./logic";
 import { levelUp } from "../engine/levelup";
 
-// Gira solo dove esistono i dati privati (non tracciati)
-const DIR = "data/private";
-describe.skipIf(!existsSync(`${DIR}/creation.json`))("creazione completa con i dati veri (step 13)", () => {
-  const R = buildRuleset(readdirSync(DIR).filter((f) => f.endsWith(".json")).map((f) => JSON.parse(readFileSync(`${DIR}/${f}`, "utf8"))));
+// Dati SRD 5.2.1 (tracciati in git)
+const R = loadSrd("it");
+describe("creazione completa con i dati SRD", () => {
   const make = (classId: string, speciesId: string, backgroundId: string, name: string) => {
     const base = { ...emptyCharacter(`t-${classId}`), name, classes: [{ classId, level: 1, hpRolls: [] }], speciesId, backgroundId };
     return autoComplete(base, R);
@@ -85,8 +83,7 @@ describe.skipIf(!existsSync(`${DIR}/creation.json`))("creazione completa con i d
   });
 });
 
-describe.skipIf(!existsSync(`${DIR}/creation.json`))("passo 0: livello di partenza (step 17)", () => {
-  const R = buildRuleset(readdirSync(DIR).filter((f) => f.endsWith(".json")).map((f) => JSON.parse(readFileSync(`${DIR}/${f}`, "utf8"))));
+describe("passo 0: livello di partenza ", () => {
   const start = (classId: string, level: number) => {
     const s = setStartLevel({ ...emptyCharacter(`s-${classId}-${level}`), name: `${classId} ${level}`, speciesId: "human", backgroundId: "soldier" }, R, level);
     expect(s.ok).toBe(true);

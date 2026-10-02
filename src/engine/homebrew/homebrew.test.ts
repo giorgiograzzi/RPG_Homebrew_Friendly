@@ -4,7 +4,8 @@ import { computeCharacter } from "../compute";
 import { testCharacter, testRuleset } from "../compute/testkit";
 import { analyzeLoadout, addItem, buyItem, shopCatalog } from "../equipment";
 import { spellbook } from "../magic";
-import { buildRuleset, extendRuleset } from "../ruleset";
+import { extendRuleset } from "../ruleset";
+import { loadSrd } from "../../data/srdIntegrity";
 import {
   buildEffect, buildPack, defaultValues, describeEffect, duplicateEntry, entryFiles, mergeEntries, newHbId, parsePack, presetFor, readEffect,
   takenIds, validateEntry, type HbEntry,
@@ -170,11 +171,11 @@ describe("homebrew: catalogo effetti", () => {
   });
 });
 
+// Pacchetti di esempio (data/homebrew/*.json): ci sono dallo step 6; finché mancano il blocco si salta
 const EX = "data/homebrew";
-describe.skipIf(!existsSync("data/private/weapons.json"))("homebrew: esempi con i dati veri", () => {
-  const files = (existsSync("data/private") ? readdirSync("data/private") : []).filter((f) => f.endsWith(".json")).map((f) => JSON.parse(readFileSync(`data/private/${f}`, "utf8")));
-  const rs = buildRuleset(files);
-  for (const f of readdirSync(EX).filter((x) => x.endsWith(".json"))) {
+describe.skipIf(!existsSync(EX))("homebrew: esempi con i dati SRD", () => {
+  const rs = loadSrd("it");
+  for (const f of (existsSync(EX) ? readdirSync(EX) : []).filter((x) => x.endsWith(".json"))) {
     it(`${f} si importa senza errori e si usa`, () => {
       const p = parsePack(readFileSync(`${EX}/${f}`, "utf8"), rs);
       expect(p.ok).toBe(true);

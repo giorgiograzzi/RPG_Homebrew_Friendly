@@ -31,6 +31,7 @@ export const BARBARIAN: ClassDef = {
           effects: [
             { op: "resistance", types: ["bludgeoning", "piercing", "slashing"], when: "active:rage" },
             { op: "saveAdvantage", abilities: ["str"], when: "active:rage" },
+            { op: "restriction", forbids: "spellcasting", reason: "Ira", when: "active:rage" },
             ...steps("rage_damage", (d, l) => ({ op: "damageBonus", value: d, attackType: "any", when: `classLevel:barbarian>=${l} && active:rage && attackAbility:str` }))(t),
           ],
         }) }),

@@ -27,7 +27,7 @@ export interface ClassDef {
   columns: ColumnDef[];
   extraRows?: { level: number; label: Bi }[]; // voci della tabella che non sono privilegi (es. "Indomabile (due utilizzi)")
   features: FeatureDef[]; subclass: SubclassDef;
-  caster?: { type: "full" | "half" | "third" | "pact"; ability: string; list: string };
+  caster?: { type: "full" | "half" | "third" | "pact"; ability: string; list: string; spellbook?: boolean }; // spellbook: gli incantesimi preparati si scelgono dal libro (Mago)
   checkPhrases?: { it: string[]; en: string[] }; // nomi che devono comparire nel PDF (es. le opzioni di un elenco: Metamagia, Suppliche occulte)
   // frasi del blocco "Tratti" nel PDF (dado vita, caratteristica primaria, ecc.) controllate in ogni lingua
   core: { primaryIt: string; primaryEn: string; savesIt: string; savesEn: string; skillsIt: string; skillsEn: string; weaponsIt: string; weaponsEn: string; armorIt: string; armorEn: string; toolsIt?: string; toolsEn?: string };
@@ -50,6 +50,12 @@ export const subclassFeature = (cls: string, it: string, en: string): FeatureDef
 export const steps = (col: string, make: (delta: number, level: number) => Json) => (t: Table): Json[] => {
   let prev = 0;
   return (t[col] ?? []).flatMap((v, i) => { const d = Number(v) - prev; prev = Number(v); return d > 0 ? [make(d, i + 1)] : []; });
+};
+
+// Colonna di dadi (1d6, 1d8...): un effetto "dado dei colpi senz'armi" ai livelli in cui il valore cambia
+export const dieSteps = (col: string, classId: string) => (t: Table): Json[] => {
+  let prev = "";
+  return (t[col] ?? []).flatMap((v, i) => { const d = String(v); const out = d !== prev ? [{ op: "unarmedDie", die: d, when: `classLevel:${classId}>=${i + 1} && wearingArmor:none && !shield` }] : []; prev = d; return out; });
 };
 
 // Opzioni di competenza in abilità: il nome viene preso dai dati delle abilità (segnaposto "$skill:<id>" risolto dall'estrattore)
