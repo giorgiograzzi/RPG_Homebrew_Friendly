@@ -16,7 +16,7 @@ export function Summary({ ch, rs }: { ch: Character; rs: Ruleset }) {
   return (
     <>
       <h2>{ch.name || it.characters.unnamed}</h2>
-      <p className="xp-muted">{[cls, nm(rs.species, ch.speciesId), nm(rs.backgrounds, ch.backgroundId)].join(" · ")}</p>
+      <p className="ui-muted">{[cls, nm(rs.species, ch.speciesId), nm(rs.backgrounds, ch.backgroundId)].join(" · ")}</p>
       <div className="wz-sum">
         <div>{t.sum.hp}<b>{d.hp.max.value}</b></div>
         <div>{t.sum.ac}<b>{d.ac.value}</b></div>
@@ -34,7 +34,7 @@ export function Summary({ ch, rs }: { ch: Character; rs: Ruleset }) {
         const def = rs.weapons.get(i.itemId) ?? rs.armors.get(i.itemId) ?? rs.items.get(i.itemId) ?? rs.tools.get(i.itemId);
         return <li key={i.itemId}>{i.qty > 1 ? `${i.qty}× ` : ""}{def?.name.it ?? i.itemId}</li>;
       })}</ul></>}
-      {d.warnings.length > 0 && <div className="xp-banner">{d.warnings.join(" ")}</div>}
+      {d.warnings.length > 0 && <div className="ui-banner">{d.warnings.join(" ")}</div>}
     </>
   );
 }

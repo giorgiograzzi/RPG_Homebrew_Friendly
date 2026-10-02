@@ -8,7 +8,7 @@ import {
 import type { Character, EquipState } from "../engine/types";
 import { strings as it } from "../i18n";
 import { fmt } from "../ui/format";
-import { Button, Dialog, Segmented } from "../ui/xp";
+import { Button, Dialog, Segmented } from "../ui/theme";
 import { useApp } from "../ui/useApp";
 import { AttackRollDialog } from "../sheet/AttacksTab";
 import { ChargeControls, SourcesDialog } from "../sheet/dialogs";
@@ -33,8 +33,8 @@ export function Equip() {
   const [discard, setDiscard] = useState<{ id: string; name: string } | null>(null);
   const [attack, setAttack] = useState<AttackOption | null>(null);
   const d = useMemo(() => (ch ? computeCharacter(ch, rs) : null), [ch, rs]);
-  if (!ch || !d) return <p className="xp-muted">{it.soon.needCharacter}</p>;
-  if (!isFinalized(ch)) return <><h2>{t.title}</h2><p className="xp-muted">{t.needCreation}</p></>;
+  if (!ch || !d) return <p className="ui-muted">{it.soon.needCharacter}</p>;
+  if (!isFinalized(ch)) return <><h2>{t.title}</h2><p className="ui-muted">{t.needCreation}</p></>;
 
   const load = analyzeLoadout(ch, rs);
   const equip = (id: string, target: EquipState, grip?: "one" | "two") => {
@@ -47,9 +47,9 @@ export function Equip() {
   return (
     <>
       <h2>{t.title}</h2>
-      {error && <div className="xp-error" role="alert">{error}</div>}
-      {load.problems.length > 0 && <div className="xp-banner">{load.problems.join(" · ")}</div>}
-      {last && <p className="xp-muted" role="status">{t.last}: {last}</p>}
+      {error && <div className="ui-error" role="alert">{error}</div>}
+      {load.problems.length > 0 && <div className="ui-banner">{load.problems.join(" · ")}</div>}
+      {last && <p className="ui-muted" role="status">{t.last}: {last}</p>}
 
       <div className="pl-grid">
         <button type="button" className="pl-tile" onClick={() => setAc(true)}>{t.ac}<b>{d.ac.value}</b><span className="pl-sub">{d.ac.formula}</span></button>
@@ -59,7 +59,7 @@ export function Equip() {
       </div>
 
       <h3>{t.attacks}</h3>
-      {d.attacks.length === 0 ? <p className="xp-muted">{t.noAttacks}</p> : (
+      {d.attacks.length === 0 ? <p className="ui-muted">{t.noAttacks}</p> : (
         <ul className="pl-list">
           {d.attacks.map((a) => (
             <li key={`${a.id}-${a.offhand}-${a.thrown}-${a.hands}`}><button type="button" onClick={() => setAttack(a)}>
@@ -71,7 +71,7 @@ export function Equip() {
       )}
 
       <div className="pl-row"><h3 style={{ flex: 1, margin: 0 }}>{t.inventory}</h3><Button variant="primary" onClick={() => setShop(true)}>{t.shop}</Button></div>
-      {ch.inventory.length === 0 && <p className="xp-muted">{t.empty}</p>}
+      {ch.inventory.length === 0 && <p className="ui-muted">{t.empty}</p>}
       <ul className="pl-list">
         {ch.inventory.map((e) => {
           const f = lookupItem(rs, e.itemId);
@@ -111,7 +111,7 @@ export function Equip() {
       {discard && (
         <Dialog title={t.discardTitle} onClose={() => setDiscard(null)}>
           <p>{fmt(t.discardAsk, { n: discard.name })}</p>
-          <div className="xp-actions">
+          <div className="ui-actions">
             <Button onClick={() => setDiscard(null)}>{it.homebrew.cancel}</Button>
             <Button variant="danger" onClick={() => { update((c) => setQty(c, discard.id, 0)); setDiscard(null); }}>{t.discard}</Button>
           </div>
@@ -142,26 +142,26 @@ function Shop({ ch, onBuy, onClose }: { ch: Character; onBuy: (id: string) => { 
     <Dialog title={t.shop} onClose={onClose}
       titleAction={{ label: hb ? t.showManual : t.showHomebrew, icon: "homebrew", pressed: hb, onClick: () => setHb(!hb) }}>
       <p>{t.funds}: <b>{formatCost(walletCp(ch.coins))}</b></p>
-      <p className="xp-muted" role="status">{hb ? t.sourceHomebrew : t.sourceManual}</p>
+      <p className="ui-muted" role="status">{hb ? t.sourceHomebrew : t.sourceManual}</p>
       <div className="pl-tabs" role="group" aria-label={t.shop}>
         <button type="button" aria-pressed={current === "all"} onClick={() => setGroup("all")}>{t.all}</button>
         {groups.map((g) => <button key={g} type="button" aria-pressed={current === g} onClick={() => setGroup(g)}>{g}</button>)}
       </div>
-      <input className="xp-input" style={{ marginBottom: 8 }} type="search" placeholder={t.search} aria-label={t.search} value={q} onChange={(e) => setQ(e.target.value)} />
+      <input className="ui-input" style={{ marginBottom: 8 }} type="search" placeholder={t.search} aria-label={t.search} value={q} onChange={(e) => setQ(e.target.value)} />
       {msg && <p role="status"><b>{msg}</b></p>}
-      {rows.length === 0 && <p className="xp-muted">{hb ? t.noHomebrew : t.noResults}</p>}
-      <ul className="xp-list">
+      {rows.length === 0 && <p className="ui-muted">{hb ? t.noHomebrew : t.noResults}</p>}
+      <ul className="ui-list">
         {shown.map((c) => (
           <li key={`${c.kind}-${c.id}`} style={{ display: "block" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <div className="grow"><div className="name">{c.name}</div><div className="xp-muted">{c.group} · {c.cost > 0 ? formatCost(c.cost) : t.free} · {c.weight} {t.lb}</div></div>
+              <div className="grow"><div className="name">{c.name}</div><div className="ui-muted">{c.group} · {c.cost > 0 ? formatCost(c.cost) : t.free} · {c.weight} {t.lb}</div></div>
               <Button disabled={walletCp(ch.coins) < c.cost} onClick={() => { const r = onBuy(c.id); setMsg(r.ok ? fmt(t.bought, { n: c.name }) : r.errors.join(" ")); }}>{t.buy}</Button>
             </div>
           </li>
         ))}
       </ul>
-      {rows.length > LIMIT && <p className="xp-muted">{fmt(t.more, { n: LIMIT })}</p>}
-      <div className="xp-actions footer"><Button onClick={onClose}>{it.play.close}</Button></div>
+      {rows.length > LIMIT && <p className="ui-muted">{fmt(t.more, { n: LIMIT })}</p>}
+      <div className="ui-actions footer"><Button onClick={onClose}>{it.play.close}</Button></div>
     </Dialog>
   );
 }

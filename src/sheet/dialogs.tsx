@@ -4,7 +4,7 @@ import { rollD20, rollExpr, useResource, type D20Roll } from "../engine/play";
 import type { Character } from "../engine/types";
 import type { Sourced } from "../engine/types";
 import { strings as it } from "../i18n";
-import { Button, Dialog, Segmented } from "../ui/xp";
+import { Button, Dialog, Segmented } from "../ui/theme";
 import { sign } from "./util";
 
 const t = it.play;
@@ -26,12 +26,12 @@ export function RollDialog({ title, bonus, mode, modeSources, note, extra, hint,
   return (
     <Dialog title={title} onClose={onClose}>
       <p className="pl-formula">d20 {sign(bonus.value)}</p>
-      {hint && <p className="xp-muted">{hint}</p>}
+      {hint && <p className="ui-muted">{hint}</p>}
       <Segmented<RollMode> label="Modalità" value={m} onChange={setM}
         options={(["disadvantage", "normal", "advantage"] as const).map((v) => ({ value: v, label: t.mode[v] }))} />
-      {modeSources.length > 0 && <p className="xp-muted">{modeSources.join(" · ")}</p>}
-      {note && <p className="xp-muted">{note}</p>}
-      <div className="xp-actions"><Button variant="primary" onClick={() => setRes(rollD20(bonus.value, m))}>{res ? t.rollAgain : t.roll}</Button></div>
+      {modeSources.length > 0 && <p className="ui-muted">{modeSources.join(" · ")}</p>}
+      {note && <p className="ui-muted">{note}</p>}
+      <div className="ui-actions"><Button variant="primary" onClick={() => setRes(rollD20(bonus.value, m))}>{res ? t.rollAgain : t.roll}</Button></div>
       {res && (
         <div className="pl-result" role="status" aria-live="polite">
           <b>{res.total}</b>
@@ -41,7 +41,7 @@ export function RollDialog({ title, bonus, mode, modeSources, note, extra, hint,
       {extra}
       <h3>{t.sources}</h3>
       <SourceList s={bonus} />
-      <div className="xp-actions footer"><Button onClick={onClose}>{t.close}</Button></div>
+      <div className="ui-actions footer"><Button onClick={onClose}>{t.close}</Button></div>
     </Dialog>
   );
 }
@@ -55,7 +55,7 @@ export function DamageRoller({ dice, bonus, type, crit }: { dice: string; bonus:
   };
   return (
     <div>
-      <div className="xp-actions"><Button onClick={roll}>{t.damageRoll}: {dice}{bonus ? ` ${sign(bonus)}` : ""} {type}</Button></div>
+      <div className="ui-actions"><Button onClick={roll}>{t.damageRoll}: {dice}{bonus ? ` ${sign(bonus)}` : ""} {type}</Button></div>
       {res && <div className="pl-result" role="status"><b>{res.total}</b><span>{res.rolls.join(" + ")}{bonus ? ` ${sign(bonus)}` : ""}{res.crit ? ` · ${t.critHit}` : ""}</span></div>}
     </div>
   );
@@ -70,18 +70,18 @@ export function SourcesDialog({ title, value, forced, onForce, onClose, onRoll }
     <Dialog title={title} onClose={onClose}>
       <p className="pl-formula">{value.value}</p>
       <SourceList s={value} />
-      {onRoll && <div className="xp-actions"><Button variant="primary" onClick={onRoll}>{t.roll}</Button></div>}
+      {onRoll && <div className="ui-actions"><Button variant="primary" onClick={onRoll}>{t.roll}</Button></div>}
       {onForce && (
         <>
           <h3>{t.force}</h3>
-          <div className="xp-actions" style={{ justifyContent: "flex-start" }}>
+          <div className="ui-actions" style={{ justifyContent: "flex-start" }}>
             <input className="wz-num" type="number" inputMode="numeric" aria-label={t.force} value={draft} onChange={(e) => setDraft(e.target.value)} />
             <Button onClick={() => onForce(Number(draft))}>{t.force}</Button>
             {forced && <Button variant="danger" onClick={() => onForce(undefined)}>{t.remove}</Button>}
           </div>
         </>
       )}
-      <div className="xp-actions footer"><Button onClick={onClose}>{t.close}</Button></div>
+      <div className="ui-actions footer"><Button onClick={onClose}>{t.close}</Button></div>
     </Dialog>
   );
 }

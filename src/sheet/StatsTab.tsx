@@ -63,10 +63,10 @@ export function StatsTab({ rs, d }: TabProps) {
       <h3>{t.languages}</h3>
       <ul className="wz-tags">{d.languages.map((l) => <li key={l}>{rs.languages.get(l)?.name.it ?? l}</li>)}</ul>
       <h3>{t.profs}</h3>
-      <p className="xp-muted">{t.armor}: {d.proficiencies.armor.join(", ") || "—"}</p>
-      <p className="xp-muted">{t.weapons}: {d.proficiencies.weapons.join(", ") || "—"}</p>
-      <p className="xp-muted">{t.tools}: {d.proficiencies.tools.map((x) => rs.tools.get(x)?.name.it ?? x).join(", ") || "—"}</p>
-      {d.resistances.length > 0 && <p className="xp-muted">{t.resistances}: {d.resistances.join(", ")}</p>}
+      <p className="ui-muted">{t.armor}: {d.proficiencies.armor.join(", ") || "—"}</p>
+      <p className="ui-muted">{t.weapons}: {d.proficiencies.weapons.join(", ") || "—"}</p>
+      <p className="ui-muted">{t.tools}: {d.proficiencies.tools.map((x) => rs.tools.get(x)?.name.it ?? x).join(", ") || "—"}</p>
+      {d.resistances.length > 0 && <p className="ui-muted">{t.resistances}: {d.resistances.join(", ")}</p>}
       {d.notes.length > 0 && <ul>{d.notes.map((n) => <li key={n}>{n}</li>)}</ul>}
       {rolling && <RollDialog {...rolling} onClose={() => setRolling(null)} />}
     </>

@@ -145,3 +145,9 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 - [ ] 🟡 Equipaggiamento: `$spellbook` non diventa un oggetto (il libro è l'elenco degli incantesimi); `$holy_symbol` dà l'amuleto (uguale agli altri due simboli sacri, costo 5 mo). Manca la scelta del simbolo sacro nella creazione.
 - [ ] 🟢 Privilegi ancora solo testo (nessun effetto sul calcolo): Attacco irruento, Istinto primordiale, Brutalità, Tiro mirato/Colpo astuto, Talento affidabile (Ladro), Aura di coraggio, Controincanto, Deviare attacchi, Evasione, Schivata prodigiosa, molte opzioni di Metamagia e Invocazioni, tratti delle sottoclassi (Frenesia, Taglio nero, Fascino…). Se serve, si modellano uno alla volta.
 - [ ] 🟢 Ira: la Concentrazione non si spezza (il motore ha solo il divieto di lanciare incantesimi).
+
+### Interfaccia (step 5b-1/5b-2)
+- [ ] 🟡 Prossimi sotto-passi 5b-3 (schermate: scheda a colonne su desktop, wizard, homebrew), 5b-4 (accessibilità: rifinire bersagli, tastiera) e 5b-5 (pulizia): i controlli di layout sono in `npm run e2e` (`e2e/layout.mjs`: 3 viewport × IT/EN × chiaro/scuro; screenshot in `e2e/out/`, non tracciati).
+- [ ] 🟡 Alcune etichette dell'interfaccia sono ancora scritte nel codice in italiano (es. «PF», «−5/+5» nei pulsanti dei Punti Ferita): da spostare in `it.json`/`en.json` in 5b-3.
+- [ ] 🟢 Il cambio di aspetto (chiaro/scuro/automatico) è immediato; il cambio di lingua ricarica la pagina.
+- [ ] 🟢 Le icone dell'app (`public/icons`) sono state ridisegnate nei nuovi colori (d20 indaco) con il font di sistema; l'icona resta provvisoria finché non c'è un logo definitivo.

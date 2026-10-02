@@ -6,14 +6,19 @@
     <link rel="icon" type="image/svg+xml" href="/icons/icon.svg" />
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
     <meta name="description" content="Crea e gestisci personaggi con le regole libere dell'SRD 5.2.1, in italiano e inglese, anche senza rete." />
-    <meta name="theme-color" content="#2f6fe0" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#181b2e" media="(prefers-color-scheme: dark)" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="PG SRD" />
     <title>Personaggi SRD 5.2</title>
   </head>
   <body>
+    <script>
+      // Aspetto scelto dall'utente: va applicato prima del primo disegno, per non far lampeggiare il tema sbagliato
+      try { var th = localStorage.getItem("theme"); if (th === "light" || th === "dark") document.documentElement.setAttribute("data-theme", th); } catch (_) {}
+    </script>
     <script>
       // Rete di sicurezza: se un file dell'app non si carica (index.html vecchio in cache dopo un aggiornamento) si ricarica una volta sola
       window.addEventListener("error", function (e) {

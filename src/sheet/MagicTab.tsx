@@ -6,7 +6,7 @@ import {
 import { toggleSlot } from "../engine/play";
 import { strings as it } from "../i18n";
 import { fmt } from "../ui/format";
-import { Button, Dialog } from "../ui/xp";
+import { Button, Dialog } from "../ui/theme";
 import { QuestionView } from "../wizard/QuestionView";
 import { choose } from "../wizard/logic";
 import { SourcesDialog } from "./dialogs";
@@ -27,7 +27,7 @@ export function MagicTab({ ch, rs, d, update }: TabProps) {
   const book = useMemo(() => spellbook(ch, rs, d), [ch, rs, d]);
   const slots = d.spellSlots;
   const hasSlots = slots.slots.some((n) => n > 0) || !!slots.pact;
-  if (!book.length && !hasSlots) return <><h2>{t.title}</h2><p className="xp-muted">{t.none}</p></>;
+  if (!book.length && !hasSlots) return <><h2>{t.title}</h2><p className="ui-muted">{t.none}</p></>;
 
   const conc = ch.state.concentration;
   const shown = book.filter((e) => (filter === "all" || (filter === "prepared" && e.castable) || (filter === "ritual" && e.ritualOk) || (filter === "conc" && e.spell.concentration))
@@ -49,12 +49,12 @@ export function MagicTab({ ch, rs, d, update }: TabProps) {
           <button type="button" className="pl-tile" onClick={() => setStat("attack")}>{t.attack}<b>{sign(first.attack.value)}</b><span className="pl-sub">{AB[first.ability]}</span></button>
         </div>
       )}
-      {d.spellcastingBlocked && <div className="xp-error" role="alert">{it.play.tabs.magic}: non puoi lanciare incantesimi ora (armatura senza addestramento, Ira, azioni bloccate).</div>}
+      {d.spellcastingBlocked && <div className="ui-error" role="alert">{it.play.tabs.magic}: non puoi lanciare incantesimi ora (armatura senza addestramento, Ira, azioni bloccate).</div>}
       {conc && (
-        <div className="xp-banner" role="status">
+        <div className="ui-banner" role="status">
           <b>{fmt(t.concentrating, { n: rs.spells.get(conc)?.name.it ?? conc })}</b>
           {concentrationBroken(d) && <span> {t.broken}</span>}
-          <div className="xp-actions" style={{ justifyContent: "flex-start", margin: "8px 0 0" }}><Button onClick={() => update(endConcentration)}>{t.endConc}</Button></div>
+          <div className="ui-actions" style={{ justifyContent: "flex-start", margin: "8px 0 0" }}><Button onClick={() => update(endConcentration)}>{t.endConc}</Button></div>
         </div>
       )}
 
@@ -80,7 +80,7 @@ export function MagicTab({ ch, rs, d, update }: TabProps) {
         </>
       )}
 
-      <div className="xp-actions" style={{ justifyContent: "flex-start", flexWrap: "wrap" }}>
+      <div className="ui-actions" style={{ justifyContent: "flex-start", flexWrap: "wrap" }}>
         <Button onClick={() => setPrep(true)}>{t.prepare}</Button>
         {(recoveries.length > 0 || canCunning) && <Button onClick={() => setRec(true)}>{t.recoveries}</Button>}
       </div>
@@ -88,8 +88,8 @@ export function MagicTab({ ch, rs, d, update }: TabProps) {
       <div className="pl-tabs" role="group" aria-label={t.title}>
         {(["all", "prepared", "ritual", "conc"] as const).map((f) => <button key={f} type="button" aria-pressed={filter === f} onClick={() => setFilter(f)}>{t.filters[f]}</button>)}
       </div>
-      <input className="xp-input" style={{ marginBottom: 8 }} type="search" placeholder={t.search} aria-label={t.search} value={q} onChange={(e) => setQ(e.target.value)} />
-      {shown.length === 0 && <p className="xp-muted">{t.empty}</p>}
+      <input className="ui-input" style={{ marginBottom: 8 }} type="search" placeholder={t.search} aria-label={t.search} value={q} onChange={(e) => setQ(e.target.value)} />
+      {shown.length === 0 && <p className="ui-muted">{t.empty}</p>}
       {levels.map((lv) => (
         <section key={lv}>
           <h3>{levelName(lv)}</h3>
@@ -150,7 +150,7 @@ function SpellDialog({ entry, ch, rs, d, update, onClose }: TabProps & { entry: 
 
   return (
     <Dialog title={sp.name.it} onClose={onClose}>
-      <p className="xp-muted">{levelName(sp.level)} · {t.school[sp.school]}{sp.concentration ? " · ◆ " + t.concentration : ""}{sp.ritual ? " · ® Rituale" : ""}</p>
+      <p className="ui-muted">{levelName(sp.level)} · {t.school[sp.school]}{sp.concentration ? " · ◆ " + t.concentration : ""}{sp.ritual ? " · ® Rituale" : ""}</p>
       <ul className="pl-src">
         <li><span>{t.castingTime}</span><b>{castTime(sp.castingTime)}{sp.castingTime.trigger ? ` (${sp.castingTime.trigger})` : ""}</b></li>
         <li><span>{t.range}</span><b>{sp.range}</b></li>
@@ -159,14 +159,14 @@ function SpellDialog({ entry, ch, rs, d, update, onClose }: TabProps & { entry: 
       </ul>
       {resolutionText(entry) && <p><b>{resolutionText(entry)}</b></p>}
       <p>{sp.summary}</p>
-      {sp.higherLevels && <p className="xp-muted"><b>{t.higher}:</b> {sp.higherLevels}</p>}
-      <p className="xp-muted">{entry.sources.map((s) => `${s.label} (${t.statusTags[s.kind]})`).join(" · ")}</p>
-      {msg && <div className={msg.ok ? "xp-banner" : "xp-error"} role={msg.ok ? "status" : "alert"}>{msg.lines.map((l) => <div key={l}>{l}</div>)}</div>}
+      {sp.higherLevels && <p className="ui-muted"><b>{t.higher}:</b> {sp.higherLevels}</p>}
+      <p className="ui-muted">{entry.sources.map((s) => `${s.label} (${t.statusTags[s.kind]})`).join(" · ")}</p>
+      {msg && <div className={msg.ok ? "ui-banner" : "ui-error"} role={msg.ok ? "status" : "alert"}>{msg.lines.map((l) => <div key={l}>{l}</div>)}</div>}
       <div className="pl-row">
-        {opts.length === 0 && <span className="xp-muted">{t.cantCast}</span>}
+        {opts.length === 0 && <span className="ui-muted">{t.cantCast}</span>}
         {opts.map((o) => <Button key={o.key} variant="primary" disabled={o.disabled} onClick={() => run(o.via)}>{o.label}</Button>)}
       </div>
-      <div className="xp-actions footer"><Button onClick={onClose}>{it.play.close}</Button></div>
+      <div className="ui-actions footer"><Button onClick={onClose}>{it.play.close}</Button></div>
     </Dialog>
   );
 }
@@ -178,11 +178,11 @@ function PrepareDialog({ ch, rs, update, onClose }: Pick<TabProps, "ch" | "rs" |
   const classes = [...new Set(qs.map((x) => x.classId).filter(Boolean))] as string[];
   return (
     <Dialog title={t.prepareTitle} onClose={onClose}>
-      {qs.length === 0 && <p className="xp-muted">{t.noPrepare}</p>}
+      {qs.length === 0 && <p className="ui-muted">{t.noPrepare}</p>}
       {classes.map((cid) => PREPARATION[cid] && (
-        <p key={cid} className="xp-muted"><b>{rs.classes.get(cid)?.name.it}</b> — {fmt(t.prepareWhen, { w: PREPARATION[cid]!.when })} · {fmt(t.prepareFocus, { f: PREPARATION[cid]!.focus })}</p>
+        <p key={cid} className="ui-muted"><b>{rs.classes.get(cid)?.name.it}</b> — {fmt(t.prepareWhen, { w: PREPARATION[cid]!.when })} · {fmt(t.prepareFocus, { f: PREPARATION[cid]!.focus })}</p>
       ))}
-      {note && <div className="xp-banner" role="status">{note}</div>}
+      {note && <div className="ui-banner" role="status">{note}</div>}
       {qs.map((x) => (
         <QuestionView key={x.key} q={x} onPick={(key, picked) => {
           const r = choose(ch, rs, key, picked);
@@ -191,7 +191,7 @@ function PrepareDialog({ ch, rs, update, onClose }: Pick<TabProps, "ch" | "rs" |
           setNote(r.removed.length ? `${t.prepared} (annullate: ${r.removed.map((z) => z.key).join(", ")})` : t.prepared);
         }} />
       ))}
-      <div className="xp-actions footer"><Button onClick={onClose}>{it.play.close}</Button></div>
+      <div className="ui-actions footer"><Button onClick={onClose}>{it.play.close}</Button></div>
     </Dialog>
   );
 }
@@ -209,7 +209,7 @@ function RecoveryDialog({ ch, d, update, recoveries, cunning, onClose }: Pick<Ta
       {rec && (
         <>
           <h3>{t.arcane}</h3>
-          <p className="xp-muted">{fmt(t.arcaneHelp, { n: limit })}</p>
+          <p className="ui-muted">{fmt(t.arcaneHelp, { n: limit })}</p>
           <ul className="pl-list">
             {d.spellSlots.slots.map((_n, i) => i < 5 && (d.spellSlots.used[i] ?? 0) > 0 && (
               <li key={i}><div className="pl-cond" style={{ cursor: "default" }}>
@@ -221,7 +221,7 @@ function RecoveryDialog({ ch, d, update, recoveries, cunning, onClose }: Pick<Ta
             ))}
           </ul>
           <p>Totale livelli: <b>{total}/{limit}</b></p>
-          <div className="xp-actions"><Button variant="primary" disabled={!picked.length} onClick={() => {
+          <div className="ui-actions"><Button variant="primary" disabled={!picked.length} onClick={() => {
             const r = recoverSlots(ch, d, rec.id, classLevel, picked);
             if (r.ok) { update(() => r.character); setPicked([]); setMsg(t.done); } else setMsg(r.errors.join(" "));
           }}>{t.recover}</Button></div>
@@ -230,11 +230,11 @@ function RecoveryDialog({ ch, d, update, recoveries, cunning, onClose }: Pick<Ta
       {cunning && (
         <>
           <h3>{t.cunning}</h3>
-          <div className="xp-actions"><Button variant="primary" onClick={() => { const r = magicalCunning(ch, d, warlock); if (r.ok) { update(() => r.character); setMsg(t.done); } else setMsg(r.errors.join(" ")); }}>{t.recover}</Button></div>
+          <div className="ui-actions"><Button variant="primary" onClick={() => { const r = magicalCunning(ch, d, warlock); if (r.ok) { update(() => r.character); setMsg(t.done); } else setMsg(r.errors.join(" ")); }}>{t.recover}</Button></div>
         </>
       )}
-      {msg && <div className="xp-banner" role="status">{msg}</div>}
-      <div className="xp-actions footer"><Button onClick={onClose}>{it.play.close}</Button></div>
+      {msg && <div className="ui-banner" role="status">{msg}</div>}
+      <div className="ui-actions footer"><Button onClick={onClose}>{it.play.close}</Button></div>
     </Dialog>
   );
 }

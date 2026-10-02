@@ -3,7 +3,7 @@ import type { FeatureInfo } from "../engine/compute/types";
 import { setActive, useResource } from "../engine/play";
 import { strings as it } from "../i18n";
 import { fmt } from "../ui/format";
-import { Button, Dialog } from "../ui/xp";
+import { Button, Dialog } from "../ui/theme";
 import type { TabProps } from "./types";
 
 const t = it.play.features;
@@ -34,7 +34,7 @@ export function FeaturesTab({ ch, rs, d, update }: TabProps) {
   return (
     <>
       <h2>{t.title}</h2>
-      {error && <div className="xp-error" role="alert">{error}</div>}
+      {error && <div className="ui-error" role="alert">{error}</div>}
       <div className="pl-tabs" role="group" aria-label={t.kinds.class}>
         <button type="button" aria-pressed={kind === "all"} onClick={() => setKind("all")}>{t.all}</button>
         {KINDS.filter((k) => all.some((f) => f.kind === k)).map((k) => (
@@ -42,14 +42,14 @@ export function FeaturesTab({ ch, rs, d, update }: TabProps) {
         ))}
       </div>
       <div className="pl-row">
-        <input className="xp-input" style={{ flex: 1, minWidth: 140 }} type="search" placeholder={t.search} aria-label={t.search} value={q} onChange={(e) => setQ(e.target.value)} />
-        <select className="xp-select" style={{ width: "auto" }} aria-label={t.allLevels} value={level} onChange={(e) => setLevel(e.target.value)}>
+        <input className="ui-input" style={{ flex: 1, minWidth: 140 }} type="search" placeholder={t.search} aria-label={t.search} value={q} onChange={(e) => setQ(e.target.value)} />
+        <select className="ui-select" style={{ width: "auto" }} aria-label={t.allLevels} value={level} onChange={(e) => setLevel(e.target.value)}>
           <option value="all">{t.allLevels}</option>
           {levels.map((l) => <option key={l} value={l}>{l === 0 ? t.kinds.feat : fmt(t.level, { n: l })}</option>)}
         </select>
       </div>
 
-      {shown.length === 0 && <p className="xp-muted">{t.empty}</p>}
+      {shown.length === 0 && <p className="ui-muted">{t.empty}</p>}
       <ul className="pl-list">
         {shown.map((f) => {
           const r = f.resourceId ? d.resources[f.resourceId] : undefined;
@@ -95,8 +95,8 @@ export function FeaturesTab({ ch, rs, d, update }: TabProps) {
               </li>
             ))}
           </ul>
-          {error && <div className="xp-error" role="alert">{error}</div>}
-          <div className="xp-actions footer">
+          {error && <div className="ui-error" role="alert">{error}</div>}
+          <div className="ui-actions footer">
             <Button onClick={() => setPick(null)}>{it.wizard.confirmNo}</Button>
             <Button variant="primary" disabled={!choice} onClick={() => activate(pick, [choice])}>{t.confirm}</Button>
           </div>

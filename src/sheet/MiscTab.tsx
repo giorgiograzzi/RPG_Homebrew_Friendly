@@ -1,6 +1,6 @@
 import { setCoins, setOverride, OVERRIDE_KEYS } from "../engine/play";
 import { strings as it } from "../i18n";
-import { Button } from "../ui/xp";
+import { Button } from "../ui/theme";
 import type { TabProps } from "./types";
 import { num } from "./util";
 
@@ -12,7 +12,7 @@ export function MiscTab({ ch, d, update, onReopen }: TabProps & { onReopen: () =
   const forced = OVERRIDE_KEYS.filter((k) => ch.overrides[k] !== undefined);
   return (
     <>
-      {d.warnings.length > 0 && <div className="xp-banner"><b>{t.warnings}:</b> {d.warnings.join(" ")}</div>}
+      {d.warnings.length > 0 && <div className="ui-banner"><b>{t.warnings}:</b> {d.warnings.join(" ")}</div>}
       <h3>{t.coins}</h3>
       <div className="pl-row">
         {COINS.map((k) => (
@@ -22,9 +22,9 @@ export function MiscTab({ ch, d, update, onReopen }: TabProps & { onReopen: () =
         ))}
       </div>
       <h3>{t.notes}</h3>
-      <textarea className="xp-input" style={{ minHeight: 160, padding: 8 }} aria-label={t.notes} placeholder={t.notesHelp} value={ch.notes} onChange={(e) => update((c) => ({ ...c, notes: e.target.value }))} />
+      <textarea className="ui-input" style={{ minHeight: 160, padding: 8 }} aria-label={t.notes} placeholder={t.notesHelp} value={ch.notes} onChange={(e) => update((c) => ({ ...c, notes: e.target.value }))} />
       <h3>{t.overrides}</h3>
-      {forced.length === 0 ? <p className="xp-muted">{t.noOverrides}</p> : (
+      {forced.length === 0 ? <p className="ui-muted">{t.noOverrides}</p> : (
         <ul className="pl-list">
           {forced.map((k) => (
             <li key={k}><div className="pl-cond" style={{ cursor: "default" }}>
@@ -34,7 +34,7 @@ export function MiscTab({ ch, d, update, onReopen }: TabProps & { onReopen: () =
           ))}
         </ul>
       )}
-      <div className="xp-actions footer"><Button onClick={onReopen}>{t.reopen}</Button></div>
+      <div className="ui-actions footer"><Button onClick={onReopen}>{t.reopen}</Button></div>
     </>
   );
 }

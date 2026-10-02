@@ -33,6 +33,11 @@
   "settings": {
     "title": "Impostazioni",
     "back": "Indietro",
+    "theme": "Aspetto",
+    "themeHelp": "Chiaro, scuro o come il dispositivo.",
+    "themeAuto": "Automatico",
+    "themeLight": "Chiaro",
+    "themeDark": "Scuro",
     "language": "Lingua",
     "languageHelp": "Cambia i testi dell'app e i dati di gioco. I personaggi restano.",
     "languageAuto": "Automatica (lingua del browser)",

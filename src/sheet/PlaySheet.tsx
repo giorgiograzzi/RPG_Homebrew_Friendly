@@ -20,7 +20,7 @@ export function PlaySheet({ ch, rs, update, onReopen, tab, onSection }: { ch: Ch
   const props = { ch, rs, d, update };
   return (
     <>
-      <p className="xp-muted" style={{ margin: "0 0 8px" }}>{[it.play.tabs[tab], cls, rs.species.get(ch.speciesId)?.name.it, rs.backgrounds.get(ch.backgroundId)?.name.it].filter(Boolean).join(" · ")}</p>
+      <p className="ui-muted" style={{ margin: "0 0 8px" }}>{[it.play.tabs[tab], cls, rs.species.get(ch.speciesId)?.name.it, rs.backgrounds.get(ch.backgroundId)?.name.it].filter(Boolean).join(" · ")}</p>
       {tab === "status" && <StatusTab {...props} onSection={onSection} />}
       {tab === "features" && <FeaturesTab {...props} />}
       {tab === "stats" && <StatsTab {...props} />}

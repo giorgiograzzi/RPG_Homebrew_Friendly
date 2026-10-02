@@ -9,7 +9,7 @@ import { canGiveKind, give, has, take } from "../homebrew/give";
 import { summarize } from "../homebrew/summary";
 import { strings as it } from "../i18n";
 import { fmt } from "../ui/format";
-import { Button, Check, Dialog, Field } from "../ui/xp";
+import { Button, Check, Dialog, Field } from "../ui/theme";
 import { useApp } from "../ui/useApp";
 import { isFinalized } from "../wizard/logic";
 import { download } from "./Settings";
@@ -67,28 +67,28 @@ export function Homebrew() {
   return (
     <>
       <h2>{t.title}</h2>
-      <p className="xp-muted">{t.intro}</p>
-      {note && <div className="xp-banner" role="status">{note}</div>}
-      <div className="xp-actions" style={{ justifyContent: "flex-start", flexWrap: "wrap" }}>
+      <p className="ui-muted">{t.intro}</p>
+      {note && <div className="ui-banner" role="status">{note}</div>}
+      <div className="ui-actions" style={{ justifyContent: "flex-start", flexWrap: "wrap" }}>
         <Button variant="primary" onClick={() => setChoose(true)}>{t.new}</Button>
         <Button onClick={() => setOfficial(true)}>{t.official}</Button>
         <Button onClick={() => setImporting(true)}>{t.import}</Button>
         <Button onClick={() => setExporting(true)} disabled={entries.length === 0}>{t.export}</Button>
       </div>
-      {!canGive && <p className="xp-muted">{ch ? t.needSheet : t.noCharacter}</p>}
-      {entries.length === 0 && <p className="xp-muted">{t.empty}</p>}
+      {!canGive && <p className="ui-muted">{ch ? t.needSheet : t.noCharacter}</p>}
+      {entries.length === 0 && <p className="ui-muted">{t.empty}</p>}
       {packs.length > 0 && (
-        <fieldset className="xp-group">
+        <fieldset className="ui-group">
           <legend>{t.pack}</legend>
           <Field label={t.pack}>
-            <select className="xp-select" value={packFilter} onChange={(e) => setPackFilter(e.target.value)}>
+            <select className="ui-select" value={packFilter} onChange={(e) => setPackFilter(e.target.value)}>
               <option value="all">{t.allPacks}</option>
               {packs.map((p) => <option key={p} value={p}>{p}</option>)}
               {entries.some((e) => !e.pack) && <option value="none">{t.noPack}</option>}
             </select>
           </Field>
           {packFilter !== "all" && packFilter !== "none" && (
-            <div className="xp-actions" style={{ justifyContent: "flex-start", flexWrap: "wrap" }}>
+            <div className="ui-actions" style={{ justifyContent: "flex-start", flexWrap: "wrap" }}>
               <Button onClick={() => setPack(packFilter, true)}>{t.packOn}</Button>
               <Button onClick={() => setPack(packFilter, false)}>{t.packOff}</Button>
             </div>
@@ -100,17 +100,17 @@ export function Homebrew() {
         const list = shownEntries.filter((e) => e.kind === kind);
         if (!list.length) return null;
         return (
-          <fieldset key={kind} className="xp-group">
+          <fieldset key={kind} className="ui-group">
             <legend>{t.kindsPlural[kind]}</legend>
             <ul className="pl-list">
               {list.map((e) => {
                 const mine = canGive && ch && canGiveKind(e) ? has(ch, e) : false;
                 return (
                   <li key={hbKey(e)} className="pl-feat hb-entry" data-enabled={e.enabled}>
-                    <p style={{ margin: 0 }}><strong>{e.data.name.it}</strong> <span className="hb-badge">{t.badge}</span> {e.pack && <span className="xp-muted">· {e.pack}</span>} {!e.enabled && <span className="xp-muted">· {t.off}</span>}</p>
-                    {summarize(kind, e.data, rs).map((l, i) => <p key={i} className="xp-muted" style={{ margin: "2px 0" }}>{l}</p>)}
+                    <p style={{ margin: 0 }}><strong>{e.data.name.it}</strong> <span className="hb-badge">{t.badge}</span> {e.pack && <span className="ui-muted">· {e.pack}</span>} {!e.enabled && <span className="ui-muted">· {t.off}</span>}</p>
+                    {summarize(kind, e.data, rs).map((l, i) => <p key={i} className="ui-muted" style={{ margin: "2px 0" }}>{l}</p>)}
                     <Check checked={e.enabled} onChange={(v) => setOne(e, v)}>{e.enabled ? t.on : t.toggleOn}</Check>
-                    <div className="xp-actions" style={{ justifyContent: "flex-start", flexWrap: "wrap" }}>
+                    <div className="ui-actions" style={{ justifyContent: "flex-start", flexWrap: "wrap" }}>
                       <Button onClick={() => setEditing({ kind, entry: e })}>{t.edit}</Button>
                       <Button onClick={() => void setHomebrew([...entries, duplicateEntry(e, rs, entries)])}>{t.duplicate}</Button>
                       <Button variant="danger" onClick={() => setDel(e)}>{t.delete}</Button>
@@ -129,9 +129,9 @@ export function Homebrew() {
       {choose && (
         <Dialog title={t.newWhat} onClose={() => setChoose(false)}>
           {KIND_GROUPS.map((g) => (
-            <fieldset key={g.id} className="xp-group">
+            <fieldset key={g.id} className="ui-group">
               <legend>{t.groups[g.id]}</legend>
-              <div className="xp-actions" style={{ flexWrap: "wrap", justifyContent: "flex-start" }}>
+              <div className="ui-actions" style={{ flexWrap: "wrap", justifyContent: "flex-start" }}>
                 {g.kinds.map((k) => <Button key={k} onClick={() => { setChoose(false); setEditing({ kind: k, entry: null }); }}>{t.kinds[k]}</Button>)}
               </div>
             </fieldset>
@@ -142,7 +142,7 @@ export function Homebrew() {
       {del && (
         <Dialog title={t.delete} onClose={() => setDel(null)}>
           <p>{t.confirmDelete}</p><p><strong>{del.data.name.it}</strong></p>
-          <div className="xp-actions">
+          <div className="ui-actions">
             <Button onClick={() => setDel(null)}>{t.cancel}</Button>
             <Button variant="danger" onClick={() => { const e = del; setDel(null); void guarded([e], () => void setHomebrew(entries.filter((x) => hbKey(x) !== hbKey(e)))); }}>{t.delete}</Button>
           </div>
@@ -151,7 +151,7 @@ export function Homebrew() {
       {warn && (
         <Dialog title={t.usedByAsk} onClose={() => setWarn(null)}>
           <p>{fmt(t.usedBy, { names: warn.names.join(", ") })}</p>
-          <div className="xp-actions">
+          <div className="ui-actions">
             <Button onClick={() => setWarn(null)}>{t.cancel}</Button>
             <Button variant="danger" onClick={() => { const r = warn.run; setWarn(null); r(); }}>{t.proceed}</Button>
           </div>
@@ -172,17 +172,17 @@ function OfficialDialog({ onClose, onPick }: { onClose: () => void; onPick: (e: 
   const list = kind ? [...(rs[kind] as Map<string, Record<string, any>>).values()].filter((x) => x.origin !== "homebrew" && x.name?.it?.toLowerCase().includes(q.toLowerCase())).sort((a, b) => a.name.it.localeCompare(b.name.it, "it")) : [];
   return (
     <Dialog title={t.official} onClose={onClose}>
-      <p className="xp-muted">{t.officialHelp}</p>
+      <p className="ui-muted">{t.officialHelp}</p>
       {!kind ? (
-        <div className="xp-actions" style={{ flexWrap: "wrap", justifyContent: "flex-start" }}>
+        <div className="ui-actions" style={{ flexWrap: "wrap", justifyContent: "flex-start" }}>
           {HB_KINDS.map((k) => <Button key={k} onClick={() => setKind(k)}>{t.kindsPlural[k]}</Button>)}
         </div>
       ) : (
         <>
-          <div className="xp-actions" style={{ justifyContent: "flex-start" }}><Button onClick={() => { setKind(null); setQ(""); }}>← {t.back}</Button></div>
-          <input className="xp-input" type="search" style={{ marginBottom: 8 }} placeholder={t.officialSearch} aria-label={t.officialSearch} value={q} onChange={(e) => setQ(e.target.value)} />
-          {list.length === 0 && <p className="xp-muted">{t.officialNone}</p>}
-          <ul className="xp-list">
+          <div className="ui-actions" style={{ justifyContent: "flex-start" }}><Button onClick={() => { setKind(null); setQ(""); }}>← {t.back}</Button></div>
+          <input className="ui-input" type="search" style={{ marginBottom: 8 }} placeholder={t.officialSearch} aria-label={t.officialSearch} value={q} onChange={(e) => setQ(e.target.value)} />
+          {list.length === 0 && <p className="ui-muted">{t.officialNone}</p>}
+          <ul className="ui-list">
             {list.slice(0, 80).map((x) => (
               <li key={x.id} style={{ display: "block" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
@@ -207,14 +207,14 @@ function ExportDialog({ entries, onClose }: { entries: HbEntry[]; onClose: () =>
     <Dialog title={t.export} onClose={onClose}>
       {packs.length > 0 && (
         <Field label={t.exportPack}>
-          <select className="xp-select" value={which} onChange={(e) => { setWhich(e.target.value); if (e.target.value !== "all") setName(e.target.value); }}>
+          <select className="ui-select" value={which} onChange={(e) => { setWhich(e.target.value); if (e.target.value !== "all") setName(e.target.value); }}>
             <option value="all">{t.allPacks}</option>
             {packs.map((p) => <option key={p} value={p}>{p}</option>)}
           </select>
         </Field>
       )}
-      <Field label={t.exportName}><input className="xp-input" value={name} onChange={(e) => setName(e.target.value)} /></Field>
-      <div className="xp-actions">
+      <Field label={t.exportName}><input className="ui-input" value={name} onChange={(e) => setName(e.target.value)} /></Field>
+      <div className="ui-actions">
         <Button onClick={onClose}>{t.cancel}</Button>
         <Button variant="primary" disabled={chosen.length === 0} onClick={() => { download(buildPack(name.trim() || "Homebrew", chosen), `homebrew-${slugify(name) || "pacchetto"}.json`); onClose(); }}>{t.export}</Button>
       </div>
@@ -238,38 +238,38 @@ function ImportDialog({ onClose, onDone }: { onClose: () => void; onDone: (msg: 
   };
   return (
     <Dialog title={t.import} onClose={onClose}>
-      <p className="xp-muted">{t.importHelp}</p>
+      <p className="ui-muted">{t.importHelp}</p>
       <input ref={file} type="file" accept=".json,application/json" hidden onChange={async (e) => { const f = e.target.files?.[0]; if (f) { const x = await f.text(); setText(x); setParsed(parsePack(x, rs)); } e.target.value = ""; }} />
-      <div className="xp-actions" style={{ justifyContent: "flex-start" }}><Button onClick={() => file.current?.click()}>{t.importFile}</Button></div>
-      <Field label={t.importPaste}><textarea className="xp-input" rows={5} style={{ padding: 8 }} value={text} onChange={(e) => { setText(e.target.value); setParsed(null); }} /></Field>
-      {parsed && !parsed.ok && <div className="xp-error" role="alert">{parsed.error}</div>}
+      <div className="ui-actions" style={{ justifyContent: "flex-start" }}><Button onClick={() => file.current?.click()}>{t.importFile}</Button></div>
+      <Field label={t.importPaste}><textarea className="ui-input" rows={5} style={{ padding: 8 }} value={text} onChange={(e) => { setText(e.target.value); setParsed(null); }} /></Field>
+      {parsed && !parsed.ok && <div className="ui-error" role="alert">{parsed.error}</div>}
       {parsed?.ok && (
         <>
           <p><strong>{parsed.name}</strong>: {fmt(t.exampleCount, { n: parsed.entries.length })}</p>
-          {parsed.errors.length > 0 && <div className="xp-error" role="alert"><strong>{t.importSkipped}</strong><ul>{parsed.errors.map((e, i) => <li key={i}>{e}</li>)}</ul></div>}
+          {parsed.errors.length > 0 && <div className="ui-error" role="alert"><strong>{t.importSkipped}</strong><ul>{parsed.errors.map((e, i) => <li key={i}>{e}</li>)}</ul></div>}
         </>
       )}
-      <div className="xp-actions">
+      <div className="ui-actions">
         <Button onClick={onClose}>{t.cancel}</Button>
         {parsed?.ok
           ? <Button variant="primary" disabled={parsed.entries.length === 0} onClick={() => commit(parsed)}>{t.importGo}</Button>
           : <Button variant="primary" disabled={!text.trim()} onClick={() => setParsed(parsePack(text, rs))}>{t.preview}</Button>}
       </div>
       {examples.length > 0 && (
-        <fieldset className="xp-group">
+        <fieldset className="ui-group">
           <legend>{t.examples}</legend>
-          <span className="xp-help">{t.examplesHelp}</span>
+          <span className="ui-help">{t.examplesHelp}</span>
           <ul className="pl-list">
             {examples.map(({ path, pack }) => (
               <li key={path} className="pl-feat">
-                <p style={{ margin: 0 }}><strong>{pack.name ?? path}</strong> <span className="xp-muted">· {fmt(t.exampleCount, { n: count(pack) })}</span></p>
-                <div className="xp-actions" style={{ justifyContent: "flex-start" }}>
+                <p style={{ margin: 0 }}><strong>{pack.name ?? path}</strong> <span className="ui-muted">· {fmt(t.exampleCount, { n: count(pack) })}</span></p>
+                <div className="ui-actions" style={{ justifyContent: "flex-start" }}>
                   <Button onClick={() => { const p = parsePack(JSON.stringify(pack), rs); if (p.ok) commit(p); else setParsed(p); }}>{t.exampleAdd}</Button>
                 </div>
               </li>
             ))}
           </ul>
-          <p className="xp-muted">{t.template}</p>
+          <p className="ui-muted">{t.template}</p>
         </fieldset>
       )}
     </Dialog>

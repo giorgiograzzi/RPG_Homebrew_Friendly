@@ -18,6 +18,8 @@ const FORBIDDEN: { name: string; re: RegExp; allow?: RegExp }[] = [
   { name: "D&D", re: /\bD\s*(&|&amp;)\s*D\b/i },
   { name: "edizione 2024 / 5.5", re: /\b2024\b|\b5\.5\s*\(|edizione 5\.5/i },
   { name: "bookPage", re: /bookPage/ },
+  // l'interfaccia non imita nessun sistema operativo o prodotto altrui
+  { name: "tema di terzi", re: /\bwindows\b|ms-dos|tahoma|\b(xp|dos)-[a-z]/i },
   // contenuti che non sono nell'SRD 5.2.1 (specie, classi e sottoclassi di altri manuali)
   { name: "non SRD: sottoclassi e specie", re: /eldritch knight|cavaliere mistico|arcane trickster|mistificatore arcano|aasimar|artificer|artefice|tabaxi|warforged/i },
 ];
