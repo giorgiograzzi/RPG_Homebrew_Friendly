@@ -43,11 +43,14 @@ for (const d of CLASSES) {
   const classTable = Object.fromEntries(Object.entries(table).filter(([k]) => !SLOT_COL.test(k) && k !== "pact_slots" && k !== "pact_slot_level"));
   const spellChoices = d.caster ? [
     ...(classTable.cantrips ? [{ id: `${d.id}_cantrips`, label: { it: "Trucchetti", en: "Cantrips" }, count: 1, countFrom: "cantrips", source: `cantrips:${d.caster.list}` }] : []),
+    ...(d.caster.spellbook ? [{ id: `${d.id}_spellbook`, label: { it: "Libro degli incantesimi", en: "Spellbook" }, count: 1, countFormula: `4 + 2 * classLevel:${d.id}`, source: `spells:${d.caster.list}` }] : []),
     { id: `${d.id}_prepared`, label: { it: "Incantesimi preparati", en: "Prepared spells" }, count: 1, countFrom: "prepared", source: `spells:${d.caster.list}` },
   ] : [];
   const toolsChoice = d.toolChoice ? { id: `${d.id}_tools`, label: { it: "Strumento", en: "Tool" }, count: d.toolChoice.count, source: d.toolChoice.source } : undefined;
   classes.push(resolve({
     id: d.id, name: d.name, description: d.description, hitDie: d.hitDie, primaryAbility: d.primary, saves: d.saves,
+    // multiclasse: 13 nella caratteristica primaria ("Forza o Destrezza" = una delle due, altrimenti tutte)
+    multiclassRequirement: d.primary.map((a) => `ability:${a}>=13`).join(/\bor\b/.test(d.core.primaryEn) ? " || " : " && "),
     skillChoices: { count: d.skills.count, from: d.skills.from }, armorTraining: d.armor, weaponProficiency: d.weapons,
     ...(d.tools ? { toolProficiency: d.tools } : {}), caster: d.caster?.type ?? "none",
     ...(d.caster ? { spellAbility: d.caster.ability, spellList: d.caster.list } : {}), ...(spellSlots ? { spellSlots } : {}), ...(pactSlots ? { pactSlots } : {}),

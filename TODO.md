@@ -126,7 +126,7 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 - [ ] 🟢 Estrazione: nel PDF le pagine hanno due colonne e alcuni blocchi sono fuori ordine nel flusso: per gli incantesimi si legge colonna sinistra poi destra (`pdfPagesColumns`).
 
 ### Dati SRD (step 2f: condizioni, slot multiclasse, creazione)
-- [ ] 🔴 **Prima di pubblicare**: i vecchi `*.private.test.ts` (8 file) citano contenuti non SRD (Cavaliere mistico, Aasimar...). Vanno riscritti sull'SRD nello step 4 e poi va tolta l'eccezione `allow` nel test guardia (`src/legal/noProtected.test.ts`).
+- [x] ~~Prima di pubblicare: i vecchi `*.private.test.ts` citavano contenuti non SRD~~ → riscritti sull'SRD nello step 4 e tolta l'eccezione dal test guardia.
 - [ ] 🟡 `slotTables`: ci sono solo `full_caster` e `half_caster`. Il terzo di incantatore non esiste nell'SRD (nessuna sottoclasse da terzo di incantatore): resta supportato dal motore solo per l'homebrew. Il vecchio test che si aspetta `third_caster` va tolto.
 - [ ] 🟡 Fasce di partenza (`startingLevels`): l'SRD le dà solo per i livelli 2-20; la 2-4 ha `gold: 0` perché vale l'equipaggiamento normale (+1 oggetto magico comune). Il motore (step 4) deve sommare l'equipaggiamento normale alle fasce 5+ (così dice la tabella: "più equipaggiamento di partenza ordinario").
 - [ ] 🟡 `description` delle condizioni è il testo dell'SRD senza la frase introduttiva. Nel PDF italiano la frase di Incapacitato dice per errore "paralizzato" (tolta). Gli effetti usano il vocabolario del motore; quelli che dipendono da fonte o distanza restano testo (Prono, Invisibile, Spaventato, Afferrato).
@@ -137,3 +137,11 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 - [ ] 🟡 `en.json` traduce tutte le chiavi di `it.json` così com'è. Restano stringhe da riscrivere con la nuova interfaccia (5b) e dall'editor homebrew (step 6, dove va tolto «Parti da una voce ufficiale»): quando si cambia una stringa vanno aggiornate entrambe (il test di parità lo impone).
 - [ ] 🟢 Nome e descrizione del manifest PWA (`vite.config.ts`) e `index.html` sono ancora solo in italiano (step 9). `<html lang>` si imposta all'avvio.
 - [ ] 🟢 Le unità (piedi/libbre) nei testi dell'interfaccia restano come nei dati; nei dati italiani le distanze sono in metri solo nel testo delle regole.
+
+### Motore con dati SRD (step 4)
+- [ ] 🟡 `homebrew.content.test.ts` è l'unico file rosso: usa i pacchetti di esempio `data/homebrew/esempio-{specie,background,classe}.json` (specie «Figli della cenere», background «Guardiano del faro», classe «Custode delle rune»…) che vanno ricreati **originali e senza contenuti ufficiali** nello step 6.
+- [ ] 🟡 I messaggi del motore («Già competente», «Richiede Forza 13+», «Nessuno slot di 3° livello»…) sono ancora solo in italiano (`src/engine/creation/*`): vanno tradotti con la nuova interfaccia (5b).
+- [ ] 🟡 Dati corretti in questo step: Soldato con scelta dello strumento (`soldier_tool`), `multiclassRequirement` delle classi (Guerriero = Forza o Destrezza), libro del Mago (`wizard_spellbook`, 4 + 2 × livello), Arcanum mistico senza il limite degli slot, Ira che vieta gli incantesimi, Forma selvatica attivabile, dado di Arti marziali (solo senza armatura né scudo), Aura di protezione del Paladino, incantesimi concessi col modo giusto (trucchetto a volontà).
+- [ ] 🟡 Equipaggiamento: `$spellbook` non diventa un oggetto (il libro è l'elenco degli incantesimi); `$holy_symbol` dà l'amuleto (uguale agli altri due simboli sacri, costo 5 mo). Manca la scelta del simbolo sacro nella creazione.
+- [ ] 🟢 Privilegi ancora solo testo (nessun effetto sul calcolo): Attacco irruento, Istinto primordiale, Brutalità, Tiro mirato/Colpo astuto, Talento affidabile (Ladro), Aura di coraggio, Controincanto, Deviare attacchi, Evasione, Schivata prodigiosa, molte opzioni di Metamagia e Invocazioni, tratti delle sottoclassi (Frenesia, Taglio nero, Fascino…). Se serve, si modellano uno alla volta.
+- [ ] 🟢 Ira: la Concentrazione non si spezza (il motore ha solo il divieto di lanciare incantesimi).

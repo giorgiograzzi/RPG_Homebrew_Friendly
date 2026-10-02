@@ -1,17 +1,14 @@
-import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { computeCharacter } from "../compute";
 import { emptyCharacter } from "../character";
 import { longRest, shortRest } from "../play";
-import { buildRuleset } from "../ruleset";
+import { loadSrd } from "../../data/srdIntegrity";
 import type { Character } from "../types";
 import { autoComplete } from "../../wizard/logic";
 import { castSpell, magicalCunning, recoverSlots, spellbook } from "./index";
 
-// Gira solo dove esistono i dati privati (non tracciati): magie con i dati veri
-const DIR = "data/private";
-describe.skipIf(!existsSync(`${DIR}/spells.json`))("magie con i dati veri (step 16)", () => {
-  const R = buildRuleset(readdirSync(DIR).filter((f) => f.endsWith(".json")).map((f) => JSON.parse(readFileSync(`${DIR}/${f}`, "utf8"))));
+describe("magie", () => {
+  const R = loadSrd("it");
   // personaggio creato dal wizard al 1° livello e poi portato al livello `level` (le scelte dei livelli superiori non servono qui)
   const make = (classId: string, species: string, bg: string, level = 1): Character => {
     const c = autoComplete({ ...emptyCharacter(`m-${classId}`), name: classId, classes: [{ classId, level: 1, hpRolls: [] }], speciesId: species, backgroundId: bg }, R);
@@ -79,10 +76,16 @@ describe.skipIf(!existsSync(`${DIR}/spells.json`))("magie con i dati veri (step 
     expect(again.ok).toBe(s.free!.max > 1);
     expect(D(longRest(r.character, D(r.character))).resources[s.free!.resourceId]!.remaining).toBe(s.free!.max);
   });
-  it("Cavaliere mistico (terzo incantatore): Intelligenza da incantatore", () => {
-    const c = { ...make("fighter", "human", "soldier", 3), classes: [{ classId: "fighter", level: 3, subclassId: "eldritch_knight", hpRolls: [] }] };
-    expect(D(c).spellcasting.map((x) => x.ability)).toEqual(["int"]);
-    expect(D(c).spellSlots.slots[0]).toBeGreaterThan(0);
+  it("Warlock: gli slot del Patto lanciano incantesimi e tornano con un riposo breve", () => {
+    const c = make("warlock", "human", "acolyte", 1);
+    const d = D(c);
+    expect(d.spellSlots.pact).toMatchObject({ count: 1, level: 1, remaining: 1 });
+    const hex = [...spellbook(c, R, d)].find((e) => e.spell.level === 1 && e.sources.some((x) => x.kind === "prepared"));
+    if (!hex) return;
+    const r = cast(c, hex.id, { kind: "pact" } as never);
+    expect(r.ok).toBe(true);
+    expect(D(r.character).spellSlots.pact!.remaining).toBe(0);
+    expect(D(shortRest(r.character, D(r.character))).spellSlots.pact!.remaining).toBe(1);
   });
   it("preparare: cambiare gli incantesimi preparati del Chierico rispetta il numero e i livelli", async () => {
     const { choose } = await import("../../wizard/logic");

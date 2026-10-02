@@ -13,6 +13,7 @@
     "str",
     "con"
    ],
+   "multiclassRequirement": "ability:str>=13",
    "skillChoices": {
     "count": 2,
     "from": [
@@ -170,6 +171,12 @@
        "abilities": [
         "str"
        ],
+       "when": "active:rage"
+      },
+      {
+       "op": "restriction",
+       "forbids": "spellcasting",
+       "reason": "Ira",
        "when": "active:rage"
       },
       {
@@ -630,6 +637,7 @@
     "dex",
     "cha"
    ],
+   "multiclassRequirement": "ability:cha>=13",
    "skillChoices": {
     "count": 3,
     "from": "any"
@@ -1130,6 +1138,7 @@
     "wis",
     "cha"
    ],
+   "multiclassRequirement": "ability:wis>=13",
    "skillChoices": {
     "count": 2,
     "from": [
@@ -1743,6 +1752,7 @@
     "int",
     "wis"
    ],
+   "multiclassRequirement": "ability:wis>=13",
    "skillChoices": {
     "count": 2,
     "from": [
@@ -2190,6 +2200,10 @@
       "recharge": "long_rest",
       "partialShortRest": 1
      },
+     "activation": {
+      "resource": "wild_shape",
+      "duration": "hours equal to half your Druid level"
+     },
      "origin": "srd"
     },
     {
@@ -2418,6 +2432,7 @@
     "str",
     "con"
    ],
+   "multiclassRequirement": "ability:str>=13 || ability:dex>=13",
    "skillChoices": {
     "count": 2,
     "from": [
@@ -2995,6 +3010,7 @@
     "str",
     "dex"
    ],
+   "multiclassRequirement": "ability:dex>=13 && ability:wis>=13",
    "skillChoices": {
     "count": 2,
     "from": [
@@ -3139,6 +3155,28 @@
      "id": "martial_arts",
      "name": "Martial Arts",
      "description": "While wearing no armor or Shield and using only Unarmed Strikes or Monk weapons (Simple Melee and Light Martial Melee weapons): a Bonus Action Unarmed Strike; a Martial Arts die instead of normal damage (Martial Arts column); you can use Dexterity instead of Strength for attack and damage rolls and for the grapple and shove save DC.",
+     "effects": [
+      {
+       "op": "unarmedDie",
+       "die": "1d6",
+       "when": "classLevel:monk>=1 && wearingArmor:none && !shield"
+      },
+      {
+       "op": "unarmedDie",
+       "die": "1d8",
+       "when": "classLevel:monk>=5 && wearingArmor:none && !shield"
+      },
+      {
+       "op": "unarmedDie",
+       "die": "1d10",
+       "when": "classLevel:monk>=11 && wearingArmor:none && !shield"
+      },
+      {
+       "op": "unarmedDie",
+       "die": "1d12",
+       "when": "classLevel:monk>=17 && wearingArmor:none && !shield"
+      }
+     ],
      "origin": "srd"
     },
     {
@@ -3524,6 +3562,7 @@
     "wis",
     "cha"
    ],
+   "multiclassRequirement": "ability:str>=13 && ability:cha>=13",
    "skillChoices": {
     "count": 2,
     "from": [
@@ -3994,6 +4033,13 @@
      "id": "aura_of_protection",
      "name": "Aura of Protection",
      "description": "10-foot Emanation (inactive if you're Incapacitated): you and your allies gain a bonus to saving throws equal to your Charisma modifier (minimum +1). A creature gets only one such bonus.",
+     "effects": [
+      {
+       "op": "saveBonus",
+       "value": "max(1, mod:cha)",
+       "when": "classLevel:paladin>=6"
+      }
+     ],
      "origin": "srd"
     },
     {
@@ -4109,6 +4155,7 @@
     "str",
     "dex"
    ],
+   "multiclassRequirement": "ability:dex>=13 && ability:wis>=13",
    "skillChoices": {
     "count": 3,
     "from": [
@@ -4760,6 +4807,7 @@
     "dex",
     "int"
    ],
+   "multiclassRequirement": "ability:dex>=13",
    "skillChoices": {
     "count": 4,
     "from": [
@@ -5264,6 +5312,7 @@
     "con",
     "cha"
    ],
+   "multiclassRequirement": "ability:cha>=13",
    "skillChoices": {
     "count": 2,
     "from": [
@@ -6037,6 +6086,7 @@
     "wis",
     "cha"
    ],
+   "multiclassRequirement": "ability:cha>=13",
    "skillChoices": {
     "count": 2,
     "from": [
@@ -6768,6 +6818,7 @@
     "int",
     "wis"
    ],
+   "multiclassRequirement": "ability:int>=13",
    "skillChoices": {
     "count": 2,
     "from": [
@@ -7073,6 +7124,13 @@
      "count": 1,
      "countFrom": "cantrips",
      "source": "cantrips:wizard"
+    },
+    {
+     "id": "wizard_spellbook",
+     "label": "Spellbook",
+     "count": 1,
+     "countFormula": "4 + 2 * classLevel:wizard",
+     "source": "spells:wizard"
     },
     {
      "id": "wizard_prepared",

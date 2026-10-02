@@ -217,7 +217,7 @@
           {
            "op": "grantSpell",
            "spell": "fire_bolt",
-           "mode": "alwaysPrepared",
+           "mode": "cantrip",
            "when": "classLevel:druid>=3"
           },
           {
@@ -278,7 +278,7 @@
           {
            "op": "grantSpell",
            "spell": "ray_of_frost",
-           "mode": "alwaysPrepared",
+           "mode": "cantrip",
            "when": "classLevel:druid>=3"
           },
           {
@@ -327,7 +327,7 @@
           {
            "op": "grantSpell",
            "spell": "shocking_grasp",
-           "mode": "alwaysPrepared",
+           "mode": "cantrip",
            "when": "classLevel:druid>=3"
           },
           {
@@ -364,7 +364,7 @@
           {
            "op": "grantSpell",
            "spell": "acid_splash",
-           "mode": "alwaysPrepared",
+           "mode": "cantrip",
            "when": "classLevel:druid>=3"
           },
           {

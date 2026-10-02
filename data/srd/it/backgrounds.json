@@ -206,6 +206,14 @@
      "gp": 50
     }
    },
+   "choices": [
+    {
+     "id": "soldier_tool",
+     "label": "Strumento",
+     "count": 1,
+     "source": "tools:gaming"
+    }
+   ],
    "description": "Una vita tra i ranghi di un esercito o di una milizia, tra addestramento e battaglie.",
    "origin": "srd"
   }

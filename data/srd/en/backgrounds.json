@@ -206,6 +206,14 @@
      "gp": 50
     }
    },
+   "choices": [
+    {
+     "id": "soldier_tool",
+     "label": "Tool",
+     "count": 1,
+     "source": "tools:gaming"
+    }
+   ],
    "description": "A life in the ranks of an army or militia, between training and battle.",
    "origin": "srd"
   }

@@ -90,7 +90,7 @@ export const WIZARD: ClassDef = {
   skills: { count: 2, from: ["arcana", "history", "insight", "investigation", "medicine", "nature", "religion"] },
   armor: [], weapons: ["simple"], multiclass: {},
   multiclassPhrases: { it: ["Ottiene il Dado Vita dalla tabella Tratti del mago"], en: ["Gain the Hit Point Die from the Core Wizard Traits table"] },
-  caster: { type: "full", ability: "int", list: "wizard" },
+  caster: { type: "full", ability: "int", list: "wizard", spellbook: true },
   core: { primaryIt: "Intelligenza", primaryEn: "Intelligence", savesIt: "Intelligenza e Saggezza", savesEn: "Intelligence and Wisdom", skillsIt: "Due a scelta tra: Arcano, Indagare, Intuizione, Medicina, Natura, Religione o Storia", skillsEn: "Choose 2: Arcana, History, Insight, Investigation, Medicine, Nature, or Religion",
     weaponsIt: "Armi semplici", weaponsEn: "Simple weapons", armorIt: "Nessuno", armorEn: "None" },
   equipment: {

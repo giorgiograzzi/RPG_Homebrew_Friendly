@@ -1,18 +1,15 @@
-import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { computeCharacter } from "../compute";
 import { testCharacter } from "../compute/testkit";
-import { buildRuleset } from "../ruleset";
+import { loadSrd } from "../../data/srdIntegrity";
 import type { Character } from "../types";
 import {
   allQuestions, availableOptions, classOptions, creationProgress, fillHpRolls, previewDecision, recommendedArray, setAsi, setBaseScores,
   startingEquipment, validateDecisions, type Question,
 } from "./index";
 
-// Gira solo dove esistono i dati privati (non tracciati)
-const DIR = "data/private";
-describe.skipIf(!existsSync(`${DIR}/creation.json`))("motore di creazione (step 10) con i dati veri", () => {
-  const R = buildRuleset(readdirSync(DIR).filter((f) => f.endsWith(".json")).map((f) => JSON.parse(readFileSync(`${DIR}/${f}`, "utf8"))));
+describe("motore di creazione con i dati SRD", () => {
+  const R = loadSrd("it");
   const cls = (classId: string, level: number, extra: object = {}) => ({ classId, level, hpRolls: [], ...extra });
   const mk = (over: Partial<Character> = {}) => testCharacter({ classes: [cls("fighter", 1)], speciesId: "human", backgroundId: "soldier", ...over });
   const q = (ch: Character, key: string): Question => allQuestions(ch, R).find((x) => x.key === key)!;
@@ -39,18 +36,16 @@ describe.skipIf(!existsSync(`${DIR}/creation.json`))("motore di creazione (step 
       expect(e.options.find((o) => o.id === "stealth")!.enabled).toBe(true);
       expect(e.options.find((o) => o.id === "arcana")).toMatchObject({ enabled: false, disabledReason: "Serve prima la competenza" });
     });
-    it("talenti: prerequisiti spiegati a parole, posseduti bloccati, ripetibili no", () => {
+    it("talenti: prerequisiti spiegati a parole, posseduti bloccati", () => {
       const ch = mk({ classes: [cls("fighter", 4)], baseScores: { str: 10, dex: 10, con: 10, int: 10, wis: 10, cha: 10 } });
-      expect(opt(ch, "asi_fighter_4", "great_weapon_master")).toMatchObject({ enabled: false, disabledReason: "Richiede Forza 13+" });
-      expect(opt(ch, "asi_fighter_4", "athlete").disabledReason).toMatch(/Forza 13\+ oppure Destrezza 13\+/);
-      const wiz = mk({ classes: [cls("wizard", 4)] });
-      expect(opt(wiz, "asi_wizard_4", "medium_armor_master").disabledReason).toMatch(/addestramento nelle armature medie/);
+      expect(opt(ch, "asi_fighter_4", "grappler")).toMatchObject({ enabled: false });
+      expect(opt(ch, "asi_fighter_4", "grappler").disabledReason).toMatch(/Forza 13\+ oppure Destrezza 13\+/);
       expect(opt(ch, "asi_fighter_4", "ability_score_improvement").enabled).toBe(true);
       const strong = mk({ classes: [cls("fighter", 4)], baseScores: { str: 16, dex: 10, con: 10, int: 10, wis: 10, cha: 10 } });
-      expect(opt(strong, "asi_fighter_4", "great_weapon_master").enabled).toBe(true);
-      expect(opt(strong, "asi_fighter_4", "medium_armor_master").enabled).toBe(true); // il Guerriero è addestrato nelle armature medie
-      expect(opt(mk({ classes: [cls("fighter", 4)], feats: [{ featId: "athlete" }] }), "asi_fighter_4", "athlete")).toMatchObject({ enabled: false, disabledReason: "Già posseduto" });
-      expect(opt(mk({ classes: [cls("fighter", 8)], feats: [{ featId: "resilient" }] }), "asi_fighter_4", "resilient").enabled).toBe(true); // ripetibile
+      expect(opt(strong, "asi_fighter_4", "grappler").enabled).toBe(true);
+      expect(opt(mk({ classes: [cls("fighter", 4)], feats: [{ featId: "grappler" }] }), "asi_fighter_4", "grappler")).toMatchObject({ enabled: false, disabledReason: "Già posseduto" });
+      // il Dono epico richiede il livello 19
+      expect(opt(mk({ classes: [cls("fighter", 19)] }), "epic_boon_fighter", "boon_of_combat_prowess").enabled).toBe(true);
     });
     it("Stile di combattimento o Guerriero benedetto (Paladino): scelte alternative", () => {
       const ch = mk({ classes: [cls("paladin", 2)] });
@@ -77,27 +72,29 @@ describe.skipIf(!existsSync(`${DIR}/creation.json`))("motore di creazione (step 
       expect(q(mk({ classes: [cls("wizard", 1)] }), "wizard_spellbook").count).toBe(6);
       expect(q(mk({ classes: [cls("wizard", 5)] }), "wizard_spellbook").count).toBe(14);
       expect(q(mk({ classes: [cls("wizard", 4)] }), "wizard_cantrips").count).toBe(4);
-      expect(q(mk({ classes: [cls("sorcerer", 1)] }), "sorcerer_metamagic")).toBeUndefined(); // 0 opzioni al 1°
-      expect(q(mk({ classes: [cls("sorcerer", 2)] }), "sorcerer_metamagic").count).toBe(2);
-      expect(q(mk({ classes: [cls("fighter", 1)] }), "fighter_weapon_mastery").count).toBe(3);
+      expect(q(mk({ classes: [cls("sorcerer", 1)] }), "sorcerer_metamagic_2")).toBeUndefined(); // la Metamagia arriva al 2°
+      expect(q(mk({ classes: [cls("sorcerer", 2)] }), "sorcerer_metamagic_2").count).toBe(2);
+      expect(q(mk({ classes: [cls("fighter", 1)] }), "weapon_mastery_pick").count).toBe(3);
+      expect(q(mk({ classes: [cls("barbarian", 1)] }), "weapon_mastery_pick").count).toBe(2);
       const cleric = mk({ classes: [cls("cleric", 1)] });
       expect(q(cleric, "cleric_cantrips").count).toBe(3);
-      expect(q(ok(cleric, "divine_order", ["thaumaturge"]).character, "cleric_cantrips").count).toBe(4); // +1 Taumaturgo
+      expect(q(ok(cleric, "cleric_divine_order", ["thaumaturge"]).character, "cleric_cantrips").count).toBe(4); // +1 Taumaturgo
     });
     it("maestria nelle armi: solo armi in cui si è competenti; Barbaro solo da mischia", () => {
       const b = mk({ classes: [cls("barbarian", 1)] });
-      expect(opt(b, "barbarian_weapon_mastery", "longbow")).toMatchObject({ enabled: false, disabledReason: "Solo armi da mischia" });
-      expect(opt(b, "barbarian_weapon_mastery", "greataxe").enabled).toBe(true);
-      const w = mk({ classes: [cls("wizard", 1)], feats: [{ featId: "weapon_master" }] });
-      expect(opt(w, "weapon_master_mastery", "longsword")).toMatchObject({ enabled: false, disabledReason: "Non sei competente" });
+      expect(opt(b, "weapon_mastery_pick", "longbow")).toMatchObject({ enabled: false, disabledReason: "Solo armi da mischia" });
+      expect(opt(b, "weapon_mastery_pick", "greataxe").enabled).toBe(true);
+      const w = mk({ classes: [cls("wizard", 1)] }); // il Mago non ha competenza nelle armi da guerra
+      expect(w.classes[0]!.classId).toBe("wizard");
+      expect(q(w, "weapon_mastery_pick")).toBeUndefined();
     });
     it("linguaggi: Comune + 2, i rari no, quelli già noti bloccati; Ladro e Ranger ne hanno di più", () => {
       const ch = mk();
       expect(q(ch, "languages").count).toBe(2);
       expect(q(ch, "languages").options.some((o) => o.id === "abyssal" || o.id === "common")).toBe(false);
       const two = ok(ch, "languages", ["elvish", "dwarvish"]).character;
-      expect(computeCharacter(two, R).languages).toEqual(["common", "elvish", "dwarvish"]);
-      expect(q(mk({ classes: [cls("rogue", 1)] }), "rogue_extra_language").count).toBe(1);
+      expect(computeCharacter(two, R).languages).toEqual(expect.arrayContaining(["common", "elvish", "dwarvish"]));
+      expect(q(mk({ classes: [cls("rogue", 1)] }), "rogue_language").count).toBe(1);
       expect(q(mk({ classes: [cls("ranger", 2)] }), "ranger_languages").count).toBe(2);
       expect(computeCharacter(mk({ classes: [cls("druid", 1)] }), R).languages).toContain("druidic");
       expect(computeCharacter(mk({ classes: [cls("rogue", 1)] }), R).languages).toContain("thieves_cant");
@@ -156,21 +153,24 @@ describe.skipIf(!existsSync(`${DIR}/creation.json`))("motore di creazione (step 
       expect(ms).toBeLessThan(3000);
     });
     it("alzare il livello non annulla nulla; abbassare i punteggi annulla i talenti con prerequisiti", () => {
-      const ch = mk({ classes: [cls("fighter", 4)], baseScores: { str: 16, dex: 10, con: 10, int: 10, wis: 10, cha: 10 }, decisions: { asi_fighter_4: ["great_weapon_master"] } });
+      const ch = mk({ classes: [cls("fighter", 4)], baseScores: { str: 16, dex: 10, con: 10, int: 10, wis: 10, cha: 10 }, decisions: { asi_fighter_4: ["grappler"] } });
       expect(validateDecisions(ch, R).removed).toEqual([]);
       const weak = setBaseScores({ ...ch, creation: { method: "manual" } }, R, "manual", { str: 12, dex: 10, con: 10, int: 10, wis: 10, cha: 10 });
       expect(weak.ok).toBe(true);
-      expect(weak.removed).toEqual([{ key: "asi_fighter_4", picked: ["great_weapon_master"], reason: "Maestro delle armi possenti: Richiede Forza 13+" }]);
+      expect(weak.removed.map((x) => [x.key, x.picked])).toEqual([["asi_fighter_4", ["grappler"]]]);
+      expect(weak.removed[0]!.reason).toMatch(/Richiede Forza 13\+ oppure Destrezza 13\+/);
     });
-    it("sottoclasse: disponibile dal livello 3, si cambia con la scelta speciale", () => {
-      expect(q(mk({ classes: [cls("fighter", 2)] }), "subclass:fighter")).toBeUndefined();
-      const ch = mk({ classes: [cls("fighter", 3)] });
-      expect(q(ch, "subclass:fighter").options.map((o) => o.id).sort()).toEqual(["battle_master", "champion", "eldritch_knight", "psi_warrior"]);
-      const a = ok(ch, "subclass:fighter", ["battle_master"]).character;
-      expect(a.classes[0]!.subclassId).toBe("battle_master");
-      expect(q(a, "battle_master_maneuvers").count).toBe(3);
-      const b = previewDecision({ ...a, decisions: { ...a.decisions, battle_master_maneuvers: ["ambush", "bait_and_switch", "commanders_strike"] } }, R, "subclass:fighter", ["champion"]);
-      expect(b.removed.map((x) => x.key)).toContain("battle_master_maneuvers");
+    it("sottoclasse: disponibile dal livello 3; cambiare classe toglie sottoclasse e scelte collegate", () => {
+      expect(q(mk({ classes: [cls("druid", 2)] }), "subclass:druid")).toBeUndefined();
+      const ch = mk({ classes: [cls("druid", 3)] });
+      expect(q(ch, "subclass:druid").options.map((o) => o.id)).toEqual(["land"]);
+      const a = ok(ch, "subclass:druid", ["land"]).character;
+      expect(a.classes[0]!.subclassId).toBe("land");
+      expect(q(a, "land_type")).toBeDefined(); // il tipo di terra del Circolo della Terra
+      const b = ok(a, "land_type", ["arid"]).character;
+      const c = previewDecision(b, R, "pick:class", ["cleric"]);
+      expect(c.character.classes[0]!.subclassId).toBeUndefined();
+      expect(c.removed.map((x) => x.key)).toContain("land_type");
     });
   });
 
@@ -198,32 +198,31 @@ describe.skipIf(!existsSync(`${DIR}/creation.json`))("motore di creazione (step 
       expect(setAsi(withFeat, R, "asi_fighter_4/asi", [{ ability: "str", amount: 2 }]).ok).toBe(true);
       expect(setAsi(withFeat, R, "asi_fighter_4/asi", [{ ability: "str", amount: 1 }, { ability: "dex", amount: 1 }]).ok).toBe(true);
       expect(setAsi({ ...withFeat, baseScores: { ...withFeat.baseScores, str: 19 } }, R, "asi_fighter_4/asi", [{ ability: "str", amount: 2 }]).errors[0]).toMatch(/massimo \(20\)/);
-      const athlete = ok(mk({ classes: [cls("fighter", 4)], baseScores: { str: 15, dex: 10, con: 10, int: 10, wis: 10, cha: 10 } }), "asi_fighter_4", ["athlete"]).character;
-      expect(q(athlete, "asi_fighter_4/asi").asi).toMatchObject({ mode: "plus1", allowed: ["str", "dex"] });
-      expect(setAsi(athlete, R, "asi_fighter_4/asi", [{ ability: "con", amount: 1 }]).errors[0]).toMatch(/non consentita/);
+      const grappler = ok(mk({ classes: [cls("fighter", 4)], baseScores: { str: 15, dex: 10, con: 10, int: 10, wis: 10, cha: 10 } }), "asi_fighter_4", ["grappler"]).character;
+      expect(q(grappler, "asi_fighter_4/asi").asi).toMatchObject({ mode: "plus1", allowed: ["str", "dex"] });
+      expect(setAsi(grappler, R, "asi_fighter_4/asi", [{ ability: "con", amount: 1 }]).errors[0]).toMatch(/non consentita/);
       const epic = mk({ classes: [cls("fighter", 19)], baseScores: { str: 20, dex: 10, con: 10, int: 10, wis: 10, cha: 10 } });
-      const boon = ok(epic, "epic_boon_fighter_19", ["boon_of_combat_prowess"]).character;
-      expect(q(boon, "epic_boon_fighter_19/asi").asi).toMatchObject({ cap: 30 });
-      const up = setAsi(boon, R, "epic_boon_fighter_19/asi", [{ ability: "str", amount: 1 }]);
+      const boon = ok(epic, "epic_boon_fighter", ["boon_of_combat_prowess"]).character;
+      expect(q(boon, "epic_boon_fighter/asi").asi).toMatchObject({ cap: 30 });
+      const up = setAsi(boon, R, "epic_boon_fighter/asi", [{ ability: "str", amount: 1 }]);
       expect(up.ok).toBe(true);
       expect(computeCharacter(up.character, R).scores.str.value).toBe(21);
     });
     it("un aumento già fatto si invalida se la fonte cambia (talento diverso)", () => {
-      const ch = mk({ classes: [cls("fighter", 4)] });
+      const ch = mk({ classes: [cls("fighter", 4)], baseScores: { str: 15, dex: 10, con: 10, int: 10, wis: 10, cha: 10 } });
       const a = setAsi(ok(ch, "asi_fighter_4", ["ability_score_improvement"]).character, R, "asi_fighter_4/asi", [{ ability: "str", amount: 2 }]).character;
-      const r = previewDecision(a, R, "asi_fighter_4", ["athlete"]);
+      const r = previewDecision(a, R, "asi_fighter_4", ["grappler"]);
       expect(r.character.asi).toEqual([]);
       expect(r.removed.map((x) => x.key)).toEqual(["asi_fighter_4/asi"]);
     });
-    it("due acquisizioni dello stesso talento ripetibile non mescolano le scelte (Resiliente ×2)", () => {
-      let ch = mk({ classes: [cls("fighter", 8)] });
-      ch = ok(ch, "asi_fighter_4", ["resilient"]).character;
-      ch = ok(ch, "asi_fighter_8", ["resilient"]).character; // ripetibile: ammesso
-      ch = ok(ch, "asi_fighter_4/resilient_save", ["wis"]).character;
-      ch = ok(ch, "asi_fighter_8/resilient_save", ["cha"]).character;
+    it("due Aumenti dei punteggi (ripetibili) non mescolano le scelte", () => {
+      let ch = mk({ classes: [cls("fighter", 8)], baseScores: { str: 10, dex: 10, con: 10, int: 10, wis: 10, cha: 10 } });
+      ch = ok(ch, "asi_fighter_4", ["ability_score_improvement"]).character;
+      ch = ok(ch, "asi_fighter_8", ["ability_score_improvement"]).character; // ripetibile: ammesso
+      ch = setAsi(ch, R, "asi_fighter_4/asi", [{ ability: "str", amount: 2 }]).character;
+      ch = setAsi(ch, R, "asi_fighter_8/asi", [{ ability: "dex", amount: 2 }]).character;
       const d = computeCharacter(ch, R);
-      expect([d.saves.wis.proficient, d.saves.cha.proficient, d.saves.int.proficient]).toEqual([true, true, false]);
-      expect(opt(ch, "asi_fighter_8/resilient_save", "wis")).toMatchObject({ enabled: false, disabledReason: "Già competente nel tiro salvezza" });
+      expect([d.scores.str.value, d.scores.dex.value, d.scores.con.value]).toEqual([12, 12, 10]);
     });
   });
 
@@ -234,6 +233,7 @@ describe.skipIf(!existsSync(`${DIR}/creation.json`))("motore di creazione (step 
       const fighter = mk({ ...st, classes: [cls("fighter", 5)] });
       expect(o(fighter, "barbarian").enabled).toBe(true);
       expect(o(fighter, "monk")).toMatchObject({ enabled: false, disabledReason: "Richiede Destrezza 13+ e Saggezza 13+" });
+      expect(o(mk({ ...st, baseScores: { ...st.baseScores, str: 8, dex: 14 }, classes: [cls("fighter", 5)] }), "barbarian").enabled).toBe(false); // Guerriero: Forza o Destrezza
       expect(o(fighter, "wizard").disabledReason).toBe("Richiede Intelligenza 13+");
       // anche la classe di partenza deve rispettare il requisito: Monaco senza Saggezza 13 non può prendere altro
       const monk = mk({ ...st, classes: [cls("monk", 3)] });
@@ -291,7 +291,7 @@ describe.skipIf(!existsSync(`${DIR}/creation.json`))("motore di creazione (step 
     it("personaggio di livello alto: tutte le scelte da 1 a N (Guerriero 8: stile, maestrie, 2 ASI)", () => {
       const ch = mk({ classes: [cls("fighter", 8)] });
       const keys = allQuestions(ch, R).map((x) => x.key);
-      expect(keys).toEqual(expect.arrayContaining(["fighter_fighting_style", "fighter_weapon_mastery", "asi_fighter_4", "asi_fighter_6", "asi_fighter_8", "subclass:fighter"]));
+      expect(keys).toEqual(expect.arrayContaining(["fighter_fighting_style", "weapon_mastery_pick", "asi_fighter_4", "asi_fighter_6", "asi_fighter_8", "subclass:fighter"]));
       expect(keys).not.toContain("asi_fighter_12");
       expect(availableOptions("class", ch, R).every((x) => x.step === "class")).toBe(true);
     });

@@ -2,6 +2,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { pdfPages, pdfPagesColumns } from "./pdf-text";
 import { DESCRIPTIONS, GROUP_DESCRIPTIONS } from "./descriptions";
 import { fixEnGlyphs } from "./srd-clean";
+import { fixSpellModes } from "./spells";
 
 export type Lang = "it" | "en";
 export const LANGS: Lang[] = ["it", "en"];
@@ -87,6 +88,8 @@ export interface Entry { id: string; name: { en: string; it: string }; [k: strin
 export function writeKind(kind: string, entries: Entry[] | Record<string, unknown>[]) {
   for (const l of LANGS) {
     mkdirSync(OUT(l), { recursive: true });
+    // gli incantesimi concessi hanno il modo giusto per il loro livello (trucchetto a volontà, ecc.)
+    if (kind !== "spells") for (const e of entries as Entry[]) fixSpellModes(e, `${kind}/${e.id}`);
     const out = (entries as Entry[]).map((e) => {
       const d = DESCRIPTIONS[kind]?.[e.id] ?? GROUP_DESCRIPTIONS[String(e.group)];
       // voci senza nome (le regole di creazione) e senza origine (nello schema non c'è) restano come sono

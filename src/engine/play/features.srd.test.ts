@@ -1,15 +1,12 @@
-import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { computeCharacter } from "../compute";
 import { emptyCharacter } from "../character";
-import { buildRuleset } from "../ruleset";
+import { loadSrd } from "../../data/srdIntegrity";
 import type { Character } from "../types";
 import { longRest, setActive, useResource } from "./index";
 
-// Gira solo dove esistono i dati privati (non tracciati): privilegi attivabili e contatori dei dati veri
-const DIR = "data/private";
-describe.skipIf(!existsSync(`${DIR}/classes.json`))("privilegi giocabili con i dati veri (step 14b)", () => {
-  const R = buildRuleset(readdirSync(DIR).filter((f) => f.endsWith(".json")).map((f) => JSON.parse(readFileSync(`${DIR}/${f}`, "utf8"))));
+describe("privilegi giocabili", () => {
+  const R = loadSrd("it");
   const mk = (over: Partial<Character>): Character => ({ ...emptyCharacter("t"), baseScores: { str: 16, dex: 12, con: 14, int: 8, wis: 16, cha: 10 }, ...over });
   const barbarian = (level: number) => mk({ classes: [{ classId: "barbarian", level, hpRolls: [] }], inventory: [{ itemId: "greataxe", qty: 1, state: "wielded" }] });
   const axe = (c: Character) => computeCharacter(c, R).attacks.find((a) => a.weaponId === "greataxe")!;
@@ -39,20 +36,8 @@ describe.skipIf(!existsSync(`${DIR}/classes.json`))("privilegi giocabili con i d
     expect(computeCharacter(longRest(on(barbarian(1), "rage"), computeCharacter(barbarian(1), R)), R).resources.rage!.remaining).toBe(2);
   });
   it("Ira con armatura pesante: non si attiva", () => {
-    const c = { ...barbarian(1), inventory: [{ itemId: "plate", qty: 1, state: "worn" as const }, ...barbarian(1).inventory] };
+    const c = { ...barbarian(1), inventory: [{ itemId: "plate_armor", qty: 1, state: "worn" as const }, ...barbarian(1).inventory] };
     expect(setActive(c, R, computeCharacter(c, R), "rage", true).ok).toBe(false);
-  });
-  it("Rivelazione celestiale (Aasimar): scelta all'attivazione salvata, con volo solo per le Ali", () => {
-    const c = mk({ classes: [{ classId: "fighter", level: 3, hpRolls: [] }], speciesId: "aasimar" });
-    const d = computeCharacter(c, R);
-    const f = d.featureList.find((x) => x.id === "celestial_revelation")!;
-    expect(f.activation!.options.map((o) => o.id)).toEqual(["celestial_wings", "inner_radiance", "necrotic_shroud"]);
-    expect(setActive(c, R, d, "celestial_revelation", true).ok).toBe(false); // serve la scelta
-    const wings = on(c, "celestial_revelation", ["celestial_wings"]);
-    expect(wings.state.active).toEqual({ celestial_revelation: ["celestial_wings"] });
-    expect(computeCharacter(wings, R).speed.fly.value).toBe(30);
-    expect(computeCharacter(on(c, "celestial_revelation", ["inner_radiance"]), R).speed.fly.value).toBe(0);
-    expect(computeCharacter(c, R).speed.fly.value).toBe(0);
   });
   it("Volo draconico, Forma grande, Forma selvatica: attivabili con il loro uso", () => {
     const dragon = on(mk({ classes: [{ classId: "fighter", level: 5, hpRolls: [] }], speciesId: "dragonborn" }), "draconic_flight");
@@ -62,17 +47,15 @@ describe.skipIf(!existsSync(`${DIR}/classes.json`))("privilegi giocabili con i d
     const druid = mk({ classes: [{ classId: "druid", level: 2, hpRolls: [] }] });
     expect(computeCharacter(on(druid, "wild_shape"), R).featureList.find((f) => f.id === "wild_shape")!.active).toBe(true);
   });
-  it("Contatore su un privilegio solo testo: Bagliore protettivo (Usi = mod Sag, min 1)", () => {
-    const c = mk({ classes: [{ classId: "cleric", level: 3, subclassId: "light", hpRolls: [] }] }); // Sag 16 → +3
+  it("Contatori: Incanalare divinità del Chierico (2 usi al 3°; un riposo breve ne rende 1)", () => {
+    const c = mk({ classes: [{ classId: "cleric", level: 3, hpRolls: [] }] });
     const d = computeCharacter(c, R);
-    const f = d.featureList.find((x) => x.id === "warding_flare")!;
-    expect(f).toMatchObject({ kind: "subclass", resourceId: "warding_flare" });
-    expect(f.description).toMatch(/mod Sag/);
-    expect(d.resources.warding_flare).toMatchObject({ max: { value: 3 }, remaining: 3, recharge: "long_rest" });
-    const used = computeCharacter(useResource(c, "warding_flare", 3, 2), R);
-    expect(used.resources.warding_flare!.remaining).toBe(1);
-    const weak = mk({ baseScores: { str: 10, dex: 10, con: 10, int: 10, wis: 8, cha: 10 }, classes: [{ classId: "cleric", level: 3, subclassId: "light", hpRolls: [] }] });
-    expect(computeCharacter(weak, R).resources.warding_flare!.max.value).toBe(1); // min 1 scritto nel testo
+    const f = d.featureList.find((x) => x.id === "channel_divinity")!;
+    expect(f).toMatchObject({ kind: "class", resourceId: "channel_divinity" });
+    expect(d.resources.channel_divinity).toMatchObject({ max: { value: 2 }, remaining: 2, recharge: "long_rest" });
+    const used = computeCharacter(useResource(c, "channel_divinity", 2, 2), R);
+    expect(used.resources.channel_divinity!.remaining).toBe(0);
+    expect(computeCharacter(longRest(useResource(c, "channel_divinity", 2, 2), used), R).resources.channel_divinity!.remaining).toBe(2);
   });
   it("nessun nome di tratto contiene l'intestazione della tabella (errore dell'estrazione delle specie)", () => {
     const names = [...R.species.values()].flatMap((s) => s.traits.map((t) => t.name.it));
