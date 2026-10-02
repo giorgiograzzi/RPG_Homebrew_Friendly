@@ -2,8 +2,17 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
+import { execSync } from "node:child_process";
+
+// Versione in esecuzione: commit (da GIT_COMMIT nel build Docker, altrimenti da git) + data del build
+function commit(): string {
+  if (process.env.GIT_COMMIT) return process.env.GIT_COMMIT.slice(0, 7);
+  try { return execSync("git rev-parse --short HEAD", { stdio: ["ignore", "pipe", "ignore"] }).toString().trim(); } catch { return "dev"; }
+}
+const BUILD = `${commit()} · ${new Date().toISOString().slice(0, 16).replace("T", " ")} UTC`;
 
 export default defineConfig({
+  define: { __BUILD__: JSON.stringify(BUILD) },
   plugins: [
     react(),
     // Config base: manifest e offline completo si rifiniscono allo step 19

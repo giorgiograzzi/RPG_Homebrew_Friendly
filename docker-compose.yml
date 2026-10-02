@@ -2,7 +2,10 @@
 # Avvio:  docker compose up -d --build        (la porta si cambia in .env, vedi .env.example)
 services:
   srd-personaggi:
-    build: .
+    build:
+      context: .
+      args:
+        GIT_COMMIT: ${GIT_COMMIT:-}
     image: srd-personaggi:latest
     container_name: srd-personaggi
     restart: unless-stopped
