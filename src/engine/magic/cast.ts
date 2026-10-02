@@ -3,6 +3,7 @@ import { toggleSlot, useResource } from "../play/state";
 import type { Ruleset } from "../ruleset";
 import type { Character } from "../types";
 import { spellbook } from "./spellbook";
+import { tr } from "../../i18n/tr";
 
 // Lancio degli incantesimi (regole di lancio del file 04 §1):
 //  - i trucchetti si lanciano a volontà; un incantesimo di 1°+ spende uno slot di livello pari o superiore (livelli superiori: si applica la voce dell'incantesimo);
@@ -17,19 +18,19 @@ export function castSpell(ch: Character, rs: Ruleset, d: Derived, spellId: strin
   const entry = spellbook(ch, rs, d).find((e) => e.id === spellId);
   if (!entry) return fail("Incantesimo non nel tuo elenco");
   const sp = entry.spell;
-  if (d.spellcastingBlocked) return fail("Non puoi lanciare incantesimi ora (armatura senza addestramento, Ira, azioni bloccate…)");
-  if (d.conditions.dead) return fail("Il personaggio è morto");
+  if (d.spellcastingBlocked) return fail(tr("Non puoi lanciare incantesimi ora (armatura senza addestramento, Ira, azioni bloccate…)", "You can't cast spells right now (untrained armor, Rage, blocked actions…)"));
+  if (d.conditions.dead) return fail(tr("Il personaggio è morto", "The character is dead"));
   const notes: string[] = [];
   let next = ch, level = sp.level;
 
   switch (via.kind) {
     case "cantrip":
-      if (sp.level !== 0) return fail("Non è un trucchetto");
-      if (!entry.castable) return fail("Il trucchetto non è tra quelli che conosci");
+      if (sp.level !== 0) return fail(tr("Non è un trucchetto", "Not a cantrip"));
+      if (!entry.castable) return fail(tr("Il trucchetto non è tra quelli che conosci", "That cantrip is not one you know"));
       break;
     case "slot": {
       if (sp.level === 0) return fail("I trucchetti non usano slot");
-      if (!entry.castable) return fail("Non è preparato: serve prepararlo per lanciarlo con uno slot");
+      if (!entry.castable) return fail(tr("Non è preparato: serve prepararlo per lanciarlo con uno slot", "Not prepared: prepare it to cast it with a slot"));
       if (via.level < sp.level || via.level > 9) return fail(`Serve uno slot di ${sp.level}° livello o superiore`);
       const total = d.spellSlots.slots[via.level - 1] ?? 0;
       if (!total || (d.spellSlots.remaining[via.level - 1] ?? 0) <= 0) return fail(`Nessuno slot di ${via.level}° livello disponibile`);
@@ -39,10 +40,10 @@ export function castSpell(ch: Character, rs: Ruleset, d: Derived, spellId: strin
     }
     case "pact": {
       const p = d.spellSlots.pact;
-      if (!p) return fail("Non hai slot del Patto");
-      if (!entry.castable || sp.level === 0) return fail("Non si può lanciare con uno slot del Patto");
-      if (p.level < sp.level) return fail(`Gli slot del Patto sono di ${p.level}° livello: l'incantesimo è di ${sp.level}°`);
-      if (p.remaining <= 0) return fail("Nessuno slot del Patto rimasto");
+      if (!p) return fail(tr("Non hai slot del Patto", "You have no Pact slots"));
+      if (!entry.castable || sp.level === 0) return fail(tr("Non si può lanciare con uno slot del Patto", "It can't be cast with a Pact slot"));
+      if (p.level < sp.level) return fail(tr(`Gli slot del Patto sono di ${p.level}° livello: l'incantesimo è di ${sp.level}°`, `Pact slots are level ${p.level}: the spell is level ${sp.level}`));
+      if (p.remaining <= 0) return fail(tr("Nessuno slot del Patto rimasto", "No Pact slots left"));
       next = { ...ch, state: { ...ch.state, pactUsed: (ch.state.pactUsed ?? 0) + 1 } }; level = p.level;
       notes.push("Regola: in un turno puoi spendere un solo slot per lanciare un incantesimo");
       break;
@@ -50,15 +51,15 @@ export function castSpell(ch: Character, rs: Ruleset, d: Derived, spellId: strin
     case "free": {
       const src = entry.sources.find((s) => s.free?.resourceId === via.resourceId);
       if (!src?.free) return fail("Lancio gratuito non disponibile");
-      if (src.free.remaining <= 0) return fail("Nessun lancio gratuito rimasto");
+      if (src.free.remaining <= 0) return fail(tr("Nessun lancio gratuito rimasto", "No free casts left"));
       next = useResource(ch, via.resourceId, src.free.max, 1);
-      notes.push("Lancio gratuito: al livello più basso dell'incantesimo, con la caratteristica di quella fonte");
+      notes.push(tr("Lancio gratuito: al livello più basso dell'incantesimo, con la caratteristica di quella fonte", "Free cast: at the spell's lowest level, using that source's ability"));
       break;
     }
     case "ritual":
-      if (!sp.ritual) return fail("Non è un rituale");
+      if (!sp.ritual) return fail(tr("Non è un rituale", "Not a ritual"));
       if (!entry.ritualOk) return fail("Per lanciarlo come rituale deve essere preparato (il Mago: nel libro)");
-      notes.push("Rituale: +10 minuti al tempo di lancio, nessuno slot, non si può potenziare");
+      notes.push(tr("Rituale: +10 minuti al tempo di lancio, nessuno slot, non si può potenziare", "Ritual: +10 minutes casting time, no slot, can't be upcast"));
       break;
   }
 

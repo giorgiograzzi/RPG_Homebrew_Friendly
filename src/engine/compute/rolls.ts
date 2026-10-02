@@ -5,6 +5,7 @@ import { evalValue } from "./formula-eval";
 import type { Profs } from "./proficiencies";
 import { sum, type Part } from "./sourced";
 import type { ConditionState, Derived, Proficiency, RollMode, Skill } from "./types";
+import { tr } from "../../i18n/tr";
 
 // Vantaggio e svantaggio non si cumulano: se ci sono entrambi si annullano (file 02 §9)
 export function combineMode(adv: string[], dis: string[]): { mode: RollMode; modeSources: string[] } {
@@ -26,10 +27,10 @@ export function computeRolls(x: Ctx, profs: Profs, notes: string[], cs: Conditio
   const saves = {} as Derived["saves"];
   for (const a of ABILITIES) {
     const proficient = profs.saves.has(a);
-    const parts: Part[] = [{ label: `Mod ${a}`, value: x.mods[a] }];
-    if (proficient) parts.push({ label: "Competenza", value: x.pb });
+    const parts: Part[] = [{ label: tr(`Mod ${a}`, `${a} mod`), value: x.mods[a] }];
+    if (proficient) parts.push({ label: tr("Competenza", "Proficiency"), value: x.pb });
     const adv: string[] = [...cs.rolls.saves[a].adv], dis: string[] = [...cs.rolls.saves[a].dis];
-    if (cs.d20Penalty) parts.push({ label: "Esaurimento", value: cs.d20Penalty });
+    if (cs.d20Penalty) parts.push({ label: tr("Esaurimento", "Exhaustion"), value: cs.d20Penalty });
     for (const { effect: e, label } of x.active) {
       if (e.op === "saveBonus" && (!e.ability || e.ability === a)) parts.push({ label, value: evalValue(e.value, x) });
       if (e.op === "saveAdvantage" && (!e.abilities || e.abilities.includes(a))) {
@@ -48,14 +49,14 @@ export function computeRolls(x: Ctx, profs: Profs, notes: string[], cs: Conditio
   for (const s of SKILLS as readonly Skill[]) {
     const ab: Ability = SKILL_ABILITY[s];
     let prof: Proficiency = profs.expertise.has(s) ? "expertise" : profs.skills.has(s) ? "proficient" : jack ? "half" : "none";
-    const parts: Part[] = [{ label: `Mod ${ab}`, value: x.mods[ab] }];
-    if (prof === "proficient") parts.push({ label: "Competenza", value: x.pb });
-    if (prof === "expertise") parts.push({ label: "Maestria", value: x.pb * 2 });
-    if (prof === "half") parts.push({ label: "Factotum (metà competenza)", value: Math.floor(x.pb / 2) });
+    const parts: Part[] = [{ label: tr(`Mod ${ab}`, `${ab} mod`), value: x.mods[ab] }];
+    if (prof === "proficient") parts.push({ label: tr("Competenza", "Proficiency"), value: x.pb });
+    if (prof === "expertise") parts.push({ label: tr("Maestria", "Expertise"), value: x.pb * 2 });
+    if (prof === "half") parts.push({ label: tr("Factotum (metà competenza)", "Jack of All Trades (half proficiency)"), value: Math.floor(x.pb / 2) });
     for (const { effect: e, label } of x.active) {
       if (e.op === "checkBonus" && (!e.skills || e.skills.includes(s))) parts.push({ label, value: evalValue(e.value, x) });
     }
-    if (cs.d20Penalty) parts.push({ label: "Esaurimento", value: cs.d20Penalty });
+    if (cs.d20Penalty) parts.push({ label: tr("Esaurimento", "Exhaustion"), value: cs.d20Penalty });
     const adv: string[] = [...cs.rolls.checks.adv], dis: string[] = [...cs.rolls.checks.dis];
     if (untrained && (ab === "str" || ab === "dex")) dis.push(armorDis);
     if (s === "stealth" && x.bodyArmor?.stealthDisadvantage) dis.push(x.bodyArmor.name.it);

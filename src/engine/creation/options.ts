@@ -9,6 +9,7 @@ import { spellChoiceCandidates } from "../spells";
 import { describeCondition } from "./describe";
 import type { Slot } from "./slots";
 import type { OptionState } from "./types";
+import { tr } from "../../i18n/tr";
 
 const ENERGY = ["acid", "cold", "fire", "lightning", "necrotic", "poison", "psychic", "radiant", "thunder"]; // Dono della resistenza all'energia
 const opt = (id: string, name: string, extra: Partial<OptionState> = {}): OptionState => ({ id, name, enabled: true, selected: false, ...extra });
@@ -40,8 +41,8 @@ export function optionStates(slot: Slot, ch: Character, rs: Ruleset, selected: s
       let st = opt(o.id, o.name.it, { ...(o.description ? { description: o.description } : {}), ...(o.cost !== undefined ? { cost: o.cost } : {}) });
       if (o.requires && !cond(o.requires)) st = off(st, `Richiede ${describeCondition(o.requires, rs)}`);
       for (const e of o.effects) {
-        if (e.op === "grantSkillProficiency" && !e.upgradeToExpertise && !e.expertise && e.skills.every((s) => profs.skills.has(s))) st = off(st, "Già competente");
-        if (e.op === "grantSaveProficiency" && e.abilities.every((a) => profs.saves.has(a))) st = off(st, "Già competente nel tiro salvezza");
+        if (e.op === "grantSkillProficiency" && !e.upgradeToExpertise && !e.expertise && e.skills.every((s) => profs.skills.has(s))) st = off(st, tr("Già competente", "Already proficient"));
+        if (e.op === "grantSaveProficiency" && e.abilities.every((a) => profs.saves.has(a))) st = off(st, tr("Già competente nel tiro salvezza", "Already proficient in the saving throw"));
       }
       return st;
     });
@@ -49,20 +50,20 @@ export function optionStates(slot: Slot, ch: Character, rs: Ruleset, selected: s
     const [kind, arg] = (c.source ?? "").split(":");
     const skillOpts = () => [...rs.skills.values()].map((s) => opt(s.id, s.name.it));
     switch (kind) {
-      case "skills": list = skillOpts().map((o) => (profs.skills.has(o.id) ? off(o, "Già competente") : o)); break;
-      case "expertise": list = skillOpts().map((o) => (!profs.skills.has(o.id) ? off(o, "Serve prima la competenza") : profs.expertise.has(o.id) ? off(o, "Ha già la Maestria") : o)); break;
-      case "skillsTools": list = [...skillOpts().map((o) => (profs.skills.has(o.id) ? off(o, "Già competente") : o)),
-        ...[...rs.tools.values()].map((t) => (profs.tools.has(t.id) ? off(opt(t.id, t.name.it), "Già competente") : opt(t.id, t.name.it)))]; break;
+      case "skills": list = skillOpts().map((o) => (profs.skills.has(o.id) ? off(o, tr("Già competente", "Already proficient")) : o)); break;
+      case "expertise": list = skillOpts().map((o) => (!profs.skills.has(o.id) ? off(o, tr("Serve prima la competenza", "Proficiency needed first")) : profs.expertise.has(o.id) ? off(o, tr("Ha già la Maestria", "Already has Expertise")) : o)); break;
+      case "skillsTools": list = [...skillOpts().map((o) => (profs.skills.has(o.id) ? off(o, tr("Già competente", "Already proficient")) : o)),
+        ...[...rs.tools.values()].map((t) => (profs.tools.has(t.id) ? off(opt(t.id, t.name.it), tr("Già competente", "Already proficient")) : opt(t.id, t.name.it)))]; break;
       case "tools": {
         const groups = new Set(arg === "artisan_musical" ? ["artisan", "musical"] : [arg ?? ""]);
-        list = [...rs.tools.values()].filter((t) => groups.has(t.group)).map((t) => (profs.tools.has(t.id) ? off(opt(t.id, t.name.it), "Già competente") : opt(t.id, t.name.it)));
+        list = [...rs.tools.values()].filter((t) => groups.has(t.group)).map((t) => (profs.tools.has(t.id) ? off(opt(t.id, t.name.it), tr("Già competente", "Already proficient")) : opt(t.id, t.name.it)));
         break;
       }
       case "weaponMastery":
         list = [...rs.weapons.values()].map((w) => {
           const o = opt(w.id, w.name.it);
-          if (c.weaponFilter && w.kind !== c.weaponFilter.kind) return off(o, c.weaponFilter.kind === "melee" ? "Solo armi da mischia" : "Solo armi a distanza");
-          return isProficient(w, profs.weapons) ? o : off(o, "Non sei competente");
+          if (c.weaponFilter && w.kind !== c.weaponFilter.kind) return off(o, c.weaponFilter.kind === "melee" ? tr("Solo armi da mischia", "Melee weapons only") : tr("Solo armi a distanza", "Ranged weapons only"));
+          return isProficient(w, profs.weapons) ? o : off(o, tr("Non sei competente", "Not proficient"));
         });
         break;
       case "feats": {
@@ -71,7 +72,7 @@ export function optionStates(slot: Slot, ch: Character, rs: Ruleset, selected: s
           const o = opt(f.id, f.origin === "homebrew" ? `${f.name.it} · Homebrew` : f.name.it, { description: f.description });
           const unmet = f.prerequisites.find((p) => !cond(p));
           if (unmet) return off(o, `Richiede ${describeCondition(unmet, rs)}`);
-          if (!f.repeatable && ctx.collected.feats.has(f.id)) return off(o, "Già posseduto");
+          if (!f.repeatable && ctx.collected.feats.has(f.id)) return off(o, tr("Già posseduto", "Already owned"));
           return o;
         });
         break;
@@ -85,11 +86,11 @@ export function optionStates(slot: Slot, ch: Character, rs: Ruleset, selected: s
         }
         // una scelta con un livello fisso (Arcanum mistico) non dipende dagli slot che si hanno
         const max = kind === "spells" && slot.classId && c.filter?.level === undefined ? maxSpellLevel(ch, rs, slot.classId) : 9;
-        list = cands.map((s) => (s.level > max ? off(opt(s.id, s.name.it), max ? `Nessuno slot di ${s.level}° livello` : "Nessuno slot") : opt(s.id, s.name.it)));
+        list = cands.map((s) => (s.level > max ? off(opt(s.id, s.name.it), max ? tr(`Nessuno slot di ${s.level}° livello`, `No level ${s.level} slot`) : tr("Nessuno slot", "No slot")) : opt(s.id, s.name.it)));
         break;
       }
       case "languages":
-        list = [...rs.languages.values()].filter((l) => l.id !== "common" && l.extra.rarity === "standard").map((l) => (ctx.collected.languages.has(l.id) ? off(opt(l.id, l.name.it), "Già conosciuto") : opt(l.id, l.name.it)));
+        list = [...rs.languages.values()].filter((l) => l.id !== "common" && l.extra.rarity === "standard").map((l) => (ctx.collected.languages.has(l.id) ? off(opt(l.id, l.name.it), tr("Già conosciuto", "Already known")) : opt(l.id, l.name.it)));
         break;
       case "resistance": list = ENERGY.map((t) => opt(t, rs.damageTypes.get(t)?.name.it ?? t)); break;
       default: list = [];

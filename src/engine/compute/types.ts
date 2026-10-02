@@ -55,6 +55,7 @@ export interface ConditionState {
   exhaustion: number; // livello 0-6
   dead: boolean; // Esaurimento al livello massimo
   immune: string[]; // condizioni bloccate da un'immunità
+  noActions: boolean; // non può compiere azioni (Incapacitato): vale anche per il lancio di incantesimi
   cannot: string[]; // cose che il personaggio non può fare/percepire (agire, parlare, vedere...)
   speedZero: string[]; // condizioni che azzerano la Velocità
   d20Penalty: number; // Esaurimento: -2 × livello ai Tiri D20 (0 o negativo)

@@ -2,6 +2,7 @@ import type { Ruleset } from "../ruleset";
 import type { Character } from "../types";
 import { allQuestions } from "./questions";
 import type { DecisionResult, Question, Removed } from "./types";
+import { tr } from "../../i18n/tr";
 
 const put = (c: Character, key: string, picked: string[]): Character => {
   const d = { ...c.decisions };
@@ -43,12 +44,12 @@ export function validateDecisions(ch: Character, rs: Ruleset): { character: Char
       if (q.kind !== "choice" || isSpecial(q.key)) continue;
       const have = cur.decisions[q.key];
       if (!have?.length) continue;
-      if (q.disabled) { removed.push({ key: q.key, picked: have, reason: q.disabledReason ?? "Scelta alternativa già coperta" }); cur = put(cur, q.key, []); changed = true; break; }
+      if (q.disabled) { removed.push({ key: q.key, picked: have, reason: q.disabledReason ?? tr("Scelta alternativa già coperta", "Alternative choice already covered") }); cur = put(cur, q.key, []); changed = true; break; }
       const bad = have.filter((id) => !q.options.find((o) => o.id === id)?.enabled);
       const kept = have.filter((id) => !bad.includes(id)).slice(0, q.count);
       if (bad.length || kept.length < have.length) {
         const why = bad.length
-          ? bad.map((id) => { const o = q.options.find((x) => x.id === id); return `${o?.name ?? id}: ${o?.disabledReason ?? "non più disponibile"}`; }).join("; ")
+          ? bad.map((id) => { const o = q.options.find((x) => x.id === id); return `${o?.name ?? id}: ${o?.disabledReason ?? tr("non più disponibile", "no longer available")}`; }).join("; ")
           : `Troppe scelte (massimo ${q.count})`;
         removed.push({ key: q.key, picked: have.filter((id) => !kept.includes(id)), reason: why });
         cur = put(cur, q.key, kept); changed = true; break;
@@ -57,16 +58,16 @@ export function validateDecisions(ch: Character, rs: Ruleset): { character: Char
     if (changed) continue;
     // 2) decisioni senza più una domanda
     const orphan = Object.keys(cur.decisions).find((k) => !byKey.has(k) && !isSpecial(k));
-    if (orphan) { removed.push({ key: orphan, picked: cur.decisions[orphan]!, reason: "La scelta non è più disponibile" }); cur = put(cur, orphan, []); continue; }
+    if (orphan) { removed.push({ key: orphan, picked: cur.decisions[orphan]!, reason: tr("La scelta non è più disponibile", "The choice is no longer available") }); cur = put(cur, orphan, []); continue; }
     // 3) aumenti di caratteristica senza domanda, o non validi
     const badAsi = cur.asi.find((a) => a.key && !(byKey.get(a.key)?.kind === "abilityIncrease"));
     if (badAsi) {
-      removed.push({ key: badAsi.key!, picked: cur.asi.filter((a) => a.key === badAsi.key).map((a) => `${a.ability}+${a.amount}`), reason: "L'aumento di caratteristica non è più disponibile" });
+      removed.push({ key: badAsi.key!, picked: cur.asi.filter((a) => a.key === badAsi.key).map((a) => `${a.ability}+${a.amount}`), reason: tr("L'aumento di caratteristica non è più disponibile", "The ability score increase is no longer available") });
       cur = { ...cur, asi: cur.asi.filter((a) => a.key !== badAsi.key) }; continue;
     }
     const invalidAsi = qs.find((q) => q.kind === "abilityIncrease" && q.selected.length && !q.complete);
     if (invalidAsi) {
-      removed.push({ key: invalidAsi.key, picked: invalidAsi.selected, reason: "L'aumento di caratteristica non è più valido (fonte o tetto cambiati)" });
+      removed.push({ key: invalidAsi.key, picked: invalidAsi.selected, reason: tr("L'aumento di caratteristica non è più valido (fonte o tetto cambiati)", "The ability score increase is no longer valid (source or cap changed)") });
       cur = { ...cur, asi: cur.asi.filter((a) => a.key !== invalidAsi.key) }; continue;
     }
     break;
@@ -82,7 +83,7 @@ export function previewDecision(ch: Character, rs: Ruleset, key: string, picked:
   const q = allQuestions(ch, rs).find((x) => x.key === key);
   if (!q) return fail(ch, `Scelta non disponibile: ${key}`);
   if (q.kind !== "choice") return fail(ch, "Gli aumenti di caratteristica si impostano con setAsi");
-  if (q.disabled) return fail(ch, q.disabledReason ?? "Scelta alternativa già coperta");
+  if (q.disabled) return fail(ch, q.disabledReason ?? tr("Scelta alternativa già coperta", "Alternative choice already covered"));
   if (picked.length > q.count) return fail(ch, `Puoi scegliere al massimo ${q.count} opzioni`);
   if (new Set(picked).size !== picked.length) return fail(ch, "Opzioni ripetute");
   const errors = picked.flatMap((id) => {

@@ -1,6 +1,8 @@
 {
   "app": {
-    "title": "Personaggi SRD 5.2"
+    "title": "Personaggi SRD 5.2",
+    "errorTitle": "Qualcosa non va",
+    "reload": "Ricarica"
   },
   "tabs": {
     "characters": "Eroi",
@@ -146,7 +148,8 @@
       "base": "Base",
       "bonus": "Bonus",
       "total": "Totale",
-      "mod": "Mod."
+      "mod": "Mod.",
+      "table": "Punteggi"
     },
     "abilities": {
       "str": "Forza",
@@ -218,6 +221,7 @@
   "play": {
     "tabs": {
       "status": "Stato",
+      "overview": "Panoramica",
       "features": "Privilegi",
       "stats": "Statistiche",
       "attacks": "Attacchi",
@@ -356,7 +360,13 @@
     "back": "Menu",
     "conditionsTile": "Condizioni",
     "conditionsNone": "nessuna",
-    "toStatus": "Stato"
+    "toStatus": "Stato",
+    "hpShort": "PF",
+    "lessN": "Meno {n}",
+    "includedIn": " — inclusa da un'altra condizione",
+    "immune": " — immune",
+    "rollMode": "Modalità",
+    "sections": "Sezioni della scheda"
   },
   "equip": {
     "title": "Equipaggiamento",

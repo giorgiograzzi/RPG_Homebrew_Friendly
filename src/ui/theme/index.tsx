@@ -58,7 +58,7 @@ export function TabBar({ tabs, current, onSelect }: { tabs: TabDef[]; current: s
 export function SectionBar({ items, current, onSelect, onBack, backLabel }: { items: { id: string; label: string; icon: IconName }[]; current: string; onSelect: (id: string) => void; onBack: () => void; backLabel: string }) {
   const Back = icons.back;
   return (
-    <nav className="ui-sections" aria-label="Sezioni della scheda">
+    <nav className="ui-sections" aria-label={strings.play.sections}>
       <button type="button" className="back" aria-label={backLabel} title={backLabel} onClick={onBack}><Back /></button>
       {items.map((s) => {
         const Icon = icons[s.icon];

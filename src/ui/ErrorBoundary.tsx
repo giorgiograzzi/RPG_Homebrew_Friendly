@@ -1,4 +1,5 @@
 import { Component, type ReactNode } from "react";
+import { strings } from "../i18n";
 
 // Un errore di disegno non deve lasciare la pagina bianca: si vede il messaggio e si può ricaricare
 export class ErrorBoundary extends Component<{ children: ReactNode }, { error: Error | null }> {
@@ -8,9 +9,9 @@ export class ErrorBoundary extends Component<{ children: ReactNode }, { error: E
     if (!this.state.error) return this.props.children;
     return (
       <div className="ui-app" style={{ padding: 16 }}>
-        <h2>Qualcosa non va</h2>
+        <h2>{strings.app.errorTitle}</h2>
         <p>{this.state.error.message}</p>
-        <button type="button" className="ui-btn primary" onClick={() => location.reload()}>Ricarica</button>
+        <button type="button" className="ui-btn primary" onClick={() => location.reload()}>{strings.app.reload}</button>
       </div>
     );
   }

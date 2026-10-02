@@ -3,6 +3,7 @@ import { fixedHp } from "../compute/constants";
 import { allQuestions, classOptions, type Question } from "../creation";
 import type { Ruleset } from "../ruleset";
 import type { Character } from "../types";
+import { tr } from "../../i18n/tr";
 
 // Avanzamento di livello (file 02 §7-§8): +1 Dado Vita e PF (tiro o valore fisso + mod Cos, minimo 1 per livello), privilegi del
 // nuovo livello di classe, sottoclasse al livello indicato dalla classe, Aumento dei punteggi / Dono epico ai livelli previsti,
@@ -41,10 +42,10 @@ export function levelUp(ch: Character, rs: Ruleset, classId: string, hp: HpChoic
   const fail = (e: string): LevelUpPreview => ({ ok: false, errors: [e], character: ch, classId, classLevel: 0, total: totalLevel(ch), isNew: false, hpDie: 0, hpGain: 0,
     hpMaxBefore: 0, hpMaxAfter: 0, pbBefore: 0, pbAfter: 0, features: [], subclassNow: false, pending: [] });
   if (!def) return fail(`Classe sconosciuta: ${classId}`);
-  if (!ch.classes.length) return fail("Scegli prima la classe");
+  if (!ch.classes.length) return fail(tr("Scegli prima la classe", "Choose the class first"));
   if (totalLevel(ch) >= MAX_LEVEL) return fail("Livello massimo: 20");
   const opt = levelUpOptions(ch, rs).find((o) => o.classId === classId);
-  if (!opt?.enabled) return fail(opt?.reason ? `Non puoi: ${opt.reason}` : "Non puoi prendere un livello in questa classe");
+  if (!opt?.enabled) return fail(opt?.reason ? tr(`Non puoi: ${opt.reason}`, `You can't: ${opt.reason}`) : tr("Non puoi prendere un livello in questa classe", "You can't take a level in this class"));
   if (hp !== "avg" && (!Number.isInteger(hp) || hp < 1 || hp > def.hitDie)) return fail(`Il tiro va da 1 a ${def.hitDie}`);
 
   const before = computeCharacter(ch, rs);

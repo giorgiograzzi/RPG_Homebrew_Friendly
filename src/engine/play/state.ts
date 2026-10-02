@@ -3,6 +3,7 @@ import type { Derived } from "../compute";
 import { describeCondition } from "../creation/describe";
 import type { Ruleset } from "../ruleset";
 import type { Character } from "../types";
+import { tr } from "../../i18n/tr";
 
 const clamp = (n: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, Math.floor(n)));
 const set = (ch: Character, s: Partial<Character["state"]>): Character => ({ ...ch, state: { ...ch.state, ...s } });
@@ -56,7 +57,7 @@ export function setActive(ch: Character, rs: Ruleset, d: Pick<Derived, "featureL
   if (!f?.activation) return fail("Questo privilegio non si attiva");
   const state = { ...(ch.state.active ?? {}) };
   if (!on) { delete state[id]; return { ok: true, errors: [], character: set(ch, { active: state }) }; }
-  if (state[id]) return fail("È già attivo");
+  if (state[id]) return fail(tr("È già attivo", "Already active"));
   const a = f.activation;
   if (a.requires && !holds(a.requires, buildCtx(ch, rs))) return fail(`Non puoi attivarlo ora: serve ${describeCondition(a.requires, rs)}`);
   if (a.options.length) {
@@ -65,7 +66,7 @@ export function setActive(ch: Character, rs: Ruleset, d: Pick<Derived, "featureL
   let next = ch;
   if (a.resource) {
     const r = d.resources[a.resource];
-    if (!r || r.remaining <= 0) return fail("Nessun uso rimasto");
+    if (!r || r.remaining <= 0) return fail(tr("Nessun uso rimasto", "No uses left"));
     next = useResource(ch, a.resource, r.max.value, 1);
   }
   return { ok: true, errors: [], character: set(next, { active: { ...(next.state.active ?? {}), [id]: a.options.length ? picks : [] } }) };

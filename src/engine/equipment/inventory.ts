@@ -1,6 +1,7 @@
 import type { Character } from "../types";
 import type { Ruleset } from "../ruleset";
 import { lookupItem, needsAttunement, type Found } from "./loadout";
+import { tr } from "../../i18n/tr";
 
 // Inventario, monete e negozio. Costi in monete di rame (1 mo = 100 mr), pesi in lb.
 type Coins = Character["coins"];
@@ -89,7 +90,7 @@ export function setAttuned(ch: Character, rs: Ruleset, id: string, on: boolean):
   if (!f || !ch.inventory.some((e) => e.itemId === id)) return fail(ch, "Oggetto non nel tuo inventario");
   if (on) {
     if (!needsAttunement(f)) return fail(ch, `${f.def.name.it} non richiede sintonia`);
-    if (ch.inventory.filter((e) => e.attuned).length >= 3) return fail(ch, "Sei già sintonizzato con 3 oggetti");
+    if (ch.inventory.filter((e) => e.attuned).length >= 3) return fail(ch, tr("Sei già sintonizzato con 3 oggetti", "You are already attuned to 3 items"));
   }
   return { ok: true, errors: [], character: { ...ch, inventory: ch.inventory.map((e) => {
     if (e.itemId !== id) return e;

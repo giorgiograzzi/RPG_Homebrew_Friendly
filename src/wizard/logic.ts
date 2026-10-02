@@ -7,6 +7,7 @@ import {
 import type { Ruleset } from "../engine/ruleset";
 import { ABILITIES, type Ability } from "../engine/schema";
 import type { Character } from "../engine/types";
+import { tr } from "../i18n/tr";
 
 // Logica del wizard di creazione, senza interfaccia (testabile). L'interfaccia mostra soltanto ciò che restituisce.
 type Scores = Record<Ability, number>;
@@ -44,7 +45,7 @@ export function chooseMethod(ch: Character, rs: Ruleset, method: Method, opts: {
   return setBaseScores(ch, rs, method, scores, rolls);
 }
 export function rerollScores(ch: Character, rs: Ruleset, allowReroll: boolean, rng?: () => number): ReturnType<typeof setBaseScores> {
-  if (!allowReroll) return { ok: false, errors: ["Rifare i tiri è disattivato nelle Impostazioni"], character: ch, removed: [] };
+  if (!allowReroll) return { ok: false, errors: [tr("Rifare i tiri è disattivato nelle Impostazioni", "Rerolling is turned off in Settings")], character: ch, removed: [] };
   const { rolls } = rollAbilityScores(rng);
   return setBaseScores(ch, rs, "roll", assign(rolls), rolls);
 }

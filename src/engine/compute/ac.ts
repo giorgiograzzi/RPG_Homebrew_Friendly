@@ -3,6 +3,7 @@ import type { Ctx } from "./context";
 import type { Profs } from "./proficiencies";
 import { sum, type Part } from "./sourced";
 import type { Derived } from "./types";
+import { tr } from "../../i18n/tr";
 
 // CA: si usa UNA sola formula, la migliore; poi scudo (se addestrato) e bonus (file 03 §4a).
 export function computeAc(x: Ctx, profs: Profs, warnings: string[]): Derived["ac"] {
@@ -19,7 +20,7 @@ export function computeAc(x: Ctx, profs: Profs, warnings: string[]): Derived["ac
     candidates.push({ name: arm.name.it, parts, shieldOk: true });
     if (!profs.armor.has(arm.category)) warnings.push(`Armatura "${arm.name.it}" senza addestramento: svantaggio a For/Des e niente incantesimi`);
   } else {
-    candidates.push({ name: "Senza armatura", parts: [{ label: "Base", value: 10 }, { label: "Des", value: dex }], shieldOk: true });
+    candidates.push({ name: tr("Senza armatura", "No armor"), parts: [{ label: tr("Base", "Base"), value: 10 }, { label: tr("Des", "Dex"), value: dex }], shieldOk: true });
     for (const { effect: e, label } of x.active) {
       if (e.op !== "acFormula") continue;
       candidates.push({ name: label, parts: [{ label, value: evalValue(e.formula, x) }], shieldOk: e.shieldAllowed });
@@ -35,6 +36,6 @@ export function computeAc(x: Ctx, profs: Profs, warnings: string[]): Derived["ac
   for (const { effect: e, label } of x.active) if (e.op === "acBonus") parts.push({ label, value: evalValue(e.value, x) });
   const total = sum(parts);
   const others = candidates.filter((c) => c !== best).map((c) => `${c.name} ${sum(c.parts).value}`);
-  if (others.length) total.sources.push({ label: `Formula scelta: ${best.name} (scartate: ${others.join(", ")})`, value: 0 });
+  if (others.length) total.sources.push({ label: tr(`Formula scelta: ${best.name} (scartate: ${others.join(", ")})`, `Chosen formula: ${best.name} (discarded: ${others.join(", ")})`), value: 0 });
   return { ...total, formula: best.name };
 }

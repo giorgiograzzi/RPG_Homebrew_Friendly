@@ -3,6 +3,7 @@ import { z } from "zod";
 import type { Character } from "../engine/types";
 import { migrateCharacter } from "./migrations";
 import { HB_KINDS, type HbEntry } from "../engine/homebrew";
+import { tr } from "../i18n/tr";
 
 export const BACKUP_FORMAT = "srd-personaggi-backup";
 export const BACKUP_VERSION = 1;
@@ -29,15 +30,15 @@ export type ImportPreview = { ok: true; exportedAt: number; items: ImportItem[];
 
 export function previewImport(text: string, existing: Character[]): ImportPreview {
   let json: unknown;
-  try { json = JSON.parse(text); } catch { return { ok: false, error: "Il file non è un JSON leggibile." }; }
+  try { json = JSON.parse(text); } catch { return { ok: false, error: tr("Il file non è un JSON leggibile.", "The file is not readable JSON.") }; }
   // Accetta anche un singolo personaggio esportato da solo
   const single = migrateCharacter(json);
   const container = containerSchema.safeParse(json);
   if (!container.success) {
     if (single.ok) return { ok: true, exportedAt: 0, items: [classify(0, single.character, single.migratedFrom, existing)] };
-    return { ok: false, error: "Il file non è un backup di questa app." };
+    return { ok: false, error: tr("Il file non è un backup di questa app.", "The file is not a backup of this app.") };
   }
-  if (container.data.version > BACKUP_VERSION) return { ok: false, error: `Backup creato da una versione più recente dell'app (formato ${container.data.version}). Aggiorna l'app.` };
+  if (container.data.version > BACKUP_VERSION) return { ok: false, error: tr(`Backup creato da una versione più recente dell'app (formato ${container.data.version}). Aggiorna l'app.`, `Backup created by a newer version of the app (format ${container.data.version}). Update the app.`) };
   const items = container.data.characters.map((raw, i): ImportItem => {
     const r = migrateCharacter(raw);
     if (!r.ok) {
