@@ -17,6 +17,7 @@ Verifiche tecniche fatte il 2026-10-02 (non sono un parere legale).
 - [x] Nel codice e nell'interfaccia non compaiono «Dungeons & Dragons» né «D&D» (guardia `noProtected.test.ts`)
 
 ## Da firmare — Giorgio
+- [ ] Nome «Placet del Master» (evoca l'originale): ricerca marchi / parere legale, oppure accetto il rischio
 - [ ] Ho riletto dicitura, avviso «non affiliato», nome e icona
 - [ ] Prova a mano con VoiceOver / TalkBack
 - [ ] Prova su telefono: installazione PWA e uso offline

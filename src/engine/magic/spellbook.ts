@@ -2,6 +2,7 @@ import type { Derived } from "../compute";
 import type { Ruleset } from "../ruleset";
 import type { Ability } from "../schema";
 import type { Character, Spell } from "../types";
+import { tr } from "../../i18n/tr";
 
 // Registro degli incantesimi del personaggio: quelli scelti nelle classi (trucchetti, preparati, libro del Mago) e quelli concessi
 // da specie, talenti e privilegi (sempre preparati, a volontà, lanci gratuiti). Ogni incantesimo ha le sue fonti.
@@ -75,13 +76,16 @@ export function spellbook(ch: Character, rs: Ruleset, d: Pick<Derived, "grantedS
 }
 
 // Quando si cambiano gli incantesimi preparati e quale focus serve (file 04 §1, "Preparazione degli incantesimi")
+const LONG_LIST = tr("Lista intera a ogni Riposo Lungo", "Whole list after each Long Rest");
+const LONG_ONE = tr("1 incantesimo a ogni Riposo Lungo", "1 spell after each Long Rest");
+const ARCANE = tr("Focus arcano", "Arcane focus");
 export const PREPARATION: Record<string, { when: string; focus: string }> = {
-  bard: { when: "1 incantesimo a ogni livello guadagnato", focus: "Strumento musicale" },
-  cleric: { when: "Lista intera a ogni Riposo Lungo", focus: "Simbolo sacro" },
-  druid: { when: "Lista intera a ogni Riposo Lungo", focus: "Focus druidico" },
-  paladin: { when: "1 incantesimo a ogni Riposo Lungo", focus: "Simbolo sacro" },
-  ranger: { when: "1 incantesimo a ogni Riposo Lungo", focus: "Focus druidico" },
-  sorcerer: { when: "1 incantesimo a ogni livello guadagnato", focus: "Focus arcano" },
-  warlock: { when: "1 incantesimo a ogni livello guadagnato", focus: "Focus arcano" },
-  wizard: { when: "Lista intera a ogni Riposo Lungo (dal libro); 1 con Riposo Breve dal 5° (Memorizzare)", focus: "Focus arcano" },
+  bard: { when: tr("1 incantesimo a ogni livello guadagnato", "1 spell whenever you gain a level"), focus: tr("Strumento musicale", "Musical instrument") },
+  cleric: { when: LONG_LIST, focus: tr("Simbolo sacro", "Holy symbol") },
+  druid: { when: LONG_LIST, focus: tr("Focus druidico", "Druidic focus") },
+  paladin: { when: LONG_ONE, focus: tr("Simbolo sacro", "Holy symbol") },
+  ranger: { when: LONG_ONE, focus: tr("Focus druidico", "Druidic focus") },
+  sorcerer: { when: tr("1 incantesimo a ogni livello guadagnato", "1 spell whenever you gain a level"), focus: ARCANE },
+  warlock: { when: tr("1 incantesimo a ogni livello guadagnato", "1 spell whenever you gain a level"), focus: ARCANE },
+  wizard: { when: tr("Lista intera a ogni Riposo Lungo (dal libro); 1 con Riposo Breve dal 5° (Memorizzare)", "Whole list after each Long Rest (from the book); 1 after a Short Rest from level 5 (Memorize Spell)"), focus: ARCANE },
 };

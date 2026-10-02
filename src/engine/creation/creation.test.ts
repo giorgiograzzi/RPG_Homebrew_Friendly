@@ -74,19 +74,19 @@ describe("motore di creazione con i dati SRD", () => {
       expect(q(mk({ classes: [cls("wizard", 4)] }), "wizard_cantrips").count).toBe(4);
       expect(q(mk({ classes: [cls("sorcerer", 1)] }), "sorcerer_metamagic_2")).toBeUndefined(); // la Metamagia arriva al 2°
       expect(q(mk({ classes: [cls("sorcerer", 2)] }), "sorcerer_metamagic_2").count).toBe(2);
-      expect(q(mk({ classes: [cls("fighter", 1)] }), "weapon_mastery_pick").count).toBe(3);
-      expect(q(mk({ classes: [cls("barbarian", 1)] }), "weapon_mastery_pick").count).toBe(2);
+      expect(q(mk({ classes: [cls("fighter", 1)] }), "fighter_weapon_mastery").count).toBe(3);
+      expect(q(mk({ classes: [cls("barbarian", 1)] }), "barbarian_weapon_mastery").count).toBe(2);
       const cleric = mk({ classes: [cls("cleric", 1)] });
       expect(q(cleric, "cleric_cantrips").count).toBe(3);
       expect(q(ok(cleric, "cleric_divine_order", ["thaumaturge"]).character, "cleric_cantrips").count).toBe(4); // +1 Taumaturgo
     });
     it("maestria nelle armi: solo armi in cui si è competenti; Barbaro solo da mischia", () => {
       const b = mk({ classes: [cls("barbarian", 1)] });
-      expect(opt(b, "weapon_mastery_pick", "longbow")).toMatchObject({ enabled: false, disabledReason: "Solo armi da mischia" });
-      expect(opt(b, "weapon_mastery_pick", "greataxe").enabled).toBe(true);
+      expect(opt(b, "barbarian_weapon_mastery", "longbow")).toMatchObject({ enabled: false, disabledReason: "Solo armi da mischia" });
+      expect(opt(b, "barbarian_weapon_mastery", "greataxe").enabled).toBe(true);
       const w = mk({ classes: [cls("wizard", 1)] }); // il Mago non ha competenza nelle armi da guerra
       expect(w.classes[0]!.classId).toBe("wizard");
-      expect(q(w, "weapon_mastery_pick")).toBeUndefined();
+      expect(q(w, "fighter_weapon_mastery")).toBeUndefined();
     });
     it("linguaggi: Comune + 2, i rari no, quelli già noti bloccati; Ladro e Ranger ne hanno di più", () => {
       const ch = mk();
@@ -291,7 +291,7 @@ describe("motore di creazione con i dati SRD", () => {
     it("personaggio di livello alto: tutte le scelte da 1 a N (Guerriero 8: stile, maestrie, 2 ASI)", () => {
       const ch = mk({ classes: [cls("fighter", 8)] });
       const keys = allQuestions(ch, R).map((x) => x.key);
-      expect(keys).toEqual(expect.arrayContaining(["fighter_fighting_style", "weapon_mastery_pick", "asi_fighter_4", "asi_fighter_6", "asi_fighter_8", "subclass:fighter"]));
+      expect(keys).toEqual(expect.arrayContaining(["fighter_fighting_style", "fighter_weapon_mastery", "asi_fighter_4", "asi_fighter_6", "asi_fighter_8", "subclass:fighter"]));
       expect(keys).not.toContain("asi_fighter_12");
       expect(availableOptions("class", ch, R).every((x) => x.step === "class")).toBe(true);
     });

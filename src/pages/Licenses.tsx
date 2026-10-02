@@ -1,6 +1,7 @@
 import { Fragment, type ReactNode } from "react";
 import { lang, strings as it } from "../i18n";
 import { CC_BY_URL, DISCLAIMER, SRD_NOTICE } from "../legal/attribution";
+import type { PolicyKind } from "../legal/policies";
 import { Button } from "../ui/theme";
 
 const t = it.about;
@@ -10,7 +11,7 @@ const linked = (s: string): ReactNode => s.split(/(https?:\/\/[^\s)]+?)(?=[.,;)]
   i % 2 ? <a key={i} href={p} target="_blank" rel="noreferrer">{p}</a> : <Fragment key={i}>{p}</Fragment>);
 
 // Informazioni e licenze: dicitura CC-BY dell'SRD (nella lingua dell'app), avviso «non ufficiale», licenze di codice e font
-export function Licenses({ onBack }: { onBack: () => void }) {
+export function Licenses({ onBack, onLegal }: { onBack: () => void; onLegal: (kind: PolicyKind) => void }) {
   return (
     <>
       <div className="ui-actions" style={{ justifyContent: "flex-start" }}><Button onClick={onBack}>← {t.back}</Button></div>
@@ -38,6 +39,14 @@ export function Licenses({ onBack }: { onBack: () => void }) {
       <fieldset className="ui-group">
         <legend>{t.homebrew}</legend>
         <p>{t.homebrewText}</p>
+      </fieldset>
+      <fieldset className="ui-group">
+        <legend>{it.settings.privacy.title}</legend>
+        <p>{it.settings.privacy.text}</p>
+        <div className="ui-actions" style={{ justifyContent: "flex-start", flexWrap: "wrap" }}>
+          <Button onClick={() => onLegal("privacy")}>{it.settings.privacy.privacy}</Button>
+          <Button onClick={() => onLegal("cookies")}>{it.settings.privacy.cookies}</Button>
+        </div>
       </fieldset>
     </>
   );

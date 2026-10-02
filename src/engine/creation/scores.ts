@@ -22,15 +22,15 @@ export function rollAbilityScores(rng: () => number = Math.random): { rolls: num
 
 export function pointBuyCost(rs: Ruleset, scores: Scores): { spent: number; remaining: number; errors: string[] } {
   const pb = rulesOf(rs)?.pointBuy;
-  if (!pb) return { spent: 0, remaining: 0, errors: ["Regole di creazione non caricate"] };
+  if (!pb) return { spent: 0, remaining: 0, errors: [tr("Regole di creazione non caricate", "Creation rules not loaded")] };
   const errors: string[] = [];
   let spent = 0;
   for (const a of ABILITIES) {
     const c = pb.costs[String(scores[a])];
-    if (c === undefined) errors.push(`${a}: con l'acquisto a punti i punteggi vanno da ${pb.min} a ${pb.max}`);
+    if (c === undefined) errors.push(tr(`${a}: con l'acquisto a punti i punteggi vanno da ${pb.min} a ${pb.max}`, `${a}: with point buy, scores range from ${pb.min} to ${pb.max}`));
     else spent += c;
   }
-  if (spent > pb.budget) errors.push(`Punti spesi: ${spent} su ${pb.budget}`);
+  if (spent > pb.budget) errors.push(tr(`Punti spesi: ${spent} su ${pb.budget}`, `Points spent: ${spent} of ${pb.budget}`));
   return { spent, remaining: pb.budget - spent, errors };
 }
 
@@ -40,14 +40,14 @@ export function scoreProblems(ch: Character, rs: Ruleset): string[] {
   const r = rulesOf(rs);
   if (!m) return [tr("Scegli un metodo per i punteggi", "Choose a method for the scores")];
   const v = values(ch.baseScores);
-  if (m === "array") return r && sorted(v) === sorted(r.standardArray) ? [] : [`Assegna i valori ${r?.standardArray.join(", ")} (uno per caratteristica)`];
+  if (m === "array") return r && sorted(v) === sorted(r.standardArray) ? [] : [tr(`Assegna i valori ${r?.standardArray.join(", ")} (uno per caratteristica)`, `Assign the values ${r?.standardArray.join(", ")} (one per ability)`)];
   if (m === "roll") {
     const rolls = ch.creation?.rolls;
-    if (!rolls || rolls.length !== 6) return ["Tira i dadi per i punteggi"];
-    return sorted(v) === sorted(rolls) ? [] : [`Assegna i valori tirati: ${rolls.join(", ")}`];
+    if (!rolls || rolls.length !== 6) return [tr("Tira i dadi per i punteggi", "Roll the dice for the scores")];
+    return sorted(v) === sorted(rolls) ? [] : [tr(`Assegna i valori tirati: ${rolls.join(", ")}`, `Assign the rolled values: ${rolls.join(", ")}`)];
   }
   if (m === "pointbuy") return pointBuyCost(rs, ch.baseScores).errors;
-  return v.every((x) => x >= 1 && x <= 20) ? [] : ["I punteggi vanno da 1 a 20"];
+  return v.every((x) => x >= 1 && x <= 20) ? [] : [tr("I punteggi vanno da 1 a 20", "Scores range from 1 to 20")];
 }
 
 export function setBaseScores(ch: Character, rs: Ruleset, method: Method, scores: Scores, rolls?: number[]): { ok: boolean; errors: string[]; character: Character; removed: Removed[] } {
@@ -67,7 +67,7 @@ export function recommendedArray(rs: Ruleset, classId: string): Scores | undefin
 // Sostituisce quelli precedenti della stessa chiave; senza aumenti ("picks" vuoto) li toglie.
 export function setAsi(ch: Character, rs: Ruleset, key: string, picks: AsiPick[]): { ok: boolean; errors: string[]; character: Character } {
   const q = allQuestions(ch, rs).find((x) => x.key === key && x.kind === "abilityIncrease");
-  if (!q?.asi) return { ok: false, errors: [`Aumento di caratteristica non disponibile: ${key}`], character: ch };
+  if (!q?.asi) return { ok: false, errors: [tr(`Aumento di caratteristica non disponibile: ${key}`, `Ability score increase not available: ${key}`)], character: ch };
   const without: Character = { ...ch, asi: ch.asi.filter((a) => a.key !== key) };
   if (!picks.length) return { ok: true, errors: [], character: without };
   // punteggi PRIMA di questo aumento, in ordine cronologico: il background per primo, poi quelli di livello (i successivi non contano)

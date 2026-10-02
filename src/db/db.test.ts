@@ -112,3 +112,17 @@ describe("id casuali senza contesto sicuro", () => {
     } finally { Object.defineProperty(globalThis.crypto, "randomUUID", { value: real, configurable: true }); }
   });
 });
+
+describe("migrazione v1 → v2: maestrie d'arma per classe", () => {
+  it("sposta weapon_mastery_pick sulla scelta della prima classe", () => {
+    const v1 = { ...pg("a"), schemaVersion: 1, classes: [{ classId: "fighter", level: 1, hpRolls: [] }], decisions: { weapon_mastery_pick: ["greatsword", "flail", "longsword"], fighter_skills: ["athletics"] } };
+    const r = migrateCharacter(v1);
+    expect(r).toMatchObject({ ok: true, migratedFrom: 1 });
+    if (r.ok) {
+      expect(r.character.schemaVersion).toBe(2);
+      expect(r.character.decisions.fighter_weapon_mastery).toEqual(["greatsword", "flail", "longsword"]);
+      expect(r.character.decisions.weapon_mastery_pick).toBeUndefined();
+      expect(r.character.decisions.fighter_skills).toEqual(["athletics"]);
+    }
+  });
+});

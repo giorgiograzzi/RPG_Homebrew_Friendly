@@ -16,7 +16,9 @@
     "settings": "Impostazioni",
     "export": "Esporta backup",
     "import": "Importa backup",
-    "about": "Informazioni e licenze"
+    "about": "Informazioni e licenze",
+    "privacy": "Privacy Policy",
+    "cookies": "Cookie Policy"
   },
   "characters": {
     "title": "I tuoi personaggi",
@@ -26,13 +28,14 @@
     "open": "Apri",
     "delete": "Elimina",
     "confirmDelete": "Eliminare definitivamente questo personaggio?",
-    "creationSoon": "La creazione guidata arriva con il prossimo passo: per ora il personaggio è vuoto.",
-    "backupDue": "È passato un po' dall'ultimo backup: esportalo adesso, così i personaggi sono al sicuro."
+    "backupDue": "È passato un po' dall'ultimo backup: esportalo adesso, così i personaggi sono al sicuro.",
+    "duplicate": "Duplica",
+    "export": "Esporta",
+    "exportRaw": "Esporta dati grezzi",
+    "broken": "Questo personaggio non si apre (dati rovinati o di una versione più recente). Puoi esportarne i dati grezzi per recuperarli.",
+    "duplicated": "Copia creata."
   },
   "soon": {
-    "sheet": "La scheda giocabile arriva presto.",
-    "equip": "L'equipaggiamento arriva presto.",
-    "magic": "Le magie arrivano presto.",
     "needCharacter": "Apri o crea un personaggio dalla scheda Personaggi."
   },
   "settings": {
@@ -79,6 +82,22 @@
       "other": "Dal menu del browser scegli «Installa app» oppure «Aggiungi alla schermata Home».",
       "offline": "Dopo il primo caricamento l'app funziona anche senza rete; i personaggi restano sul tuo dispositivo.",
       "done": "Installazione avviata."
+    },
+    "storage": {
+      "title": "Archivio",
+      "persisted": "Protetto: il browser non cancella i personaggi da solo.",
+      "notPersisted": "Non protetto: se il dispositivo ha poco spazio il browser potrebbe cancellare i dati. Esporta spesso un backup.",
+      "request": "Proteggi l'archivio",
+      "unsupported": "Questo browser non permette di proteggere l'archivio: esporta spesso un backup.",
+      "usage": "Spazio usato: {u} su {q}",
+      "installedNoApi": "App installata nella Home: il sistema non cancella da solo i dati di una app installata, ma il browser non permette di verificarlo. Esporta comunque un backup ogni tanto."
+    },
+    "privacy": {
+      "title": "Privacy e cookie",
+      "text": "L'app non raccoglie dati personali e non imposta cookie: tutto resta sul tuo dispositivo.",
+      "privacy": "Privacy Policy",
+      "cookies": "Cookie Policy",
+      "showNotice": "Mostra di nuovo l'avviso sui cookie"
     }
   },
   "import": {
@@ -112,7 +131,7 @@
       "class": "Classe",
       "background": "Background",
       "species": "Specie",
-      "languages": "Linguaggi",
+      "languages": "Lingue",
       "scores": "Punteggi",
       "alignment": "Allineamento",
       "details": "Dettagli"
@@ -138,7 +157,7 @@
     },
     "scores": {
       "method": "Metodo",
-      "array": "Array standard",
+      "array": "Serie standard",
       "roll": "Tiro dei dadi",
       "pointbuy": "Acquisto a punti",
       "manual": "Manuale",
@@ -153,7 +172,8 @@
       "bonus": "Bonus",
       "total": "Totale",
       "mod": "Mod.",
-      "table": "Punteggi"
+      "table": "Punteggi",
+      "nonSrd": "Solo la serie standard è nell'SRD 5.2.1: tiro dei dadi, acquisto a punti e manuale sono metodi aggiuntivi comuni."
     },
     "abilities": {
       "str": "Forza",
@@ -171,18 +191,19 @@
       "speed": "Velocità",
       "pb": "Bonus di competenza",
       "init": "Iniziativa",
-      "languages": "Linguaggi",
+      "languages": "Lingue",
       "equipment": "Equipaggiamento",
-      "features": "Privilegi",
       "spells": "Incantesimi",
       "gold": "Monete",
       "errors": "Non si può ancora chiudere",
-      "done": "Creazione completata",
       "reopen": "Modifica la creazione",
       "reopenConfirm": "Riaprendo la creazione puoi cambiare scelte e livello. I Punti Ferita già tirati, l'equipaggiamento, le monete e lo stato di gioco restano quelli attuali. Continuare?",
-      "progress": "Livello e avanzamento"
+      "saves": "Tiri salvezza",
+      "skills": "Abilità",
+      "profs": "Competenze",
+      "features": "Privilegi"
     },
-    "noCreation": "Mancano le regole di creazione: allineamenti, array standard e acquisto a punti non sono disponibili. Sul server lancia «npm run extract:data», poi rifai la build.",
+    "noCreation": "Mancano le regole di creazione: allineamenti e serie standard non sono disponibili. Ricarica l'app; se il problema resta, aggiornala.",
     "stepMissing": "Passo «{s}»: mancano delle scelte",
     "levelStep": {
       "level": "Livello del personaggio",
@@ -220,6 +241,30 @@
       "done": "Scheda di {name} pronta: la trovi tra i download.",
       "error": "Non riesco a creare il PDF: {e}",
       "help": "Scrive i dati del personaggio su una scheda PDF pronta da stampare."
+    },
+    "second": {
+      "title": "Seconda classe (multiclasse, facoltativa)",
+      "help": "Se parti da livello 2 o più puoi dividere i livelli tra due classi. Servono 13 nella caratteristica primaria di entrambe (si controlla quando assegni i punteggi).",
+      "class": "Seconda classe",
+      "none": "Nessuna",
+      "levels": "Livelli di {c}",
+      "split": "{a} {la} / {b} {lb}"
+    },
+    "details": {
+      "title": "Dettagli del personaggio",
+      "help": "Tutto facoltativo: serve a ricordare chi è il personaggio e finisce sulla scheda PDF.",
+      "labels": {
+        "player": "Nome del giocatore",
+        "age": "Età",
+        "height": "Altezza",
+        "weight": "Peso",
+        "appearance": "Aspetto",
+        "personality": "Tratti della personalità",
+        "ideals": "Ideali",
+        "bonds": "Legami",
+        "flaws": "Difetti",
+        "backstory": "Storia"
+      }
     }
   },
   "play": {
@@ -237,7 +282,7 @@
     "hp": "Punti Ferita",
     "temp": "PF temporanei",
     "tempShort": "PF temp",
-    "deathSaves": "Tiri su Morte",
+    "deathSaves": "Tiri salvezza contro morte",
     "amount": "Quantità",
     "damage": "Danno",
     "heal": "Cura",
@@ -255,7 +300,7 @@
     "ac": "Classe Armatura",
     "init": "Iniziativa",
     "speed": "Velocità",
-    "pb": "Bonus competenza",
+    "pb": "Bonus di competenza",
     "pp": "Percezione passiva",
     "hitDice": "Dadi Vita",
     "inspiration": "Ispirazione",
@@ -265,7 +310,7 @@
     "noDice": "Nessun Dado Vita rimasto",
     "healedBy": "Recuperi {n} PF (d{d} {r} + Cos)",
     "endShort": "Finisci il riposo",
-    "longConfirm": "Il riposo lungo ripristina PF, metà dei Dadi Vita, risorse e slot e toglie 1 livello di Esaurimento. Continuare?",
+    "longConfirm": "Il riposo lungo ripristina PF, metà dei Dadi Vita, risorse e slot e toglie 1 livello di Indebolimento. Continuare?",
     "resources": "Risorse",
     "slots": "Slot incantesimo",
     "slotLevel": "{n}° livello",
@@ -298,7 +343,7 @@
       "expertise": "◆"
     },
     "senses": "Sensi",
-    "languages": "Linguaggi",
+    "languages": "Lingue",
     "profs": "Competenze",
     "armor": "Armature",
     "weapons": "Armi",
@@ -311,12 +356,12 @@
     "hit": "Colpisci con {t}",
     "critHit": "Critico! Dadi del danno raddoppiati.",
     "conditionsTitle": "Condizioni",
-    "exhaustion": "Esaurimento",
+    "exhaustion": "Indebolimento",
     "exhaustionLevel": "Livello {n}",
     "source": "Causata da…",
     "none": "Nessuna condizione attiva.",
     "cannot": "Non puoi",
-    "penalty": "Tiri d20: {n} · Velocità: {s} ft",
+    "penalty": "Tiri d20: {n} · Velocità: {s}",
     "coins": "Monete",
     "notes": "Note",
     "notesHelp": "Appunti liberi sul personaggio.",
@@ -370,7 +415,18 @@
     "includedIn": " — inclusa da un'altra condizione",
     "immune": " — immune",
     "rollMode": "Modalità",
-    "sections": "Sezioni della scheda"
+    "sections": "Sezioni della scheda",
+    "snapshots": {
+      "title": "Copie di sicurezza",
+      "help": "Si creano da sole prima di salire di livello e prima di modificare la creazione (ne restano 10). Ripristinare ne crea una nuova dello stato attuale.",
+      "none": "Ancora nessuna copia.",
+      "now": "Crea una copia ora",
+      "restore": "Ripristina",
+      "restoreConfirm": "Ripristinare la copia del {d}? Lo stato attuale resta salvato come copia.",
+      "levelUp": "Prima di salire di livello",
+      "reopen": "Prima di modificare la creazione",
+      "manual": "Copia manuale"
+    }
   },
   "equip": {
     "title": "Equipaggiamento",
@@ -477,7 +533,7 @@
     },
     "time": {
       "action": "Azione",
-      "bonus_action": "Azione Bonus",
+      "bonus_action": "Azione bonus",
       "reaction": "Reazione",
       "minute": "minuti",
       "hour": "ore"
@@ -558,7 +614,7 @@
       "backgrounds": "Background",
       "classes": "Classe",
       "subclasses": "Sottoclasse",
-      "languages": "Linguaggio",
+      "languages": "Lingua",
       "damageTypes": "Tipo di danno",
       "conditions": "Condizione"
     },
@@ -572,7 +628,7 @@
       "backgrounds": "Background",
       "classes": "Classi",
       "subclasses": "Sottoclassi",
-      "languages": "Linguaggi",
+      "languages": "Lingue",
       "damageTypes": "Tipi di danno",
       "conditions": "Condizioni"
     },
@@ -1009,7 +1065,7 @@
     "armorShield": "Scudi",
     "weapons": "Armi",
     "tools": "Strumenti",
-    "languages": "Linguaggi",
+    "languages": "Lingue",
     "classFeatures": "Privilegi di classe",
     "speciesTraits": "Tratti di specie",
     "feats": "Talenti e background",
@@ -1046,7 +1102,8 @@
       "always": "sempre preparato",
       "granted": "concesso"
     },
-    "ft": "ft"
+    "ft": "ft",
+    "details": "Dettagli del personaggio"
   },
   "about": {
     "title": "Informazioni e licenze",
@@ -1062,5 +1119,22 @@
     "fontText": "Noto Sans, Copyright 2022 The Noto Project Authors, licenza SIL Open Font License 1.1 (https://openfontlicense.org).",
     "homebrew": "Contenuti homebrew",
     "homebrewText": "Quello che aggiungi come homebrew resta tuo e sta solo sul tuo dispositivo (o nei file che esporti): non fa parte dell'SRD."
+  },
+  "cookieNotice": {
+    "label": "Avviso sui cookie",
+    "text": "Questa app non usa cookie di profilazione né di terze parti: salva solo sul tuo dispositivo i dati tecnici che servono a farla funzionare (personaggi, lingua, aspetto).",
+    "ok": "Ho capito",
+    "cookies": "Cookie Policy",
+    "privacy": "Privacy Policy"
+  },
+  "legal": {
+    "back": "Indietro",
+    "updated": "Aggiornamento",
+    "controller": "Titolare del trattamento",
+    "other": {
+      "privacy": "Leggi anche la Privacy Policy",
+      "cookies": "Leggi anche la Cookie Policy"
+    },
+    "disclaimer": "Questi testi descrivono come funziona l'app; non sono una consulenza legale."
   }
 }

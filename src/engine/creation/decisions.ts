@@ -15,7 +15,14 @@ function setKey(ch: Character, key: string, picked: string[]): Character {
   if (key === "pick:class") {
     const old = ch.classes[0];
     const classes = ch.classes.slice();
-    if (picked[0]) classes[0] = { classId: picked[0], level: ch.startLevel ?? old?.level ?? 1, hpRolls: [] };
+    const second = classes[1];
+    if (picked[0]) {
+      const total = ch.startLevel ?? classes.reduce((n, c) => n + c.level, 0) ?? 1;
+      // la seconda classe (multiclasse alla creazione) resta, a meno che coincida con la nuova prima classe
+      const keep = second && second.classId !== picked[0] ? second : undefined;
+      return { ...ch, classes: [{ classId: picked[0], level: Math.max(1, total - (keep?.level ?? 0)), hpRolls: [] }, ...(keep ? [keep] : [])] };
+    }
+    void old;
     return { ...ch, classes };
   }
   if (key === "pick:background") return { ...ch, backgroundId: picked[0] ?? "" };
@@ -50,7 +57,7 @@ export function validateDecisions(ch: Character, rs: Ruleset): { character: Char
       if (bad.length || kept.length < have.length) {
         const why = bad.length
           ? bad.map((id) => { const o = q.options.find((x) => x.id === id); return `${o?.name ?? id}: ${o?.disabledReason ?? tr("non più disponibile", "no longer available")}`; }).join("; ")
-          : `Troppe scelte (massimo ${q.count})`;
+          : tr(`Troppe scelte (massimo ${q.count})`, `Too many choices (maximum ${q.count})`);
         removed.push({ key: q.key, picked: have.filter((id) => !kept.includes(id)), reason: why });
         cur = put(cur, q.key, kept); changed = true; break;
       }
@@ -70,6 +77,12 @@ export function validateDecisions(ch: Character, rs: Ruleset): { character: Char
       removed.push({ key: invalidAsi.key, picked: invalidAsi.selected, reason: tr("L'aumento di caratteristica non è più valido (fonte o tetto cambiati)", "The ability score increase is no longer valid (source or cap changed)") });
       cur = { ...cur, asi: cur.asi.filter((a) => a.key !== invalidAsi.key) }; continue;
     }
+    // 4) sottoclasse scelta ma sotto il livello in cui si ottiene (il livello è sceso)
+    const badSub = cur.classes.find((cl) => cl.subclassId && cl.level < (rs.classes.get(cl.classId)?.subclassLevel ?? 0));
+    if (badSub) {
+      removed.push({ key: `subclass:${badSub.classId}`, picked: [badSub.subclassId!], reason: tr("La sottoclasse si ottiene a un livello più alto", "The subclass comes at a higher level") });
+      cur = { ...cur, classes: cur.classes.map((c) => { if (c !== badSub) return c; const { subclassId: _drop, ...rest } = c; void _drop; return rest; }) }; continue;
+    }
     break;
   }
   return { character: cur, removed };
@@ -81,14 +94,14 @@ const fail = (ch: Character, ...errors: string[]): DecisionResult => ({ ok: fals
 // nuovo ripulito e ciò che verrebbe annullato a cascata. L'interfaccia mostra l'avviso e, se l'utente annulla, tiene il personaggio di partenza.
 export function previewDecision(ch: Character, rs: Ruleset, key: string, picked: string[]): DecisionResult {
   const q = allQuestions(ch, rs).find((x) => x.key === key);
-  if (!q) return fail(ch, `Scelta non disponibile: ${key}`);
-  if (q.kind !== "choice") return fail(ch, "Gli aumenti di caratteristica si impostano con setAsi");
+  if (!q) return fail(ch, tr(`Scelta non disponibile: ${key}`, `Choice not available: ${key}`));
+  if (q.kind !== "choice") return fail(ch, tr("Gli aumenti di caratteristica si impostano con setAsi", "Ability score increases are set with setAsi"));
   if (q.disabled) return fail(ch, q.disabledReason ?? tr("Scelta alternativa già coperta", "Alternative choice already covered"));
-  if (picked.length > q.count) return fail(ch, `Puoi scegliere al massimo ${q.count} opzioni`);
+  if (picked.length > q.count) return fail(ch, tr(`Puoi scegliere al massimo ${q.count} opzioni`, `You can choose at most ${q.count} options`));
   if (new Set(picked).size !== picked.length) return fail(ch, "Opzioni ripetute");
   const errors = picked.flatMap((id) => {
     const o = q.options.find((x) => x.id === id);
-    return !o ? [`Opzione sconosciuta: ${id}`] : o.enabled ? [] : [`${o.name}: ${o.disabledReason ?? "non disponibile"}`];
+    return !o ? [tr(`Opzione sconosciuta: ${id}`, `Unknown option: ${id}`)] : o.enabled ? [] : [`${o.name}: ${o.disabledReason ?? tr("non disponibile", "not available")}`];
   });
   if (errors.length) return fail(ch, ...errors);
   let next = setKey(ch, key, picked);

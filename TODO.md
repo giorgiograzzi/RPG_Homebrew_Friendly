@@ -5,17 +5,25 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 
 ## Aperti
 
+### PLAN2 (audit 2026-10-02)
+- [x] Test PDF che scriveva in `/tmp/claude-0`, CI, archivio sicuro, termini del manuale, unità, messaggi bilingui, taglia, dettagli, multiclasse alla creazione (vedi `PLAN2.md`).
+- [ ] 🟡 `docker compose build` e prova offline con rete spenta (step 9 di `PLAN.md`) da rifare a mano prima della release.
+- [ ] 🟡 Descrizioni: restano senza testo armi, armature e gli oggetti non elencati in `scripts/lib/descriptions.ts` (`items`); 28 oggetti con effetto sono già descritti.
+- [ ] 🟡 Oggetti magici dell'SRD (2g) non ancora nei dati: a livello 2+ l'app scrive «da concordare col DM».
+- [ ] 🟢 Sincronizzazione tra dispositivi: fuori portata (solo file di backup).
+- [ ] 🟢 Guardia anti-italiano (`src/i18n/noItalianLeaks.test.ts`) copre messaggi con parole italiane comuni; resta escluso solo `engine/validate.ts` (messaggi per sviluppatori sui dati).
+
 ### Fonti e dati
 - [ ] 🔴 **Censimento dell'SRD prima di estrarre**: dall'indice dei due PDF elencare esattamente cosa contiene (classi, sottoclassi, specie, background, talenti, incantesimi, oggetti magici) e scrivere i numeri attesi nei test. Non dare per scontato il contenuto: va verificato sul PDF.
 - [ ] 🟡 Gli estrattori attuali leggono riepiloghi del Manuale del Giocatore (`01-05_*.pdf`) e regole di `scripts/lib/*-rules.ts` scritte su quei dati: vanno riscritti sull'SRD, non adattati a occhio.
 - [ ] 🟡 Le 48 sottoclassi e gli incantesimi/specie/background fuori SRD spariscono: verificare che i privilegi/talenti rimasti non citino id non più esistenti (`validate:data` sui riferimenti incrociati).
 - [ ] 🟡 Le voci `needsReview` dell'app privata non si portano dietro: ripartire da zero per i dubbi.
-- [ ] 🟢 Decidere se includere gli oggetti magici dell'SRD (step 2g).
+- [x] 🟢 Oggetti magici dell'SRD inclusi (step 2g). Da fare: effetti meccanici (CA, bonus, cariche) per gli oggetti più comuni; 8 paragrafi del testo sono spezzati male dove un rigo inizia con un titolo in linea.
 
 ### Legale
 - [ ] 🔴 Dicitura CC-BY: copiare **testo esatto** dalla prima pagina di ciascun PDF (la versione IT e quella EN sono diverse).
 - [ ] 🟡 Font per la scheda PDF: usare solo font con licenza libera (es. OFL) e citarli in `ATTRIBUTION.md`.
-- [ ] 🟡 Icone/immagini: usare solo asset originali (le attuali in `public/icons/` vanno riviste: se sono generiche ok, altrimenti rifarle).
+- [ ] 🟡 Icone/immagini: l'icona dell'app è nuova (drago + d20, PR #28 e #29, `public/icons/`): Giorgio conferma che sia un disegno originale prima della release (step 10).
 - [ ] 🟡 Licenza delle dipendenze npm: controllare che siano tutte compatibili con MIT (report `npm ls` / license-checker).
 - [ ] 🟡 Rileggere il testo legale finale con calma prima della release (non sono un avvocato: è una verifica tecnica, non un parere legale).
 
@@ -76,20 +84,20 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 - [ ] 🟡 Scheda PDF: tolta in step 1 (usava il modello ufficiale). Resta `src/export/sheetData.ts`; il pulsante "Stampa scheda" torna con il nuovo generatore (step 7). Chiavi `wizard.sheet.*` in `it.json` ancora presenti.
 - [x] `scripts/extract-*.ts` e `validate-data.ts` (citavano fonti non SRD) rimossi in step 1; `validate:data` ed `extract:data` (script npm) tornano con la riscrittura in step 2.
 - [ ] 🟡 `origin: "private"` (default in `src/engine/schema/content.ts` e nei test): con i dati SRD tracciati va sostituito con `"srd"` (step 2/4).
-- [ ] 🟡 `Dockerfile` e `.dockerignore` parlano ancora di `data/private` (step 9).
+- [x] `Dockerfile` e `.dockerignore` non parlano più di `data/private` (già sistemato in #20; ripulito `.dockerignore` in step 9).
 - [ ] 🟡 Dopo lo step 1 `npm test` ha 8 file che falliscono per mancanza di `data/` (stessi di prima): tornano verdi con gli step 2-4.
-- [ ] 🟡 `.env.example`: porta 8097 scelta per l'app privata; rivedere se serve (step 9).
+- [x] `.env.example`: porta predefinita 8098 (#21), configurabile con `PORT`.
 - [x] Commento in `scripts/extract-conditions.ts`: file rimosso in step 1.
 - [ ] 🟡 `ATTRIBUTION.md`: diciture trascritte dai PDF, riverificare a occhio (step 8).
 - [ ] 🟡 I test `*.private.test.ts` saltano i dati mancanti: rinominarli e farli girare sempre, sui dati SRD tracciati (step 4).
 - [ ] 🟡 `README` e doc dell'app privata citano il bunker, Cloudflare, porte e dominio personale: **non** portarli nella repo pubblica.
-- [ ] 🟢 Workflow CI GitHub Actions (step 9).
+- [x] Workflow CI GitHub Actions (step 9): job `check` (typecheck, test, validate:data, build), `e2e` (layout, smoke, offline) e `docker` (build immagine).
 
 ### Frontend (step 5b)
 - [ ] 🔴 Tema Windows XP / Win95 (`src/ui/xp/`, ~266 classi in 31 file, popup "Prompt di MS-DOS", font Tahoma, icona "Start") da sostituire con il tema neutro mobile-first + desktop. Decisione presa: neutro, moderno, chiaro/scuro.
 - [ ] 🟡 Scegliere la palette/accento del nuovo tema (proposta: neutri + un solo colore d'accento) e il nome visibile dell'app; Giorgio conferma.
 - [ ] 🟡 Su desktop la Scheda va in colonne affiancate (non a 7 tab): progettare quali blocchi vanno insieme.
-- [ ] 🟡 `index.html` ha `theme-color` blu XP; il manifest PWA e le icone usano i colori vecchi (step 5b-5 e 9).
+- [x] `theme-color` di `index.html` e colori del manifest PWA aggiornati al tema neutro; icone nuove (#28, #29).
 - [ ] 🟡 `src/ui/xp/contrast.test.ts` verifica i colori XP: va riscritto sui nuovi token.
 - [ ] 🟡 Un solo punto di adattamento schermo oggi (`max-width: 720px`): introdurre breakpoint 640 / 1024.
 - [ ] 🟢 Valutare interruttore tema (sistema / chiaro / scuro) e dimensione testo in Impostazioni.
@@ -140,16 +148,16 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 ### Lingue (step 3)
 - [ ] 🟡 Cambiare lingua ricarica la pagina (la lingua si legge una volta all'avvio; i personaggi stanno nel database e restano). Nello step 5b si può rendere il cambio immediato se serve.
 - [ ] 🟡 `en.json` traduce tutte le chiavi di `it.json` così com'è. Restano stringhe da riscrivere con la nuova interfaccia (5b) e dall'editor homebrew (step 6, dove va tolto «Parti da una voce ufficiale»): quando si cambia una stringa vanno aggiornate entrambe (il test di parità lo impone).
-- [ ] 🟢 Nome e descrizione del manifest PWA (`vite.config.ts`) e `index.html` sono ancora solo in italiano (step 9). `<html lang>` si imposta all'avvio.
+- [ ] 🟢 Nome e descrizione del manifest PWA (`vite.config.ts`) e `index.html` restano solo in italiano: un manifest è unico per sito, non si può avere per lingua senza server dedicato. `<html lang>` si imposta all'avvio. Da decidere in step 10 se renderli neutri/bilingui.
 - [ ] 🟢 Le unità (piedi/libbre) nei testi dell'interfaccia restano come nei dati; nei dati italiani le distanze sono in metri solo nel testo delle regole.
 
 ### Attribuzioni e nome (step 8)
-- [x] Nome definitivo: **Placet del Master** (app, `index.html`, manifest PWA, README, PDF). Non usare mai la sigla «D&D» (marchio WotC), nemmeno come nome breve.
+- [x] Nome definitivo: **Placet del Master** (prima «Danger & Dragons») (app, `index.html`, manifest PWA, README, PDF). Non usare mai la sigla «D&D» (marchio WotC), nemmeno come nome breve.
 - [x] Schermata «Informazioni e licenze» (menu): dicitura CC-BY nella lingua dell'app con link alla licenza, avviso «non ufficiale, non affiliato», MIT del codice, licenza del font, nota sull'homebrew.
 - [x] Dicitura + avviso anche su ogni pagina della scheda PDF, in `ATTRIBUTION.md` e nel README. `attribution.test.ts` confronta la dicitura con la prima pagina dei due PDF SRD (chiusa la voce «da verificare a occhio»).
 - [x] Corretto il pulsante «Sali di livello» tagliato su telefono (testata della scheda a capo).
-- [x] Il nome «Placet del Master» (scelto da Giorgio il 2026-10-02) non richiama la sigla D&D: il dubbio sul marchio non si pone più.
-- [x] File di export `placet-del-master-*.json` e pacchetto npm `placet-del-master` (v1.0.0).
+- [ ] 🟡 Il nome «Placet del Master» evoca l'originale. Va bene, ma sarebbe prudente un parere legale/una ricerca marchi prima della pubblicazione (step 10).
+- [ ] 🟢 Rinominare i file di export (`personaggi-srd-*.json` → `danger-and-dragons-*.json`) e il pacchetto npm `srd-personaggi-pwa`.
 
 ### Scheda PDF (step 7)
 - [x] Generatore originale con pdf-lib (`src/export/sheetPdf.ts`, `pdfKit.ts`): A4, IT e EN, Noto Sans (OFL) incorporato, dicitura CC-BY e numero di pagina su ogni pagina; pulsante in Scheda → Altro. Licenza del font in `ATTRIBUTION.md` e `docs/licenses/`.
@@ -179,7 +187,7 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 - [ ] 🟡 Prossimi sotto-passi 5b-3 (schermate: scheda a colonne su desktop, wizard, homebrew), 5b-4 (accessibilità: rifinire bersagli, tastiera) e 5b-5 (pulizia): i controlli di layout sono in `npm run e2e` (`e2e/layout.mjs`: 3 viewport × IT/EN × chiaro/scuro; screenshot in `e2e/out/`, non tracciati).
 - [x] ~~Etichette scritte nel codice in italiano~~ → spostate in `it.json`/`en.json`; i messaggi e le etichette del motore usano `tr(it, en)` (`src/i18n/tr.ts`).
 - [ ] 🟢 Il cambio di aspetto (chiaro/scuro/automatico) è immediato; il cambio di lingua ricarica la pagina.
-- [ ] 🟢 Le icone dell'app (`public/icons`) sono state ridisegnate nei nuovi colori (d20 indaco) con il font di sistema; l'icona resta provvisoria finché non c'è un logo definitivo.
+- [x] Icone dell'app rifatte: nuova icona drago + d20 e favicon (#28), apple-touch-icon rinominata per la cache di iOS (#29).
 
 ### Interfaccia (step 5b-3)
 - [ ] 🟡 Nel motore restano in italiano solo alcune stringhe minori (riepiloghi dell'editor Homebrew in `src/homebrew/summary.ts` e `complex.ts`, etichette di spellbook/risorse): il controllo `npm run e2e` segnala testo italiano nelle schermate inglesi; oggi non ne trova nelle schermate controllate (Personaggi, wizard, scheda, Homebrew, Impostazioni).
@@ -187,4 +195,4 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 
 ### Interfaccia (step 5b-4/5b-5)
 - [ ] 🟢 Non fatto (non necessario ora): lettore di schermo provato solo in modo automatico (ruoli e nomi); un controllo a mano con VoiceOver/TalkBack prima della release (step 10).
-- [ ] 🟢 `npm run e2e` non è nel CI (serve Chromium): da aggiungere allo step 9 come job separato.
+- [x] `npm run e2e`, `e2e:smoke` ed `e2e:offline` girano nel CI come job separato (Chromium da `playwright install`). `playwright` è ora tra le devDependencies.

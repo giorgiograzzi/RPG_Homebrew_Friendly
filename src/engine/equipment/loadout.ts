@@ -1,6 +1,7 @@
 import type { Armor, Character, EquipState, Item, Tool, Weapon } from "../types";
 import type { Ruleset } from "../ruleset";
 import { DEFAULT_SETTINGS, type Settings } from "../settings";
+import { tr } from "../../i18n/tr";
 
 export type Found =
   | { kind: "weapon"; def: Weapon } | { kind: "armor"; def: Armor } | { kind: "tool"; def: Tool } | { kind: "item"; def: Item };
@@ -44,24 +45,24 @@ export function analyzeLoadout(ch: Character, rs: Ruleset): Loadout {
   let weight = 0, attuned = 0;
   for (const e of ch.inventory) {
     const f = lookupItem(rs, e.itemId);
-    if (!f) { if (rs.items.size + rs.weapons.size > 0) problems.push(`Oggetto sconosciuto: ${e.itemId}`); continue; }
+    if (!f) { if (rs.items.size + rs.weapons.size > 0) problems.push(tr(`Oggetto sconosciuto: ${e.itemId}`, `Unknown item: ${e.itemId}`)); continue; }
     weight += ((f.def as { weight?: number }).weight ?? 0) * e.qty;
     const name = f.def.name.it;
     if (e.attuned) {
       attuned++;
-      if (!needsAttunement(f)) problems.push(`${name} non richiede sintonia`);
+      if (!needsAttunement(f)) problems.push(tr(`${name} non richiede sintonia`, `${name} does not require attunement`));
     }
     if (f.kind === "armor") {
-      if (e.state === "wielded") problems.push(`${name}: un'armatura si indossa (stato "indossato"), non si impugna`);
+      if (e.state === "wielded") problems.push(tr(`${name}: un'armatura si indossa (stato "indossato"), non si impugna`, `${name}: armor is worn (state "worn"), not wielded`));
       if (e.state === "worn") (f.def.category === "shield" ? shields : bodies).push(f.def);
     } else if (f.kind === "weapon") {
-      if (e.state === "worn") problems.push(`${name}: un'arma si impugna, non si indossa`);
+      if (e.state === "worn") problems.push(tr(`${name}: un'arma si impugna, non si indossa`, `${name}: a weapon is wielded, not worn`));
       if (e.state === "wielded") wielded.push({ entry: e, weapon: f.def, hands: handsFor(f.def, e, mounted) });
     }
   }
   weight += (ch.coins.cp + ch.coins.sp + ch.coins.ep + ch.coins.gp + ch.coins.pp) / 50;
-  if (bodies.length > 1) problems.push(`Puoi indossare una sola armatura (indossate: ${bodies.map((b) => b.name.it).join(", ")})`);
-  if (shields.length > 1) problems.push("Puoi usare un solo scudo");
+  if (bodies.length > 1) problems.push(tr(`Puoi indossare una sola armatura (indossate: ${bodies.map((b) => b.name.it).join(", ")})`, `You can wear only one suit of armor (worn: ${bodies.map((b) => b.name.it).join(", ")})`));
+  if (shields.length > 1) problems.push(tr("Puoi usare un solo scudo", "You can use only one shield"));
   const handsUsed = wielded.reduce((n, w) => n + w.hands, 0) + (shields.length ? 1 : 0);
   if (handsUsed > 2) problems.push(`Troppe mani occupate (${handsUsed} su 2): armi impugnate e scudo`);
   if (attuned > 3) problems.push(`Sintonia: ${attuned} oggetti (massimo 3)`);
@@ -80,7 +81,7 @@ export function equipItem(ch: Character, rs: Ruleset, itemId: string, target: Eq
   const f = lookupItem(rs, itemId);
   const none: EquipTime = { minutes: 0, action: false, free: true, note: "" };
   const idx = ch.inventory.findIndex((e) => e.itemId === itemId);
-  if (!f || idx < 0) return { character: ch, time: none, problems: [`Oggetto non nel tuo inventario: ${itemId}`] };
+  if (!f || idx < 0) return { character: ch, time: none, problems: [tr(`Oggetto non nel tuo inventario: ${itemId}`, `Item not in your inventory: ${itemId}`)] };
   const cur = ch.inventory[idx]!;
   if (cur.state === target && (grip === undefined || cur.grip === grip)) return { character: ch, time: none, problems: [] };
 
@@ -98,11 +99,11 @@ export function equipItem(ch: Character, rs: Ruleset, itemId: string, target: Eq
     } else if (cur.state === "worn") { minutes += f.def.doffMinutes; note = `Togliere: ${f.def.doffMinutes} min`; }
     else free = true;
   } else if (f.kind === "armor") {
-    action = true; note = "Scudo: 1 azione";
+    action = true; note = tr("Scudo: 1 azione", "Shield: 1 action");
   } else if (f.kind === "weapon" && settings.weaponSwap === "house") {
-    action = true; note = "Estrarre o riporre un'arma: 1 azione (regola della casa)";
+    action = true; note = tr("Estrarre o riporre un'arma: 1 azione (regola della casa)", "Drawing or stowing a weapon: 1 action (house rule)");
   } else {
-    free = true; note = f.kind === "weapon" ? "Estrarre o riporre un'arma fa parte dell'azione di Attacco (un oggetto per turno)" : "Interazione con un oggetto";
+    free = true; note = f.kind === "weapon" ? tr("Estrarre o riporre un'arma fa parte dell'azione di Attacco (un oggetto per turno)", "Drawing or stowing a weapon is part of the Attack action (one object per turn)") : tr("Interazione con un oggetto", "Object interaction");
   }
   const next: Character = { ...ch, inventory };
   const problems = analyzeLoadout(next, rs).problems.filter((p) => !analyzeLoadout(ch, rs).problems.includes(p));

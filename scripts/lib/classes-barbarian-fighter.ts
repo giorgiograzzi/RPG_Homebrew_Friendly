@@ -2,7 +2,7 @@
 // sui PDF da class-verify.ts. Id delle colonne della tabella in inglese (es. rages, rage_damage).
 import { asi, B, epicBoon, f, skillOpts, steps, subclassFeature, type ClassDef } from "./class-types";
 
-const TWO_FROM_TABLE = (col: string) => ({ id: "weapon_mastery_pick", label: B("Padronanza d'armi", "Weapon Mastery"), countFrom: col, source: "weaponMastery" });
+const TWO_FROM_TABLE = (cls: string, col: string) => ({ id: `${cls}_weapon_mastery`, label: B("Padronanza d'armi", "Weapon Mastery"), countFrom: col, source: "weaponMastery" });
 const lvl = (rows: [number, number][]) => (n: number) => rows.filter(([from]) => n >= from).at(-1)?.[1] ?? 0; // valore per livello da soglie
 const tableOf = (rows: [number, number][]) => ({ table: Array.from({ length: 20 }, (_, i) => lvl(rows)(i + 1)) });
 
@@ -38,7 +38,7 @@ export const BARBARIAN: ClassDef = {
     f(1, "unarmored_defense", ["Difesa senza armatura", "Unarmored Defense"], ["Senza armatura la CA base è 10 + Des + Cos; puoi usare uno scudo.", "Without armor your base AC is 10 + Dex + Con; you can use a Shield."],
       { effects: [{ op: "acFormula", formula: "10 + mod:dex + mod:con", shieldAllowed: true, when: "wearingArmor:none" }] }),
     f(1, "weapon_mastery", ["Padronanza d'armi", "Weapon Mastery"], ["Puoi usare le proprietà di padronanza di 2 tipi di armi da mischia semplici o da guerra (altri con i livelli, colonna Padronanza d'armi); a ogni riposo lungo puoi cambiarne uno.", "You can use the mastery properties of 2 kinds of Simple or Martial Melee weapons (more with levels, Weapon Mastery column); after a Long Rest you can change one."],
-      { choices: [{ ...TWO_FROM_TABLE("weapon_mastery"), weaponFilter: { kind: "melee" } }] }),
+      { choices: [{ ...TWO_FROM_TABLE("barbarian", "weapon_mastery"), weaponFilter: { kind: "melee" } }] }),
     f(2, "danger_sense", ["Percezione del pericolo", "Danger Sense"], ["Vantaggio ai tiri salvezza su Destrezza, a meno che tu sia incapacitato.", "Advantage on Dexterity saving throws unless you have the Incapacitated condition."], { effects: [{ op: "saveAdvantage", abilities: ["dex"] }] }),
     f(2, "reckless_attack", ["Attacco irruento", "Reckless Attack"], ["Con il primo attacco del tuo turno puoi attaccare con irruenza: Vantaggio ai tiri per colpire con Forza fino all'inizio del tuo prossimo turno, ma anche i tiri contro di te hanno Vantaggio.", "On your first attack of the turn you can attack recklessly: Advantage on Strength-based attack rolls until the start of your next turn, but attack rolls against you have Advantage."]),
     subclassFeature("barbarian", "del barbaro", "Barbarian"),
@@ -96,7 +96,7 @@ export const FIGHTER: ClassDef = {
     f(1, "second_wind", ["Recuperare energie", "Second Wind"], ["Come azione bonus recuperi 1d10 + livello da guerriero PF. Gli usi sono nella colonna Recuperare energie: ne recuperi 1 con un riposo breve, tutti con uno lungo.", "As a Bonus Action you regain 1d10 + your Fighter level Hit Points. Uses are in the Second Wind column: regain one on a Short Rest, all on a Long Rest."],
       { build: (t) => ({ usage: { uses: { table: t.second_wind }, recharge: "long_rest", partialShortRest: 1 } }) }),
     f(1, "weapon_mastery", ["Padronanza d'armi", "Weapon Mastery"], ["Puoi usare le proprietà di padronanza di 3 tipi di armi semplici o da guerra (altri con i livelli, colonna Padronanza d'armi); a ogni riposo lungo puoi cambiarne uno.", "You can use the mastery properties of 3 kinds of Simple or Martial weapons (more with levels, Weapon Mastery column); after a Long Rest you can change one."],
-      { choices: [TWO_FROM_TABLE("weapon_mastery")] }),
+      { choices: [TWO_FROM_TABLE("fighter", "weapon_mastery")] }),
     f(2, "action_surge", ["Azione impetuosa", "Action Surge"], ["Nel tuo turno puoi fare un'azione aggiuntiva (non quella di Magia). Una volta per riposo breve o lungo; due volte dal 17° livello, ma una sola nello stesso turno.", "On your turn you can take one additional action (except the Magic action). Once per Short or Long Rest; twice from level 17, but only once per turn."],
       { row: B("Azione impetuosa (un utilizzo)", "Action Surge (one use)"), usage: { uses: tableOf([[1, 1], [17, 2]]), recharge: "short_rest" } }),
     f(2, "tactical_mind", ["Mente tattica", "Tactical Mind"], ["Quando fallisci una prova di caratteristica puoi spendere un uso di Recuperare energie: tira 1d10 e sommalo alla prova. Se fallisce comunque, l'uso non viene speso.", "When you fail an ability check you can expend a Second Wind use: roll 1d10 and add it to the check. If you still fail, the use isn't expended."]),

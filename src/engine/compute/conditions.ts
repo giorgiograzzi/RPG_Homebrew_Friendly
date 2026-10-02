@@ -59,7 +59,7 @@ export function resolveConditions(ch: Character, rs: Ruleset): ConditionState {
         case "cant_see": case "cant_hear": case "cant_speak": case "break_concentration": case "unaware_of_surroundings":
           st.cannot.push(CANNOT[e.type]!); break;
         case "no_actions": st.noActions = true; for (const b of (e.blocks as string[] | undefined) ?? []) st.cannot.push(tr(`compiere ${BLOCK[b] ?? b}`, `take ${BLOCK[b] ?? b}`)); break;
-        case "auto_fail_ability_check": st.autoFailChecks.push(`${who}: prove che richiedono ${e.requires === "sight" ? "la vista" : "l'udito"}`); break;
+        case "auto_fail_ability_check": st.autoFailChecks.push(tr(`${who}: prove che richiedono ${e.requires === "sight" ? "la vista" : "l'udito"}`, `${who}: checks that require ${e.requires === "sight" ? "sight" : "hearing"}`)); break;
         case "auto_fail_saving_throw": for (const a of e.abilities ?? []) (st.autoFailSaves[a] ??= []).push(who); break;
         case "saving_throw_mode": for (const a of e.abilities ?? []) push(st.rolls.saves[a], e.mode, who); break;
         case "own_attack_rolls": if (situ) note(); else push(st.rolls.attack, e.mode, who); break;
@@ -101,7 +101,7 @@ export function applyConditionSpeed(speed: Derived["speed"], st: ConditionState)
     if (base.value <= 0) continue;
     let v = base.value;
     const sources = [...base.sources];
-    if (st.speedPenalty) { const p = Math.max(st.speedPenalty, -v); v += p; sources.push({ label: tr("Esaurimento", "Exhaustion"), value: p }); }
+    if (st.speedPenalty) { const p = Math.max(st.speedPenalty, -v); v += p; sources.push({ label: tr("Indebolimento", "Exhaustion"), value: p }); }
     if (st.speedZero.length) { sources.push({ label: tr(`Velocità 0: ${st.speedZero.join(", ")}`, `Speed 0: ${st.speedZero.join(", ")}`), value: -v }); v = 0; }
     out[k] = { value: v, sources } as Sourced;
   }

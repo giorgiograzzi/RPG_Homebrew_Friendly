@@ -5,6 +5,7 @@ import { formatDate } from "../ui/format";
 import { useApp } from "../ui/useApp";
 import { backupDue } from "../store";
 import { exportNow } from "./Settings";
+import { shareOrDownloadJson } from "../export/download";
 
 export function Characters({ onOpened }: { onOpened: () => void }) {
   const list = useApp((s) => s.list);
@@ -15,13 +16,23 @@ export function Characters({ onOpened }: { onOpened: () => void }) {
   const remove = useApp((s) => s.remove);
   const settings = useApp((s) => s.settings);
   const exportAll = useApp((s) => s.exportAll);
+  const duplicate = useApp((s) => s.duplicate);
+  const exportOne = useApp((s) => s.exportOne);
+  const exportRaw = useApp((s) => s.exportRaw);
   const [toDelete, setToDelete] = useState<string | null>(null);
+  const [failed, setFailed] = useState<string | null>(null);
+  const fileName = (id: string, suffix = "") => `${(list.find((c) => c.id === id)?.name || "personaggio").replace(/[^\p{L}\p{N}]+/gu, "-")}${suffix}.json`;
   const t = it.characters;
 
   return (
     <>
       <h2>{t.title}</h2>
       {error && <div className="ui-error" role="alert">{error}</div>}
+      {failed && (
+        <div className="ui-banner" role="alert">{t.broken}
+          <div className="ui-actions" style={{ justifyContent: "flex-start" }}><Button onClick={() => void exportRaw(failed).then((x) => x && shareOrDownloadJson(x, fileName(failed, "-grezzo")))}>{t.exportRaw}</Button></div>
+        </div>
+      )}
       {list.length > 0 && backupDue(settings) && (
         <div className="ui-banner" role="alert">
           {t.backupDue}
@@ -41,8 +52,12 @@ export function Characters({ onOpened }: { onOpened: () => void }) {
                 <div className="name">{c.name || t.unnamed}</div>
                 <div className="ui-muted">{formatDate(c.updatedAt)}</div>
               </div>
-              <Button onClick={() => void open(c.id).then((ok) => ok && onOpened())}>{t.open}</Button>
+              <div className="row-actions">
+              <Button onClick={() => void open(c.id).then((ok) => { setFailed(ok ? null : c.id); if (ok) onOpened(); })}>{t.open}</Button>
+              <Button onClick={() => void duplicate(c.id)}>{t.duplicate}</Button>
+              <Button onClick={() => void exportOne(c.id).then((x) => x && shareOrDownloadJson(x, fileName(c.id)))}>{t.export}</Button>
               <Button variant="danger" aria-label={`${t.delete} ${c.name || t.unnamed}`} onClick={() => setToDelete(c.id)}>✕</Button>
+              </div>
             </li>
           ))}
         </ul>

@@ -45,7 +45,7 @@ export const takenIds = (rs: Ruleset, entries: HbEntry[]) => (id: string) =>
 
 // Oggetti dell'equipaggiamento: "$tool", "$gaming_set"... sono segnaposto validi
 const unknownItems = (items: { item: string }[], rs: Ruleset) =>
-  items.filter((i) => !i.item.startsWith("$") && !lookupItem(rs, i.item)).map((i) => `Oggetto sconosciuto nell'equipaggiamento: ${i.item}`);
+  items.filter((i) => !i.item.startsWith("$") && !lookupItem(rs, i.item)).map((i) => tr(`Oggetto sconosciuto nell'equipaggiamento: ${i.item}`, `Unknown item in the equipment: ${i.item}`));
 
 const where = (path: PropertyKey[]) => (path.length ? path.join(".") : "");
 
@@ -61,7 +61,7 @@ export function validateEntry(kind: HbKind, data: unknown, rs: Ruleset): { ok: t
   // riferimenti ai dati di gioco
   if (kind === "weapons") {
     if (!rs.masteries.has(String(out.mastery))) errors.push(`Maestria sconosciuta: ${String(out.mastery)}`);
-    if (!rs.damageTypes.has(String(out.damageType))) errors.push(`Tipo di danno sconosciuto: ${String(out.damageType)}`);
+    if (!rs.damageTypes.has(String(out.damageType))) errors.push(tr(`Tipo di danno sconosciuto: ${String(out.damageType)}`, `Unknown damage type: ${String(out.damageType)}`));
   }
   if (kind === "feats") for (const e of (out.effects as { op: string; spell?: string }[])) if (e.op === "grantSpell" && e.spell && !rs.spells.has(e.spell)) errors.push(`Incantesimo sconosciuto: ${e.spell}`);
   if (kind === "backgrounds") {
@@ -75,9 +75,9 @@ export function validateEntry(kind: HbKind, data: unknown, rs: Ruleset): { ok: t
     errors.push(...unknownItems(Object.values(c.equipment).flatMap((e) => e.items), rs));
     const cc = out as unknown as { spellAbility?: string; pactSlots?: unknown };
     if (c.caster !== "none") {
-      if (!cc.spellAbility) errors.push("Una classe incantatrice ha bisogno della caratteristica da incantatore.");
-      if (c.caster === "pact" ? !cc.pactSlots : !c.spellSlots) errors.push("Una classe incantatrice ha bisogno della progressione degli slot.");
-      if (!c.table.prepared) errors.push("Una classe incantatrice ha bisogno della colonna \"prepared\" nella tabella.");
+      if (!cc.spellAbility) errors.push(tr("Una classe incantatrice ha bisogno della caratteristica da incantatore.", "A spellcasting class needs a spellcasting ability."));
+      if (c.caster === "pact" ? !cc.pactSlots : !c.spellSlots) errors.push(tr("Una classe incantatrice ha bisogno della progressione degli slot.", "A spellcasting class needs a slot progression."));
+      if (!c.table.prepared) errors.push(tr("Una classe incantatrice ha bisogno della colonna \"prepared\" nella tabella.", "A spellcasting class needs a \"prepared\" column in the table."));
     }
   }
   if (kind === "subclasses") {

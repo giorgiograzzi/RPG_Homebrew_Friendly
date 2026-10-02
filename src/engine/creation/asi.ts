@@ -14,15 +14,15 @@ export function asiProblems(spec: NonNullable<Question["asi"]>, picks: AsiPick[]
   const abil = picks.map((p) => p.ability);
   if (new Set(abil).size !== abil.length) errs.push(tr("Ogni caratteristica può ricevere un solo aumento da questa fonte", "Each ability can receive only one increase from this source"));
   for (const p of picks) {
-    if (!spec.allowed.includes(p.ability)) errs.push(`${p.ability}: non consentita da questa fonte`);
+    if (!spec.allowed.includes(p.ability)) errs.push(tr(`${p.ability}: non consentita da questa fonte`, `${p.ability}: not allowed by this source`));
     if (![1, 2].includes(p.amount)) errs.push(tr(`${p.ability}: l'aumento è +1 o +2`, `${p.ability}: the increase is +1 or +2`));
-    if (scoresBefore[p.ability] + p.amount > spec.cap) errs.push(`${p.ability}: supererebbe il massimo (${spec.cap})`);
+    if (scoresBefore[p.ability] + p.amount > spec.cap) errs.push(tr(`${p.ability}: supererebbe il massimo (${spec.cap})`, `${p.ability}: would exceed the maximum (${spec.cap})`));
   }
   const amounts = picks.map((p) => p.amount).sort().join();
-  if (spec.mode === "background" && amounts !== "1,2" && amounts !== "1,1,1") errs.push("Background: +2 a una e +1 a un'altra, oppure +1 a tutte e tre");
-  if (spec.mode === "background" && amounts === "1,1,1" && new Set(abil).size !== spec.allowed.length) errs.push("Background: il +1/+1/+1 va sulle tre caratteristiche del background");
-  if (spec.mode === "asi" && amounts !== "2" && amounts !== "1,1") errs.push("+2 a una caratteristica oppure +1 a due");
-  if (spec.mode === "plus1" && amounts !== "1") errs.push("+1 a una delle caratteristiche elencate");
+  if (spec.mode === "background" && amounts !== "1,2" && amounts !== "1,1,1") errs.push(tr("Background: +2 a una e +1 a un'altra, oppure +1 a tutte e tre", "Background: +2 to one and +1 to another, or +1 to all three"));
+  if (spec.mode === "background" && amounts === "1,1,1" && new Set(abil).size !== spec.allowed.length) errs.push(tr("Background: il +1/+1/+1 va sulle tre caratteristiche del background", "Background: the +1/+1/+1 goes on the background's three abilities"));
+  if (spec.mode === "asi" && amounts !== "2" && amounts !== "1,1") errs.push(tr("+2 a una caratteristica oppure +1 a due", "+2 to one ability or +1 to two"));
+  if (spec.mode === "plus1" && amounts !== "1") errs.push(tr("+1 a una delle caratteristiche elencate", "+1 to one of the listed abilities"));
   return errs;
 }
 

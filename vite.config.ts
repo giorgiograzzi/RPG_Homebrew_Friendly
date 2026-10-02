@@ -15,13 +15,13 @@ export default defineConfig({
   define: { __BUILD__: JSON.stringify(BUILD) },
   plugins: [
     react(),
-    // Config base: manifest e offline completo si rifiniscono allo step 19
+    // Manifest (nome, icone originali) e offline completo: verificato da e2e/offline.mjs
     VitePWA({
       // "prompt": l'app installata non si aggiorna da sola a metà uso, chiede (ReloadPrompt)
       registerType: "prompt",
       includeAssets: ["favicon.ico", "icons/apple-touch-icon-v2.png"],
       manifest: {
-        id: "./", name: "Placet del Master", short_name: "Placet", description: "Crea e gestisci personaggi con le regole libere dell'SRD 5.2.1, in italiano e inglese, anche senza rete.",
+        id: "./", name: "Placet del Master", short_name: "Placet Master", description: "Crea e gestisci personaggi con le regole libere dell'SRD 5.2.1, in italiano e inglese, anche senza rete.",
         lang: "it", dir: "ltr", start_url: "./", scope: "./", display: "standalone", orientation: "any", categories: ["games", "entertainment"],
         background_color: "#f3f4f8", theme_color: "#4f46e5",
         icons: [

@@ -2,11 +2,13 @@ import { useState } from "react";
 import { ABILITIES, SKILLS, type Ability } from "../engine/schema";
 import type { Sourced } from "../engine/types";
 import { strings as it } from "../i18n";
+import { tr } from "../i18n/tr";
 import { fmt } from "../ui/format";
 import { RollDialog } from "./dialogs";
 import type { TabProps } from "./types";
 import { AB, sign } from "./util";
 import type { RollMode } from "../engine/compute/types";
+import { distance } from "../ui/units";
 
 const t = it.play;
 interface Rolling { title: string; bonus: Sourced; mode: RollMode; modeSources: string[]; note?: string }
@@ -18,7 +20,7 @@ export function StatsTab({ rs, d }: TabProps) {
   // prova di caratteristica: mod + penalità di Esaurimento; il vantaggio/svantaggio viene dalle condizioni
   const check = (a: Ability): Rolling => ({
     title: fmt(t.check, { a: AB[a] }),
-    bonus: { value: d.mods[a].value + cs.d20Penalty, sources: [...d.mods[a].sources, ...(cs.d20Penalty ? [{ label: "Esaurimento", value: cs.d20Penalty }] : [])] },
+    bonus: { value: d.mods[a].value + cs.d20Penalty, sources: [...d.mods[a].sources, ...(cs.d20Penalty ? [{ label: tr("Indebolimento", "Exhaustion"), value: cs.d20Penalty }] : [])] },
     mode: cs.abilityChecks.mode, modeSources: cs.abilityChecks.modeSources,
   });
   return (
@@ -59,7 +61,7 @@ export function StatsTab({ rs, d }: TabProps) {
       </ul>
 
       <h3>{t.senses}</h3>
-      <p>{Object.entries(d.senses).map(([k, v]) => `${k} ${v!.value} ft`).join(" · ") || "—"}</p>
+      <p>{Object.entries(d.senses).map(([k, v]) => `${k} ${distance(v!.value)}`).join(" · ") || "—"}</p>
       <h3>{t.languages}</h3>
       <ul className="wz-tags">{d.languages.map((l) => <li key={l}>{rs.languages.get(l)?.name.it ?? l}</li>)}</ul>
       <h3>{t.profs}</h3>

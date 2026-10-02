@@ -84,7 +84,7 @@ export const ROGUE: ClassDef = {
     f(1, "thieves_cant", ["Gergo ladresco", "Thieves' Cant"], ["Conosci il Gergo ladresco e un'altra lingua a tua scelta.", "You know Thieves' Cant and one other language of your choice."],
       { choices: [{ id: "rogue_language", label: B("Lingua aggiuntiva", "Extra language"), count: 1, source: "languages:standard" }] }),
     f(1, "weapon_mastery", ["Padronanza d'armi", "Weapon Mastery"], ["Puoi usare le proprietà di padronanza di 2 tipi di armi in cui hai competenza (per esempio pugnali e archi corti); a ogni riposo lungo puoi cambiarne uno.", "You can use the mastery properties of 2 kinds of weapons you're proficient with (such as Daggers and Shortbows); after a Long Rest you can change one."],
-      { choices: [{ id: "weapon_mastery_pick", label: B("Padronanza d'armi", "Weapon Mastery"), count: 2, source: "weaponMastery" }] }),
+      { choices: [{ id: "rogue_weapon_mastery", label: B("Padronanza d'armi", "Weapon Mastery"), count: 2, source: "weaponMastery" }] }),
     f(2, "cunning_action", ["Azione scaltra", "Cunning Action"], ["Nel tuo turno puoi usare come azione bonus Scatto, Disimpegno o Nascondersi.", "On your turn you can take Dash, Disengage, or Hide as a Bonus Action."]),
     subclassFeature("rogue", "del ladro", "Rogue"),
     f(3, "steady_aim", ["Mira ferma", "Steady Aim"], ["Come azione bonus ottieni Vantaggio al prossimo tiro per colpire del turno; solo se non ti sei mosso nel turno, e dopo l'uso la tua velocità è 0 fino alla fine del turno.", "As a Bonus Action you gain Advantage on your next attack roll this turn; only if you haven't moved this turn, and your Speed becomes 0 until the end of the turn."]),

@@ -43,10 +43,10 @@ export function levelUp(ch: Character, rs: Ruleset, classId: string, hp: HpChoic
     hpMaxBefore: 0, hpMaxAfter: 0, pbBefore: 0, pbAfter: 0, features: [], subclassNow: false, pending: [] });
   if (!def) return fail(`Classe sconosciuta: ${classId}`);
   if (!ch.classes.length) return fail(tr("Scegli prima la classe", "Choose the class first"));
-  if (totalLevel(ch) >= MAX_LEVEL) return fail("Livello massimo: 20");
+  if (totalLevel(ch) >= MAX_LEVEL) return fail(tr("Livello massimo: 20", "Maximum level: 20"));
   const opt = levelUpOptions(ch, rs).find((o) => o.classId === classId);
   if (!opt?.enabled) return fail(opt?.reason ? tr(`Non puoi: ${opt.reason}`, `You can't: ${opt.reason}`) : tr("Non puoi prendere un livello in questa classe", "You can't take a level in this class"));
-  if (hp !== "avg" && (!Number.isInteger(hp) || hp < 1 || hp > def.hitDie)) return fail(`Il tiro va da 1 a ${def.hitDie}`);
+  if (hp !== "avg" && (!Number.isInteger(hp) || hp < 1 || hp > def.hitDie)) return fail(tr(`Il tiro va da 1 a ${def.hitDie}`, `The roll ranges from 1 to ${def.hitDie}`));
 
   const before = computeCharacter(ch, rs);
   const have = ch.classes.find((c) => c.classId === classId);

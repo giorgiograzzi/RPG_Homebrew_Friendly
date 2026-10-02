@@ -35,10 +35,14 @@ npm test               # dati SRD, motore, interfaccia, guardie legali
 npm run validate:data
 npm run build
 npm run e2e:smoke      # percorso completo con un browser vero (Playwright + Chromium)
+npm run e2e:offline    # build di produzione e verifica che la PWA riparta a rete spenta
 npm run e2e            # layout/accessibilità: 3 viewport × IT/EN × chiaro/scuro (lento)
 npm run extract:data   # rigenera data/srd/ dai PDF in docs/srd/
 ```
 Struttura: `src/engine` (regole), `src/ui` e `src/pages` (interfaccia), `src/export` (PDF), `src/homebrew`, `src/i18n`, `data/srd` (dati IT/EN), `data/homebrew` (esempi). Piano e storico: `PLAN.md`, `TODO.md`; checklist di rilascio: `docs/RELEASE.md`.
+
+## Privacy e cookie
+L'app non raccoglie dati personali e non imposta cookie: personaggi e impostazioni restano nel browser. Il testo di Privacy Policy e Cookie Policy (IT/EN) è in `src/legal/policies.ts` e si legge nell'app.
 
 ## Licenze
 - **Codice**: MIT (`LICENSE`).

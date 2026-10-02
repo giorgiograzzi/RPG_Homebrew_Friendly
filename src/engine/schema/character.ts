@@ -2,7 +2,8 @@ import { z } from "zod";
 import { ability, id } from "./primitives";
 
 // Formato del personaggio salvato. Valida ciò che arriva da disco o da un file importato.
-export const CHARACTER_SCHEMA_VERSION = 1;
+// v2: la scelta delle maestrie d'arma ha un id per classe (`<classe>_weapon_mastery`), così due classi che le danno (multiclasse) non condividono la scelta
+export const CHARACTER_SCHEMA_VERSION = 2;
 
 const int = z.number().int();
 const scores = z.object({ str: int, dex: int, con: int, int: int, wis: int, cha: int });
@@ -39,6 +40,7 @@ export const characterSchema = z.object({
   }),
   overrides: z.record(z.string(), z.number()),
   notes: z.string(),
+  details: z.object(Object.fromEntries(["player", "age", "height", "weight", "appearance", "personality", "ideals", "bonds", "flaws", "backstory"].map((k) => [k, z.string().max(8000).optional()]))).optional(),
   xp: int.min(0).optional(),
   startLevel: int.min(1).max(20).optional(), startingGold: int.min(0).optional(),
   editing: z.boolean().optional(), created: z.boolean().optional(),

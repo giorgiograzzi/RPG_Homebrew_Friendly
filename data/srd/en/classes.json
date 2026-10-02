@@ -255,7 +255,7 @@
      "description": "You can use the mastery properties of 2 kinds of Simple or Martial Melee weapons (more with levels, Weapon Mastery column); after a Long Rest you can change one.",
      "choices": [
       {
-       "id": "weapon_mastery_pick",
+       "id": "barbarian_weapon_mastery",
        "label": "Weapon Mastery",
        "countFrom": "weapon_mastery",
        "source": "weaponMastery",
@@ -2710,7 +2710,7 @@
      "description": "You can use the mastery properties of 3 kinds of Simple or Martial weapons (more with levels, Weapon Mastery column); after a Long Rest you can change one.",
      "choices": [
       {
-       "id": "weapon_mastery_pick",
+       "id": "fighter_weapon_mastery",
        "label": "Weapon Mastery",
        "countFrom": "weapon_mastery",
        "source": "weaponMastery"
@@ -3851,7 +3851,7 @@
      "description": "You can use the mastery properties of 2 kinds of weapons you're proficient with; after a Long Rest you can change one.",
      "choices": [
       {
-       "id": "weapon_mastery_pick",
+       "id": "paladin_weapon_mastery",
        "label": "Weapon Mastery",
        "count": 2,
        "source": "weaponMastery"
@@ -4507,7 +4507,7 @@
      "description": "You can use the mastery properties of 2 kinds of weapons you're proficient with; after a Long Rest you can change one.",
      "choices": [
       {
-       "id": "weapon_mastery_pick",
+       "id": "ranger_weapon_mastery",
        "label": "Weapon Mastery",
        "count": 2,
        "source": "weaponMastery"
@@ -5062,7 +5062,7 @@
      "description": "You can use the mastery properties of 2 kinds of weapons you're proficient with (such as Daggers and Shortbows); after a Long Rest you can change one.",
      "choices": [
       {
-       "id": "weapon_mastery_pick",
+       "id": "rogue_weapon_mastery",
        "label": "Weapon Mastery",
        "count": 2,
        "source": "weaponMastery"
