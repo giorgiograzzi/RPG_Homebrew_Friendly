@@ -144,6 +144,12 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 - [ ] 🟢 Nome e descrizione del manifest PWA (`vite.config.ts`) e `index.html` sono ancora solo in italiano (step 9). `<html lang>` si imposta all'avvio.
 - [ ] 🟢 Le unità (piedi/libbre) nei testi dell'interfaccia restano come nei dati; nei dati italiani le distanze sono in metri solo nel testo delle regole.
 
+### Scheda PDF (step 7)
+- [x] Generatore originale con pdf-lib (`src/export/sheetPdf.ts`, `pdfKit.ts`): A4, IT e EN, Noto Sans (OFL) incorporato, dicitura CC-BY e numero di pagina su ogni pagina; pulsante in Scheda → Note. Licenza del font in `ATTRIBUTION.md` e `docs/licenses/`.
+- [x] Etichette degli attacchi del motore («Colpo senz'armi», «lanciata», «due mani»…) ora bilingui.
+- [ ] 🟡 Il PDF usa la lingua dell'app: chi cambia lingua deve riaprire la scheda per rigenerarlo (nessun problema, ma non c'è un selettore di lingua solo per il PDF).
+- [ ] 🟢 Il testo di privilegi lunghi occupa molto spazio: si può offrire una versione «compatta» (solo nomi) o due colonne.
+
 ### Homebrew (step 6)
 - [x] Tolta «copia da voce ufficiale» (UI, `copyOfficial`, testi); test guardia in `homebrew.srd.test.ts`.
 - [x] `data/homebrew/`: tre pacchetti di esempio inventati (specie, background+talento, classe+sottoclasse+6 incantesimi), `template.jsonc` e `README.md`; test sull'SRD vero. Tutta la suite è verde.

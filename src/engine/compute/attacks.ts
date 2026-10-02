@@ -114,7 +114,7 @@ export function computeAttacks(x: Ctx, profs: Profs, cs: ConditionState, untrain
       available: ch.inventory.filter((e) => e.itemId === ammoId).reduce((n, e) => n + e.qty * Number(/\((\d+)\)/.exec(rs.items.get(ammoId)?.name.it ?? "")?.[1] ?? 1), 0),
     } : undefined;
     const range = w?.range && (thrown || w.kind === "ranged") ? w.range : undefined;
-    const label = !w ? "Colpo senz'armi" : `${w.name.it}${thrown ? " (lanciata)" : ""}${offhand ? " (mano secondaria)" : hands === 2 && w.properties.includes("versatile") ? " (due mani)" : ""}`;
+    const label = !w ? tr("Colpo senz'armi", "Unarmed Strike") : `${w.name.it}${thrown ? tr(" (lanciata)", " (thrown)") : ""}${offhand ? tr(" (mano secondaria)", " (off-hand)") : hands === 2 && w.properties.includes("versatile") ? tr(" (due mani)", " (two-handed)") : ""}`;
     return {
       id: wf?.entry.itemId ?? "unarmed", ...(w ? { weaponId: w.id } : {}), label, kind, thrown, offhand, hands: hands as 0 | 1 | 2,
       ability, abilityWhy: why, proficient, toHit: sum(parts), ...mode,

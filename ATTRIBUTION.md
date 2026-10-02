@@ -13,3 +13,9 @@ This work includes material from the System Reference Document 5.2.1 (“SRD 5.2
 Quest'opera include materiale tratto dal System Reference Document 5.2.1 ("SRD 5.2.1") di Wizards of the Coast LLC, disponibile all'indirizzo https://www.dndbeyond.com/srd. Il SRD 5.2.1 è concesso in licenza ai sensi della licenza di attribuzione 4.0 Internazionale di Creative Commons, disponibile all'indirizzo https://creativecommons.org/licenses/by/4.0/legalcode.
 
 _Testi copiati dalla prima pagina di ciascun PDF (transcript da verificare a occhio nello step 8)._
+
+## Font della scheda PDF — Noto Sans
+
+La scheda PDF incorpora **Noto Sans** (pesi 400 e 700, sottoinsieme latino), distribuito con il pacchetto npm `@fontsource/noto-sans`.
+Copyright 2022 The Noto Project Authors (https://github.com/notofonts/latin-greek-cyrillic). Licenza SIL Open Font License 1.1: testo completo in `docs/licenses/NotoSans-OFL-1.1.txt`.
+Il font non è modificato e non è venduto separatamente; il PDF generato è un documento che lo incorpora, e la licenza non impone vincoli sul PDF.

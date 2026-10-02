@@ -33,7 +33,7 @@ export default defineConfig({
       workbox: {
         // Offline completo: tutto ciò che serve (anche i dati di gioco, che stanno dentro i file JS) entra nella cache del primo caricamento.
         // Il limite predefinito (2 MB) lascerebbe fuori i file grandi: senza dati di gioco nel bundle l'app non parte offline.
-        globPatterns: ["**/*.{js,css,html,svg,png,ico,webmanifest,woff2}"],
+        globPatterns: ["**/*.{js,css,html,svg,png,ico,webmanifest,woff,woff2}"],
         maximumFileSizeToCacheInBytes: 30 * 1024 * 1024,
         navigateFallback: "index.html",
         cleanupOutdatedCaches: true,

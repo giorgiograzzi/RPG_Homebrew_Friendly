@@ -136,6 +136,15 @@ try {
   expect(hp2 > Number(hp.split("/")[1]), `i PF massimi non sono saliti (${hp} → ${hp2})`);
   log(`level-up ok (PF max ${hp2})`);
 
+  // ── Scheda PDF: dalla sezione «Note» ────────────────────────────────────
+  log("scheda PDF");
+  await page.locator(".ui-sections button:not(.back)").nth(6).click();
+  const [pdfDl] = await Promise.all([page.waitForEvent("download"), page.getByRole("button", { name: en.wizard.sheet.button }).click()]);
+  const pdfBytes = readFileSync(await pdfDl.path());
+  expect(pdfBytes.subarray(0, 5).toString() === "%PDF-" && pdfBytes.length > 20_000, `il PDF non è valido (${pdfBytes.length} byte)`);
+  expect(/^scheda-smoke\.pdf$/.test(pdfDl.suggestedFilename()), `nome file inatteso: ${pdfDl.suggestedFilename()}`);
+  await page.locator(".ui-sections button:not(.back)").first().click();
+
   // ── Backup: esporta, elimina, reimporta ─────────────────────────────────
   log("backup e ripristino");
   await page.locator(".ui-title-btn:not(.ui-back)").click();
