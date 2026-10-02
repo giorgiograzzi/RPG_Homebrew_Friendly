@@ -23,7 +23,7 @@ Testo ≥ 16px, bersagli ≥ 48px, contrasto WCAG AA, uso da tastiera. Token in 
 ## Deploy con Docker
 ```
 git clone <repo> srd-personaggi && cd srd-personaggi
-cp .env.example .env        # facoltativo: cambia PORT (default 8097)
+cp .env.example .env        # facoltativo: cambia PORT (default 8098)
 docker compose up -d --build
 ```
 L'app è statica (nginx): si aggiorna con `git pull && docker compose up -d --build`. Il service worker e `index.html` non vanno in cache, così un aggiornamento arriva subito.
