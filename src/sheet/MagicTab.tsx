@@ -215,7 +215,7 @@ function RecoveryDialog({ ch, d, update, recoveries, cunning, onClose }: Pick<Ta
               <li key={i}><div className="pl-cond" style={{ cursor: "default" }}>
                 <span className="nm">{fmt(t.levelN, { n: i + 1 })} — spesi {d.spellSlots.used[i]}</span>
                 <span className="val">{picked.filter((l) => l === i + 1).length}</span>
-                <Button aria-label={`Meno ${i + 1}`} disabled={!picked.includes(i + 1)} onClick={() => setPicked((p) => { const k = p.indexOf(i + 1); return p.filter((_, j) => j !== k); })}>−</Button>
+                <Button aria-label={fmt(it.play.lessN, { n: i + 1 })} disabled={!picked.includes(i + 1)} onClick={() => setPicked((p) => { const k = p.indexOf(i + 1); return p.filter((_, j) => j !== k); })}>−</Button>
                 <Button aria-label={`Più ${i + 1}`} disabled={picked.filter((l) => l === i + 1).length >= (d.spellSlots.used[i] ?? 0) || total + i + 1 > limit} onClick={() => setPicked((p) => [...p, i + 1])}>+</Button>
               </div></li>
             ))}

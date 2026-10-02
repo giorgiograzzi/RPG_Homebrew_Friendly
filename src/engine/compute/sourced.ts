@@ -1,3 +1,4 @@
+import { tr } from "../../i18n/tr";
 import type { Sourced } from "../types";
 
 export type Part = { label: string; value: number };
@@ -9,4 +10,4 @@ export function sum(parts: Part[]): Sourced {
 }
 
 export const withOverride = (s: Sourced, v: number | undefined): Sourced =>
-  v === undefined ? s : { value: v, sources: [{ label: "Valore forzato a mano", value: v }, ...s.sources.map((x) => ({ ...x }))] };
+  v === undefined ? s : { value: v, sources: [{ label: tr("Valore forzato a mano", "Value forced by hand"), value: v }, ...s.sources.map((x) => ({ ...x }))] };

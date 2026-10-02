@@ -8,6 +8,8 @@ const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ?? "playwright")
 const PORT = 5199, URL = `http://localhost:${PORT}/`;
 const VIEWPORTS = [["telefono", 375, 812], ["tablet", 768, 1024], ["desktop", 1280, 800]];
 const ONLY = (process.env.E2E_ONLY ?? "").split(",").filter(Boolean);
+const pick = (v, all) => (v ? v.split(",") : all);
+const VP_SEL = pick(process.env.E2E_VP, VIEWPORTS.map((v) => v[0])), LANGS = pick(process.env.E2E_LANG, ["it", "en"]), SCHEMES = pick(process.env.E2E_SCHEME, ["light", "dark"]);
 mkdirSync("e2e/out", { recursive: true });
 
 const server = spawn("npx", ["vite", "--port", String(PORT), "--strictPort"], { stdio: "ignore" });
@@ -52,14 +54,21 @@ async function check(page, tag) {
     for (const e of document.querySelectorAll(".ui-btn, .ui-tab, .ui-seg button, .wz-steps button, .pl-tabs button, .hb-chips button")) {
       if (vis(e) && e.scrollWidth > e.clientWidth + 1 && getComputedStyle(e).overflow !== "visible") out.clipped.push((e.textContent || "").trim().slice(0, 30));
     }
+    // inglese: nessuna parola italiana evidente nel testo visibile
+    out.italian = [];
+    if (document.documentElement.lang === "en") {
+      const txt = document.body.innerText;
+      for (const m of txt.matchAll(/[^\n]*(?:[àèìòù]|\b(?:Scegli|Nessun[oa]?|Livello|Punti Ferita|Forza|Destrezza|Costituzione|Saggezza|Carisma|Competenza|Incantesim\w+|Non |Già|Richiede|Mancano)\b)[^\n]*/g)) out.italian.push(m[0].trim().slice(0, 70));
+    }
     return out;
   });
+  if (r.italian?.length) problems.push(`${tag}: testo italiano in inglese → ${[...new Set(r.italian)].slice(0, 5).join(" | ")}`);
   if (r.hscroll) problems.push(`${tag}: scroll orizzontale`);
   if (r.small.length) problems.push(`${tag}: bersagli piccoli → ${[...new Set(r.small)].slice(0, 6).join(" | ")}`);
   if (r.clipped.length) problems.push(`${tag}: testo tagliato → ${[...new Set(r.clipped)].join(" | ")}`);
 }
 
-for (const [vpName, width, height] of VIEWPORTS) for (const lang of ["it", "en"]) for (const scheme of ["light", "dark"]) {
+for (const [vpName, width, height] of VIEWPORTS.filter((v) => VP_SEL.includes(v[0]))) for (const lang of LANGS) for (const scheme of SCHEMES) {
   const ctx = await browser.newContext({ viewport: { width, height }, colorScheme: scheme, locale: lang === "it" ? "it-IT" : "en-US" });
   const page = await ctx.newPage();
   await page.addInitScript(([l, s]) => { try { localStorage.setItem("lang", l); localStorage.setItem("theme", s); } catch { /* niente */ } }, [lang, scheme]);
@@ -77,8 +86,23 @@ for (const [vpName, width, height] of VIEWPORTS) for (const lang of ["it", "en"]
     await check(page, tag);
   };
   await shot("personaggi");
+  // nuovo personaggio: wizard di creazione (primo passo e un passo avanti)
+  await page.getByRole("button", { name: /^\+/ }).first().click();
+  await page.waitForTimeout(300);
+  await shot("wizard-1");
+  await page.locator(".wz-opt").first().click().catch(() => {});
+  await page.getByRole("button", { name: lang === "it" ? "Avanti" : "Next" }).first().click().catch(() => {});
+  await page.waitForTimeout(250);
+  await shot("wizard-2");
+  await page.locator(".ui-tab, .ui-back").first().click().catch(() => {});
+  await page.waitForTimeout(200);
+  await page.locator(".ui-tab").nth(1).click().catch(() => {});
+  await page.waitForTimeout(300);
+  await shot("homebrew");
+  await page.locator(".ui-tab").first().click().catch(() => {});
+  await page.waitForTimeout(200);
   // apre il personaggio: primo pulsante «Apri»
-  await page.locator(".ui-list button").first().click();
+  await page.locator(".ui-list li", { hasText: "Aria" }).locator("button").first().click();
   await page.waitForTimeout(300);
   await shot("scheda-stato");
   const sections = page.locator(".ui-sections button:not(.back)");

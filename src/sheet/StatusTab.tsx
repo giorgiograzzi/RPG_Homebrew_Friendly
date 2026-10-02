@@ -62,7 +62,7 @@ export function StatusTab({ ch, rs, d, update, onSection }: TabProps & { onSecti
         <div className="pl-quick">
           <Button variant="danger" aria-label={`${t.damage} 5`} disabled={dead} onClick={() => damage(5)}>−5</Button>
           <Button variant="danger" aria-label={`${t.damage} 1`} disabled={dead} onClick={() => damage(1)}>−1</Button>
-          <Button variant="primary" className="pl-quick-hp" onClick={() => setDlg({ kind: "hp" })}>PF</Button>
+          <Button variant="primary" className="pl-quick-hp" onClick={() => setDlg({ kind: "hp" })}>{t.hpShort}</Button>
           <Button variant="primary" aria-label={`${t.heal} 1`} disabled={dead} onClick={() => heal(1)}>+1</Button>
           <Button variant="primary" aria-label={`${t.heal} 5`} disabled={dead} onClick={() => heal(5)}>+5</Button>
         </div>

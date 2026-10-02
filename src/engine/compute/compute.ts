@@ -16,6 +16,7 @@ import { computeRolls, untrainedArmor } from "./rolls";
 import { sum, withOverride } from "./sourced";
 import { computeResistances, computeSenses, computeSpeed } from "./speed";
 import type { Derived } from "./types";
+import { tr } from "../../i18n/tr";
 
 // Valori forzati a mano (Character.overrides): ac, hp.max, initiative, speed.walk, passivePerception
 export function computeCharacter(ch: Character, rs: Ruleset): Derived {
@@ -28,15 +29,15 @@ export function computeCharacter(ch: Character, rs: Ruleset): Derived {
   const { saves, skills } = computeRolls(x, profs, notes, cs);
 
   const initiative = sum([
-    { label: "Mod Des", value: x.mods.dex },
-    ...(cs.d20Penalty ? [{ label: "Esaurimento", value: cs.d20Penalty }] : []),
+    { label: tr("Mod Des", "Dex mod"), value: x.mods.dex },
+    ...(cs.d20Penalty ? [{ label: tr("Esaurimento", "Exhaustion"), value: cs.d20Penalty }] : []),
     ...x.active.flatMap(({ effect: e, label }) => (e.op === "initiativeBonus" ? [{ label, value: evalValue(e.value, x) }] : [])),
   ]);
   const perc = skills.perception;
   const percMode = perc.mode;
   const passive = sum([
-    { label: "Base", value: 10 },
-    { label: "Percezione", value: perc.bonus.value - cs.d20Penalty }, // la Percezione passiva non è un Tiro D20: niente Esaurimento
+    { label: tr("Base", "Base"), value: 10 },
+    { label: tr("Percezione", "Perception"), value: perc.bonus.value - cs.d20Penalty }, // la Percezione passiva non è un Tiro D20: niente Esaurimento
     { label: percMode === "advantage" ? "Vantaggio" : "Svantaggio", value: percMode === "advantage" ? 5 : percMode === "disadvantage" ? -5 : 0 },
   ]);
 
@@ -52,14 +53,14 @@ export function computeCharacter(ch: Character, rs: Ruleset): Derived {
     const m = x.mods[ability];
     return [{
       classId: c.classId, ability,
-      dc: sum([{ label: "Base", value: 8 }, { label: `Mod ${ability}`, value: m }, { label: "Competenza", value: x.pb }]),
-      attack: sum([{ label: `Mod ${ability}`, value: m }, { label: "Competenza", value: x.pb }]),
+      dc: sum([{ label: tr("Base", "Base"), value: 8 }, { label: tr(`Mod ${ability}`, `${ability} mod`), value: m }, { label: tr("Competenza", "Proficiency"), value: x.pb }]),
+      attack: sum([{ label: tr(`Mod ${ability}`, `${ability} mod`), value: m }, { label: tr("Competenza", "Proficiency"), value: x.pb }]),
     }];
   });
 
   return {
     level: x.level,
-    proficiencyBonus: { value: x.pb, sources: [{ label: `Livello totale ${x.level}`, value: x.pb }] },
+    proficiencyBonus: { value: x.pb, sources: [{ label: tr(`Livello totale ${x.level}`, `Total level ${x.level}`), value: x.pb }] },
     scores, mods, saves, skills,
     initiative: withOverride(initiative, o.initiative),
     passivePerception: withOverride(passive, o.passivePerception),
@@ -87,7 +88,7 @@ export function computeCharacter(ch: Character, rs: Ruleset): Derived {
     featureList: x.collected.info.map((f) => ({ ...f, active: !!ch.state.active?.[f.id], picked: ch.state.active?.[f.id] ?? [] })),
     notes, warnings,
     // niente incantesimi: armatura senza addestramento, azioni bloccate, o uno stato attivo che li vieta (Ira)
-    spellcastingBlocked: untrainedArmor(x, profs) || cs.cannot.includes("compiere azione")
+    spellcastingBlocked: untrainedArmor(x, profs) || cs.noActions
       || x.active.some(({ effect: e }) => e.op === "restriction" && e.forbids === "spellcasting"),
     conditions: cs,
   };

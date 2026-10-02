@@ -1,6 +1,7 @@
 import { ABILITIES, type Ability } from "../schema";
 import type { Character } from "../types";
 import type { Question } from "./types";
+import { tr } from "../../i18n/tr";
 
 export interface AsiPick { ability: Ability; amount: number }
 
@@ -11,10 +12,10 @@ export interface AsiPick { ability: Ability; amount: number }
 export function asiProblems(spec: NonNullable<Question["asi"]>, picks: AsiPick[], scoresBefore: Record<Ability, number>): string[] {
   const errs: string[] = [];
   const abil = picks.map((p) => p.ability);
-  if (new Set(abil).size !== abil.length) errs.push("Ogni caratteristica può ricevere un solo aumento da questa fonte");
+  if (new Set(abil).size !== abil.length) errs.push(tr("Ogni caratteristica può ricevere un solo aumento da questa fonte", "Each ability can receive only one increase from this source"));
   for (const p of picks) {
     if (!spec.allowed.includes(p.ability)) errs.push(`${p.ability}: non consentita da questa fonte`);
-    if (![1, 2].includes(p.amount)) errs.push(`${p.ability}: l'aumento è +1 o +2`);
+    if (![1, 2].includes(p.amount)) errs.push(tr(`${p.ability}: l'aumento è +1 o +2`, `${p.ability}: the increase is +1 or +2`));
     if (scoresBefore[p.ability] + p.amount > spec.cap) errs.push(`${p.ability}: supererebbe il massimo (${spec.cap})`);
   }
   const amounts = picks.map((p) => p.amount).sort().join();

@@ -224,8 +224,8 @@ h1, h2, h3 { line-height: 1.25; }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
 
 /* ---- wizard di creazione ---------------------------------------------------------------------------------------------- */
-.wz-steps { display: flex; gap: 4px; margin-bottom: 8px; }
-.wz-steps button { flex: 1; min-width: 0; min-height: var(--tap); padding: 0; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); cursor: pointer; font-weight: 700; }
+.wz-steps { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px; }
+.wz-steps button { flex: 1 1 var(--tap); min-width: var(--tap); min-height: var(--tap); padding: 0; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); cursor: pointer; font-weight: 700; }
 .wz-steps button[aria-current="step"] { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
 .wz-steps button.done:not([aria-current="step"]) { background: var(--ok-soft); }
 .wz-bar { height: 10px; border-radius: 6px; background: var(--surface-2); margin-bottom: 12px; overflow: hidden; }
@@ -279,7 +279,7 @@ h1, h2, h3 { line-height: 1.25; }
 .pl-hp-saves .pl-row { margin-bottom: 2px; }
 .pl-hp-saves .pl-pip { width: 18px; height: 18px; }
 .pl-quick { display: flex; gap: 8px; margin: 8px 0 4px; }
-.pl-quick .ui-btn { flex: 1; min-width: 0; font-size: 22px; font-weight: 700; padding: 10px 0; }
+.pl-quick .ui-btn { flex: 1; min-width: var(--tap); font-size: 22px; font-weight: 700; padding: 10px 0; }
 .pl-quick .pl-quick-hp { flex: 1.6; }
 .pl-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 8px; }
 .pl-pips { display: inline-flex; gap: 6px; }
@@ -308,6 +308,13 @@ h1, h2, h3 { line-height: 1.25; }
 .pl-feat { border-bottom: 1px solid var(--border); }
 .pl-feat:last-child { border-bottom: 0; }
 @media (min-width: 640px) { .pl-grid { grid-template-columns: repeat(4, 1fr); } }
+
+/* panoramica a colonne (schermo largo): Stato | Statistiche e Attacchi | Magia */
+.pl-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; align-items: start; }
+.pl-cols.three { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr) minmax(0, 1fr); }
+.pl-col { min-width: 0; }
+.pl-col .pl-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.ui-body:has(.pl-cols) > * { max-width: 1600px; }
 
 /* ---- Homebrew --------------------------------------------------------------------------------------------------------- */
 .hb-chips { display: flex; flex-wrap: wrap; gap: 6px; }

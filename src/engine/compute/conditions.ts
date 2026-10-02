@@ -1,3 +1,4 @@
+import { tr } from "../../i18n/tr";
 import { ABILITIES, type Ability } from "../schema";
 import type { Ruleset } from "../ruleset";
 import type { Character, Sourced } from "../types";
@@ -5,8 +6,11 @@ import { combineMode } from "./rolls";
 import type { ConditionState, Derived, Lists } from "./types";
 
 const FACTOR = /^(-?\d+)\s*\*\s*exhaustion_level$/; // "-2 * exhaustion_level"
-const CANNOT: Record<string, string> = { cant_see: "vedere", cant_hear: "sentire", cant_speak: "parlare", break_concentration: "concentrarsi", unaware_of_surroundings: "percepire ciò che ti circonda" };
-const BLOCK: Record<string, string> = { action: "azione", bonus_action: "azione bonus", reaction: "reazione" };
+const CANNOT: Record<string, string> = {
+  cant_see: tr("vedere", "see"), cant_hear: tr("sentire", "hear"), cant_speak: tr("parlare", "speak"), break_concentration: tr("concentrarsi", "concentrate"),
+  unaware_of_surroundings: tr("percepire ciò che ti circonda", "be aware of your surroundings"),
+};
+const BLOCK: Record<string, string> = { action: tr("azione", "an action"), bonus_action: tr("azione bonus", "a bonus action"), reaction: tr("reazione", "a reaction") };
 
 const lists = (): Lists => ({ adv: [], dis: [] });
 const push = (l: Lists, mode: "advantage" | "disadvantage" | undefined, who: string) => { if (mode) (mode === "advantage" ? l.adv : l.dis).push(who); };
@@ -36,7 +40,7 @@ export function resolveConditions(ch: Character, rs: Ruleset): ConditionState {
   const blocked = [...immune].filter((c) => active.delete(c));
 
   const st: ConditionState = {
-    active: [], exhaustion: level, dead: false, immune: blocked, cannot: [], speedZero: [], d20Penalty: 0, speedPenalty: 0,
+    active: [], exhaustion: level, dead: false, immune: blocked, noActions: false, cannot: [], speedZero: [], d20Penalty: 0, speedPenalty: 0,
     rolls: { attack: lists(), checks: lists(), initiative: lists(), saves: Object.fromEntries(ABILITIES.map((a) => [a, lists()])) as Record<Ability, Lists> },
     attackRolls: { mode: "normal", modeSources: [] }, abilityChecks: { mode: "normal", modeSources: [] }, initiativeMode: { mode: "normal", modeSources: [] },
     autoFailSaves: {}, autoFailChecks: [], attacksAgainstYou: { advantage: [], disadvantage: [], autoCritical: [] }, resistAll: [], situational: [],
@@ -54,7 +58,7 @@ export function resolveConditions(ch: Character, rs: Ruleset): ConditionState {
       switch (e.type) {
         case "cant_see": case "cant_hear": case "cant_speak": case "break_concentration": case "unaware_of_surroundings":
           st.cannot.push(CANNOT[e.type]!); break;
-        case "no_actions": for (const b of (e.blocks as string[] | undefined) ?? []) st.cannot.push(`compiere ${BLOCK[b] ?? b}`); break;
+        case "no_actions": st.noActions = true; for (const b of (e.blocks as string[] | undefined) ?? []) st.cannot.push(tr(`compiere ${BLOCK[b] ?? b}`, `take ${BLOCK[b] ?? b}`)); break;
         case "auto_fail_ability_check": st.autoFailChecks.push(`${who}: prove che richiedono ${e.requires === "sight" ? "la vista" : "l'udito"}`); break;
         case "auto_fail_saving_throw": for (const a of e.abilities ?? []) (st.autoFailSaves[a] ??= []).push(who); break;
         case "saving_throw_mode": for (const a of e.abilities ?? []) push(st.rolls.saves[a], e.mode, who); break;
@@ -97,8 +101,8 @@ export function applyConditionSpeed(speed: Derived["speed"], st: ConditionState)
     if (base.value <= 0) continue;
     let v = base.value;
     const sources = [...base.sources];
-    if (st.speedPenalty) { const p = Math.max(st.speedPenalty, -v); v += p; sources.push({ label: "Esaurimento", value: p }); }
-    if (st.speedZero.length) { sources.push({ label: `Velocità 0: ${st.speedZero.join(", ")}`, value: -v }); v = 0; }
+    if (st.speedPenalty) { const p = Math.max(st.speedPenalty, -v); v += p; sources.push({ label: tr("Esaurimento", "Exhaustion"), value: p }); }
+    if (st.speedZero.length) { sources.push({ label: tr(`Velocità 0: ${st.speedZero.join(", ")}`, `Speed 0: ${st.speedZero.join(", ")}`), value: -v }); v = 0; }
     out[k] = { value: v, sources } as Sourced;
   }
   return out;

@@ -7,6 +7,7 @@ import { describeCondition } from "./describe";
 import { allQuestions } from "./questions";
 import { scoreProblems } from "./scores";
 import { STEPS, type OptionState, type StepId } from "./types";
+import { tr } from "../../i18n/tr";
 
 export interface StepStatus { step: StepId; complete: boolean; missing: string[]; problems: string[] }
 
@@ -19,7 +20,7 @@ export function creationProgress(ch: Character, rs: Ruleset): { steps: StepStatu
     const problems: string[] = [];
     if (step === "scores") problems.push(...scoreProblems(ch, rs));
     if (step === "details" && !ch.name.trim()) problems.push("Dai un nome al personaggio");
-    if (step === "class" && !ch.classes.length) problems.push("Scegli una classe");
+    if (step === "class" && !ch.classes.length) problems.push(tr("Scegli una classe", "Choose a class"));
     // il livello (passo 0) parte da 1: non manca mai nulla
     return { step, complete: !missing.length && !problems.length, missing, problems };
   });

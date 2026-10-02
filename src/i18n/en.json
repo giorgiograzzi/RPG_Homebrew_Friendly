@@ -1,6 +1,8 @@
 {
   "app": {
-    "title": "SRD 5.2 Characters"
+    "title": "SRD 5.2 Characters",
+    "errorTitle": "Something went wrong",
+    "reload": "Reload"
   },
   "tabs": {
     "characters": "Heroes",
@@ -146,7 +148,8 @@
       "base": "Base",
       "bonus": "Bonus",
       "total": "Total",
-      "mod": "Mod."
+      "mod": "Mod.",
+      "table": "Scores"
     },
     "abilities": {
       "str": "Strength",
@@ -218,6 +221,7 @@
   "play": {
     "tabs": {
       "status": "Status",
+      "overview": "Overview",
       "features": "Features",
       "stats": "Stats",
       "attacks": "Attacks",
@@ -356,7 +360,13 @@
     "back": "Menu",
     "conditionsTile": "Conditions",
     "conditionsNone": "none",
-    "toStatus": "Status"
+    "toStatus": "Status",
+    "hpShort": "HP",
+    "lessN": "Less {n}",
+    "includedIn": " — included in another condition",
+    "immune": " — immune",
+    "rollMode": "Mode",
+    "sections": "Sheet sections"
   },
   "equip": {
     "title": "Equipment",

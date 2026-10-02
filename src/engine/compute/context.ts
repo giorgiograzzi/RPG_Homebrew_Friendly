@@ -5,6 +5,7 @@ import type { Ruleset } from "../ruleset";
 import { holds, type CondCtx } from "./condition-eval";
 import { collectEffects, type Collected, type Entry } from "./collect";
 import { abilityMod, type FormulaCtx } from "./formula-eval";
+import { tr } from "../../i18n/tr";
 
 export const proficiencyByLevel = (lvl: number) => 2 + Math.floor((Math.max(1, lvl) - 1) / 4);
 
@@ -47,7 +48,7 @@ export function wornGear(ch: Character, rs: Ruleset) {
 export function finalScores(ch: Character, collected: Collected, cond: CondCtx) {
   const cap: Record<string, number> = {};
   const parts: Ctx["parts"] = { str: [], dex: [], con: [], int: [], wis: [], cha: [] };
-  for (const a of ABILITIES) parts[a].push({ label: "Base", value: ch.baseScores[a] });
+  for (const a of ABILITIES) parts[a].push({ label: tr("Base", "Base"), value: ch.baseScores[a] });
   for (const s of ch.asi) {
     parts[s.ability].push({ label: s.source, value: s.amount });
     cap[s.ability] = Math.max(cap[s.ability] ?? 20, s.cap ?? 20);

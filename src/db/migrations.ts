@@ -1,5 +1,6 @@
 import { CHARACTER_SCHEMA_VERSION, characterSchema } from "../engine/schema";
 import type { Character } from "../engine/types";
+import { tr } from "../i18n/tr";
 
 // Migrazione da versione N a N+1, su dati grezzi (ancora non validati)
 export type Migration = (raw: Record<string, unknown>) => Record<string, unknown>;
@@ -17,7 +18,7 @@ export function migrateCharacter(
   let data = raw as Record<string, unknown>;
   const from = data.schemaVersion;
   if (typeof from !== "number" || !Number.isInteger(from) || from < 1) return { ok: false, error: "Versione del personaggio mancante o non valida." };
-  if (from > target) return { ok: false, error: `Personaggio creato con una versione più recente dell'app (formato ${from}, supportato fino a ${target}). Aggiorna l'app.` };
+  if (from > target) return { ok: false, error: tr(`Personaggio creato con una versione più recente dell'app (formato ${from}, supportato fino a ${target}). Aggiorna l'app.`, `Character created with a newer version of the app (format ${from}, supported up to ${target}). Update the app.`) };
   for (let v = from; v < target; v++) {
     const step = migrations[v];
     if (!step) return { ok: false, error: `Manca la migrazione dal formato ${v} al ${v + 1}.` };

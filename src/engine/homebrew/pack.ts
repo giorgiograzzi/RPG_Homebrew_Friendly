@@ -5,6 +5,7 @@ import {
 } from "../schema";
 import { extendRuleset } from "../ruleset";
 import { lookupItem } from "../equipment/loadout";
+import { tr } from "../../i18n/tr";
 
 // Homebrew: voci create dall'utente, di qualunque tipo giocabile. Stanno nell'archivio del browser, si attivano/disattivano,
 // e si scambiano come pacchetto .json versionato. Ogni voce attiva entra nel ruleset come un dato qualunque (stesso schema dei dati ufficiali).
@@ -85,7 +86,7 @@ export function validateEntry(kind: HbKind, data: unknown, rs: Ruleset): { ok: t
   }
   // un id dei dati di gioco non si può sovrascrivere
   const clash = (rs[kind] as Map<string, { origin?: string }>).get(out.id);
-  if (clash && clash.origin !== "homebrew") errors.push(`L'id "${out.id}" è già usato dai dati di gioco.`);
+  if (clash && clash.origin !== "homebrew") errors.push(tr(`L'id "${out.id}" è già usato dai dati di gioco.`, `The id "${out.id}" is already used by the game data.`));
   return errors.length ? { ok: false, errors } : { ok: true, data: out };
 }
 
@@ -108,11 +109,11 @@ export type ParsedPack = { ok: true; name: string; entries: HbEntry[]; errors: s
 // Legge un pacchetto: file illeggibile o di una versione più nuova → errore; singole voci invalide → scartate con il motivo.
 export function parsePack(text: string, rs: Ruleset): ParsedPack {
   let raw: unknown;
-  try { raw = JSON.parse(text); } catch { return { ok: false, error: "Il file non è un JSON valido." }; }
-  if (typeof raw !== "object" || raw === null || Array.isArray(raw)) return { ok: false, error: "Il file non è un pacchetto homebrew." };
+  try { raw = JSON.parse(text); } catch { return { ok: false, error: tr("Il file non è un JSON valido.", "The file is not valid JSON.") }; }
+  if (typeof raw !== "object" || raw === null || Array.isArray(raw)) return { ok: false, error: tr("Il file non è un pacchetto homebrew.", "The file is not a homebrew pack.") };
   const p = raw as Record<string, unknown>;
-  if (typeof p.schemaVersion !== "number" || !Number.isInteger(p.schemaVersion) || p.schemaVersion < 1) return { ok: false, error: "Manca la versione del pacchetto (schemaVersion)." };
-  if (p.schemaVersion > SCHEMA_VERSION) return { ok: false, error: `Pacchetto di una versione più recente (${p.schemaVersion}): aggiorna l'app.` };
+  if (typeof p.schemaVersion !== "number" || !Number.isInteger(p.schemaVersion) || p.schemaVersion < 1) return { ok: false, error: tr("Manca la versione del pacchetto (schemaVersion).", "The pack version (schemaVersion) is missing.") };
+  if (p.schemaVersion > SCHEMA_VERSION) return { ok: false, error: tr(`Pacchetto di una versione più recente (${p.schemaVersion}): aggiorna l'app.`, `Pack from a newer version (${p.schemaVersion}): update the app.`) };
   const name = typeof p.name === "string" && p.name.trim() ? p.name.trim() : "Pacchetto";
   const entries: HbEntry[] = [], errors: string[] = [];
   let cur = rs;

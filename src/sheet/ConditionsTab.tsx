@@ -43,7 +43,7 @@ export function ConditionsTab({ ch, rs, d, update, onBack }: TabProps & { onBack
                 onClick={() => update((x) => setCondition(x, rs, c.id, !on, sources[c.id]))}>
                 <span className="wz-opt" style={{ padding: 0, border: 0, minHeight: 0, width: "auto" }}><span className="mark" aria-hidden="true">{on || included ? "✓" : ""}</span></span>
                 <span className="txt" style={{ flex: 1 }}>
-                  <b>{c.name.it}</b>{included && <span className="pl-sub"> — inclusa da un'altra condizione</span>}{blocked && <span className="pl-sub"> — immune</span>}
+                  <b>{c.name.it}</b>{included && <span className="pl-sub">{t.includedIn}</span>}{blocked && <span className="pl-sub">{t.immune}</span>}
                   {c.description && <span className="pl-sub" style={{ display: "block" }}>{c.description}</span>}
                   {on && ch.state.conditionSources?.[c.id] && <span className="pl-sub" style={{ display: "block" }}>{ch.state.conditionSources[c.id]}</span>}
                 </span>

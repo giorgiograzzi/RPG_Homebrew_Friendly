@@ -27,7 +27,7 @@ export function RollDialog({ title, bonus, mode, modeSources, note, extra, hint,
     <Dialog title={title} onClose={onClose}>
       <p className="pl-formula">d20 {sign(bonus.value)}</p>
       {hint && <p className="ui-muted">{hint}</p>}
-      <Segmented<RollMode> label="Modalità" value={m} onChange={setM}
+      <Segmented<RollMode> label={it.play.rollMode} value={m} onChange={setM}
         options={(["disadvantage", "normal", "advantage"] as const).map((v) => ({ value: v, label: t.mode[v] }))} />
       {modeSources.length > 0 && <p className="ui-muted">{modeSources.join(" · ")}</p>}
       {note && <p className="ui-muted">{note}</p>}

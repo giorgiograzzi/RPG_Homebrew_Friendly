@@ -3,6 +3,7 @@ import { evalValue } from "./formula-eval";
 import { fixedHp } from "./constants";
 import { sum, type Part } from "./sourced";
 import type { Derived } from "./types";
+import { tr } from "../../i18n/tr";
 
 // PF max = dado massimo 1° livello + Σ(tiro o media, min 1 con Cos) + mod Cos × livello + bonus.
 // hpRolls[i] = livello i+1 della classe; per la prima classe l'indice 0 è ignorato (massimo).
@@ -22,9 +23,9 @@ export function computeHp(x: Ctx): Derived["hp"] {
       const die = roll === "avg" ? fixedHp(def.hitDie) : roll;
       gain += Math.max(die + con, 1) - con;
     }
-    parts.push({ label: `Dadi Vita ${def.name.it} (d${def.hitDie})`, value: gain });
+    parts.push({ label: tr(`Dadi Vita ${def.name.it} (d${def.hitDie})`, `${def.name.it} Hit Dice (d${def.hitDie})`), value: gain });
   });
-  parts.push({ label: `Costituzione (${con >= 0 ? "+" : ""}${con} × ${x.level})`, value: con * x.level });
+  parts.push({ label: tr(`Costituzione (${con >= 0 ? "+" : ""}${con} × ${x.level})`, `Constitution (${con >= 0 ? "+" : ""}${con} × ${x.level})`), value: con * x.level });
   for (const { effect: e, label } of x.active) {
     if (e.op === "hpMaxPerLevel") {
       const lv = e.classId ? x.classLevels[e.classId] ?? 0 : x.level;

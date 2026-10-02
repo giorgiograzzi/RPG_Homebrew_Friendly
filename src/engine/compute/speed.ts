@@ -2,6 +2,7 @@ import { evalValue } from "./formula-eval";
 import type { Ctx } from "./context";
 import { sum, type Part } from "./sourced";
 import type { Derived } from "./types";
+import { tr } from "../../i18n/tr";
 
 export function computeSpeed(x: Ctx): Derived["speed"] {
   const sp = x.rs.species.get(x.ch.speciesId);
@@ -18,7 +19,7 @@ export function computeSpeed(x: Ctx): Derived["speed"] {
   }
   const a = x.bodyArmor;
   const heavyPenalty: Part[] =
-    a && a.strRequired > x.scores.str ? [{ label: `${a.name.it}: Forza ${x.scores.str} < ${a.strRequired}`, value: -10 }] : [];
+    a && a.strRequired > x.scores.str ? [{ label: tr(`${a.name.it}: Forza ${x.scores.str} < ${a.strRequired}`, `${a.name.it}: Strength ${x.scores.str} < ${a.strRequired}`), value: -10 }] : [];
   const w = [...walk, ...bonus, ...heavyPenalty];
   return {
     walk: sum(w),

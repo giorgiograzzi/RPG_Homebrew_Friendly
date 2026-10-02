@@ -5,6 +5,7 @@ import { asiProblems, asiScores, parseAsi, type AsiPick } from "./asi";
 import { validateDecisions } from "./decisions";
 import { allQuestions } from "./questions";
 import type { Removed } from "./types";
+import { tr } from "../../i18n/tr";
 
 type Scores = Record<Ability, number>;
 type Method = NonNullable<Character["creation"]>["method"];
@@ -37,7 +38,7 @@ export function pointBuyCost(rs: Ruleset, scores: Scores): { spent: number; rema
 export function scoreProblems(ch: Character, rs: Ruleset): string[] {
   const m = ch.creation?.method;
   const r = rulesOf(rs);
-  if (!m) return ["Scegli un metodo per i punteggi"];
+  if (!m) return [tr("Scegli un metodo per i punteggi", "Choose a method for the scores")];
   const v = values(ch.baseScores);
   if (m === "array") return r && sorted(v) === sorted(r.standardArray) ? [] : [`Assegna i valori ${r?.standardArray.join(", ")} (uno per caratteristica)`];
   if (m === "roll") {

@@ -148,6 +148,10 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 
 ### Interfaccia (step 5b-1/5b-2)
 - [ ] 🟡 Prossimi sotto-passi 5b-3 (schermate: scheda a colonne su desktop, wizard, homebrew), 5b-4 (accessibilità: rifinire bersagli, tastiera) e 5b-5 (pulizia): i controlli di layout sono in `npm run e2e` (`e2e/layout.mjs`: 3 viewport × IT/EN × chiaro/scuro; screenshot in `e2e/out/`, non tracciati).
-- [ ] 🟡 Alcune etichette dell'interfaccia sono ancora scritte nel codice in italiano (es. «PF», «−5/+5» nei pulsanti dei Punti Ferita): da spostare in `it.json`/`en.json` in 5b-3.
+- [x] ~~Etichette scritte nel codice in italiano~~ → spostate in `it.json`/`en.json`; i messaggi e le etichette del motore usano `tr(it, en)` (`src/i18n/tr.ts`).
 - [ ] 🟢 Il cambio di aspetto (chiaro/scuro/automatico) è immediato; il cambio di lingua ricarica la pagina.
 - [ ] 🟢 Le icone dell'app (`public/icons`) sono state ridisegnate nei nuovi colori (d20 indaco) con il font di sistema; l'icona resta provvisoria finché non c'è un logo definitivo.
+
+### Interfaccia (step 5b-3)
+- [ ] 🟡 Nel motore restano in italiano solo alcune stringhe minori (riepiloghi dell'editor Homebrew in `src/homebrew/summary.ts` e `complex.ts`, etichette di spellbook/risorse): il controllo `npm run e2e` segnala testo italiano nelle schermate inglesi; oggi non ne trova nelle schermate controllate (Personaggi, wizard, scheda, Homebrew, Impostazioni).
+- [ ] 🟢 Sulla scheda desktop (≥1100px) Statistiche, Attacchi e Magia sono nella panoramica; la navigazione laterale ha Panoramica, Privilegi, Equipaggiamento, Altro.

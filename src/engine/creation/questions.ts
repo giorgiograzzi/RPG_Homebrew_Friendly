@@ -7,6 +7,7 @@ import { asiProblems, asiScores, parseAsi } from "./asi";
 import { optionStates } from "./options";
 import { collectSlots, resolveCount, type Slot } from "./slots";
 import { STEPS, type OptionState, type Question, type StepId } from "./types";
+import { tr } from "../../i18n/tr";
 
 const AB_IT: Record<Ability, string> = { str: "Forza", dex: "Destrezza", con: "Costituzione", int: "Intelligenza", wis: "Saggezza", cha: "Carisma" };
 // Le voci homebrew si riconoscono nell'elenco dalla dicitura accanto al nome
@@ -17,7 +18,7 @@ const mkChoice = (id: string, label: string, count: number, source: string): Cho
 interface Draft { q: Omit<Question, "options" | "complete" | "selected">; slot?: Slot; fixedOptions?: (ch: Character) => OptionState[]; selectedFrom?: (ch: Character) => string[]; asiKey?: string }
 
 const equipmentName = (rs: Ruleset, set: { items: { item: string; qty: number }[]; gp: number }) =>
-  [...set.items.map((i) => `${i.qty > 1 ? `${i.qty}× ` : ""}${i.item.startsWith("$") ? "strumento a scelta" : lookupItem(rs, i.item)?.def.name.it ?? i.item}`), ...(set.gp ? [`${set.gp} mo`] : [])].join(", ");
+  [...set.items.map((i) => `${i.qty > 1 ? `${i.qty}× ` : ""}${i.item.startsWith("$") ? tr("strumento a scelta", "tool of your choice") : lookupItem(rs, i.item)?.def.name.it ?? i.item}`), ...(set.gp ? [`${set.gp} mo`] : [])].join(", ");
 
 // Tutte le domande di creazione del personaggio, nell'ordine ufficiale dei passi. Le opzioni di ciascuna tengono conto solo di
 // ciò che viene PRIMA (dati fissi e domande precedenti): due scelte in conflitto si risolvono a favore della prima.
@@ -28,12 +29,12 @@ export function allQuestions(ch: Character, rs: Ruleset): Question[] {
   const first = ch.classes[0];
 
   // -- classe e sottoclasse
-  drafts.push({ q: { key: "pick:class", step: "class", owner: "Classe", label: "Classe", kind: "choice", count: 1 },
+  drafts.push({ q: { key: "pick:class", step: "class", owner: tr("Classe", "Class"), label: tr("Classe", "Class"), kind: "choice", count: 1 },
     fixedOptions: () => [...rs.classes.values()].map((c) => ({ id: c.id, name: badge(c), enabled: true, selected: false })), selectedFrom: () => (first ? [first.classId] : []) });
   for (const cl of ch.classes) {
     const def = rs.classes.get(cl.classId);
     if (def && cl.level >= def.subclassLevel) drafts.push({
-      q: { key: `subclass:${cl.classId}`, step: "class", owner: def.name.it, label: "Sottoclasse", kind: "choice", count: 1, classId: cl.classId },
+      q: { key: `subclass:${cl.classId}`, step: "class", owner: def.name.it, label: tr("Sottoclasse", "Subclass"), kind: "choice", count: 1, classId: cl.classId },
       fixedOptions: () => [...rs.subclasses.values()].filter((s) => s.classId === cl.classId).map((s) => ({ id: s.id, name: badge(s), enabled: true, selected: false })),
       selectedFrom: () => (cl.subclassId ? [cl.subclassId] : []),
     });
@@ -50,7 +51,7 @@ export function allQuestions(ch: Character, rs: Ruleset): Question[] {
         const f = rs.feats.get(fid);
         if (f && (f.abilityIncrease || f.id === "ability_score_improvement")) {
           const all = f.id === "ability_score_improvement";
-          drafts.push({ q: { key: `${s.key}/asi`, step, owner: f.name.it, label: "Aumento di caratteristica", kind: "abilityIncrease", count: all ? 2 : 1,
+          drafts.push({ q: { key: `${s.key}/asi`, step, owner: f.name.it, label: tr("Aumento di caratteristica", "Ability score increase"), kind: "abilityIncrease", count: all ? 2 : 1,
             asi: { allowed: all ? [...ABILITIES] : f.abilityIncrease!, mode: all ? "asi" : "plus1", cap: f.category === "epic_boon" ? 30 : 20 } }, asiKey: `${s.key}/asi` });
         }
       }
@@ -59,30 +60,30 @@ export function allQuestions(ch: Character, rs: Ruleset): Question[] {
   addSlots("class");
 
   // -- origine
-  drafts.push({ q: { key: "pick:background", step: "background", owner: "Background", label: "Background", kind: "choice", count: 1 },
+  drafts.push({ q: { key: "pick:background", step: "background", owner: tr("Background", "Background"), label: tr("Background", "Background"), kind: "choice", count: 1 },
     fixedOptions: () => [...rs.backgrounds.values()].map((b) => ({ id: b.id, name: badge(b), enabled: true, selected: false })), selectedFrom: () => (ch.backgroundId ? [ch.backgroundId] : []) });
   const bg = rs.backgrounds.get(ch.backgroundId);
-  if (bg) drafts.push({ q: { key: "background/asi", step: "background", owner: bg.name.it, label: "Aumenti di caratteristica (+2/+1 oppure +1/+1/+1)", kind: "abilityIncrease", count: 3,
+  if (bg) drafts.push({ q: { key: "background/asi", step: "background", owner: bg.name.it, label: tr("Aumenti di caratteristica (+2/+1 oppure +1/+1/+1)", "Ability score increases (+2/+1 or +1/+1/+1)"), kind: "abilityIncrease", count: 3,
     asi: { allowed: [...bg.abilityOptions], mode: "background", cap: 20 } }, asiKey: "background/asi" });
   addSlots("background");
-  drafts.push({ q: { key: "pick:species", step: "species", owner: "Specie", label: "Specie", kind: "choice", count: 1 },
+  drafts.push({ q: { key: "pick:species", step: "species", owner: tr("Specie", "Species"), label: tr("Specie", "Species"), kind: "choice", count: 1 },
     fixedOptions: () => [...rs.species.values()].map((s) => ({ id: s.id, name: badge(s), enabled: true, selected: false })), selectedFrom: () => (ch.speciesId ? [ch.speciesId] : []) });
   addSlots("species");
 
   // -- linguaggi: Comune + 2 a scelta (i rari solo se una regola li concede), poi quelli dei privilegi
-  drafts.push({ q: { key: "languages", step: "languages", owner: "Linguaggi", label: "Linguaggi (oltre al Comune)", kind: "choice", count: 2, choice: mkChoice("languages", "Linguaggi", 2, "languages:standard") },
-    slot: { key: "languages", choice: mkChoice("languages", "Linguaggi", 2, "languages:standard"), owner: "Linguaggi", step: "languages" } });
+  drafts.push({ q: { key: "languages", step: "languages", owner: tr("Linguaggi", "Languages"), label: tr("Linguaggi (oltre al Comune)", "Languages (besides Common)"), kind: "choice", count: 2, choice: mkChoice("languages", "Linguaggi", 2, "languages:standard") },
+    slot: { key: "languages", choice: mkChoice("languages", "Linguaggi", 2, "languages:standard"), owner: tr("Linguaggi", "Languages"), step: "languages" } });
   addSlots("languages");
 
   // -- allineamento e dettagli
   const rules = rs.creation.get("creation");
-  drafts.push({ q: { key: "alignment", step: "alignment", owner: "Allineamento", label: "Allineamento", kind: "choice", count: 1 },
+  drafts.push({ q: { key: "alignment", step: "alignment", owner: tr("Allineamento", "Alignment"), label: tr("Allineamento", "Alignment"), kind: "choice", count: 1 },
     fixedOptions: () => (rules?.alignments ?? []).map((a) => ({ id: a.id, name: a.name.it, enabled: true, selected: false })) });
   addSlots("details");
   const cdef = first && rs.classes.get(first.classId);
-  if (cdef) drafts.push({ q: { key: "equipment:class", step: "details", owner: cdef.name.it, label: "Equipaggiamento di classe", kind: "choice", count: 1, classId: cdef.id },
+  if (cdef) drafts.push({ q: { key: "equipment:class", step: "details", owner: cdef.name.it, label: tr("Equipaggiamento di classe", "Class equipment"), kind: "choice", count: 1, classId: cdef.id },
     fixedOptions: () => Object.entries(cdef.equipment).map(([k, set]) => ({ id: k, name: `${k}: ${equipmentName(rs, set!)}`, enabled: true, selected: false })) });
-  if (bg) drafts.push({ q: { key: "equipment:background", step: "details", owner: bg.name.it, label: "Equipaggiamento del background", kind: "choice", count: 1 },
+  if (bg) drafts.push({ q: { key: "equipment:background", step: "details", owner: bg.name.it, label: tr("Equipaggiamento del background", "Background equipment"), kind: "choice", count: 1 },
     fixedOptions: () => Object.entries(bg.equipment).map(([k, set]) => ({ id: k, name: `${k}: ${equipmentName(rs, set!)}`, enabled: true, selected: false })) });
 
   // ordine per passo (stabile)
@@ -118,7 +119,7 @@ export function allQuestions(ch: Character, rs: Ruleset): Question[] {
       const cap = d.q.asi!.cap;
       options = ABILITIES.map((a) => {
         const base: OptionState = { id: a, name: AB_IT[a], enabled: true, selected: selected.some((s) => s.startsWith(`${a}+`)) };
-        if (!d.q.asi!.allowed.includes(a)) return { ...base, enabled: false, disabledReason: "Non consentita da questa fonte" };
+        if (!d.q.asi!.allowed.includes(a)) return { ...base, enabled: false, disabledReason: tr("Non consentita da questa fonte", "Not allowed by this source") };
         if (sc[a] + 1 > cap) return { ...base, enabled: false, disabledReason: `Supererebbe il massimo (${cap})` };
         return base;
       });
@@ -134,7 +135,7 @@ export function allQuestions(ch: Character, rs: Ruleset): Question[] {
   for (const q of out) {
     if (!q.group || q.selected.length) continue;
     const other = out.find((o) => o !== q && o.group === q.group && o.selected.length > 0);
-    if (other) { q.disabled = true; q.disabledReason = `Hai già scelto: ${other.label}`; q.complete = true; }
+    if (other) { q.disabled = true; q.disabledReason = tr(`Hai già scelto: ${other.label}`, `You already chose: ${other.label}`); q.complete = true; }
   }
   return out;
 }
