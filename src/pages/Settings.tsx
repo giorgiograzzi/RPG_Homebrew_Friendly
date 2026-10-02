@@ -96,6 +96,8 @@ export function Settings({ onBack }: { onBack: () => void }) {
         {message && <p role="status">{message}</p>}
       </fieldset>
 
+      <p className="ui-help" data-testid="build">{t.version}: {__BUILD__}</p>
+
       {importing && <ImportDialog preview={importing.preview} onClose={() => setImporting(null)} onDone={(m) => { setImporting(null); setMessage(m); }} />}
     </>
   );

@@ -35,6 +35,7 @@
     "needCharacter": "Apri o crea un personaggio dalla scheda Personaggi."
   },
   "settings": {
+    "version": "Versione",
     "title": "Impostazioni",
     "back": "Indietro",
     "theme": "Aspetto",

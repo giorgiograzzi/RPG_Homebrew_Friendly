@@ -5,6 +5,8 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
+ARG GIT_COMMIT=
+ENV GIT_COMMIT=$GIT_COMMIT
 RUN [ -f data/srd/it/classes.json ] && [ -f data/srd/en/classes.json ] || (echo "ERRORE: mancano i dati di gioco in data/srd" && exit 1)
 RUN npm run build
 

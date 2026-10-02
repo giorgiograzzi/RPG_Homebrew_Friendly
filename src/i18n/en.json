@@ -35,6 +35,7 @@
     "needCharacter": "Open or create a character from the Characters tab."
   },
   "settings": {
+    "version": "Version",
     "title": "Settings",
     "back": "Back",
     "theme": "Appearance",
