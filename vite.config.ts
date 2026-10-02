@@ -19,7 +19,7 @@ export default defineConfig({
     VitePWA({
       // "prompt": l'app installata non si aggiorna da sola a metà uso, chiede (ReloadPrompt)
       registerType: "prompt",
-      includeAssets: ["favicon.ico", "icons/apple-touch-icon.png"],
+      includeAssets: ["favicon.ico", "icons/apple-touch-icon-v2.png"],
       manifest: {
         id: "./", name: "Danger & Dragons", short_name: "Danger&Dragons", description: "Crea e gestisci personaggi con le regole libere dell'SRD 5.2.1, in italiano e inglese, anche senza rete.",
         lang: "it", dir: "ltr", start_url: "./", scope: "./", display: "standalone", orientation: "any", categories: ["games", "entertainment"],
