@@ -136,6 +136,7 @@ function flow(doc: Doc, d: SheetData, P: Pdf) {
   list(P.classFeatures, d.classFeatures);
   list(P.speciesTraits, d.speciesTraits);
   list(P.feats, d.feats);
+  list(P.details, d.details);
 
   if (!d.spellAbility) return;
   fresh();

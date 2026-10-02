@@ -187,7 +187,11 @@
       "gold": "Coins",
       "errors": "It cannot be closed yet",
       "reopen": "Edit the creation",
-      "reopenConfirm": "By reopening the creation you can change choices and level. Hit Points already rolled, equipment, coins and play state stay as they are now. Continue?"
+      "reopenConfirm": "By reopening the creation you can change choices and level. Hit Points already rolled, equipment, coins and play state stay as they are now. Continue?",
+      "saves": "Saving throws",
+      "skills": "Skills",
+      "profs": "Proficiencies",
+      "features": "Features"
     },
     "noCreation": "The creation rules are missing: alignments and the standard array are not available. Reload the app; if it persists, update it.",
     "stepMissing": "Step “{s}”: some choices are missing",
@@ -235,6 +239,22 @@
       "none": "None",
       "levels": "Levels of {c}",
       "split": "{a} {la} / {b} {lb}"
+    },
+    "details": {
+      "title": "Character details",
+      "help": "All optional: it helps you remember who the character is and goes on the PDF sheet.",
+      "labels": {
+        "player": "Player name",
+        "age": "Age",
+        "height": "Height",
+        "weight": "Weight",
+        "appearance": "Appearance",
+        "personality": "Personality traits",
+        "ideals": "Ideals",
+        "bonds": "Bonds",
+        "flaws": "Flaws",
+        "backstory": "Backstory"
+      }
     }
   },
   "play": {
@@ -1072,7 +1092,8 @@
       "always": "always prepared",
       "granted": "granted"
     },
-    "ft": "ft"
+    "ft": "ft",
+    "details": "Character details"
   },
   "about": {
     "title": "About and licenses",

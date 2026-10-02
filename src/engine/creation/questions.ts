@@ -69,6 +69,10 @@ export function allQuestions(ch: Character, rs: Ruleset): Question[] {
   drafts.push({ q: { key: "pick:species", step: "species", owner: tr("Specie", "Species"), label: tr("Specie", "Species"), kind: "choice", count: 1 },
     fixedOptions: () => [...rs.species.values()].map((s) => ({ id: s.id, name: badge(s), enabled: true, selected: false })), selectedFrom: () => (ch.speciesId ? [ch.speciesId] : []) });
   addSlots("species");
+  // taglia a scelta (Umano, Tiefling: Media o Piccola)
+  const spDef = rs.species.get(ch.speciesId);
+  if (spDef && spDef.sizes.length > 1) drafts.push({ q: { key: "size", step: "species", owner: spDef.name.it, label: tr("Taglia", "Size"), kind: "choice", count: 1 },
+    fixedOptions: () => spDef.sizes.map((z) => ({ id: z, name: rs.sizes.get(z)?.name.it ?? z, enabled: true, selected: false })) });
 
   // -- linguaggi: Comune + 2 a scelta (i rari solo se una regola li concede), poi quelli dei privilegi
   drafts.push({ q: { key: "languages", step: "languages", owner: tr("Lingue", "Languages"), label: tr("Lingue (oltre al Comune)", "Languages (besides Common)"), kind: "choice", count: 2, choice: mkChoice("languages", "Lingue", 2, "languages:standard") },
@@ -85,6 +89,14 @@ export function allQuestions(ch: Character, rs: Ruleset): Question[] {
     fixedOptions: () => Object.entries(cdef.equipment).map(([k, set]) => ({ id: k, name: `${k}: ${equipmentName(rs, set!)}`, enabled: true, selected: false })) });
   if (bg) drafts.push({ q: { key: "equipment:background", step: "details", owner: bg.name.it, label: tr("Equipaggiamento del background", "Background equipment"), kind: "choice", count: 1 },
     fixedOptions: () => Object.entries(bg.equipment).map(([k, set]) => ({ id: k, name: `${k}: ${equipmentName(rs, set!)}`, enabled: true, selected: false })) });
+
+  // oggetti a scelta dell'equipaggiamento scelto: simbolo sacro (3 varianti) e set da gioco
+  const sets = [cdef?.equipment[(ch.decisions["equipment:class"]?.[0] ?? "") as "A"], bg?.equipment[(ch.decisions["equipment:background"]?.[0] ?? "") as "A"]];
+  const needs = (id: string) => sets.some((s) => s?.items.some((i) => i.item === id));
+  if (needs("$holy_symbol")) drafts.push({ q: { key: "equipment:holy_symbol", step: "details", owner: tr("Equipaggiamento", "Equipment"), label: tr("Simbolo sacro", "Holy symbol"), kind: "choice", count: 1 },
+    fixedOptions: () => [...rs.items.values()].filter((i) => i.category === "holy_symbol").map((i) => ({ id: i.id, name: i.name.it, enabled: true, selected: false })) });
+  if (needs("$gaming_set")) drafts.push({ q: { key: "equipment:gaming_set", step: "details", owner: tr("Equipaggiamento", "Equipment"), label: tr("Set da gioco", "Gaming set"), kind: "choice", count: 1 },
+    fixedOptions: () => [...rs.tools.values()].filter((x) => x.group === "gaming").map((x) => ({ id: x.id, name: x.name.it, enabled: true, selected: false })) });
 
   // ordine per passo (stabile)
   drafts.sort((a, b) => stepIndex(a.q.step) - stepIndex(b.q.step));

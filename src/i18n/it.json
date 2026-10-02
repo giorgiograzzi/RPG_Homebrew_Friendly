@@ -187,7 +187,11 @@
       "gold": "Monete",
       "errors": "Non si può ancora chiudere",
       "reopen": "Modifica la creazione",
-      "reopenConfirm": "Riaprendo la creazione puoi cambiare scelte e livello. I Punti Ferita già tirati, l'equipaggiamento, le monete e lo stato di gioco restano quelli attuali. Continuare?"
+      "reopenConfirm": "Riaprendo la creazione puoi cambiare scelte e livello. I Punti Ferita già tirati, l'equipaggiamento, le monete e lo stato di gioco restano quelli attuali. Continuare?",
+      "saves": "Tiri salvezza",
+      "skills": "Abilità",
+      "profs": "Competenze",
+      "features": "Privilegi"
     },
     "noCreation": "Mancano le regole di creazione: allineamenti e serie standard non sono disponibili. Ricarica l'app; se il problema resta, aggiornala.",
     "stepMissing": "Passo «{s}»: mancano delle scelte",
@@ -235,6 +239,22 @@
       "none": "Nessuna",
       "levels": "Livelli di {c}",
       "split": "{a} {la} / {b} {lb}"
+    },
+    "details": {
+      "title": "Dettagli del personaggio",
+      "help": "Tutto facoltativo: serve a ricordare chi è il personaggio e finisce sulla scheda PDF.",
+      "labels": {
+        "player": "Nome del giocatore",
+        "age": "Età",
+        "height": "Altezza",
+        "weight": "Peso",
+        "appearance": "Aspetto",
+        "personality": "Tratti della personalità",
+        "ideals": "Ideali",
+        "bonds": "Legami",
+        "flaws": "Difetti",
+        "backstory": "Storia"
+      }
     }
   },
   "play": {
@@ -1072,7 +1092,8 @@
       "always": "sempre preparato",
       "granted": "concesso"
     },
-    "ft": "ft"
+    "ft": "ft",
+    "details": "Dettagli del personaggio"
   },
   "about": {
     "title": "Informazioni e licenze",

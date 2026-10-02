@@ -40,6 +40,7 @@ export const characterSchema = z.object({
   }),
   overrides: z.record(z.string(), z.number()),
   notes: z.string(),
+  details: z.object(Object.fromEntries(["player", "age", "height", "weight", "appearance", "personality", "ideals", "bonds", "flaws", "backstory"].map((k) => [k, z.string().max(8000).optional()]))).optional(),
   xp: int.min(0).optional(),
   startLevel: int.min(1).max(20).optional(), startingGold: int.min(0).optional(),
   editing: z.boolean().optional(), created: z.boolean().optional(),

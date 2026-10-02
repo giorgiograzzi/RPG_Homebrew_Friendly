@@ -4,6 +4,18 @@ Seconda fase dopo `PLAN.md` (step 0–8 chiusi; 9 e 10 ancora da fare). Nasce da
 
 Come è stato fatto l'audit: lettura di `src/engine/creation/*`, `src/wizard/*`, `src/db/*`, `src/store/*`; confronto automatico dei nomi dei dati con il testo del PDF IT; prove con test usa-e-getta (non committati) su tutte le classi ai livelli 1, 2, 3, 4, 6, 8, 9, 12, 15, 17, 19, 20 e su alcuni scenari (cambio classe/specie/livello, metodi di punteggio, creazione senza nome).
 
+## 0. Stato di avanzamento
+| Step | Stato |
+|---|---|
+| P2-1 Test e CI | ✅ fatto (test PDF corretto, `.github/workflows/ci.yml`; resta da verificare `docker compose build` e la prova offline) |
+| P2-2 Archivio sicuro | ✅ fatto: `storage.persist()` + stato nelle Impostazioni, Dexie v2 (homebrew a righe, copie di sicurezza), avviso tra schede (BroadcastChannel), duplica / esporta uno solo / condividi, esporta dati grezzi |
+| P2-3 Lingua e terminologia | ✅ fatto: termini del manuale, metri/kg in italiano, messaggi del motore in `tr()`, test guardia `noItalianLeaks.test.ts` |
+| P2-4 Creazione completa | ✅ fatto: taglia a scelta, dettagli del personaggio (anche nel PDF), multiclasse alla creazione, riepilogo con abilità/competenze/privilegi, simbolo sacro e set da gioco scelti in creazione, sottoclasse tolta se il livello scende |
+| P2-5 Contenuti e decisioni | 🔶 deciso: tengono tutti i metodi di punteggio (con nota nell'app). Restano: oggetti magici SRD, descrizioni di armi/armature/oggetti, i tratti "solo a testo" |
+| P2-6 Release | ⬜ da fare |
+
+Trovato e corretto durante P2-4: la scelta `weapon_mastery_pick` aveva lo stesso id in 5 classi, quindi un multiclasse (anche da level-up) con due di loro condivideva la scelta e si bloccava. Ora ogni classe ha il suo id (`<classe>_weapon_mastery`), con migrazione dello schema del personaggio da v1 a v2.
+
 ## 1. Cosa funziona (verificato)
 - `typecheck` pulito; `npm test`: 575 test su 577 passano (i 2 che falliscono sono il bug B1 qui sotto).
 - Tutti i nomi dei dati IT (classi, sottoclassi, specie, background, talenti, incantesimi, armi, armature, strumenti, abilità, condizioni, tipi di danno, maestrie, proprietà, privilegi e tratti) compaiono nel PDF italiano: **0 mancanti**. Le 12 voci "mancanti" tra gli oggetti sono nomi composti (es. «Focus arcano (cristallo)»), non errori.
@@ -99,6 +111,6 @@ L'app è statica (nessun server): il "back" è IndexedDB (Dexie) + store + backu
 - Passata finale sul `TODO.md`, README, controllo legale, tag `v1.0.0`, checklist firmata.
 
 ## 7. Domande aperte per Giorgio
-1. ~~Teniamo "Tiro dei dadi", "Acquisto a punti" e "Manuale"?~~ **Deciso (Giorgio, 2026-10-02): sì, si tengono tutti e quattro i metodi** (con una nota nell'app: solo la serie standard è nell'SRD).
+1. ~~Teniamo "Tiro dei dadi", "Acquisto a punti" e "Manuale"?~~ **Deciso (Giorgio, 2026-10-02): sì, si tengono tutti e quattro i metodi** (nota nell'app, fatta in P2-4).
 2. Per i dettagli del personaggio (P2-4) bastano i campi del manuale o vuoi anche ritratto/immagine?
 3. Vuoi che P2-2 includa la sincronizzazione tra dispositivi, o restiamo sul file di backup?

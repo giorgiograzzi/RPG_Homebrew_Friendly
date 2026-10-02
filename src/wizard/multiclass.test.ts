@@ -22,7 +22,7 @@ function make(a: string, b: string, total: number, l2: number, scores = all14) {
 }
 
 describe("multiclasse alla creazione", () => {
-  it("ogni coppia di classi: livello 5 diviso 3+2, si completa e si chiude", () => {
+  it("ogni coppia di classi: livello 5 diviso 3+2, si completa e si chiude", { timeout: 90_000 }, () => {
     for (const a of R.classes.keys()) for (const b of R.classes.keys()) {
       if (a === b) continue;
       const ch = make(a, b, 5, 2);

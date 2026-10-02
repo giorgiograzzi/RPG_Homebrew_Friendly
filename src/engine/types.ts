@@ -21,6 +21,10 @@ export type Term = z.infer<typeof termSchema>;
 
 export type EquipState = "stowed" | "wielded" | "worn" | "dropped";
 
+export const DETAIL_FIELDS = ["player", "age", "height", "weight", "appearance", "personality", "ideals", "bonds", "flaws", "backstory"] as const;
+export type DetailField = (typeof DETAIL_FIELDS)[number];
+export type CharacterDetails = Partial<Record<DetailField, string>>;
+
 // Il personaggio salva SOLO scelte e stato di gioco; ogni numero è derivato (compute/).
 export interface Character {
   schemaVersion: number;
@@ -54,6 +58,7 @@ export interface Character {
   };
   overrides: Record<string, number>; // valori forzati a mano, visibili e rimovibili
   notes: string;
+  details?: CharacterDetails; // nome del giocatore, aspetto, personalità, storia (tutti facoltativi)
   // true = creazione in corso o riaperta per modifiche (livello, scelte): la scheda giocabile non si apre; false = creazione chiusa.
   // Assente nei salvataggi vecchi: allora vale "chiusa" se la prima classe ha i PF per livello.
   startLevel?: number; // livello scelto al passo 0 della creazione (vale per la classe di partenza)

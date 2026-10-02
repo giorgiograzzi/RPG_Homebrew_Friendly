@@ -1,6 +1,7 @@
 import { setCoins, setOverride, OVERRIDE_KEYS } from "../engine/play";
 import { strings as it } from "../i18n";
 import { tr } from "../i18n/tr";
+import { DetailsForm } from "../wizard/DetailsForm";
 import { Button, Dialog } from "../ui/theme";
 import type { TabProps } from "./types";
 import { PdfButton } from "./PdfButton";
@@ -59,6 +60,8 @@ export function MiscTab({ ch, rs, d, update, onReopen }: TabProps & { onReopen: 
           </label>
         ))}
       </div>
+      <h3>{it.wizard.details.title}</h3>
+      <DetailsForm ch={ch} onChange={(c) => update(() => c)} />
       <h3>{t.notes}</h3>
       <textarea className="ui-input" style={{ minHeight: 160, padding: 8 }} aria-label={t.notes} placeholder={t.notesHelp} value={ch.notes} onChange={(e) => update((c) => ({ ...c, notes: e.target.value }))} />
       <h3>{t.overrides}</h3>

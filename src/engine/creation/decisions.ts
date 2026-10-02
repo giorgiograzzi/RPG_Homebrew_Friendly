@@ -77,6 +77,12 @@ export function validateDecisions(ch: Character, rs: Ruleset): { character: Char
       removed.push({ key: invalidAsi.key, picked: invalidAsi.selected, reason: tr("L'aumento di caratteristica non è più valido (fonte o tetto cambiati)", "The ability score increase is no longer valid (source or cap changed)") });
       cur = { ...cur, asi: cur.asi.filter((a) => a.key !== invalidAsi.key) }; continue;
     }
+    // 4) sottoclasse scelta ma sotto il livello in cui si ottiene (il livello è sceso)
+    const badSub = cur.classes.find((cl) => cl.subclassId && cl.level < (rs.classes.get(cl.classId)?.subclassLevel ?? 0));
+    if (badSub) {
+      removed.push({ key: `subclass:${badSub.classId}`, picked: [badSub.subclassId!], reason: tr("La sottoclasse si ottiene a un livello più alto", "The subclass comes at a higher level") });
+      cur = { ...cur, classes: cur.classes.map((c) => { if (c !== badSub) return c; const { subclassId: _drop, ...rest } = c; void _drop; return rest; }) }; continue;
+    }
     break;
   }
   return { character: cur, removed };

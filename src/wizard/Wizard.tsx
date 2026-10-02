@@ -12,6 +12,7 @@ import { AsiView, QuestionView } from "./QuestionView";
 import { ScoresStep } from "./ScoresStep";
 import { HomebrewStep } from "./HomebrewStep";
 import { Summary } from "./Summary";
+import { DetailsForm } from "./DetailsForm";
 import { applyAsiDraft, choose, finalizeCharacter, gamingSetsNeeded } from "./logic";
 
 const t = it.wizard;
@@ -94,6 +95,7 @@ export function Wizard({ ch, rs, allowReroll, onChange, onDone }: {
             <input className="ui-input" value={ch.name} placeholder={t.namePlaceholder} maxLength={60} onChange={(e) => onChange({ ...ch, name: e.target.value })} />
           </Field>
         )}
+        {view === "details" && <DetailsForm ch={ch} onChange={onChange} />}
       </>
     );
   };

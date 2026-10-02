@@ -1,10 +1,11 @@
 import { computeCharacter } from "../engine/compute";
 import type { Skill } from "../engine/compute/types";
 import { lookupItem } from "../engine/equipment";
+import { characterSize } from "../engine/creation";
 import { spellbook } from "../engine/magic";
 import type { Ruleset } from "../engine/ruleset";
 import { ABILITIES, type Ability } from "../engine/schema";
-import type { Character } from "../engine/types";
+import { DETAIL_FIELDS, type Character } from "../engine/types";
 import { lang as appLang, STRINGS, type Lang } from "../i18n";
 import { distance } from "../ui/units";
 
@@ -20,6 +21,7 @@ export interface SheetData {
   attacks: { name: string; bonus: string; damage: string; notes: string }[];
   classFeatures: string[]; speciesTraits: string[]; feats: string[];
   // pagina 2
+  details: string[]; // "Etichetta: testo" per ogni dettaglio compilato
   alignment: string; languages: string; equipment: string[]; attunement: string[];
   coins: { cp: string; sp: string; ep: string; gp: string; pp: string };
   spellAbility: string; spellMod: string; spellDc: string; spellAtk: string; slots: string[];
@@ -35,7 +37,7 @@ export function buildSheetData(ch: Character, rs: Ruleset, lang: Lang = appLang)
   const TIME: Record<string, string> = { action: P.action, bonus_action: P.bonusAction, reaction: P.reaction };
   const d = computeCharacter(ch, rs);
   const totalLevel = ch.classes.reduce((n, c) => n + c.level, 0);
-  const sizes = rs.species.get(ch.speciesId)?.sizes ?? [];
+  const size = characterSize(ch, rs);
   const sheet = {} as SheetData["scores"];
   for (const a of ABILITIES) sheet[a] = { score: String(d.scores[a].value), mod: sign(d.mods[a].value), save: sign(d.saves[a].bonus.value), saveProf: d.saves[a].proficient };
 
@@ -60,7 +62,7 @@ export function buildSheetData(ch: Character, rs: Ruleset, lang: Lang = appLang)
     name: ch.name, klass: ch.classes.map((c) => nameOf(rs.classes, c.classId)).join(" / "), level: String(totalLevel),
     subclass: ch.classes.map((c) => (c.subclassId ? nameOf(rs.subclasses, c.subclassId) : "")).filter(Boolean).join(" / "),
     species: nameOf(rs.species, ch.speciesId), background: nameOf(rs.backgrounds, ch.backgroundId), xp: ch.xp !== undefined ? String(ch.xp) : "",
-    size: sizes.map((z) => nameOf(rs.sizes, z)).join(" / "), speed: distance(d.speed.walk.value, lang), initiative: sign(d.initiative.value),
+    size: size ? nameOf(rs.sizes, size) : "", speed: distance(d.speed.walk.value, lang), initiative: sign(d.initiative.value),
     passive: String(d.passivePerception.value), pb: sign(d.proficiencyBonus.value), hpNow: String(Math.min(ch.state.hp, d.hp.max.value)), hpMax: String(d.hp.max.value),
     hitDiceUsed: ch.state.hitDiceUsed ? String(ch.state.hitDiceUsed) : "", hitDice: d.hp.hitDice.map((h) => `${h.total}d${h.die}`).join(" + "), ac: String(d.ac.value), shield: !!d.loadout.shield, inspiration: ch.state.inspiration,
     scores: sheet, skills,
@@ -68,6 +70,7 @@ export function buildSheetData(ch: Character, rs: Ruleset, lang: Lang = appLang)
     weapons: weaponNames.join(", "), tools: toolNames.join(", "),
     attacks: d.attacks.slice(0, 8).map((a) => ({ name: a.label, bonus: sign(a.toHit.value), damage: a.damage.text, notes: a.notes.join(" · ") })),
     classFeatures: info(["class", "subclass"]), speciesTraits: info(["species"]), feats: info(["feat", "background"]),
+    details: DETAIL_FIELDS.filter((k) => ch.details?.[k]?.trim()).map((k) => `${STRINGS[lang].wizard.details.labels[k]}: ${ch.details![k]!.trim()}`),
     alignment: align ? creation?.alignments.find((x) => x.id === align)?.name.it ?? align : "",
     languages: d.languages.map((l) => nameOf(rs.languages, l)).join(", "),
     equipment: ch.inventory.map((i) => `${i.qty > 1 ? `${i.qty}× ` : ""}${lookupItem(rs, i.itemId)?.def.name.it ?? i.itemId}`),
