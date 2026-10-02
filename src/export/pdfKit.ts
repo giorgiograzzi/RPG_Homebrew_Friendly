@@ -64,6 +64,7 @@ export class Doc {
     for (const l of this.wrap(s, width, size, o.bold)) { this.ensure(lh); this.text(l, x, this.y, { size, bold: o.bold, color: o.color }); this.y += lh; }
     this.y += o.gap ?? 3;
   }
+  paraHeight(s: string, width: number, size = 8.5, gap = 3): number { return this.wrap(s, width, size).length * size * 1.35 + gap; }
   heading(s: string, x = MARGIN, width = A4.w - 2 * MARGIN): void {
     this.ensure(26);
     this.y += 4;
