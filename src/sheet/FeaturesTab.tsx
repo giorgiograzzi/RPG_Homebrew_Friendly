@@ -87,7 +87,7 @@ export function FeaturesTab({ ch, rs, d, update }: TabProps) {
           <p>{pick.activation.label ?? ""}</p>
           <ul className="wz-opts" role="radiogroup" aria-label={pick.activation.label ?? pick.name}>
             {pick.activation.options.map((o) => (
-              <li key={o.id}>
+              <li key={o.id} role="presentation">
                 <button type="button" className="wz-opt" role="radio" aria-checked={choice === o.id} onClick={() => setChoice(o.id)}>
                   <span className="mark radio" aria-hidden="true">{choice === o.id ? "●" : ""}</span>
                   <span className="txt"><span className="nm">{o.name}</span>{o.description && <span className="desc" style={{ display: "block" }}>{o.description}</span>}</span>

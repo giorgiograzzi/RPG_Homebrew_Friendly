@@ -155,3 +155,7 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 ### Interfaccia (step 5b-3)
 - [ ] 🟡 Nel motore restano in italiano solo alcune stringhe minori (riepiloghi dell'editor Homebrew in `src/homebrew/summary.ts` e `complex.ts`, etichette di spellbook/risorse): il controllo `npm run e2e` segnala testo italiano nelle schermate inglesi; oggi non ne trova nelle schermate controllate (Personaggi, wizard, scheda, Homebrew, Impostazioni).
 - [ ] 🟢 Sulla scheda desktop (≥1100px) Statistiche, Attacchi e Magia sono nella panoramica; la navigazione laterale ha Panoramica, Privilegi, Equipaggiamento, Altro.
+
+### Interfaccia (step 5b-4/5b-5)
+- [ ] 🟢 Non fatto (non necessario ora): lettore di schermo provato solo in modo automatico (ruoli e nomi); un controllo a mano con VoiceOver/TalkBack prima della release (step 10).
+- [ ] 🟢 `npm run e2e` non è nel CI (serve Chromium): da aggiungere allo step 9 come job separato.

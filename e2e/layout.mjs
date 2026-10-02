@@ -54,6 +54,21 @@ async function check(page, tag) {
     for (const e of document.querySelectorAll(".ui-btn, .ui-tab, .ui-seg button, .wz-steps button, .pl-tabs button, .hb-chips button")) {
       if (vis(e) && e.scrollWidth > e.clientWidth + 1 && getComputedStyle(e).overflow !== "visible") out.clipped.push((e.textContent || "").trim().slice(0, 30));
     }
+    // contrasto del testo visibile (WCAG AA: 4.5, oppure 3 per il testo grande), calcolato sui colori reali della pagina
+    out.contrast = [];
+    const parse = (c) => { const m = c.match(/rgba?\(([^)]+)\)/); if (!m) return null; const p = m[1].split(",").map((x) => parseFloat(x)); return { r: p[0], g: p[1], b: p[2], a: p[3] ?? 1 }; };
+    const lumOf = ({ r, g, b }) => { const f = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; }; return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b); };
+    const bgOf = (el) => { let base = { r: 255, g: 255, b: 255 }; const chain = []; for (let e = el; e; e = e.parentElement) chain.push(e); for (const e of chain.reverse()) { const c = parse(getComputedStyle(e).backgroundColor); if (c && c.a > 0) base = { r: base.r * (1 - c.a) + c.r * c.a, g: base.g * (1 - c.a) + c.g * c.a, b: base.b * (1 - c.a) + c.b * c.a }; } return base; };
+    const seen = new Set();
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+      const el = n.parentElement; if (!el || !n.textContent.trim() || seen.has(el) || !vis(el)) continue; seen.add(el);
+      const st = getComputedStyle(el); const fg = parse(st.color); if (!fg) continue;
+      const bg = bgOf(el); const a = fg.a; const mix = { r: bg.r * (1 - a) + fg.r * a, g: bg.g * (1 - a) + fg.g * a, b: bg.b * (1 - a) + fg.b * a };
+      const [l1, l2] = [lumOf(mix), lumOf(bg)]; const ratio = (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+      const size = parseFloat(st.fontSize), bold = parseInt(st.fontWeight) >= 700; const large = size >= 24 || (size >= 18.66 && bold);
+      if (ratio < (large ? 3 : 4.5) && !el.closest("[disabled], [aria-disabled=true]")) out.contrast.push(`"${n.textContent.trim().slice(0, 20)}" ${ratio.toFixed(2)}`);
+    }
     // inglese: nessuna parola italiana evidente nel testo visibile
     out.italian = [];
     if (document.documentElement.lang === "en") {
@@ -62,6 +77,7 @@ async function check(page, tag) {
     }
     return out;
   });
+  if (r.contrast?.length) problems.push(`${tag}: contrasto basso → ${[...new Set(r.contrast)].slice(0, 5).join(" | ")}`);
   if (r.italian?.length) problems.push(`${tag}: testo italiano in inglese → ${[...new Set(r.italian)].slice(0, 5).join(" | ")}`);
   if (r.hscroll) problems.push(`${tag}: scroll orizzontale`);
   if (r.small.length) problems.push(`${tag}: bersagli piccoli → ${[...new Set(r.small)].slice(0, 6).join(" | ")}`);
@@ -77,6 +93,10 @@ for (const [vpName, width, height] of VIEWPORTS.filter((v) => VP_SEL.includes(v[
   await seed(page);
   await page.reload();
   await page.waitForSelector(".ui-app");
+  // tastiera: a pagina nuova il primo Tab va a «vai al contenuto»
+  await page.keyboard.press("Tab");
+  const first = await page.evaluate(() => document.activeElement?.className ?? "");
+  if (!String(first).includes("ui-skip")) problems.push(`${vpName}/${lang}/${scheme}: il primo Tab non va a «vai al contenuto» (${first})`);
   const shot = async (name) => {
     const tag = `${vpName}/${lang}/${scheme}/${name}`;
     if (ONLY.length && !ONLY.includes(name)) return;
@@ -105,6 +125,21 @@ for (const [vpName, width, height] of VIEWPORTS.filter((v) => VP_SEL.includes(v[
   await page.locator(".ui-list li", { hasText: "Aria" }).locator("button").first().click();
   await page.waitForTimeout(300);
   await shot("scheda-stato");
+  // tastiera: «vai al contenuto» è il primo elemento; una finestra tiene il focus dentro e lo restituisce alla chiusura
+  const hp = page.locator(".pl-quick-hp").first();
+  if (await hp.count()) {
+    await hp.focus(); await hp.press("Enter");
+    await page.waitForSelector(".ui-dialog");
+    const inside = async () => page.evaluate(() => !!document.activeElement?.closest(".ui-dialog"));
+    let ok = await inside();
+    for (let i = 0; i < 25 && ok; i++) { await page.keyboard.press("Tab"); ok = await inside(); }
+    if (!ok) problems.push(`${vpName}/${lang}/${scheme}: il focus esce dalla finestra con Tab`);
+    await page.keyboard.press("Escape");
+    await page.waitForTimeout(150);
+    const back = await page.evaluate(() => document.activeElement?.className ?? "");
+    if (await page.locator(".ui-dialog").count()) problems.push(`${vpName}/${lang}/${scheme}: Esc non chiude la finestra`);
+    else if (!String(back).includes("pl-quick-hp")) problems.push(`${vpName}/${lang}/${scheme}: alla chiusura il focus non torna al pulsante (${back})`);
+  }
   const sections = page.locator(".ui-sections button:not(.back)");
   const n = await sections.count();
   for (const [i, name] of [[1, "privilegi"], [2, "statistiche"], [3, "attacchi"], [4, "equip"], [5, "magie"]]) {
