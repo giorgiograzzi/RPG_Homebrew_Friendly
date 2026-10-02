@@ -1,4 +1,4 @@
-import it from "../i18n/it.json";
+import { strings as it } from "../i18n";
 import { buildCtx, computeCharacter } from "../engine/compute";
 import {
   allQuestions, creationProgress, fillHpRolls, levelStartingGold, pointBuyCost, previewDecision, recommendedArray, rollAbilityScores, setAsi, setBaseScores,

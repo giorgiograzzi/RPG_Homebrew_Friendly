@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import it from "../i18n/it.json";
+import { strings as it } from "../i18n";
 import { Button } from "./xp";
 
 const t = it.settings.install;

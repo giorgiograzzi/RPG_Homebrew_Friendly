@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { useRuleset } from "../data/ruleset";
 import { missingHomebrew } from "../engine/homebrew";
 import { fmt } from "../ui/format";
-import it from "../i18n/it.json";
+import { strings as it } from "../i18n";
 import { Button, Dialog } from "../ui/xp";
 import { useApp } from "../ui/useApp";
 import { PlaySheet } from "../sheet/PlaySheet";

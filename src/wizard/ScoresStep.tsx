@@ -3,7 +3,7 @@ import { buildCtx } from "../engine/compute";
 import type { Ruleset } from "../engine/ruleset";
 import { ABILITIES, type Ability } from "../engine/schema";
 import type { Character } from "../engine/types";
-import it from "../i18n/it.json";
+import { strings as it } from "../i18n";
 import { fmt } from "../ui/format";
 import { Button, Field, Segmented } from "../ui/xp";
 import { METHODS, chooseMethod, rerollScores, stepPointBuy, swapScore } from "./logic";

@@ -1,5 +1,5 @@
 import { useRegisterSW } from "virtual:pwa-register/react";
-import it from "../i18n/it.json";
+import { strings as it } from "../i18n";
 import { Button } from "./xp";
 
 const CHECK_INTERVAL_MS = 60 * 60 * 1000;

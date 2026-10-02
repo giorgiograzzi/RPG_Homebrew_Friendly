@@ -4,7 +4,7 @@ import {
   shortRest, spendHitDie, stabilize, toggleSlot, useResource, type OverrideKey,
 } from "../engine/play";
 import type { Sourced } from "../engine/types";
-import it from "../i18n/it.json";
+import { strings as it } from "../i18n";
 import { fmt } from "../ui/format";
 import { Button, Check, Dialog } from "../ui/xp";
 import { concentrationDc, endConcentration } from "../engine/magic";

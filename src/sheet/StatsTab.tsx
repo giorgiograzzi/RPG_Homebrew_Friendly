@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ABILITIES, SKILLS, type Ability } from "../engine/schema";
 import type { Sourced } from "../engine/types";
-import it from "../i18n/it.json";
+import { strings as it } from "../i18n";
 import { fmt } from "../ui/format";
 import { RollDialog } from "./dialogs";
 import type { TabProps } from "./types";

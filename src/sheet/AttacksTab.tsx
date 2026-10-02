@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { AttackOption } from "../engine/compute/types";
-import it from "../i18n/it.json";
+import { strings as it } from "../i18n";
 import { fmt } from "../ui/format";
 import type { Character } from "../engine/types";
 import { ChargeControls, DamageRoller, RollDialog, type ChargeRes } from "./dialogs";

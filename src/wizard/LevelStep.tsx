@@ -2,7 +2,7 @@ import { hpIsRolled, levelBand, rollStartingGold, setHpMode, xpThreshold, MAX_ST
 import { proficiencyByLevel } from "../engine/compute";
 import type { Ruleset } from "../engine/ruleset";
 import type { Character } from "../engine/types";
-import it from "../i18n/it.json";
+import { strings as it } from "../i18n";
 import { fmt } from "../ui/format";
 import { Button, Field, Segmented } from "../ui/xp";
 

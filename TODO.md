@@ -131,3 +131,9 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 - [ ] 🟡 Fasce di partenza (`startingLevels`): l'SRD le dà solo per i livelli 2-20; la 2-4 ha `gold: 0` perché vale l'equipaggiamento normale (+1 oggetto magico comune). Il motore (step 4) deve sommare l'equipaggiamento normale alle fasce 5+ (così dice la tabella: "più equipaggiamento di partenza ordinario").
 - [ ] 🟡 `description` delle condizioni è il testo dell'SRD senza la frase introduttiva. Nel PDF italiano la frase di Incapacitato dice per errore "paralizzato" (tolta). Gli effetti usano il vocabolario del motore; quelli che dipendono da fonte o distanza restano testo (Prono, Invisibile, Spaventato, Afferrato).
 - [ ] 🟢 `recommendedArrays` (serie standard per classe) viene dall'SRD (12 classi). Riposi e morte sono costanti nel motore: da confrontare con l'SRD nello step 4 (riposo lungo: metà Dadi Vita arrotondati per difetto, min 1; Esaurimento -1).
+
+### Lingue (step 3)
+- [ ] 🟡 Cambiare lingua ricarica la pagina (la lingua si legge una volta all'avvio; i personaggi stanno nel database e restano). Nello step 5b si può rendere il cambio immediato se serve.
+- [ ] 🟡 `en.json` traduce tutte le chiavi di `it.json` così com'è. Restano stringhe da riscrivere con la nuova interfaccia (5b) e dall'editor homebrew (step 6, dove va tolto «Parti da una voce ufficiale»): quando si cambia una stringa vanno aggiornate entrambe (il test di parità lo impone).
+- [ ] 🟢 Nome e descrizione del manifest PWA (`vite.config.ts`) e `index.html` sono ancora solo in italiano (step 9). `<html lang>` si imposta all'avvio.
+- [ ] 🟢 Le unità (piedi/libbre) nei testi dell'interfaccia restano come nei dati; nei dati italiani le distanze sono in metri solo nel testo delle regole.

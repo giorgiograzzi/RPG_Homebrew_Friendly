@@ -25,14 +25,17 @@
     "backupDue": "È passato un po' dall'ultimo backup: esportalo adesso, così i personaggi sono al sicuro."
   },
   "soon": {
-    "sheet": "La scheda giocabile arriva allo step 14.",
-    "equip": "L'equipaggiamento arriva allo step 15.",
-    "magic": "Le magie arrivano allo step 16.",
+    "sheet": "La scheda giocabile arriva presto.",
+    "equip": "L'equipaggiamento arriva presto.",
+    "magic": "Le magie arrivano presto.",
     "needCharacter": "Apri o crea un personaggio dalla scheda Personaggi."
   },
   "settings": {
     "title": "Impostazioni",
     "back": "Indietro",
+    "language": "Lingua",
+    "languageHelp": "Cambia i testi dell'app e i dati di gioco. I personaggi restano.",
+    "languageAuto": "Automatica (lingua del browser)",
     "hand": "Mano di gioco",
     "handHelp": "Sposta i pulsanti principali dove il pollice arriva meglio.",
     "right": "Destra",
@@ -109,7 +112,7 @@
     "complete": "Completo",
     "filter": "Cerca…",
     "noOptions": "Nessuna opzione disponibile per ora.",
-    "noData": "Mancano i dati di gioco: la cartella data/private non è presente su questo server.",
+    "noData": "Mancano i dati di gioco: non è stato possibile caricare i file dei dati.",
     "confirmTitle": "Questa scelta annulla altre scelte",
     "confirmText": "Se continui, verranno tolte:",
     "confirmYes": "Continua",
@@ -167,7 +170,7 @@
       "reopenConfirm": "Riaprendo la creazione puoi cambiare scelte e livello. I Punti Ferita già tirati, l'equipaggiamento, le monete e lo stato di gioco restano quelli attuali. Continuare?",
       "progress": "Livello e avanzamento"
     },
-    "noCreation": "Mancano le regole di creazione (file creation.json in data/private): allineamenti, array standard e acquisto a punti non sono disponibili. Sul server lancia «npm run extract:data» (servono i PDF in docs/rules), poi rifai la build.",
+    "noCreation": "Mancano le regole di creazione: allineamenti, array standard e acquisto a punti non sono disponibili. Sul server lancia «npm run extract:data», poi rifai la build.",
     "stepMissing": "Passo «{s}»: mancano delle scelte",
     "levelStep": {
       "level": "Livello del personaggio",

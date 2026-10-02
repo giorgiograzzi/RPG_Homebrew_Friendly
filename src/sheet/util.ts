@@ -1,5 +1,5 @@
 import type { Ability } from "../engine/schema";
-import it from "../i18n/it.json";
+import { strings as it } from "../i18n";
 
 export const AB = it.wizard.abilities as Record<Ability, string>;
 export const sign = (n: number) => (n >= 0 ? `+${n}` : `${n}`);

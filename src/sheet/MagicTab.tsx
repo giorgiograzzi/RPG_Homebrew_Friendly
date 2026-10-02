@@ -4,7 +4,7 @@ import {
   PREPARATION, castSpell, concentrationBroken, endConcentration, magicalCunning, recoverSlots, recoveryLimit, spellbook, type CastVia, type SpellEntry,
 } from "../engine/magic";
 import { toggleSlot } from "../engine/play";
-import it from "../i18n/it.json";
+import { strings as it } from "../i18n";
 import { fmt } from "../ui/format";
 import { Button, Dialog } from "../ui/xp";
 import { QuestionView } from "../wizard/QuestionView";

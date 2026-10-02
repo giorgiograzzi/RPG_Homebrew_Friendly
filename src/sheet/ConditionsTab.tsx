@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { setCondition, setExhaustion } from "../engine/play";
-import it from "../i18n/it.json";
+import { strings as it } from "../i18n";
 import { fmt } from "../ui/format";
 import { Button } from "../ui/xp";
 import type { TabProps } from "./types";

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { FeatureInfo } from "../engine/compute/types";
 import { setActive, useResource } from "../engine/play";
-import it from "../i18n/it.json";
+import { strings as it } from "../i18n";
 import { fmt } from "../ui/format";
 import { Button, Dialog } from "../ui/xp";
 import type { TabProps } from "./types";

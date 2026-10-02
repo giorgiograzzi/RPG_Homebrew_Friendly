@@ -11,7 +11,7 @@ import { StatsTab } from "./StatsTab";
 import { StatusTab } from "./StatusTab";
 import type { SheetView } from "./sections";
 import { Equip } from "../pages/Equip";
-import it from "../i18n/it.json";
+import { strings as it } from "../i18n";
 
 // Scheda giocabile: ogni numero viene dal motore (computeCharacter); qui si cambia solo lo stato di gioco
 export function PlaySheet({ ch, rs, update, onReopen, tab, onSection }: { ch: Character; rs: Ruleset; update: (fn: (c: Character) => Character) => void; onReopen: () => void; tab: SheetView; onSection: (s: SheetView) => void }) {

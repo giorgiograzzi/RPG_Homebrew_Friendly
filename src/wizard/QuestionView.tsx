@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Question } from "../engine/creation";
 import { ABILITIES, type Ability } from "../engine/schema";
-import it from "../i18n/it.json";
+import { strings as it } from "../i18n";
 import { fmt } from "../ui/format";
 import { Button } from "../ui/xp";
 import { togglePick } from "./logic";

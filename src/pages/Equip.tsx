@@ -6,7 +6,7 @@ import {
   analyzeLoadout, buyItem, equipItem, formatCost, lookupItem, needsAttunement, setAttuned, setQty, shopCatalog, walletCp, type EquipTime,
 } from "../engine/equipment";
 import type { Character, EquipState } from "../engine/types";
-import it from "../i18n/it.json";
+import { strings as it } from "../i18n";
 import { fmt } from "../ui/format";
 import { Button, Dialog, Segmented } from "../ui/xp";
 import { useApp } from "../ui/useApp";

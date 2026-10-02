@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { defaultValues, buildEffect, optionSet, presetFor, validEffect, EFFECT_PRESETS, type ParamSpec, type ParamValues } from "../engine/homebrew";
 import type { Ruleset } from "../engine/ruleset";
-import it from "../i18n/it.json";
+import { strings as it } from "../i18n";
 import { Button, Check, Field } from "../ui/xp";
 import type { EffectRow } from "./complex";
 import type { Draft, FieldSpec } from "./forms";

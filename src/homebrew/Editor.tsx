@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { buildEffect, newHbId, readEffect, takenIds, validateEntry, type HbEntry, type HbKind } from "../engine/homebrew";
 import type { Ruleset } from "../engine/ruleset";
 import type { Effect } from "../engine/types";
-import it from "../i18n/it.json";
+import { strings as it } from "../i18n";
 import { Button, Field } from "../ui/xp";
 import { ComplexEditor, type Then } from "./ComplexEditor";
 import { isComplex, type EffectRow } from "./complex";

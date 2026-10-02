@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import type { ImportPreview, Resolution } from "../db/backup";
-import it from "../i18n/it.json";
+import { getLangPref, setLangPref, strings as it, type LangPref } from "../i18n";
 import { backupDue } from "../store";
 import { Button, Check, Dialog, Field, Segmented } from "../ui/xp";
 import { fmt, formatDate } from "../ui/format";
@@ -24,6 +24,7 @@ export function Settings({ onBack }: { onBack: () => void }) {
   const saveStatus = useApp((x) => x.saveStatus);
   const updateSettings = useApp((x) => x.updateSettings);
   const exportAll = useApp((x) => x.exportAll);
+  const flush = useApp((x) => x.flush);
   const [importing, setImporting] = useState<{ preview: ImportPreview } | null>(null);
   const [message, setMessage] = useState("");
   const file = useRef<HTMLInputElement>(null);
@@ -36,6 +37,14 @@ export function Settings({ onBack }: { onBack: () => void }) {
       </div>
       <h2>{t.title}</h2>
       <p className="xp-muted" role="status">{t.saveStatus[saveStatus]}</p>
+
+      <fieldset className="xp-group">
+        <legend>{t.language}</legend>
+        <span className="xp-help">{t.languageHelp}</span>
+        <Segmented label={t.language} value={getLangPref()} onChange={(pref: LangPref) => { void flush().then(() => setLangPref(pref)); }}
+          options={[{ value: "auto", label: t.languageAuto }, { value: "it", label: "Italiano" }, { value: "en", label: "English" }]} />
+        <div style={{ height: 12 }} />
+      </fieldset>
 
       <fieldset className="xp-group">
         <legend>{t.hand}</legend>
