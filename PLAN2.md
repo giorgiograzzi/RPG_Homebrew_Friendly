@@ -7,12 +7,12 @@ Come è stato fatto l'audit: lettura di `src/engine/creation/*`, `src/wizard/*`,
 ## 0. Stato di avanzamento
 | Step | Stato |
 |---|---|
-| P2-1 Test e CI | ✅ fatto (test PDF corretto, `.github/workflows/ci.yml`; resta da verificare `docker compose build` e la prova offline) |
+| P2-1 Test e CI | ✅ fatto (test PDF corretto, `.github/workflows/ci.yml`; `typecheck`, 595 test, `validate:data`, `build`, smoke Playwright verdi in locale; `docker compose build` non verificabile qui) |
 | P2-2 Archivio sicuro | ✅ fatto: `storage.persist()` + stato nelle Impostazioni, Dexie v2 (homebrew a righe, copie di sicurezza), avviso tra schede (BroadcastChannel), duplica / esporta uno solo / condividi, esporta dati grezzi |
 | P2-3 Lingua e terminologia | ✅ fatto: termini del manuale, metri/kg in italiano, messaggi del motore in `tr()`, test guardia `noItalianLeaks.test.ts` |
 | P2-4 Creazione completa | ✅ fatto: taglia a scelta, dettagli del personaggio (anche nel PDF), multiclasse alla creazione, riepilogo con abilità/competenze/privilegi, simbolo sacro e set da gioco scelti in creazione, sottoclasse tolta se il livello scende |
-| P2-5 Contenuti e decisioni | 🔶 deciso: tengono tutti i metodi di punteggio (con nota nell'app). Restano: oggetti magici SRD, descrizioni di armi/armature/oggetti, i tratti "solo a testo" |
-| P2-6 Release | ⬜ da fare |
+| P2-5 Contenuti e decisioni | 🔶 fatto: metodi di punteggio tenuti (con nota nell'app), 28 oggetti con descrizione IT+EN, descrizioni mostrate nello zaino e nel negozio. Restano: oggetti magici SRD (2g), descrizioni di armi/armature, i tratti "solo a testo" (in `TODO.md`) |
+| P2-6 Release | 🔶 README e TODO aggiornati. Mancano: `docker compose build` e prova offline (in questo ambiente non c'è il daemon Docker), checklist legale finale, tag `v1.0.0` |
 
 Trovato e corretto durante P2-4: la scelta `weapon_mastery_pick` aveva lo stesso id in 5 classi, quindi un multiclasse (anche da level-up) con due di loro condivideva la scelta e si bloccava. Ora ogni classe ha il suo id (`<classe>_weapon_mastery`), con migrazione dello schema del personaggio da v1 a v2.
 
