@@ -15,7 +15,14 @@ function setKey(ch: Character, key: string, picked: string[]): Character {
   if (key === "pick:class") {
     const old = ch.classes[0];
     const classes = ch.classes.slice();
-    if (picked[0]) classes[0] = { classId: picked[0], level: ch.startLevel ?? old?.level ?? 1, hpRolls: [] };
+    const second = classes[1];
+    if (picked[0]) {
+      const total = ch.startLevel ?? classes.reduce((n, c) => n + c.level, 0) ?? 1;
+      // la seconda classe (multiclasse alla creazione) resta, a meno che coincida con la nuova prima classe
+      const keep = second && second.classId !== picked[0] ? second : undefined;
+      return { ...ch, classes: [{ classId: picked[0], level: Math.max(1, total - (keep?.level ?? 0)), hpRolls: [] }, ...(keep ? [keep] : [])] };
+    }
+    void old;
     return { ...ch, classes };
   }
   if (key === "pick:background") return { ...ch, backgroundId: picked[0] ?? "" };
@@ -50,7 +57,7 @@ export function validateDecisions(ch: Character, rs: Ruleset): { character: Char
       if (bad.length || kept.length < have.length) {
         const why = bad.length
           ? bad.map((id) => { const o = q.options.find((x) => x.id === id); return `${o?.name ?? id}: ${o?.disabledReason ?? tr("non più disponibile", "no longer available")}`; }).join("; ")
-          : `Troppe scelte (massimo ${q.count})`;
+          : tr(`Troppe scelte (massimo ${q.count})`, `Too many choices (maximum ${q.count})`);
         removed.push({ key: q.key, picked: have.filter((id) => !kept.includes(id)), reason: why });
         cur = put(cur, q.key, kept); changed = true; break;
       }

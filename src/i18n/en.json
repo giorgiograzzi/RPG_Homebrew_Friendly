@@ -227,6 +227,14 @@
       "done": "{name}'s sheet is ready: you will find it in your downloads.",
       "error": "I cannot create the PDF: {e}",
       "help": "Writes the character's data on a PDF sheet ready to print."
+    },
+    "second": {
+      "title": "Second class (multiclass, optional)",
+      "help": "If you start at level 2 or higher you can split the levels between two classes. You need 13 in the primary ability of both (checked when you assign the scores).",
+      "class": "Second class",
+      "none": "None",
+      "levels": "Levels of {c}",
+      "split": "{a} {la} / {b} {lb}"
     }
   },
   "play": {

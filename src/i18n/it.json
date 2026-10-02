@@ -227,6 +227,14 @@
       "done": "Scheda di {name} pronta: la trovi tra i download.",
       "error": "Non riesco a creare il PDF: {e}",
       "help": "Scrive i dati del personaggio su una scheda PDF pronta da stampare."
+    },
+    "second": {
+      "title": "Seconda classe (multiclasse, facoltativa)",
+      "help": "Se parti da livello 2 o più puoi dividere i livelli tra due classi. Servono 13 nella caratteristica primaria di entrambe (si controlla quando assegni i punteggi).",
+      "class": "Seconda classe",
+      "none": "Nessuna",
+      "levels": "Livelli di {c}",
+      "split": "{a} {la} / {b} {lb}"
     }
   },
   "play": {

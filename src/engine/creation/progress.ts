@@ -21,6 +21,13 @@ export function creationProgress(ch: Character, rs: Ruleset): { steps: StepStatu
     if (step === "scores") problems.push(...scoreProblems(ch, rs));
     if (step === "details" && !ch.name.trim()) problems.push(tr("Dai un nome al personaggio", "Give the character a name"));
     if (step === "class" && !ch.classes.length) problems.push(tr("Scegli una classe", "Choose a class"));
+    if (step === "class" && ch.classes.length > 1) {
+      const ctx = buildCtx(ch, rs);
+      for (const cl of ch.classes) {
+        const req = rs.classes.get(cl.classId)?.multiclassRequirement;
+        if (req && !evalCondition(parseCondition(req), ctx)) problems.push(tr(`Multiclasse: ${rs.classes.get(cl.classId)!.name.it} richiede ${describeCondition(req, rs)}`, `Multiclassing: ${rs.classes.get(cl.classId)!.name.it} requires ${describeCondition(req, rs)}`));
+      }
+    }
     // il livello (passo 0) parte da 1: non manca mai nulla
     return { step, complete: !missing.length && !problems.length, missing, problems };
   });

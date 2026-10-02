@@ -4,7 +4,7 @@ import type { Ruleset } from "../engine/ruleset";
 import type { Ability } from "../engine/schema";
 import type { Character } from "../engine/types";
 import { STEPS, setStartLevel, type StepId } from "../engine/creation";
-import { HpField, LevelStep } from "./LevelStep";
+import { HpField, LevelStep, SecondClass } from "./LevelStep";
 import { strings as it } from "../i18n";
 import { fmt } from "../ui/format";
 import { Button, Dialog, Field } from "../ui/theme";
@@ -86,6 +86,9 @@ export function Wizard({ ch, rs, allowReroll, onChange, onDone }: {
           ? <AsiBlock key={q.key} q={q} ch={ch} rs={rs} draft={drafts[q.key] ?? draftOf(q)} onDraft={(d) => setDrafts({ ...drafts, [q.key]: d })}
               onApply={(r) => { if (r.ok) { setErrors([]); onChange(r.character); setDrafts(({ [q.key]: _, ...rest }) => rest); } else setErrors(r.errors); }} />
           : <QuestionView key={q.key} q={q} onPick={pick} />)}
+        {view === "class" && ch.classes.length > 0 && (
+          <SecondClass ch={ch} rs={rs} onApply={(r) => { if (!r.ok) { setErrors(r.errors); return; } setErrors([]); if (r.removed.length) setConfirm(r); else onChange(r.character); }} />
+        )}
         {view === "details" && (
           <Field label={t.name}>
             <input className="ui-input" value={ch.name} placeholder={t.namePlaceholder} maxLength={60} onChange={(e) => onChange({ ...ch, name: e.target.value })} />

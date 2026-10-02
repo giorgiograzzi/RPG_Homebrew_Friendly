@@ -255,7 +255,7 @@
      "description": "Puoi usare le proprietà di padronanza di 2 tipi di armi da mischia semplici o da guerra (altri con i livelli, colonna Padronanza d'armi); a ogni riposo lungo puoi cambiarne uno.",
      "choices": [
       {
-       "id": "weapon_mastery_pick",
+       "id": "barbarian_weapon_mastery",
        "label": "Padronanza d'armi",
        "countFrom": "weapon_mastery",
        "source": "weaponMastery",
@@ -2710,7 +2710,7 @@
      "description": "Puoi usare le proprietà di padronanza di 3 tipi di armi semplici o da guerra (altri con i livelli, colonna Padronanza d'armi); a ogni riposo lungo puoi cambiarne uno.",
      "choices": [
       {
-       "id": "weapon_mastery_pick",
+       "id": "fighter_weapon_mastery",
        "label": "Padronanza d'armi",
        "countFrom": "weapon_mastery",
        "source": "weaponMastery"
@@ -3851,7 +3851,7 @@
      "description": "Puoi usare le proprietà di padronanza di 2 tipi di armi in cui hai competenza; a ogni riposo lungo puoi cambiarne uno.",
      "choices": [
       {
-       "id": "weapon_mastery_pick",
+       "id": "paladin_weapon_mastery",
        "label": "Padronanza d'armi",
        "count": 2,
        "source": "weaponMastery"
@@ -4507,7 +4507,7 @@
      "description": "Puoi usare le proprietà di padronanza di 2 tipi di armi in cui hai competenza; a ogni riposo lungo puoi cambiarne uno.",
      "choices": [
       {
-       "id": "weapon_mastery_pick",
+       "id": "ranger_weapon_mastery",
        "label": "Padronanza d'armi",
        "count": 2,
        "source": "weaponMastery"
@@ -5062,7 +5062,7 @@
      "description": "Puoi usare le proprietà di padronanza di 2 tipi di armi in cui hai competenza (per esempio pugnali e archi corti); a ogni riposo lungo puoi cambiarne uno.",
      "choices": [
       {
-       "id": "weapon_mastery_pick",
+       "id": "rogue_weapon_mastery",
        "label": "Padronanza d'armi",
        "count": 2,
        "source": "weaponMastery"

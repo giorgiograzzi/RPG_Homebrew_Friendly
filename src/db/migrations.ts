@@ -5,9 +5,19 @@ import { tr } from "../i18n/tr";
 // Migrazione da versione N a N+1, su dati grezzi (ancora non validati)
 export type Migration = (raw: Record<string, unknown>) => Record<string, unknown>;
 
-// La chiave è la versione di partenza. Alla versione 1 non c'è ancora nulla da migrare:
-// quando cambia il formato si alza CHARACTER_SCHEMA_VERSION e si aggiunge qui il passaggio.
-export const MIGRATIONS: Record<number, Migration> = {};
+// La chiave è la versione di partenza: quando cambia il formato si alza CHARACTER_SCHEMA_VERSION e si aggiunge qui il passaggio.
+export const MIGRATIONS: Record<number, Migration> = {
+  // v1 → v2: `weapon_mastery_pick` → `<prima classe>_weapon_mastery` (nella v1 poteva esserci una sola classe con questa scelta)
+  1: (raw) => {
+    const decisions = { ...((raw.decisions ?? {}) as Record<string, string[]>) };
+    const first = (raw.classes as { classId?: string }[] | undefined)?.[0]?.classId;
+    if (decisions.weapon_mastery_pick) {
+      if (first) decisions[`${first}_weapon_mastery`] = decisions.weapon_mastery_pick;
+      delete decisions.weapon_mastery_pick;
+    }
+    return { ...raw, decisions };
+  },
+};
 
 export type MigrateResult = { ok: true; character: Character; migratedFrom?: number } | { ok: false; error: string };
 
