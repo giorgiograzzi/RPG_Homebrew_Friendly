@@ -13,7 +13,6 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 - [ ] 🟢 Decidere se includere gli oggetti magici dell'SRD (step 2g).
 
 ### Legale
-- [ ] 🔴 Nome definitivo dell'app (ora "Personaggi SRD 5.2", provvisorio "Personaggi SRD 5.2"): niente "D&D", "Dungeons & Dragons", loghi o marchi WotC. Il nome della repo `RPG_Homebrew_Friendly` è ok.
 - [ ] 🔴 Dicitura CC-BY: copiare **testo esatto** dalla prima pagina di ciascun PDF (la versione IT e quella EN sono diverse).
 - [ ] 🟡 Font per la scheda PDF: usare solo font con licenza libera (es. OFL) e citarli in `ATTRIBUTION.md`.
 - [ ] 🟡 Icone/immagini: usare solo asset originali (le attuali in `public/icons/` vanno riviste: se sono generiche ok, altrimenti rifarle).
@@ -144,8 +143,16 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 - [ ] 🟢 Nome e descrizione del manifest PWA (`vite.config.ts`) e `index.html` sono ancora solo in italiano (step 9). `<html lang>` si imposta all'avvio.
 - [ ] 🟢 Le unità (piedi/libbre) nei testi dell'interfaccia restano come nei dati; nei dati italiani le distanze sono in metri solo nel testo delle regole.
 
+### Attribuzioni e nome (step 8)
+- [x] Nome definitivo: **Danger & Dragons** (app, `index.html`, manifest PWA, README, PDF). Non usare mai la sigla «D&D» (marchio WotC), nemmeno come nome breve.
+- [x] Schermata «Informazioni e licenze» (menu): dicitura CC-BY nella lingua dell'app con link alla licenza, avviso «non ufficiale, non affiliato», MIT del codice, licenza del font, nota sull'homebrew.
+- [x] Dicitura + avviso anche su ogni pagina della scheda PDF, in `ATTRIBUTION.md` e nel README. `attribution.test.ts` confronta la dicitura con la prima pagina dei due PDF SRD (chiusa la voce «da verificare a occhio»).
+- [x] Corretto il pulsante «Sali di livello» tagliato su telefono (testata della scheda a capo).
+- [ ] 🟡 La sigla di «Danger & Dragons» è D&D. Va bene come nome, ma sarebbe prudente un parere legale/una ricerca marchi prima della pubblicazione (step 10).
+- [ ] 🟢 Rinominare i file di export (`personaggi-srd-*.json` → `danger-and-dragons-*.json`) e il pacchetto npm `srd-personaggi-pwa`.
+
 ### Scheda PDF (step 7)
-- [x] Generatore originale con pdf-lib (`src/export/sheetPdf.ts`, `pdfKit.ts`): A4, IT e EN, Noto Sans (OFL) incorporato, dicitura CC-BY e numero di pagina su ogni pagina; pulsante in Scheda → Note. Licenza del font in `ATTRIBUTION.md` e `docs/licenses/`.
+- [x] Generatore originale con pdf-lib (`src/export/sheetPdf.ts`, `pdfKit.ts`): A4, IT e EN, Noto Sans (OFL) incorporato, dicitura CC-BY e numero di pagina su ogni pagina; pulsante in Scheda → Altro. Licenza del font in `ATTRIBUTION.md` e `docs/licenses/`.
 - [x] Etichette degli attacchi del motore («Colpo senz'armi», «lanciata», «due mani»…) ora bilingui.
 - [ ] 🟡 Il PDF usa la lingua dell'app: chi cambia lingua deve riaprire la scheda per rigenerarlo (nessun problema, ma non c'è un selettore di lingua solo per il PDF).
 - [ ] 🟢 Il testo di privilegi lunghi occupa molto spazio: si può offrire una versione «compatta» (solo nomi) o due colonne.

@@ -1,4 +1,6 @@
-# RPG Homebrew Friendly
+# Danger & Dragons
+
+_(repo: RPG Homebrew Friendly)_
 
 PWA gratuita per creare e gestire personaggi, in **italiano e inglese**, anche offline.
 Contiene solo contenuti dell'SRD 5.2.1 (CC-BY-4.0); il resto si aggiunge come homebrew.
@@ -30,3 +32,12 @@ L'app è statica (nginx): si aggiorna con `git pull && docker compose up -d --bu
 
 ## Licenze
 Codice: MIT (`LICENSE`). Contenuti SRD: CC-BY-4.0 (`ATTRIBUTION.md`).
+
+## Licenze
+Codice: MIT (`LICENSE`). Font della scheda PDF: Noto Sans, SIL OFL 1.1 (`docs/licenses/`). Dettagli in `ATTRIBUTION.md`.
+
+> This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC, available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0 International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.
+>
+> Quest'opera include materiale tratto dal System Reference Document 5.2.1 ("SRD 5.2.1") di Wizards of the Coast LLC, disponibile all'indirizzo https://www.dndbeyond.com/srd. Il SRD 5.2.1 è concesso in licenza ai sensi della licenza di attribuzione 4.0 Internazionale di Creative Commons, disponibile all'indirizzo https://creativecommons.org/licenses/by/4.0/legalcode.
+
+Danger & Dragons is an unofficial, fan-made app. It is not affiliated with, endorsed or sponsored by Wizards of the Coast. / Danger & Dragons è un'app non ufficiale, creata da appassionati. Non è affiliata, approvata né sponsorizzata da Wizards of the Coast.

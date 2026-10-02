@@ -13,7 +13,7 @@ export class Doc {
   pages: PDFPage[] = [];
   page: PDFPage;
   y = MARGIN; // cursore verticale (dall'alto)
-  readonly bottom = A4.h - MARGIN - 28; // sotto: spazio per il piè di pagina (dicitura e numero)
+  readonly bottom = A4.h - MARGIN - 38; // sotto: spazio per il piè di pagina (dicitura, avviso e numero)
 
   private constructor(readonly pdf: PDFDocument, readonly regular: PDFFont, readonly bold: PDFFont) { this.page = this.addPage(); }
   static async create(fonts: FontBytes, title: string): Promise<Doc> {

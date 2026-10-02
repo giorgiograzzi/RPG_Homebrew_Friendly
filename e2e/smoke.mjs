@@ -5,6 +5,7 @@ import { spawn } from "node:child_process";
 import { readFileSync } from "node:fs";
 import en from "../src/i18n/en.json" with { type: "json" };
 import it from "../src/i18n/it.json" with { type: "json" };
+import { DISCLAIMER, SRD_NOTICE } from "../src/legal/attribution.ts";
 
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ?? "playwright");
 const PORT = 5198, URL = `http://localhost:${PORT}/`;
@@ -116,6 +117,17 @@ try {
   expect(/Wizard 1/.test(await page.locator(".ui-body").innerText()), "in inglese la scheda non mostra «Wizard 1»");
   expect((await page.locator(".pl-hp .big").first().innerText()).trim() === hp, "i PF cambiano con la lingua");
 
+  // ── Informazioni e licenze: dicitura CC-BY e avviso nella lingua dell'app ─────────
+  log("informazioni e licenze");
+  expect((await page.title()) === "Danger & Dragons", `titolo pagina: ${await page.title()}`);
+  await page.locator(".ui-title-btn:not(.ui-back)").click();
+  await page.getByRole("menuitem", { name: en.menu.about }).click();
+  const notice = (await page.getByTestId("srd-notice").innerText()).replace(/\s+/g, " ");
+  expect(notice === SRD_NOTICE.en, `dicitura diversa da quella dell'SRD: ${notice.slice(0, 80)}`);
+  expect((await page.getByTestId("disclaimer").innerText()) === DISCLAIMER.en, "avviso «non ufficiale» mancante");
+  expect(await page.locator('.ui-body a[href="https://creativecommons.org/licenses/by/4.0/legalcode"]').count() >= 1, "manca il link alla licenza");
+  await page.getByRole("button", { name: new RegExp(en.about.back) }).click();
+
   // ── Level-up ─────────────────────────────────────────────────────────────
   log("level-up");
   await page.getByRole("button", { name: en.levelup.button, exact: true }).click();
@@ -136,14 +148,14 @@ try {
   expect(hp2 > Number(hp.split("/")[1]), `i PF massimi non sono saliti (${hp} → ${hp2})`);
   log(`level-up ok (PF max ${hp2})`);
 
-  // ── Scheda PDF: dalla sezione «Note» ────────────────────────────────────
+  // ── Scheda PDF: dalla sezione «Altro» ────────────────────────────────────
   log("scheda PDF");
-  await page.locator(".ui-sections button:not(.back)").nth(6).click();
+  await page.getByRole("button", { name: en.play.tabs.misc, exact: true }).click();
   const [pdfDl] = await Promise.all([page.waitForEvent("download"), page.getByRole("button", { name: en.wizard.sheet.button }).click()]);
   const pdfBytes = readFileSync(await pdfDl.path());
   expect(pdfBytes.subarray(0, 5).toString() === "%PDF-" && pdfBytes.length > 20_000, `il PDF non è valido (${pdfBytes.length} byte)`);
   expect(/^scheda-smoke\.pdf$/.test(pdfDl.suggestedFilename()), `nome file inatteso: ${pdfDl.suggestedFilename()}`);
-  await page.locator(".ui-sections button:not(.back)").first().click();
+  await page.getByRole("button", { name: en.play.tabs.status, exact: true }).click();
 
   // ── Backup: esporta, elimina, reimporta ─────────────────────────────────
   log("backup e ripristino");

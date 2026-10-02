@@ -4,7 +4,7 @@ PWA per creare e gestire personaggi, **italiano + inglese**, offline. Contiene *
 Nasce dall'app privata `giorgiograzzi/Prova_creazione_dnd_character` (non si tocca: resta com'è). Il codice si copia **senza cronologia git**, così i PDF non liberi non entrano mai qui.
 
 ## Stato
-**Chiusi: step 0 (PR #2), 1 (#3), 2a (#4), correttore glifi + descrizioni 2a (#5), piano 5b (#6), 2b (#7), 2c (#8), 2d-1 (#9), 2d-2 (#10), 2d-3 (#11), 2e (#12), 2f (#13): step 2 (dati SRD) chiuso. 3 (#14). 4 (#15). 5b-1 e 5b-2 (#16). 5b-3 (#17). 5b-4/5b-5 (#18): step 5b chiuso. Step 5 (#19). Step 6 (#22). Step 7 in PR. 8 → 10: da fare.**
+**Chiusi: step 0 (PR #2), 1 (#3), 2a (#4), correttore glifi + descrizioni 2a (#5), piano 5b (#6), 2b (#7), 2c (#8), 2d-1 (#9), 2d-2 (#10), 2d-3 (#11), 2e (#12), 2f (#13): step 2 (dati SRD) chiuso. 3 (#14). 4 (#15). 5b-1 e 5b-2 (#16). 5b-3 (#17). 5b-4/5b-5 (#18): step 5b chiuso. Step 5 (#19). Step 6 (#22). Step 7 (#25). Step 8 in PR. 9 → 10: da fare.**
 
 ## Decisioni già prese (Giorgio)
 | Tema | Scelta |
@@ -16,7 +16,7 @@ Nasce dall'app privata `giorgiograzzi/Prova_creazione_dnd_character` (non si toc
 | PDF scheda | scheda **originale** disegnata nel codice (pdf-lib); il PDF ufficiale WotC non c'è più |
 | Homebrew | tenuto; **tolta** "copia da voce ufficiale"; esempi solo SRD |
 | Licenze | codice MIT; contenuti SRD CC-BY 4.0 con la dicitura ufficiale nell'app e in `ATTRIBUTION.md` |
-| Nome | neutro, senza "D&D" né loghi WotC (nome provvisorio: "Personaggi SRD 5.2") |
+| Nome | **Danger & Dragons** (scelto da Giorgio il 2026-10-02). Mai la sigla «D&D» né loghi WotC; nome breve della PWA: «Danger&Dragons» |
 | Dati | **tracciati in git** (sono CC-BY): niente più `data/private` |
 
 ## Come lavoriamo (regole valide in ogni chat)
@@ -87,8 +87,8 @@ Oggi l'interfaccia imita Windows XP / Win95 (`src/ui/xp/`, 313 righe di CSS, ~26
 - **Cosa**: nuovo generatore con pdf-lib, layout originale (non copiare l'impaginazione della scheda ufficiale), A4, IT e EN, font liberi incorporati (es. OFL). Sostituisce `src/export/sheetPdf.ts` basato sul PDF ufficiale.
 - **Test**: test che genera il PDF per un personaggio d'esempio in IT e EN, lo rilegge e controlla pagine, testi chiave e assenza di campi vuoti; nessun asset di terzi non libero (licenza del font in `ATTRIBUTION.md`).
 
-### Step 8 — Attribuzione e note legali nell'app  ☐
-- **Cosa**: schermata "Informazioni e licenze" con la dicitura CC-BY esatta (versione giusta per lingua: 5.2 EN, 5.2.1 IT), link alla licenza, avviso "contenuto non ufficiale, non affiliato a WotC", MIT del codice; stessa dicitura in `ATTRIBUTION.md`, `README` e (se presente) sul PDF della scheda.
+### Step 8 — Attribuzione e note legali nell'app  ☑ (dicitura identica nei due PDF SRD 5.2.1, verificata dal test)
+- **Cosa**: schermata "Informazioni e licenze" con la dicitura CC-BY esatta (versione per lingua: 5.2.1 sia IT sia EN), link alla licenza, avviso "contenuto non ufficiale, non affiliato a WotC", MIT del codice; stessa dicitura in `ATTRIBUTION.md`, `README` e (se presente) sul PDF della scheda.
 - **Test**: test che la dicitura è presente nell'app, in `ATTRIBUTION.md` e nel PDF generato; il guardia dello step 1 continua a passare.
 
 ### Step 9 — PWA, Docker e CI  ☐

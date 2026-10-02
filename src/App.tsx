@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { strings as it } from "./i18n";
 import { Characters } from "./pages/Characters";
 import { Homebrew } from "./pages/Homebrew";
+import { Licenses } from "./pages/Licenses";
 import { Sheet } from "./pages/Sheet";
 import { ImportDialog, Settings, exportNow } from "./pages/Settings";
 import type { ImportPreview } from "./db/backup";
@@ -29,6 +30,7 @@ export function App() {
   const [section, setSection] = useState<SheetView>("status");
   const [menu, setMenu] = useState(false);
   const [settings, setSettings] = useState(false);
+  const [about, setAbout] = useState(false);
   const [importing, setImporting] = useState<ImportPreview | null>(null);
 
   useEffect(() => { void init(); }, [init]);
@@ -60,20 +62,21 @@ export function App() {
     <div className={`ui-app hand-${hand}`}>
       <a className="ui-skip" href="#main" onClick={(e) => { e.preventDefault(); document.getElementById("main")?.focus(); }}>{it.app.skip}</a>
       <header className="ui-title">
-        {inSheet && <button type="button" className="ui-title-btn ui-back" aria-label={it.play.back} title={it.play.back} onClick={() => { setSettings(false); setTab("characters"); }}><icons.back /></button>}
+        {inSheet && <button type="button" className="ui-title-btn ui-back" aria-label={it.play.back} title={it.play.back} onClick={() => { setSettings(false); setAbout(false); setTab("characters"); }}><icons.back /></button>}
         <h1>{current ? current.name || it.characters.unnamed : it.app.title}</h1>
         <span className="ui-status" role="status" aria-live="polite">{saveStatus === "error" ? it.settings.saveStatus.error : ""}</span>
         <button type="button" className="ui-title-btn" aria-label={it.menu.open} aria-haspopup="menu" aria-expanded={menu} onClick={() => setMenu(!menu)}><Menu /></button>
       </header>
       {menu && (
         <div className="ui-menu" role="menu" onClick={() => setMenu(false)} onKeyDown={(e) => { if (e.key === "Escape") setMenu(false); }}>
-          <button type="button" role="menuitem" onClick={() => setSettings(true)}>{it.menu.settings}</button>
+          <button type="button" role="menuitem" onClick={() => { setAbout(false); setSettings(true); }}>{it.menu.settings}</button>
+          <button type="button" role="menuitem" onClick={() => { setSettings(false); setAbout(true); }}>{it.menu.about}</button>
           <button type="button" role="menuitem" onClick={() => void exportNow(exportAll)}>{it.menu.export}</button>
           <button type="button" role="menuitem" onClick={pickFile}>{it.menu.import}</button>
         </div>
       )}
       <main className="ui-body" id="main" tabIndex={-1}>
-        {settings ? <Settings onBack={() => setSettings(false)} /> : (
+        {about ? <Licenses onBack={() => setAbout(false)} /> : settings ? <Settings onBack={() => setSettings(false)} /> : (
           <>
             {shown === "characters" && <Characters onOpened={() => { setSection("status"); setTab("sheet"); }} />}
             {shown === "sheet" && <Sheet section={section} onSection={setSection} />}
@@ -83,8 +86,8 @@ export function App() {
       </main>
       {inSheet
         ? <SectionBar items={SHEET_SECTIONS.filter((id) => !wide || !(["attacks", "magic"] as string[]).includes(id)).map((id) => ({ id, label: id === "status" && wide ? it.play.tabs.overview : it.play.tabs[id], icon: SECTION_ICONS[id] }))} current={section === "conditions" || (wide && ["attacks", "magic"].includes(section)) ? "status" : section} backLabel={it.play.back}
-            onSelect={(id) => { setSettings(false); setSection(id as SheetView); }} onBack={() => { setSettings(false); setTab("characters"); }} />
-        : <TabBar tabs={tabs} current={shown} onSelect={(id) => { setSettings(false); setTab(id as TabId); }} />}
+            onSelect={(id) => { setSettings(false); setAbout(false); setSection(id as SheetView); }} onBack={() => { setSettings(false); setAbout(false); setTab("characters"); }} />
+        : <TabBar tabs={tabs} current={shown} onSelect={(id) => { setSettings(false); setAbout(false); setTab(id as TabId); }} />}
       {importing && <ImportDialog preview={importing} onClose={() => setImporting(null)} onDone={() => setImporting(null)} />}
       <ReloadPrompt />
     </div>
