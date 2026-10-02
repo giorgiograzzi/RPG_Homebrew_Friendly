@@ -10,7 +10,7 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 - [ ] 🟡 Gli estrattori attuali leggono riepiloghi del Manuale del Giocatore (`01-05_*.pdf`) e regole di `scripts/lib/*-rules.ts` scritte su quei dati: vanno riscritti sull'SRD, non adattati a occhio.
 - [ ] 🟡 Le 48 sottoclassi e gli incantesimi/specie/background fuori SRD spariscono: verificare che i privilegi/talenti rimasti non citino id non più esistenti (`validate:data` sui riferimenti incrociati).
 - [ ] 🟡 Le voci `needsReview` dell'app privata non si portano dietro: ripartire da zero per i dubbi.
-- [ ] 🟢 Decidere se includere gli oggetti magici dell'SRD (step 2g).
+- [x] 🟢 Oggetti magici dell'SRD inclusi (step 2g). Da fare: effetti meccanici (CA, bonus, cariche) per gli oggetti più comuni; 8 paragrafi del testo sono spezzati male dove un rigo inizia con un titolo in linea.
 
 ### Legale
 - [ ] 🔴 Dicitura CC-BY: copiare **testo esatto** dalla prima pagina di ciascun PDF (la versione IT e quella EN sono diverse).

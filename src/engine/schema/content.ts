@@ -142,8 +142,18 @@ export const armorSchema = z.object({
   cost: z.number().default(0),
 });
 
+// Oggetto magico dell'SRD: tipo, rarità (più voci se varia con il bonus, es. +1/+2/+3; nessuna se "varia"), a chi si applica e chi può sintonizzarsi
+export const magicInfoSchema = z.object({
+  type: z.enum(["armor", "weapon", "wondrous", "potion", "ring", "rod", "scroll", "staff", "wand"]),
+  rarity: z.array(z.object({ rarity: z.enum(["common", "uncommon", "rare", "very_rare", "legendary", "artifact"]), note: z.string().optional() })).default([]),
+  varies: z.boolean().default(false), // la rarità dipende dall'esemplare (pozioni di guarigione, pergamene...)
+  appliesTo: z.string().optional(), // "Qualsiasi armatura media o pesante"
+  attunementBy: z.string().optional(), // sintonia riservata ("un incantatore")
+});
+
 export const itemSchema = z.object({
   ...base,
+  magic: magicInfoSchema.optional(),
   category: z.string(),
   weight: z.number().default(0), // libbre (l'app mostra i kg in italiano: 1 lb = 0,5 kg come nell'SRD IT)
   cost: z.number().default(0),
