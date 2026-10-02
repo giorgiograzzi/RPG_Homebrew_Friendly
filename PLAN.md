@@ -4,7 +4,7 @@ PWA per creare e gestire personaggi, **italiano + inglese**, offline. Contiene *
 Nasce dall'app privata `giorgiograzzi/Prova_creazione_dnd_character` (non si tocca: resta com'è). Il codice si copia **senza cronologia git**, così i PDF non liberi non entrano mai qui.
 
 ## Stato
-**Chiusi: step 0 (PR #2), 1 (#3), 2a (#4), correttore glifi + descrizioni 2a (#5), piano 5b (#6), 2b (#7), 2c (#8), 2d-1 (#9), 2d-2 (#10), 2d-3 (#11), 2e (#12), 2f (#13): step 2 (dati SRD) chiuso. 3 (#14). 4 (#15). 5b-1 e 5b-2 (#16). 5b-3 (schermate) in PR. Step 5, 5b-3 → 10: da fare.**
+**Chiusi: step 0 (PR #2), 1 (#3), 2a (#4), correttore glifi + descrizioni 2a (#5), piano 5b (#6), 2b (#7), 2c (#8), 2d-1 (#9), 2d-2 (#10), 2d-3 (#11), 2e (#12), 2f (#13): step 2 (dati SRD) chiuso. 3 (#14). 4 (#15). 5b-1 e 5b-2 (#16). 5b-3 (#17). Step 5 in PR. 5b-4 → 10: da fare.**
 
 ## Decisioni già prese (Giorgio)
 | Tema | Scelta |
@@ -66,7 +66,7 @@ Riscrittura degli estrattori in `scripts/` perché leggano **solo** i due PDF SR
 - **Cosa**: adatta il motore ai dati ridotti (niente riferimenti a voci non SRD); i vecchi test `*.private.test.ts` diventano test normali (i dati ora sono tracciati) e vengono riscritti sui contenuti SRD.
 - **Test**: `npm test` verde per compute, creation, levelup, magic, play, equipment; test nuovo "ogni voce dei dati SRD è creabile": per ogni classe × sottoclasse × specie × background si crea un personaggio di livello 1 e uno di livello 5 senza errori.
 
-### Step 5 — Wizard, scheda e level-up  ☐
+### Step 5 — Wizard, scheda e level-up  ☑ (smoke Playwright `e2e/smoke.mjs`; trovata e costruita la schermata di level-up che mancava)
 - **Cosa**: verifica a mano e con test tutta l'interfaccia con i dati SRD in IT e EN: creazione, scheda, tab Equip/Magia, riposi, passaggio di livello, backup/ripristino.
 - **Test**: test store/db esistenti verdi; smoke test Playwright (Chromium già installato): crea un personaggio in IT, cambia in EN, sale di livello, esporta e reimporta il backup.
 

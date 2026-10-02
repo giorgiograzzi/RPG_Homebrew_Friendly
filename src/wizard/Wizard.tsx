@@ -84,7 +84,7 @@ export function Wizard({ ch, rs, allowReroll, onChange, onDone }: {
         {view === "class" && <p className="ui-muted">{fmt(t.level1, { n: ch.startLevel ?? ch.classes[0]?.level ?? 1 })}</p>}
         {qs.map((q) => q.kind === "abilityIncrease"
           ? <AsiBlock key={q.key} q={q} ch={ch} rs={rs} draft={drafts[q.key] ?? draftOf(q)} onDraft={(d) => setDrafts({ ...drafts, [q.key]: d })}
-              onApply={(r) => { if (r.ok) { setErrors([]); onChange(r.character); setDrafts({ ...drafts, [q.key]: {} }); } else setErrors(r.errors); }} />
+              onApply={(r) => { if (r.ok) { setErrors([]); onChange(r.character); setDrafts(({ [q.key]: _, ...rest }) => rest); } else setErrors(r.errors); }} />
           : <QuestionView key={q.key} q={q} onPick={pick} />)}
         {view === "details" && (
           <Field label={t.name}>

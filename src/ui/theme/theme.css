@@ -310,6 +310,7 @@ h1, h2, h3 { line-height: 1.25; }
 @media (min-width: 640px) { .pl-grid { grid-template-columns: repeat(4, 1fr); } }
 
 /* panoramica a colonne (schermo largo): Stato | Statistiche e Attacchi | Magia */
+.pl-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0 0 8px; }
 .pl-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; align-items: start; }
 .pl-cols.three { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr) minmax(0, 1fr); }
 .pl-col { min-width: 0; }

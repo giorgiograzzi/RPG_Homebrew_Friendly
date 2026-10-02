@@ -29,7 +29,7 @@ export function Summary({ ch, rs }: { ch: Character; rs: Ruleset }) {
         {(Object.keys(AB) as Ability[]).map((a) => <div key={a}>{AB[a]}<b>{d.scores[a].value} ({sign(d.mods[a].value)})</b></div>)}
       </div>
       {d.languages.length > 0 && <><h3>{t.sum.languages}</h3><ul className="wz-tags">{d.languages.map((l) => <li key={l}>{rs.languages.get(l)?.name.it ?? l}</li>)}</ul></>}
-      {d.grantedSpells.length > 0 && <><h3>{t.sum.spells}</h3><ul className="wz-tags">{d.grantedSpells.map((s) => <li key={`${s.spell}-${s.source}`}>{rs.spells.get(s.spell)?.name.it ?? s.spell}</li>)}</ul></>}
+      {d.grantedSpells.length > 0 && <><h3>{t.sum.spells}</h3><ul className="wz-tags">{[...new Map(d.grantedSpells.map((s) => [`${s.spell}-${s.source}`, s])).values()].map((s) => <li key={`${s.spell}-${s.source}`}>{rs.spells.get(s.spell)?.name.it ?? s.spell}</li>)}</ul></>}
       {ch.inventory.length > 0 && <><h3>{t.sum.equipment}</h3><ul className="wz-tags">{ch.inventory.map((i) => {
         const def = rs.weapons.get(i.itemId) ?? rs.armors.get(i.itemId) ?? rs.items.get(i.itemId) ?? rs.tools.get(i.itemId);
         return <li key={i.itemId}>{i.qty > 1 ? `${i.qty}× ` : ""}{def?.name.it ?? i.itemId}</li>;
