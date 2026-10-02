@@ -21,6 +21,8 @@ npm run typecheck
 npm test            # test unitari e di integrazione (dati SRD, motore, interfaccia)
 npm run dev
 npm run e2e         # controlli di layout e accessibilità con un browser vero (serve Playwright + Chromium)
+npm run e2e:smoke   # crea un personaggio, cambia lingua, sale di livello, backup
+npm run e2e:offline # build di produzione e verifica che la PWA riparta a rete spenta
 npm run validate:data
 npm run extract:data   # rigenera data/srd/ dai PDF in docs/srd/ (verifica IT e EN: si ferma se non coincidono)
 ```
