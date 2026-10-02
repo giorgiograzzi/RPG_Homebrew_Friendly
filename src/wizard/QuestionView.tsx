@@ -26,7 +26,7 @@ export function QuestionView({ q, onPick }: { q: Question; onPick: (key: string,
           {q.options.length > 12 && <input className="ui-input" style={{ marginBottom: 8 }} type="search" placeholder={t.filter} aria-label={t.filter} value={filter} onChange={(e) => setFilter(e.target.value)} />}
           <ul className={`wz-opts ${q.options.length > 12 ? "long" : ""}`} role={single ? "radiogroup" : "group"} aria-label={q.label}>
             {shown.map((o) => (
-              <li key={o.id}>
+              <li key={o.id} role="presentation">
                 <button type="button" className="wz-opt" role={single ? "radio" : "checkbox"} aria-checked={o.selected} aria-disabled={!o.enabled || q.disabled === true}
                   onClick={() => { if (o.enabled && !q.disabled) onPick(q.key, togglePick(q, o.id)); }}>
                   <span className={`mark ${single ? "radio" : ""}`} aria-hidden="true">{o.selected ? (single ? "●" : "✓") : ""}</span>

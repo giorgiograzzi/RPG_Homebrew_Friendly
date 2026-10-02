@@ -2,7 +2,9 @@
   "app": {
     "title": "Personaggi SRD 5.2",
     "errorTitle": "Qualcosa non va",
-    "reload": "Ricarica"
+    "reload": "Ricarica",
+    "skip": "Vai al contenuto",
+    "nav": "Navigazione"
   },
   "tabs": {
     "characters": "Eroi",

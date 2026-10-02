@@ -9,9 +9,16 @@ Contiene solo contenuti dell'SRD 5.2.1 (CC-BY-4.0); il resto si aggiunge come ho
 ```
 npm ci
 npm run typecheck
-npm test
+npm test            # test unitari e di integrazione (dati SRD, motore, interfaccia)
 npm run dev
+npm run e2e         # controlli di layout e accessibilità con un browser vero (serve Playwright + Chromium)
+npm run validate:data
+npm run extract:data   # rigenera data/srd/ dai PDF in docs/srd/ (verifica IT e EN: si ferma se non coincidono)
 ```
+
+## Interfaccia
+Tema originale neutro (indaco), chiaro/scuro, mobile-first con layout desktop a colonne da 1100px.
+Testo ≥ 16px, bersagli ≥ 48px, contrasto WCAG AA, uso da tastiera. Token in `src/ui/theme/theme.css`.
 
 ## Licenze
 Codice: MIT (`LICENSE`). Contenuti SRD: CC-BY-4.0 (`ATTRIBUTION.md`).

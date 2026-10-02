@@ -2,7 +2,9 @@
   "app": {
     "title": "SRD 5.2 Characters",
     "errorTitle": "Something went wrong",
-    "reload": "Reload"
+    "reload": "Reload",
+    "skip": "Skip to content",
+    "nav": "Navigation"
   },
   "tabs": {
     "characters": "Heroes",

@@ -101,6 +101,10 @@ body { font: 16px/1.45 var(--font); color: var(--text); background: var(--bg); o
 button, input, select, textarea { font: inherit; color: inherit; }
 h1, h2, h3 { line-height: 1.25; }
 :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.ui-dialog:focus, .ui-body:focus { outline: none; }
+/* «vai al contenuto»: visibile solo con la tastiera */
+.ui-skip { position: absolute; z-index: 2000; left: 8px; top: -80px; display: flex; align-items: center; min-height: var(--tap); padding: 0 18px; background: var(--accent); color: var(--accent-text); border-radius: var(--radius-sm); font-weight: 700; text-decoration: none; }
+.ui-skip:focus { top: calc(8px + var(--safe-t)); }
 
 /* ---- guscio dell'app ---------------------------------------------------------------------------------------------
    Telefono: intestazione in alto, contenuto, barra a schede in basso.
@@ -134,7 +138,7 @@ h1, h2, h3 { line-height: 1.25; }
 .ui-tab { flex: 1 1 0; min-width: 56px; min-height: 60px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 4px 2px; font-size: 16px; overflow: hidden; white-space: nowrap;
   background: transparent; border: 0; cursor: pointer; color: var(--text-dim); border-top: 3px solid transparent; }
 .ui-tab svg { width: 24px; height: 24px; }
-.ui-tab[aria-selected="true"] { color: var(--accent); border-top-color: var(--accent); font-weight: 700; }
+.ui-tab[aria-current="page"] { color: var(--accent); border-top-color: var(--accent); font-weight: 700; }
 .ui-tab[disabled] { opacity: .5; cursor: not-allowed; }
 .ui-sections button { flex: 1; min-width: 0; min-height: 60px; display: grid; place-items: center; padding: 0; background: transparent; border: 0; border-top: 3px solid transparent; cursor: pointer; color: var(--text-dim); }
 .ui-sections svg { width: 26px; height: 26px; }
@@ -149,7 +153,7 @@ h1, h2, h3 { line-height: 1.25; }
   .ui-app { grid-template-columns: var(--nav-w) minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); grid-template-areas: "nav head" "nav main"; }
   .ui-tabs, .ui-sections { flex-direction: column; justify-content: flex-start; gap: 4px; padding: 16px 12px; border-top: 0; border-right: 1px solid var(--border); }
   .ui-tab { flex: 0 0 auto; flex-direction: row; justify-content: flex-start; gap: 12px; min-height: var(--tap); padding: 0 14px; border-top: 0; border-radius: var(--radius-sm); font-size: 16px; }
-  .ui-tab[aria-selected="true"] { background: var(--accent-soft); color: var(--accent-soft-text); }
+  .ui-tab[aria-current="page"] { background: var(--accent-soft); color: var(--accent-soft-text); }
   .ui-sections button { flex: 0 0 auto; display: flex; justify-content: flex-start; align-items: center; gap: 12px; min-height: var(--tap); padding: 0 14px; border-top: 0; border-radius: var(--radius-sm); }
   .ui-sections button::after { content: attr(aria-label); font-size: 16px; }
   .ui-sections .back { display: flex; }

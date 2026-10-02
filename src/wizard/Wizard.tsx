@@ -99,14 +99,14 @@ export function Wizard({ ch, rs, allowReroll, onChange, onDone }: {
   const problems = view !== "summary" && view !== "homebrew" ? status(view)?.problems ?? [] : [];
   return (
     <>
-      <div className="wz-steps" role="tablist" aria-label={t.title}>
+      <nav className="wz-steps" aria-label={t.title}>
         {VIEWS.map((v, i) => (
-          <button key={v} type="button" role="tab" aria-current={v === view ? "step" : undefined} aria-label={v === "summary" ? t.summary : v === "homebrew" ? it.homebrew.title : `${i}. ${t.steps[v]}`}
+          <button key={v} type="button" aria-current={v === view ? "step" : undefined} aria-label={v === "summary" ? t.summary : v === "homebrew" ? it.homebrew.title : `${i}. ${t.steps[v]}`}
             className={v !== "summary" && v !== "homebrew" && status(v)?.complete ? "done" : ""} onClick={() => go(v)}>
             {v === "summary" ? "★" : v === "homebrew" ? "⚗" : status(v)?.complete ? "✓" : i}
           </button>
         ))}
-      </div>
+      </nav>
       <div className="wz-bar" role="progressbar" aria-valuemin={0} aria-valuemax={STEPS.length} aria-valuenow={done}><div style={{ width: `${(done / STEPS.length) * 100}%` }} /></div>
       <h2>{view === "summary" ? t.summary : view === "homebrew" ? it.homebrew.title : `${fmt(t.step, { n: idx, t: STEPS.length - 1 })}: ${t.steps[view]}`}</h2>
       {!rs.creation.get("creation") && <div className="ui-error" role="alert">{t.noCreation}</div>}
