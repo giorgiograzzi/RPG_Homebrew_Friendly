@@ -25,6 +25,11 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 - [ ] 🟡 Font per la scheda PDF: usare solo font con licenza libera (es. OFL) e citarli in `ATTRIBUTION.md`.
 - [ ] 🟡 Icone/immagini: l'icona dell'app è nuova (drago + d20, PR #28 e #29, `public/icons/`): Giorgio conferma che sia un disegno originale prima della release (step 10).
 - [ ] 🟡 Licenza delle dipendenze npm: controllare che siano tutte compatibili con MIT (report `npm ls` / license-checker).
+- [x] Privacy Policy e Cookie Policy complete in IT/EN (`src/legal/policies.ts`, menu → Privacy Policy / Cookie Policy), avviso sui cookie informativo (`src/ui/CookieBanner.tsx`, «Ho capito»; si rimostra da Impostazioni → Privacy e cookie), test e smoke (#34).
+- [ ] 🟡 Confermare l'email del titolare in `CONTROLLER` (`giorgiograzzi1987@gmail.com`: nella richiesta era scritta «girgiograzzi1987», trattata come refuso) e valutare se aggiungere indirizzo / P.IVA.
+- [ ] 🟡 Verificare i dati di hosting scritti nella Privacy Policy: retention dei log del server (30 giorni scritti nel testo), nominare l'eventuale CDN/tunnel (es. Cloudflare) e i suoi cookie tecnici.
+- [ ] 🟡 Far rivedere Privacy e Cookie Policy da un professionista prima di un uso commerciale (i testi non sono consulenza legale).
+- [ ] 🟢 Se si aggiungono statistiche, servizi esterni o cookie: aggiornare `policies.ts` e trasformare il banner in Accetta / Rifiuta / Personalizza, senza caricare nulla prima del consenso.
 - [ ] 🟡 Rileggere il testo legale finale con calma prima della release (non sono un avvocato: è una verifica tecnica, non un parere legale).
 
 ### Dati SRD (step 2a)
@@ -157,7 +162,7 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 - [x] Dicitura + avviso anche su ogni pagina della scheda PDF, in `ATTRIBUTION.md` e nel README. `attribution.test.ts` confronta la dicitura con la prima pagina dei due PDF SRD (chiusa la voce «da verificare a occhio»).
 - [x] Corretto il pulsante «Sali di livello» tagliato su telefono (testata della scheda a capo).
 - [ ] 🟡 Il nome «Placet del Master» evoca l'originale. Va bene, ma sarebbe prudente un parere legale/una ricerca marchi prima della pubblicazione (step 10).
-- [ ] 🟢 Rinominare i file di export (`personaggi-srd-*.json` → `danger-and-dragons-*.json`) e il pacchetto npm `srd-personaggi-pwa`.
+- [ ] 🟢 Rinominare i file di export (`personaggi-srd-*.json` → `placet-del-master-*.json`) e il pacchetto npm `srd-personaggi-pwa`.
 
 ### Scheda PDF (step 7)
 - [x] Generatore originale con pdf-lib (`src/export/sheetPdf.ts`, `pdfKit.ts`): A4, IT e EN, Noto Sans (OFL) incorporato, dicitura CC-BY e numero di pagina su ogni pagina; pulsante in Scheda → Altro. Licenza del font in `ATTRIBUTION.md` e `docs/licenses/`.
