@@ -10,6 +10,7 @@ import { Button, Dialog } from "../ui/theme";
 import { AsiBlock, draftOf } from "../wizard/Wizard";
 import { QuestionView } from "../wizard/QuestionView";
 import { choose } from "../wizard/logic";
+import { appStore } from "../store";
 
 const t = it.levelup;
 
@@ -46,7 +47,7 @@ export function LevelUp({ ch, rs, update, onClose }: { ch: Character; rs: Rulese
     if (!r.ok) { setErrors(r.errors); return; }
     setErrors([]); setWork(r.character);
   };
-  const confirm = () => { update(() => base); onClose(); };
+  const confirm = () => { void appStore.getState().snapshot(it.play.snapshots.levelUp); update(() => base); onClose(); };
 
   return (
     <Dialog title={t.title} onClose={onClose}>

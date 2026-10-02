@@ -26,7 +26,12 @@
     "open": "Apri",
     "delete": "Elimina",
     "confirmDelete": "Eliminare definitivamente questo personaggio?",
-    "backupDue": "È passato un po' dall'ultimo backup: esportalo adesso, così i personaggi sono al sicuro."
+    "backupDue": "È passato un po' dall'ultimo backup: esportalo adesso, così i personaggi sono al sicuro.",
+    "duplicate": "Duplica",
+    "export": "Esporta",
+    "exportRaw": "Esporta dati grezzi",
+    "broken": "Questo personaggio non si apre (dati rovinati o di una versione più recente). Puoi esportarne i dati grezzi per recuperarli.",
+    "duplicated": "Copia creata."
   },
   "soon": {
     "needCharacter": "Apri o crea un personaggio dalla scheda Personaggi."
@@ -75,6 +80,14 @@
       "other": "Dal menu del browser scegli «Installa app» oppure «Aggiungi alla schermata Home».",
       "offline": "Dopo il primo caricamento l'app funziona anche senza rete; i personaggi restano sul tuo dispositivo.",
       "done": "Installazione avviata."
+    },
+    "storage": {
+      "title": "Archivio",
+      "persisted": "Protetto: il browser non cancella i personaggi da solo.",
+      "notPersisted": "Non protetto: se il dispositivo ha poco spazio il browser potrebbe cancellare i dati. Esporta spesso un backup.",
+      "request": "Proteggi l'archivio",
+      "unsupported": "Questo browser non permette di proteggere l'archivio: esporta spesso un backup.",
+      "usage": "Spazio usato: {u} su {q}"
     }
   },
   "import": {
@@ -364,7 +377,18 @@
     "includedIn": " — inclusa da un'altra condizione",
     "immune": " — immune",
     "rollMode": "Modalità",
-    "sections": "Sezioni della scheda"
+    "sections": "Sezioni della scheda",
+    "snapshots": {
+      "title": "Copie di sicurezza",
+      "help": "Si creano da sole prima di salire di livello e prima di modificare la creazione (ne restano 10). Ripristinare ne crea una nuova dello stato attuale.",
+      "none": "Ancora nessuna copia.",
+      "now": "Crea una copia ora",
+      "restore": "Ripristina",
+      "restoreConfirm": "Ripristinare la copia del {d}? Lo stato attuale resta salvato come copia.",
+      "levelUp": "Prima di salire di livello",
+      "reopen": "Prima di modificare la creazione",
+      "manual": "Copia manuale"
+    }
   },
   "equip": {
     "title": "Equipaggiamento",

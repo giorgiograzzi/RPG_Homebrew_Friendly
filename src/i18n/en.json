@@ -26,7 +26,12 @@
     "open": "Open",
     "delete": "Delete",
     "confirmDelete": "Permanently delete this character?",
-    "backupDue": "It has been a while since your last backup: export one now to keep your characters safe."
+    "backupDue": "It has been a while since your last backup: export one now to keep your characters safe.",
+    "duplicate": "Duplicate",
+    "export": "Export",
+    "exportRaw": "Export raw data",
+    "broken": "This character cannot be opened (damaged data or from a newer version). You can export the raw data to recover it.",
+    "duplicated": "Copy created."
   },
   "soon": {
     "needCharacter": "Open or create a character from the Characters tab."
@@ -75,6 +80,14 @@
       "other": "From the browser menu choose “Install app” or “Add to Home Screen”.",
       "offline": "After the first load the app also works without a network; your characters stay on your device.",
       "done": "Installation started."
+    },
+    "storage": {
+      "title": "Storage",
+      "persisted": "Protected: the browser will not delete your characters on its own.",
+      "notPersisted": "Not protected: if the device is low on space the browser may delete the data. Export a backup often.",
+      "request": "Protect storage",
+      "unsupported": "This browser cannot protect the storage: export a backup often.",
+      "usage": "Space used: {u} of {q}"
     }
   },
   "import": {
@@ -364,7 +377,18 @@
     "includedIn": " — included in another condition",
     "immune": " — immune",
     "rollMode": "Mode",
-    "sections": "Sheet sections"
+    "sections": "Sheet sections",
+    "snapshots": {
+      "title": "Safety copies",
+      "help": "Created automatically before leveling up and before editing the creation (the last 10 are kept). Restoring saves the current state as a new copy.",
+      "none": "No copies yet.",
+      "now": "Make a copy now",
+      "restore": "Restore",
+      "restoreConfirm": "Restore the copy from {d}? The current state is kept as a copy.",
+      "levelUp": "Before leveling up",
+      "reopen": "Before editing the creation",
+      "manual": "Manual copy"
+    }
   },
   "equip": {
     "title": "Equipment",

@@ -146,3 +146,78 @@ describe("store: homebrew", () => {
     expect(b.store.getState().homebrew).toEqual([on, off]);
   });
 });
+
+describe("store: archivio sicuro (P2-2)", () => {
+  const mkEntry = (id: string) => ({ kind: "feats" as const, enabled: true, data: { id, name: { it: id, en: id }, description: { it: "", en: "" }, category: "general" } }) as never;
+  it("migra l'homebrew della v1 (un blocco in settings) alla tabella a righe", async () => {
+    const Dexie = (await import("dexie")).default;
+    const name = `mig-${++n}`;
+    const old = new Dexie(name);
+    old.version(1).stores({ characters: "id, updatedAt", settings: "key" });
+    await old.table("settings").put({ key: "homebrew", value: [mkEntry("a"), mkEntry("b")] });
+    old.close();
+    const repo = createRepo(name);
+    expect((await repo.listHomebrew()).map((e) => (e.data as { id: string }).id).sort()).toEqual(["a", "b"]);
+    expect(await repo.getSetting("homebrew")).toBeUndefined();
+  });
+  it("due schede: le voci homebrew aggiunte altrove non si perdono, e le modifiche arrivano all'altra scheda", async () => {
+    const listeners: ((m: never) => void)[] = [];
+    const bus = (): import("./app").Channel => ({ post: (m) => listeners.forEach((l) => l(m as never)), subscribe: (cb) => { listeners.push(cb as never); } });
+    const repo = createRepo(`store-${++n}`);
+    const a = createAppStore({ repo, channel: bus(), newId: () => "x1" });
+    const b = createAppStore({ repo, channel: bus(), newId: () => "x2" });
+    await a.getState().init(); await b.getState().init();
+    await a.getState().setHomebrew([mkEntry("da_a")]);
+    await new Promise((r) => setTimeout(r, 20));
+    expect(b.getState().homebrew).toHaveLength(1); // arrivata via canale
+    await b.getState().setHomebrew([...b.getState().homebrew, mkEntry("da_b")]);
+    expect((await repo.listHomebrew()).length).toBe(2);
+    // un personaggio aperto in entrambe: la modifica di A compare in B (B non ha modifiche in sospeso)
+    const ch = await a.getState().create();
+    await b.getState().open(ch.id);
+    a.getState().update((c) => ({ ...c, name: "Da A" }));
+    await a.getState().flush();
+    await new Promise((r) => setTimeout(r, 20));
+    expect(b.getState().current?.name).toBe("Da A");
+    // se B ha modifiche non salvate, non si sovrascrive in silenzio: compare un avviso
+    b.getState().update((c) => ({ ...c, name: "Da B" }));
+    a.getState().update((c) => ({ ...c, name: "Di nuovo A" }));
+    await a.getState().flush();
+    await new Promise((r) => setTimeout(r, 20));
+    expect(b.getState().current?.name).toBe("Da B");
+    expect(b.getState().error).toContain("altra scheda");
+  });
+  it("snapshot: se ne tengono 10 per personaggio e si ripristina", async () => {
+    const { store, repo } = setup();
+    await store.getState().init();
+    await store.getState().create();
+    for (let i = 0; i < 12; i++) {
+      store.getState().update((c) => ({ ...c, name: `v${i}` }));
+      await store.getState().snapshot(`s${i}`);
+    }
+    const list = await store.getState().snapshots();
+    expect(list).toHaveLength(10);
+    expect(list[0]!.label).toBe("s11");
+    const old = list[list.length - 1]!; // s2 → nome v2
+    expect(await store.getState().restoreSnapshot(old.id)).toBe(true);
+    expect(store.getState().current?.name).toBe("v2");
+    expect(store.getState().saveStatus).toBe("saved");
+    const l = await repo.load(store.getState().current!.id);
+    expect(l.ok && l.character.name).toBe("v2");
+  });
+  it("duplica, esporta un solo personaggio e recupera i dati grezzi di una riga rovinata", async () => {
+    const { store, repo } = setup();
+    await store.getState().init();
+    const ch = await store.getState().create();
+    store.getState().update((c) => ({ ...c, name: "Aria" }));
+    const dupId = await store.getState().duplicate(ch.id);
+    expect(dupId).not.toBe(ch.id);
+    const dup = await repo.load(dupId!);
+    expect(dup.ok && dup.character.name).toBe("Aria (copia)");
+    const one = JSON.parse((await store.getState().exportOne(ch.id))!);
+    expect(one.characters).toHaveLength(1);
+    // righe rovinate: i dati grezzi si recuperano anche se non passano la validazione; id sconosciuto → null
+    expect(JSON.parse((await store.getState().exportRaw(ch.id))!).id).toBe(ch.id);
+    expect(await store.getState().exportRaw("inesistente")).toBeNull();
+  });
+});
