@@ -95,6 +95,12 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 - [ ] 🟡 Un solo punto di adattamento schermo oggi (`max-width: 720px`): introdurre breakpoint 640 / 1024.
 - [ ] 🟢 Valutare interruttore tema (sistema / chiaro / scuro) e dimensione testo in Impostazioni.
 
+### Verifica interfaccia (step 5)
+- [ ] 🟡 Il pulsante «indietro» della scheda e quello del menu hanno entrambi l'etichetta accessibile «Menu» (`it.play.back` e `it.menu.open`): rinominare il primo («Personaggi») nello step 5b-4.
+- [ ] 🟡 Il level-up non gestisce i PX: `levelFromXp`/`xpForLevel` esistono nel motore ma il personaggio non ha un campo PX; i testi `levelup.xp*` non sono usati.
+- [ ] 🟢 Il level-up usa il tiro del dado solo come scelta «tira una volta»: ogni clic su «Tira» sostituisce il tiro precedente (rispettare `allowReroll`?).
+- [ ] 🟢 `grantedSpells` contiene gli stessi incantesimi due volte per il Mago (libro e preparati): il riepilogo li mostra una volta sola, ma il motore andrebbe controllato.
+
 ### Prodotto
 - [ ] 🟡 Con l'SRD le opzioni sono meno: pensare a un messaggio chiaro in creazione ("contenuto non presente: aggiungilo come homebrew") e a un modo semplice per importare pacchetti homebrew dell'utente.
 - [ ] 🟡 Verifica in app che cambiare lingua non perda scelte del personaggio (id stabili).
@@ -137,6 +143,12 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 - [ ] 🟡 `en.json` traduce tutte le chiavi di `it.json` così com'è. Restano stringhe da riscrivere con la nuova interfaccia (5b) e dall'editor homebrew (step 6, dove va tolto «Parti da una voce ufficiale»): quando si cambia una stringa vanno aggiornate entrambe (il test di parità lo impone).
 - [ ] 🟢 Nome e descrizione del manifest PWA (`vite.config.ts`) e `index.html` sono ancora solo in italiano (step 9). `<html lang>` si imposta all'avvio.
 - [ ] 🟢 Le unità (piedi/libbre) nei testi dell'interfaccia restano come nei dati; nei dati italiani le distanze sono in metri solo nel testo delle regole.
+
+### Verifica interfaccia (step 5)
+- [x] 🔴 Mancava la schermata di level-up (il motore e i testi `levelup.*` c'erano, la UI no): costruita in `src/sheet/LevelUp.tsx` (classe/multiclasse → PF → novità e scelte), pulsante nella testata della scheda.
+- [x] 🟡 Dopo «Applica» negli aumenti di caratteristica la bozza tornava a +0 pur essendo applicata (wizard e level-up): corretto.
+- [x] 🟡 Riepilogo del wizard: chiavi React duplicate per gli incantesimi concessi (Mago): deduplicati.
+- [x] Smoke Playwright `npm run e2e:smoke`: crea un Mago in IT, riposo lungo, passa a EN, level-up 1→2, esporta, elimina, reimporta.
 
 ### Motore con dati SRD (step 4)
 - [ ] 🟡 `homebrew.content.test.ts` è l'unico file rosso: usa i pacchetti di esempio `data/homebrew/esempio-{specie,background,classe}.json` (specie «Figli della cenere», background «Guardiano del faro», classe «Custode delle rune»…) che vanno ricreati **originali e senza contenuti ufficiali** nello step 6.
