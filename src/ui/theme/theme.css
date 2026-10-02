@@ -189,9 +189,10 @@ h1, h2, h3 { line-height: 1.25; }
 .ui-seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-text); font-weight: 700; }
 
 .ui-list { list-style: none; margin: 0 0 16px; padding: 0; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); overflow: hidden; }
-.ui-list li { display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border); padding: 4px 6px 4px 14px; min-height: 60px; }
+.ui-list li { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; border-bottom: 1px solid var(--border); padding: 4px 6px 4px 14px; min-height: 60px; }
 .ui-list li:last-child { border-bottom: 0; }
-.ui-list .grow { flex: 1; min-width: 0; }
+.ui-list .grow { flex: 1 1 160px; min-width: 0; }
+.ui-list .row-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-left: auto; }
 .ui-list .name { font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .ui-list li.active { background: var(--accent-soft); color: var(--accent-soft-text); }
 .ui-list li.active .ui-muted { color: var(--accent-soft-text); opacity: .85; }

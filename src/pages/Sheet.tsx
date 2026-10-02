@@ -9,6 +9,7 @@ import { PlaySheet } from "../sheet/PlaySheet";
 import type { SheetView } from "../sheet/sections";
 import { Wizard } from "../wizard/Wizard";
 import { isFinalized, reopenCreation } from "../wizard/logic";
+import { appStore } from "../store";
 
 // Scheda: finché la creazione non è chiusa mostra il wizard; poi il riepilogo (la scheda giocabile arriva allo step 14)
 export function Sheet({ section, onSection }: { section: SheetView; onSection: (s: SheetView) => void }) {
@@ -36,7 +37,7 @@ export function Sheet({ section, onSection }: { section: SheetView; onSection: (
           <p>{it.wizard.sum.reopenConfirm}</p>
           <div className="ui-actions footer">
             <Button onClick={() => setReopen(false)}>{it.wizard.confirmNo}</Button>
-            <Button variant="primary" onClick={() => { update(reopenCreation); setReopen(false); }}>{it.wizard.confirmYes}</Button>
+            <Button variant="primary" onClick={() => { void appStore.getState().snapshot(it.play.snapshots.reopen); update(reopenCreation); setReopen(false); }}>{it.wizard.confirmYes}</Button>
           </div>
         </Dialog>
       )}

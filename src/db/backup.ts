@@ -77,7 +77,7 @@ export function applyImport(preview: ImportPreview, resolutions: Record<string, 
     if (it.status === "new") { out.push(it.character); continue; }
     const r = resolutions[it.id] ?? "copy";
     if (r === "replace") out.push(it.character);
-    else if (r === "copy") out.push({ ...it.character, id: newId(), name: `${it.character.name} (importato)` });
+    else if (r === "copy") out.push({ ...it.character, id: newId(), name: `${it.character.name} ${tr("(importato)", "(imported)")}` });
   }
   return out;
 }

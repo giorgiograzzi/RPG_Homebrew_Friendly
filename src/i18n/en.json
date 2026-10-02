@@ -28,13 +28,14 @@
     "open": "Open",
     "delete": "Delete",
     "confirmDelete": "Permanently delete this character?",
-    "creationSoon": "Guided creation comes with the next step: for now the character is empty.",
-    "backupDue": "It has been a while since your last backup: export one now to keep your characters safe."
+    "backupDue": "It has been a while since your last backup: export one now to keep your characters safe.",
+    "duplicate": "Duplicate",
+    "export": "Export",
+    "exportRaw": "Export raw data",
+    "broken": "This character cannot be opened (damaged data or from a newer version). You can export the raw data to recover it.",
+    "duplicated": "Copy created."
   },
   "soon": {
-    "sheet": "The playable sheet is coming.",
-    "equip": "Equipment is coming.",
-    "magic": "Spells are coming.",
     "needCharacter": "Open or create a character from the Characters tab."
   },
   "settings": {
@@ -81,6 +82,15 @@
       "other": "From the browser menu choose “Install app” or “Add to Home Screen”.",
       "offline": "After the first load the app also works without a network; your characters stay on your device.",
       "done": "Installation started."
+    },
+    "storage": {
+      "title": "Storage",
+      "persisted": "Protected: the browser will not delete your characters on its own.",
+      "notPersisted": "Not protected: if the device is low on space the browser may delete the data. Export a backup often.",
+      "request": "Protect storage",
+      "unsupported": "This browser cannot protect the storage: export a backup often.",
+      "usage": "Space used: {u} of {q}",
+      "installedNoApi": "App installed on the Home screen: the system does not delete an installed app's data on its own, but the browser cannot confirm it. Export a backup now and then anyway."
     },
     "privacy": {
       "title": "Privacy and cookies",
@@ -162,7 +172,8 @@
       "bonus": "Bonus",
       "total": "Total",
       "mod": "Mod.",
-      "table": "Scores"
+      "table": "Scores",
+      "nonSrd": "Only the standard array is in SRD 5.2.1: rolling, point buy and manual are common extra methods."
     },
     "abilities": {
       "str": "Strength",
@@ -182,16 +193,17 @@
       "init": "Initiative",
       "languages": "Languages",
       "equipment": "Equipment",
-      "features": "Features",
       "spells": "Spells",
       "gold": "Coins",
       "errors": "It cannot be closed yet",
-      "done": "Creation complete",
       "reopen": "Edit the creation",
       "reopenConfirm": "By reopening the creation you can change choices and level. Hit Points already rolled, equipment, coins and play state stay as they are now. Continue?",
-      "progress": "Level and advancement"
+      "saves": "Saving throws",
+      "skills": "Skills",
+      "profs": "Proficiencies",
+      "features": "Features"
     },
-    "noCreation": "The creation rules are missing: alignments, standard array and point buy are not available. Run “npm run extract:data” on the server, then rebuild.",
+    "noCreation": "The creation rules are missing: alignments and the standard array are not available. Reload the app; if it persists, update it.",
     "stepMissing": "Step “{s}”: some choices are missing",
     "levelStep": {
       "level": "Character level",
@@ -229,6 +241,30 @@
       "done": "{name}'s sheet is ready: you will find it in your downloads.",
       "error": "I cannot create the PDF: {e}",
       "help": "Writes the character's data on a PDF sheet ready to print."
+    },
+    "second": {
+      "title": "Second class (multiclass, optional)",
+      "help": "If you start at level 2 or higher you can split the levels between two classes. You need 13 in the primary ability of both (checked when you assign the scores).",
+      "class": "Second class",
+      "none": "None",
+      "levels": "Levels of {c}",
+      "split": "{a} {la} / {b} {lb}"
+    },
+    "details": {
+      "title": "Character details",
+      "help": "All optional: it helps you remember who the character is and goes on the PDF sheet.",
+      "labels": {
+        "player": "Player name",
+        "age": "Age",
+        "height": "Height",
+        "weight": "Weight",
+        "appearance": "Appearance",
+        "personality": "Personality traits",
+        "ideals": "Ideals",
+        "bonds": "Bonds",
+        "flaws": "Flaws",
+        "backstory": "Backstory"
+      }
     }
   },
   "play": {
@@ -325,7 +361,7 @@
     "source": "Caused by…",
     "none": "No active conditions.",
     "cannot": "You can't",
-    "penalty": "d20 rolls: {n} · Speed: {s} ft",
+    "penalty": "d20 rolls: {n} · Speed: {s}",
     "coins": "Coins",
     "notes": "Notes",
     "notesHelp": "Free notes about the character.",
@@ -379,7 +415,18 @@
     "includedIn": " — included in another condition",
     "immune": " — immune",
     "rollMode": "Mode",
-    "sections": "Sheet sections"
+    "sections": "Sheet sections",
+    "snapshots": {
+      "title": "Safety copies",
+      "help": "Created automatically before leveling up and before editing the creation (the last 10 are kept). Restoring saves the current state as a new copy.",
+      "none": "No copies yet.",
+      "now": "Make a copy now",
+      "restore": "Restore",
+      "restoreConfirm": "Restore the copy from {d}? The current state is kept as a copy.",
+      "levelUp": "Before leveling up",
+      "reopen": "Before editing the creation",
+      "manual": "Manual copy"
+    }
   },
   "equip": {
     "title": "Equipment",
@@ -1055,7 +1102,8 @@
       "always": "always prepared",
       "granted": "granted"
     },
-    "ft": "ft"
+    "ft": "ft",
+    "details": "Character details"
   },
   "about": {
     "title": "About and licenses",

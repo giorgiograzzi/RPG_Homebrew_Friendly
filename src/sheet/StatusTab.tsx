@@ -11,9 +11,11 @@ import { concentrationDc, endConcentration } from "../engine/magic";
 import { RegainButton, RollDialog, SourcesDialog } from "./dialogs";
 import type { TabProps } from "./types";
 import { num, sign } from "./util";
+import { tr } from "../i18n/tr";
+import { distance } from "../ui/units";
 
 const t = it.play;
-const RECHARGE: Record<string, string> = { short_rest: "Si ricarica con un riposo breve", long_rest: "Si ricarica con un riposo lungo", dawn: "Si ricarica all'alba" };
+const RECHARGE: Record<string, string> = { short_rest: tr("Si ricarica con un riposo breve", "Recharges on a short rest"), long_rest: tr("Si ricarica con un riposo lungo", "Recharges on a long rest"), dawn: tr("Si ricarica all'alba", "Recharges at dawn") };
 const Pips = ({ n, of, kind }: { n: number; of: number; kind: "ok" | "ko" }) => (
   <span className="pl-pips" aria-label={`${n}/${of}`}>{Array.from({ length: of }, (_, i) => <span key={i} className={`pl-pip ${i < n ? `on ${kind}` : ""}`} />)}</span>
 );
@@ -71,7 +73,7 @@ export function StatusTab({ ch, rs, d, update, onSection }: TabProps & { onSecti
       <div className="pl-grid">
         {tile(t.ac, d.ac, "ac")}
         {tile(t.init, d.initiative, "initiative", sign)}
-        {tile(t.speed, d.speed.walk, "speed.walk", (n) => `${n} ft`)}
+        {tile(t.speed, d.speed.walk, "speed.walk", (n) => distance(n))}
         {tile(t.pb, d.proficiencyBonus, undefined, sign)}
         {tile(t.pp, d.passivePerception, "passivePerception")}
         <button type="button" className="pl-tile" onClick={() => setDlg({ kind: "sources", title: t.hp, value: d.hp.max, key: "hp.max" })}>
@@ -83,7 +85,7 @@ export function StatusTab({ ch, rs, d, update, onSection }: TabProps & { onSecti
       <button type="button" className="pl-tile" style={{ width: "100%", marginBottom: 12 }} onClick={() => onSection("conditions")}>
         {t.conditionsTile}
         <b>{d.conditions.active.length + (s.exhaustion > 0 && !d.conditions.active.includes("exhaustion") ? 1 : 0) || 0}</b>
-        <span className="pl-sub">{[...d.conditions.active.map((c) => rs.conditions.get(c)?.name.it ?? c), ...(s.exhaustion > 0 && !d.conditions.active.includes("exhaustion") ? [`Esaurimento ${s.exhaustion}`] : [])].join(", ") || t.conditionsNone}</span>
+        <span className="pl-sub">{[...d.conditions.active.map((c) => rs.conditions.get(c)?.name.it ?? c), ...(s.exhaustion > 0 && !d.conditions.active.includes("exhaustion") ? [`${it.play.exhaustion} ${s.exhaustion}`] : [])].join(", ") || t.conditionsNone}</span>
       </button>
 
       <Check checked={s.inspiration} onChange={(v) => update((c) => setInspiration(c, v))}>{t.inspiration}</Check>

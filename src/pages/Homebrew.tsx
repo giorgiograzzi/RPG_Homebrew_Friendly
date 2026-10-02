@@ -13,6 +13,7 @@ import { Button, Check, Dialog, Field } from "../ui/theme";
 import { useApp } from "../ui/useApp";
 import { isFinalized } from "../wizard/logic";
 import { download } from "./Settings";
+import { tr } from "../i18n/tr";
 
 const t = it.homebrew;
 
@@ -163,7 +164,7 @@ export function Homebrew() {
 function ExportDialog({ entries, onClose }: { entries: HbEntry[]; onClose: () => void }) {
   const packs = packNames(entries);
   const [which, setWhich] = useState("all");
-  const [name, setName] = useState(packs.length === 1 ? packs[0]! : "Il mio homebrew");
+  const [name, setName] = useState(packs.length === 1 ? packs[0]! : tr("Il mio homebrew", "My homebrew"));
   const chosen = which === "all" ? entries : entries.filter((e) => e.pack === which);
   return (
     <Dialog title={t.export} onClose={onClose}>

@@ -2,6 +2,7 @@ import type { HbData, HbKind, Opt } from "../engine/homebrew";
 import type { ComplexKind } from "./complex";
 import type { Ruleset } from "../engine/ruleset";
 import { strings as it } from "../i18n";
+import { tr } from "../i18n/tr";
 
 const F = it.homebrew.f;
 const O = it.homebrew.opts;
@@ -93,7 +94,7 @@ export const emptyDraft = (kind: FlatKind): Draft => {
   switch (kind) {
     case "weapons": return { name: "", description: "", category: "simple", wkind: "melee", damage: "1d6", damageType: "slashing", properties: [], versatileDamage: "", rangeNormal: "", rangeLong: "", mastery: "", attunement: false, ...CHARGES_DRAFT, weight: "0", costGp: "0" };
     case "armors": return { name: "", description: "", category: "light", baseAc: "11", dexCap: "", strRequired: "0", donMinutes: "1", stealthDisadvantage: false, attunement: false, ...CHARGES_DRAFT, weight: "0", costGp: "0" };
-    case "items": return { name: "", description: "", category: "Oggetto magico", attunement: false, ...CHARGES_DRAFT, weight: "0", costGp: "0" };
+    case "items": return { name: "", description: "", category: tr("Oggetto magico", "Magic item"), attunement: false, ...CHARGES_DRAFT, weight: "0", costGp: "0" };
     case "feats": return { name: "", description: "", category: "general", minLevel: "", repeatable: false };
     case "languages": return { name: "", description: "", rarity: "standard" };
     case "damageTypes": return { name: "", description: "" };

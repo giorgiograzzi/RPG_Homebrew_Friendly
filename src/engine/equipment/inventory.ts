@@ -22,7 +22,7 @@ export function formatCost(cp: number): string {
 // Paga con le monete che hai: prima quelle più grandi che ci stanno, poi si "spezza" la più piccola che basta e si dà il resto.
 export function payCoins(coins: Coins, costCp: number): { ok: true; coins: Coins } | { ok: false; error: string } {
   if (costCp <= 0) return { ok: true, coins };
-  if (walletCp(coins) < costCp) return { ok: false, error: `Ti servono ${formatCost(costCp)}: hai ${formatCost(walletCp(coins))}` };
+  if (walletCp(coins) < costCp) return { ok: false, error: tr(`Ti servono ${formatCost(costCp)}: hai ${formatCost(walletCp(coins))}`, `You need ${formatCost(costCp)}: you have ${formatCost(walletCp(coins))}`) };
   const c: Coins = { ...coins };
   let need = costCp;
   for (const d of HIGH_TO_LOW) {
@@ -44,16 +44,16 @@ export function payCoins(coins: Coins, costCp: number): { ok: true; coins: Coins
   return { ok: true, coins: c };
 }
 
-export interface CatalogEntry { id: string; name: string; kind: Found["kind"]; group: string; homebrew: boolean; cost: number; weight: number }
-const GROUP: Record<string, string> = { weapon: "Armi", armor: "Armature", tool: "Strumenti", item: "Oggetti", magic: "Oggetti magici" };
+export interface CatalogEntry { id: string; name: string; kind: Found["kind"]; group: string; homebrew: boolean; cost: number; weight: number; description: string }
+const GROUP: Record<string, string> = { weapon: tr("Armi", "Weapons"), armor: tr("Armature", "Armor"), tool: tr("Strumenti", "Tools"), item: tr("Oggetti", "Items"), magic: tr("Oggetti magici", "Magic items") };
 // Tutto ciò che si può comprare (ha un costo). Le creazioni homebrew hanno gli stessi gruppi del manuale ma il flag `homebrew` (anche a costo 0: oggetti magici, doni).
 export function shopCatalog(rs: Ruleset): CatalogEntry[] {
   const out: CatalogEntry[] = [];
-  const add = (kind: Found["kind"], defs: Iterable<{ id: string; name: { it: string }; cost: number; weight: number; origin?: string }>) => {
+  const add = (kind: Found["kind"], defs: Iterable<{ id: string; name: { it: string }; cost: number; weight: number; origin?: string; description?: string }>) => {
     for (const d of defs) {
       const hb = d.origin === "homebrew";
       const magic = kind === "item" && !!(d as { magic?: unknown }).magic; // gli oggetti magici dell'SRD non hanno prezzo: si aggiungono (li assegna il GM)
-      if (d.cost > 0 || hb || magic) out.push({ id: d.id, name: d.name.it, kind, group: GROUP[magic ? "magic" : kind]!, homebrew: hb, cost: d.cost, weight: d.weight });
+      if (d.cost > 0 || hb || magic) out.push({ id: d.id, name: d.name.it, kind, group: GROUP[magic ? "magic" : kind]!, homebrew: hb, cost: d.cost, weight: d.weight, description: d.description ?? "" });
     }
   };
   add("weapon", rs.weapons.values()); add("armor", rs.armors.values()); add("tool", rs.tools.values()); add("item", rs.items.values());
@@ -65,7 +65,7 @@ const fail = (ch: Character, e: string): Result => ({ ok: false, errors: [e], ch
 
 export function buyItem(ch: Character, rs: Ruleset, id: string, qty = 1): Result {
   const f = lookupItem(rs, id);
-  if (!f) return fail(ch, `Oggetto sconosciuto: ${id}`);
+  if (!f) return fail(ch, tr(`Oggetto sconosciuto: ${id}`, `Unknown item: ${id}`));
   const cost = (f.def as { cost?: number }).cost ?? 0;
   const pay = payCoins(ch.coins, cost * qty);
   if (!pay.ok) return fail(ch, pay.error);
@@ -88,9 +88,9 @@ export function setQty(ch: Character, id: string, qty: number): Character {
 // Sintonia: solo per gli oggetti che la richiedono, al massimo 3
 export function setAttuned(ch: Character, rs: Ruleset, id: string, on: boolean): Result {
   const f = lookupItem(rs, id);
-  if (!f || !ch.inventory.some((e) => e.itemId === id)) return fail(ch, "Oggetto non nel tuo inventario");
+  if (!f || !ch.inventory.some((e) => e.itemId === id)) return fail(ch, tr("Oggetto non nel tuo inventario", "Item not in your inventory"));
   if (on) {
-    if (!needsAttunement(f)) return fail(ch, `${f.def.name.it} non richiede sintonia`);
+    if (!needsAttunement(f)) return fail(ch, tr(`${f.def.name.it} non richiede sintonia`, `${f.def.name.it} does not require attunement`));
     if (ch.inventory.filter((e) => e.attuned).length >= 3) return fail(ch, tr("Sei già sintonizzato con 3 oggetti", "You are already attuned to 3 items"));
   }
   return { ok: true, errors: [], character: { ...ch, inventory: ch.inventory.map((e) => {

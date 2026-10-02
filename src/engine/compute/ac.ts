@@ -31,7 +31,7 @@ export function computeAc(x: Ctx, profs: Profs, warnings: string[]): Derived["ac
   const parts = [...best.parts];
   if (x.shield) {
     if (best.shieldOk && profs.armor.has("shield")) parts.push({ label: x.shield.name.it, value: x.shield.baseAc });
-    else if (best.shieldOk) warnings.push("Scudo senza addestramento: nessun bonus alla CA");
+    else if (best.shieldOk) warnings.push(tr("Scudo senza addestramento: nessun bonus alla CA", "Shield without training: no AC bonus"));
   }
   for (const { effect: e, label } of x.active) if (e.op === "acBonus") parts.push({ label, value: evalValue(e.value, x) });
   const total = sum(parts);

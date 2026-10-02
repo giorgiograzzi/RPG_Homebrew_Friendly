@@ -15,6 +15,7 @@ import { isFinalized } from "./wizard/logic";
 import { ReloadPrompt } from "./ui/ReloadPrompt";
 import { useApp } from "./ui/useApp";
 import { useMedia, WIDE } from "./ui/useMedia";
+import { requestPersistence } from "./store";
 
 const SECTION_ICONS: Record<(typeof SHEET_SECTIONS)[number], IconName> = { status: "heart", attacks: "sword", equip: "equip", magic: "magic", misc: "notes" };
 // Le tab principali non riguardano un personaggio; Scheda, Equip e Magie sono sezioni della scheda
@@ -37,7 +38,7 @@ export function App() {
   const [legal, setLegal] = useState<PolicyKind | null>(null);
   const [importing, setImporting] = useState<ImportPreview | null>(null);
 
-  useEffect(() => { void init(); }, [init]);
+  useEffect(() => { void init().then(() => requestPersistence()); }, [init]);
   // Salva subito quando l'app va in secondo piano o si chiude
   useEffect(() => {
     const onHide = () => { if (document.visibilityState === "hidden") void flush(); };

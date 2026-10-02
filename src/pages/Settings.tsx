@@ -1,7 +1,6 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { ImportPreview, Resolution } from "../db/backup";
 import { getLangPref, setLangPref, strings as it, type LangPref } from "../i18n";
-import { backupDue } from "../store";
 import { Button, Check, Dialog, Field, Segmented } from "../ui/theme";
 import { getThemePref, setThemePref, type ThemePref } from "../ui/theme/mode";
 import { fmt, formatDate } from "../ui/format";
@@ -9,6 +8,7 @@ import type { PolicyKind } from "../legal/policies";
 import { resetCookieNotice } from "../ui/CookieBanner";
 import { InstallHint } from "../ui/InstallHint";
 import { useApp } from "../ui/useApp";
+import { backupDue, formatBytes, requestPersistence, storageInfo, type StorageInfo } from "../store";
 
 const t = it.settings;
 const REMINDERS = [0, 7, 14, 30, 90];
@@ -21,6 +21,23 @@ export function download(text: string, name: string) {
 }
 export const exportNow = async (exportAll: () => Promise<string>) =>
   download(await exportAll(), `personaggi-srd-${new Date().toISOString().slice(0, 10)}.json`);
+
+const isStandalone = () => { try { return window.matchMedia("(display-mode: standalone)").matches || (navigator as { standalone?: boolean }).standalone === true; } catch { return false; } };
+
+function StorageStatus() {
+  const [info, setInfo] = useState<StorageInfo | null>(null);
+  useEffect(() => { void storageInfo().then(setInfo); }, []);
+  if (!info) return null;
+  const tt = t.storage;
+  return (
+    <fieldset className="ui-group">
+      <legend>{tt.title}</legend>
+      <p role="status">{!info.supported ? (isStandalone() ? tt.installedNoApi : tt.unsupported) : info.persisted ? tt.persisted : tt.notPersisted}</p>
+      {info.usage !== undefined && info.quota !== undefined && <p className="ui-muted">{fmt(tt.usage, { u: formatBytes(info.usage), q: formatBytes(info.quota) })}</p>}
+      {info.supported && !info.persisted && <div className="ui-actions" style={{ justifyContent: "flex-start" }}><Button onClick={() => void requestPersistence().then(setInfo)}>{tt.request}</Button></div>}
+    </fieldset>
+  );
+}
 
 export function Settings({ onBack, onLegal }: { onBack: () => void; onLegal: (kind: PolicyKind) => void }) {
   const s = useApp((x) => x.settings);
@@ -74,6 +91,8 @@ export function Settings({ onBack, onLegal }: { onBack: () => void; onLegal: (ki
         </Field>
         <Check checked={s.allowReroll} onChange={(allowReroll) => void updateSettings({ allowReroll })}>{t.allowReroll}</Check>
       </fieldset>
+
+      <StorageStatus />
 
       <InstallHint />
 

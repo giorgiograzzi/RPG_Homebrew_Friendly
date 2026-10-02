@@ -30,7 +30,7 @@ export function computeCharacter(ch: Character, rs: Ruleset): Derived {
 
   const initiative = sum([
     { label: tr("Mod Des", "Dex mod"), value: x.mods.dex },
-    ...(cs.d20Penalty ? [{ label: tr("Esaurimento", "Exhaustion"), value: cs.d20Penalty }] : []),
+    ...(cs.d20Penalty ? [{ label: tr("Indebolimento", "Exhaustion"), value: cs.d20Penalty }] : []),
     ...x.active.flatMap(({ effect: e, label }) => (e.op === "initiativeBonus" ? [{ label, value: evalValue(e.value, x) }] : [])),
   ]);
   const perc = skills.perception;
@@ -38,7 +38,7 @@ export function computeCharacter(ch: Character, rs: Ruleset): Derived {
   const passive = sum([
     { label: tr("Base", "Base"), value: 10 },
     { label: tr("Percezione", "Perception"), value: perc.bonus.value - cs.d20Penalty }, // la Percezione passiva non è un Tiro D20: niente Esaurimento
-    { label: percMode === "advantage" ? "Vantaggio" : "Svantaggio", value: percMode === "advantage" ? 5 : percMode === "disadvantage" ? -5 : 0 },
+    { label: percMode === "advantage" ? tr("Vantaggio", "Advantage") : tr("Svantaggio", "Disadvantage"), value: percMode === "advantage" ? 5 : percMode === "disadvantage" ? -5 : 0 },
   ]);
 
   const ac = computeAc(x, profs, warnings);

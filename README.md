@@ -5,7 +5,14 @@ _(repo: RPG Homebrew Friendly)_
 PWA gratuita per creare e gestire personaggi, in **italiano e inglese**, anche offline.
 Contiene solo contenuti dell'SRD 5.2.1 (CC-BY-4.0); il resto si aggiunge come homebrew.
 
-> Progetto in costruzione: vedi `PLAN.md` (step) e `TODO.md`.
+> Piani di lavoro: `PLAN.md` (step 0–8) e `PLAN2.md` (audit della creazione, archivio, lingua); cose aperte in `TODO.md`.
+
+## Uso in breve
+- **Eroi** → *Nuovo personaggio*: creazione guidata in 8 passi (livello, classe, background, specie, lingue, punteggi, allineamento, dettagli) più un passo *Homebrew*. Si può partire da un livello qualsiasi (1–20) e, da livello 2, dividere i livelli tra due classi (multiclasse).
+- **Punteggi**: serie standard (l'unico metodo dell'SRD 5.2.1), tiro 4d6, acquisto a punti, manuale. Gli ultimi tre sono metodi aggiuntivi, non dell'SRD (l'app lo dice).
+- **Scheda**: stato, attacchi, equipaggiamento, magie, altro (dettagli del personaggio, note, copie di sicurezza, PDF). Italiano con metri e kg, inglese con piedi e libbre.
+- **Homebrew**: crea o importa pacchetti (`data/homebrew/`); le voci attive entrano nella creazione e nella scheda.
+- **Dati**: stanno solo sul dispositivo (IndexedDB). L'app chiede al browser di proteggere l'archivio; esporta comunque un backup (Impostazioni) ogni tanto. Dalla lista si può duplicare, esportare un solo personaggio o condividerlo.
 
 ## Sviluppo
 ```

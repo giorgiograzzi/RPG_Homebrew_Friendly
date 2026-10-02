@@ -5,6 +5,14 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 
 ## Aperti
 
+### PLAN2 (audit 2026-10-02)
+- [x] Test PDF che scriveva in `/tmp/claude-0`, CI, archivio sicuro, termini del manuale, unità, messaggi bilingui, taglia, dettagli, multiclasse alla creazione (vedi `PLAN2.md`).
+- [ ] 🟡 `docker compose build` e prova offline con rete spenta (step 9 di `PLAN.md`) da rifare a mano prima della release.
+- [ ] 🟡 Descrizioni: restano senza testo armi, armature e gli oggetti non elencati in `scripts/lib/descriptions.ts` (`items`); 28 oggetti con effetto sono già descritti.
+- [ ] 🟡 Oggetti magici dell'SRD (2g) non ancora nei dati: a livello 2+ l'app scrive «da concordare col DM».
+- [ ] 🟢 Sincronizzazione tra dispositivi: fuori portata (solo file di backup).
+- [ ] 🟢 Guardia anti-italiano (`src/i18n/noItalianLeaks.test.ts`) copre messaggi con parole italiane comuni; resta escluso solo `engine/validate.ts` (messaggi per sviluppatori sui dati).
+
 ### Fonti e dati
 - [ ] 🔴 **Censimento dell'SRD prima di estrarre**: dall'indice dei due PDF elencare esattamente cosa contiene (classi, sottoclassi, specie, background, talenti, incantesimi, oggetti magici) e scrivere i numeri attesi nei test. Non dare per scontato il contenuto: va verificato sul PDF.
 - [ ] 🟡 Gli estrattori attuali leggono riepiloghi del Manuale del Giocatore (`01-05_*.pdf`) e regole di `scripts/lib/*-rules.ts` scritte su quei dati: vanno riscritti sull'SRD, non adattati a occhio.

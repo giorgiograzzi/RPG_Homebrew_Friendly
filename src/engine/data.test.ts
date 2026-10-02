@@ -534,7 +534,7 @@ describe("dati SRD nel motore", () => {
     it("Guerriero con Spadone: Pesante, 2d6 + For, maestria Colpo di striscio solo se scelta", () => {
       const inventory = inv(["greatsword", "wielded"]);
       const base = sc({ str: 16 });
-      const m = atk(run([cls("fighter", 1)], { ...base, inventory, decisions: { weapon_mastery_pick: ["greatsword"] } }), "Spadone");
+      const m = atk(run([cls("fighter", 1)], { ...base, inventory, decisions: { fighter_weapon_mastery: ["greatsword"] } }), "Spadone");
       expect([m.hands, m.damage.dice, m.damage.bonus.value, m.toHit.value]).toEqual([2, "2d6", 3, 5]);
       expect(m.mastery).toMatchObject({ id: "graze", active: true });
       const n = atk(run([cls("fighter", 1)], { ...base, inventory }), "Spadone");
@@ -542,9 +542,9 @@ describe("dati SRD nel motore", () => {
       expect(atk(run([cls("fighter", 1)], { ...sc({ str: 12 }), inventory }), "Spadone").mode).toBe("disadvantage"); // Pesante: serve For 13
     });
     it("Rovesciare: CD = 8 + modificatore + competenza", () => {
-      const a = atk(run([cls("fighter", 1)], { ...sc({ str: 16 }), inventory: inv(["warhammer", "wielded"]), decisions: { weapon_mastery_pick: ["warhammer"] } }), "Martello da guerra");
+      const a = atk(run([cls("fighter", 1)], { ...sc({ str: 16 }), inventory: inv(["warhammer", "wielded"]), decisions: { fighter_weapon_mastery: ["warhammer"] } }), "Martello da guerra");
       expect(a.mastery).toBeTruthy();
-      const b = atk(run([cls("fighter", 1)], { ...sc({ str: 16 }), inventory: inv(["battleaxe", "wielded"]), decisions: { weapon_mastery_pick: ["battleaxe"] } }), "Ascia da battaglia");
+      const b = atk(run([cls("fighter", 1)], { ...sc({ str: 16 }), inventory: inv(["battleaxe", "wielded"]), decisions: { fighter_weapon_mastery: ["battleaxe"] } }), "Ascia da battaglia");
       expect(b.mastery).toMatchObject({ id: "topple", active: true, dc: 8 + 3 + 2 });
     });
     it("Stili di combattimento SRD: Tiro con l'arco, Difesa, Combattere con armi possenti", () => {

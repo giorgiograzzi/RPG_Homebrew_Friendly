@@ -19,11 +19,11 @@ export function startingEquipment(ch: Character, rs: Ruleset, opts: { gaming_set
   const resolve = (id: string): string | undefined => {
     if (id === "$tool") return tool;
     if (id === "$instrument") return (first && ch.decisions[`${first.id}_tools`]?.[0]) || ch.decisions[`${bg?.id}_tool`]?.[0];
-    if (id === "$gaming_set") return opts.gaming_set;
+    if (id === "$gaming_set") return ch.decisions["equipment:gaming_set"]?.[0] ?? opts.gaming_set;
     // il libro degli incantesimi non è un oggetto dell'SRD: il libro è l'elenco degli incantesimi del personaggio
     if (id === "$spellbook") return "";
     // simbolo sacro: l'SRD ne ha tre varianti dello stesso costo; si parte dall'amuleto (si cambia nello zaino)
-    if (id === "$holy_symbol") return "holy_symbol_amulet";
+    if (id === "$holy_symbol") return ch.decisions["equipment:holy_symbol"]?.[0] ?? "holy_symbol_amulet";
     return id.startsWith("$") ? undefined : id;
   };
   const add = (set: Set | undefined) => {

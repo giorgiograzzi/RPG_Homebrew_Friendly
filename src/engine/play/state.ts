@@ -54,14 +54,14 @@ export function setOverride(ch: Character, key: OverrideKey, value: number | und
 export function setActive(ch: Character, rs: Ruleset, d: Pick<Derived, "featureList" | "resources">, id: string, on: boolean, picks: string[] = []): { ok: boolean; errors: string[]; character: Character } {
   const fail = (e: string) => ({ ok: false, errors: [e], character: ch });
   const f = d.featureList.find((x) => x.id === id);
-  if (!f?.activation) return fail("Questo privilegio non si attiva");
+  if (!f?.activation) return fail(tr("Questo privilegio non si attiva", "This feature cannot be activated"));
   const state = { ...(ch.state.active ?? {}) };
   if (!on) { delete state[id]; return { ok: true, errors: [], character: set(ch, { active: state }) }; }
   if (state[id]) return fail(tr("È già attivo", "Already active"));
   const a = f.activation;
-  if (a.requires && !holds(a.requires, buildCtx(ch, rs))) return fail(`Non puoi attivarlo ora: serve ${describeCondition(a.requires, rs)}`);
+  if (a.requires && !holds(a.requires, buildCtx(ch, rs))) return fail(tr(`Non puoi attivarlo ora: serve ${describeCondition(a.requires, rs)}`, `You cannot activate it now: requires ${describeCondition(a.requires, rs)}`));
   if (a.options.length) {
-    if (picks.length !== 1 || !a.options.some((o) => o.id === picks[0])) return fail(`Scegli ${a.label ? a.label.toLowerCase() : "un\u2019opzione"}`);
+    if (picks.length !== 1 || !a.options.some((o) => o.id === picks[0])) return fail(tr(`Scegli ${a.label ? a.label.toLowerCase() : "un\u2019opzione"}`, `Choose ${a.label ? a.label.toLowerCase() : "an option"}`));
   }
   let next = ch;
   if (a.resource) {
