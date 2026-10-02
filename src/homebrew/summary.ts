@@ -2,7 +2,7 @@ import { describeEffect, type HbData, type HbKind } from "../engine/homebrew";
 import type { Effect } from "../engine/types";
 import type { Ruleset } from "../engine/ruleset";
 import { formatCost } from "../engine/equipment";
-import it from "../i18n/it.json";
+import { strings as it } from "../i18n";
 
 const O = it.homebrew.opts;
 const AB = it.wizard.abilities as Record<string, string>;

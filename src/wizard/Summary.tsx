@@ -2,7 +2,7 @@ import { computeCharacter } from "../engine/compute";
 import type { Ruleset } from "../engine/ruleset";
 import type { Ability } from "../engine/schema";
 import type { Character } from "../engine/types";
-import it from "../i18n/it.json";
+import { strings as it } from "../i18n";
 
 const t = it.wizard;
 const AB = it.wizard.abilities as Record<Ability, string>;

@@ -2,7 +2,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import { newHbId, takenIds, validateEntry, type HbEntry, type HbKind } from "../engine/homebrew";
 import type { Ruleset } from "../engine/ruleset";
 import { ABILITIES, SKILLS } from "../engine/schema";
-import it from "../i18n/it.json";
+import { strings as it } from "../i18n";
 import { fmt } from "../ui/format";
 import { Button, Check, Field } from "../ui/xp";
 import {

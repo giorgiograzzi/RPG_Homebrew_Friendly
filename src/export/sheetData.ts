@@ -5,7 +5,7 @@ import { spellbook } from "../engine/magic";
 import type { Ruleset } from "../engine/ruleset";
 import { ABILITIES, type Ability } from "../engine/schema";
 import type { Character } from "../engine/types";
-import it from "../i18n/it.json";
+import { strings as it } from "../i18n";
 
 // Dati del personaggio pronti da scrivere sulla scheda PDF (step 7): solo testi già formattati.
 // Niente calcoli qui: ogni numero arriva dal motore (computeCharacter), la scheda stampata coincide con quella dell'app.

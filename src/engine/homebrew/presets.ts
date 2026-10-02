@@ -1,6 +1,6 @@
 import type { Ruleset } from "../ruleset";
 import { effectSchema, ABILITIES, SKILLS, type Effect } from "../schema";
-import it from "../../i18n/it.json";
+import { strings as it } from "../../i18n";
 
 // Catalogo degli effetti predefiniti per i talenti homebrew: ogni voce è una `op` del motore con i suoi parametri.
 // I parametri hanno lo stesso nome dei campi dell'effetto, così si può leggere un effetto già salvato e rimostrarlo nel modulo.

@@ -3,7 +3,7 @@ import type { RollMode } from "../engine/compute/types";
 import { rollD20, rollExpr, useResource, type D20Roll } from "../engine/play";
 import type { Character } from "../engine/types";
 import type { Sourced } from "../engine/types";
-import it from "../i18n/it.json";
+import { strings as it } from "../i18n";
 import { Button, Dialog, Segmented } from "../ui/xp";
 import { sign } from "./util";
 

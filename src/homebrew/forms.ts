@@ -1,7 +1,7 @@
 import type { HbData, HbKind, Opt } from "../engine/homebrew";
 import type { ComplexKind } from "./complex";
 import type { Ruleset } from "../engine/ruleset";
-import it from "../i18n/it.json";
+import { strings as it } from "../i18n";
 
 const F = it.homebrew.f;
 const O = it.homebrew.opts;

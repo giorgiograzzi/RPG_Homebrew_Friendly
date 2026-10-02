@@ -1,5 +1,5 @@
 import { useState } from "react";
-import it from "../i18n/it.json";
+import { strings as it } from "../i18n";
 import { Button, Dialog } from "../ui/xp";
 import { formatDate } from "../ui/format";
 import { useApp } from "../ui/useApp";

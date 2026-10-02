@@ -3,7 +3,7 @@ import type { Ruleset } from "../engine/ruleset";
 import type { Character } from "../engine/types";
 import { GIVE_KINDS, give, has, take } from "../homebrew/give";
 import { summarize } from "../homebrew/summary";
-import it from "../i18n/it.json";
+import { strings as it } from "../i18n";
 import { Check } from "../ui/xp";
 import { useApp } from "../ui/useApp";
 

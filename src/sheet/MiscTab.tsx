@@ -1,5 +1,5 @@
 import { setCoins, setOverride, OVERRIDE_KEYS } from "../engine/play";
-import it from "../i18n/it.json";
+import { strings as it } from "../i18n";
 import { Button } from "../ui/xp";
 import type { TabProps } from "./types";
 import { num } from "./util";

@@ -5,7 +5,7 @@ import type { Ability } from "../engine/schema";
 import type { Character } from "../engine/types";
 import { STEPS, setStartLevel, type StepId } from "../engine/creation";
 import { HpField, LevelStep } from "./LevelStep";
-import it from "../i18n/it.json";
+import { strings as it } from "../i18n";
 import { fmt } from "../ui/format";
 import { Button, Dialog, Field } from "../ui/xp";
 import { AsiView, QuestionView } from "./QuestionView";

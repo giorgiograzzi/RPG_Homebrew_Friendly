@@ -4,7 +4,7 @@ PWA per creare e gestire personaggi, **italiano + inglese**, offline. Contiene *
 Nasce dall'app privata `giorgiograzzi/Prova_creazione_dnd_character` (non si tocca: resta com'è). Il codice si copia **senza cronologia git**, così i PDF non liberi non entrano mai qui.
 
 ## Stato
-**Chiusi: step 0 (PR #2), 1 (#3), 2a (#4), correttore glifi + descrizioni 2a (#5), piano 5b (#6), 2b (#7), 2c (#8), 2d-1 (#9), 2d-2 (#10), 2d-3 (#11), 2e (#12): step 2d e 2e chiusi. 2f (condizioni, slot multiclasse, creazione) in PR: chiude lo step 2 (dati). Step 3 → 10: da fare.**
+**Chiusi: step 0 (PR #2), 1 (#3), 2a (#4), correttore glifi + descrizioni 2a (#5), piano 5b (#6), 2b (#7), 2c (#8), 2d-1 (#9), 2d-2 (#10), 2d-3 (#11), 2e (#12), 2f (#13): step 2 (dati SRD) chiuso. Step 3 (lingue) in PR. Step 4 → 10: da fare.**
 
 ## Decisioni già prese (Giorgio)
 | Tema | Scelta |
@@ -58,7 +58,7 @@ Riscrittura degli estrattori in `scripts/` perché leggano **solo** i due PDF SR
 - **2g (opzionale, da decidere)**: oggetti magici dell'SRD.
 - **Test per ogni sotto-passo**: `npm run validate:data` (schema Zod + riferimenti incrociati) su entrambe le lingue; test "IT e EN hanno gli stessi id" (`src/data/srd.parity.test.ts`); **conteggi attesi** scritti nel test (es. n. di classi, specie, incantesimi) presi dall'indice del PDF; controllo a campione di ≥10 voci per blocco contro il PDF (riportato nel riepilogo); i dubbi vanno in `TODO.md`, non inventati.
 
-### Step 3 — Caricamento dati e lingua (i18n IT/EN)  ☐
+### Step 3 — Caricamento dati e lingua (i18n IT/EN)  ☑
 - **Cosa**: `loadRuleset(lang)` legge `data/srd/<lang>/`; `src/i18n/en.json` accanto a `it.json`; selettore lingua in Impostazioni (default = lingua del browser, fallback EN); la lingua cambia testi **e** dati senza perdere i personaggi (salvati per id).
 - **Test**: test che ogni chiave di `it.json` esiste in `en.json` e viceversa; test di cambio lingua (stesso personaggio, calcolo identico, nomi diversi); il ruleset si carica in entrambe le lingue; build con dati vuoti non si rompe.
 
