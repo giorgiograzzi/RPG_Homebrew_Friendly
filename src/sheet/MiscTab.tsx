@@ -2,13 +2,14 @@ import { setCoins, setOverride, OVERRIDE_KEYS } from "../engine/play";
 import { strings as it } from "../i18n";
 import { Button } from "../ui/theme";
 import type { TabProps } from "./types";
+import { PdfButton } from "./PdfButton";
 import { num } from "./util";
 
 const t = it.play;
 const COINS = ["pp", "gp", "ep", "sp", "cp"] as const;
 const NAMES: Record<string, string> = { ac: "Classe Armatura", "hp.max": "PF massimi", initiative: "Iniziativa", "speed.walk": "Velocità", passivePerception: "Percezione passiva" };
 
-export function MiscTab({ ch, d, update, onReopen }: TabProps & { onReopen: () => void }) {
+export function MiscTab({ ch, rs, d, update, onReopen }: TabProps & { onReopen: () => void }) {
   const forced = OVERRIDE_KEYS.filter((k) => ch.overrides[k] !== undefined);
   return (
     <>
@@ -34,6 +35,8 @@ export function MiscTab({ ch, d, update, onReopen }: TabProps & { onReopen: () =
           ))}
         </ul>
       )}
+      <h3>PDF</h3>
+      <PdfButton ch={ch} rs={rs} />
       <div className="ui-actions footer"><Button onClick={onReopen}>{t.reopen}</Button></div>
     </>
   );

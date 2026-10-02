@@ -4,7 +4,7 @@ PWA per creare e gestire personaggi, **italiano + inglese**, offline. Contiene *
 Nasce dall'app privata `giorgiograzzi/Prova_creazione_dnd_character` (non si tocca: resta com'è). Il codice si copia **senza cronologia git**, così i PDF non liberi non entrano mai qui.
 
 ## Stato
-**Chiusi: step 0 (PR #2), 1 (#3), 2a (#4), correttore glifi + descrizioni 2a (#5), piano 5b (#6), 2b (#7), 2c (#8), 2d-1 (#9), 2d-2 (#10), 2d-3 (#11), 2e (#12), 2f (#13): step 2 (dati SRD) chiuso. 3 (#14). 4 (#15). 5b-1 e 5b-2 (#16). 5b-3 (#17). 5b-4/5b-5 (#18): step 5b chiuso. Step 5 (#19). Step 6 in PR. 7 → 10: da fare.**
+**Chiusi: step 0 (PR #2), 1 (#3), 2a (#4), correttore glifi + descrizioni 2a (#5), piano 5b (#6), 2b (#7), 2c (#8), 2d-1 (#9), 2d-2 (#10), 2d-3 (#11), 2e (#12), 2f (#13): step 2 (dati SRD) chiuso. 3 (#14). 4 (#15). 5b-1 e 5b-2 (#16). 5b-3 (#17). 5b-4/5b-5 (#18): step 5b chiuso. Step 5 (#19). Step 6 (#22). Step 7 in PR. 8 → 10: da fare.**
 
 ## Decisioni già prese (Giorgio)
 | Tema | Scelta |
@@ -83,7 +83,7 @@ Oggi l'interfaccia imita Windows XP / Win95 (`src/ui/xp/`, 313 righe di CSS, ~26
 - **Cosa**: rimuovi "copia da voce ufficiale" (UI, logica in `src/homebrew/`, `presets`); riscrivi `data/homebrew/` (modello commentato + esempi) usando solo contenuti SRD o inventati; README homebrew che spiega come l'utente aggiunge i propri contenuti.
 - **Test**: gli esempi passano lo schema e si importano; test che l'editor non espone la copia da voce ufficiale; export/import di pacchetti e backup ancora verdi.
 
-### Step 7 — Scheda PDF libera  ☐
+### Step 7 — Scheda PDF libera  ☑ (Noto Sans, scelto da Giorgio il 2026-10-02)
 - **Cosa**: nuovo generatore con pdf-lib, layout originale (non copiare l'impaginazione della scheda ufficiale), A4, IT e EN, font liberi incorporati (es. OFL). Sostituisce `src/export/sheetPdf.ts` basato sul PDF ufficiale.
 - **Test**: test che genera il PDF per un personaggio d'esempio in IT e EN, lo rilegge e controlla pagine, testi chiave e assenza di campi vuoti; nessun asset di terzi non libero (licenza del font in `ATTRIBUTION.md`).
 
