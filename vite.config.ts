@@ -36,6 +36,8 @@ export default defineConfig({
         globPatterns: ["**/*.{js,css,html,svg,png,ico,webmanifest,woff,woff2}"],
         maximumFileSizeToCacheInBytes: 30 * 1024 * 1024,
         navigateFallback: "index.html",
+        // La landing (/sito/) è una pagina a parte: il service worker non deve sostituirla con l'app
+        navigateFallbackDenylist: [/^\/sito(\/|$)/],
         cleanupOutdatedCaches: true,
       },
     }),
