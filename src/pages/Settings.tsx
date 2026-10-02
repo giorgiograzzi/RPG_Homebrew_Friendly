@@ -18,7 +18,7 @@ export function download(text: string, name: string) {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 export const exportNow = async (exportAll: () => Promise<string>) =>
-  download(await exportAll(), `danger-and-dragons-${new Date().toISOString().slice(0, 10)}.json`);
+  download(await exportAll(), `placet-del-master-${new Date().toISOString().slice(0, 10)}.json`);
 
 export function Settings({ onBack }: { onBack: () => void }) {
   const s = useApp((x) => x.settings);

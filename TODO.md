@@ -144,12 +144,12 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 - [ ] 🟢 Le unità (piedi/libbre) nei testi dell'interfaccia restano come nei dati; nei dati italiani le distanze sono in metri solo nel testo delle regole.
 
 ### Attribuzioni e nome (step 8)
-- [x] Nome definitivo: **Danger & Dragons** (app, `index.html`, manifest PWA, README, PDF). Non usare mai la sigla «D&D» (marchio WotC), nemmeno come nome breve.
+- [x] Nome definitivo: **Placet del Master** (app, `index.html`, manifest PWA, README, PDF). Non usare mai la sigla «D&D» (marchio WotC), nemmeno come nome breve.
 - [x] Schermata «Informazioni e licenze» (menu): dicitura CC-BY nella lingua dell'app con link alla licenza, avviso «non ufficiale, non affiliato», MIT del codice, licenza del font, nota sull'homebrew.
 - [x] Dicitura + avviso anche su ogni pagina della scheda PDF, in `ATTRIBUTION.md` e nel README. `attribution.test.ts` confronta la dicitura con la prima pagina dei due PDF SRD (chiusa la voce «da verificare a occhio»).
 - [x] Corretto il pulsante «Sali di livello» tagliato su telefono (testata della scheda a capo).
-- [ ] 🟡 La sigla di «Danger & Dragons» è D&D. Va bene come nome, ma sarebbe prudente un parere legale/una ricerca marchi prima della pubblicazione (step 10).
-- [x] File di export `danger-and-dragons-*.json` e pacchetto npm `danger-and-dragons` (v1.0.0).
+- [x] Il nome «Placet del Master» (scelto da Giorgio il 2026-10-02) non richiama la sigla D&D: il dubbio sul marchio non si pone più.
+- [x] File di export `placet-del-master-*.json` e pacchetto npm `placet-del-master` (v1.0.0).
 
 ### Scheda PDF (step 7)
 - [x] Generatore originale con pdf-lib (`src/export/sheetPdf.ts`, `pdfKit.ts`): A4, IT e EN, Noto Sans (OFL) incorporato, dicitura CC-BY e numero di pagina su ogni pagina; pulsante in Scheda → Altro. Licenza del font in `ATTRIBUTION.md` e `docs/licenses/`.

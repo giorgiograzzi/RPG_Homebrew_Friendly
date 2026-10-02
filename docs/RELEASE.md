@@ -18,7 +18,6 @@ Verifiche tecniche fatte il 2026-10-02 (non sono un parere legale).
 
 ## Da firmare — Giorgio
 - [ ] Ho riletto dicitura, avviso «non affiliato», nome e icona
-- [ ] Decisione sul nome «Danger & Dragons» (la sigla coincide con D&D, marchio WotC): ricerca marchi / parere legale, oppure accetto il rischio
 - [ ] Prova a mano con VoiceOver / TalkBack
 - [ ] Prova su telefono: installazione PWA e uso offline
-- [ ] Via libera al tag: `git tag -a v1.0.0 -m "Danger & Dragons 1.0.0" && git push origin v1.0.0`
+- [ ] Via libera al tag: `git tag -a v1.0.0 -m "Placet del Master 1.0.0" && git push origin v1.0.0`

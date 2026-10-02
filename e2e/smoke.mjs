@@ -119,7 +119,7 @@ try {
 
   // ── Informazioni e licenze: dicitura CC-BY e avviso nella lingua dell'app ─────────
   log("informazioni e licenze");
-  expect((await page.title()) === "Danger & Dragons", `titolo pagina: ${await page.title()}`);
+  expect((await page.title()) === "Placet del Master", `titolo pagina: ${await page.title()}`);
   await page.locator(".ui-title-btn:not(.ui-back)").click();
   await page.getByRole("menuitem", { name: en.menu.about }).click();
   const notice = (await page.getByTestId("srd-notice").innerText()).replace(/\s+/g, " ");
