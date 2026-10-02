@@ -7,7 +7,7 @@ services:
     container_name: srd-personaggi
     restart: unless-stopped
     ports:
-      - "${PORT:-8097}:80"
+      - "${PORT:-8098}:80"
     healthcheck:
       test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1/"]
       interval: 30s
