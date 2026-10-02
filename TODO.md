@@ -11,7 +11,7 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 - [ ] 🟡 Descrizioni: restano senza testo armi, armature e gli oggetti non elencati in `scripts/lib/descriptions.ts` (`items`); 28 oggetti con effetto sono già descritti.
 - [ ] 🟡 Oggetti magici dell'SRD (2g) non ancora nei dati: a livello 2+ l'app scrive «da concordare col DM».
 - [ ] 🟢 Sincronizzazione tra dispositivi: fuori portata (solo file di backup).
-- [ ] 🟢 Guardia anti-italiano (`src/i18n/noItalianLeaks.test.ts`) copre messaggi con parole italiane comuni; i testi in `homebrew/forms.ts`, `homebrew/complex.ts`, `homebrew/give.ts` e `engine/validate.ts` (messaggi per sviluppatori) sono esclusi: rivederli.
+- [ ] 🟢 Guardia anti-italiano (`src/i18n/noItalianLeaks.test.ts`) copre messaggi con parole italiane comuni; resta escluso solo `engine/validate.ts` (messaggi per sviluppatori sui dati).
 
 ### Fonti e dati
 - [ ] 🔴 **Censimento dell'SRD prima di estrarre**: dall'indice dei due PDF elencare esattamente cosa contiene (classi, sottoclassi, specie, background, talenti, incantesimi, oggetti magici) e scrivere i numeri attesi nei test. Non dare per scontato il contenuto: va verificato sul PDF.

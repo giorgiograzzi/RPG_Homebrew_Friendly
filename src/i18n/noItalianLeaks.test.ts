@@ -5,7 +5,7 @@ import { distance, weight } from "../ui/units";
 
 // Messaggi mostrati all'utente: devono passare da tr("italiano", "english") o da it.json/en.json, mai solo in italiano.
 const ITALIAN = /\b(non|per|il|la|di|del|della|con|hai|puoi|serve|nessun[oa]?|manca|scegli|tira|assegna|oggetto|slot di|livello)\b/i;
-const SKIP = [/ruleset\.ts$/, /validate\.ts$/, /\.test\.ts$/, /testkit\.ts$/, /schema\//, /homebrew\/(forms|complex)\.ts$/, /homebrew\/give\.ts$/, /srdIntegrity/, /legal\//, /i18n\//, /data\//];
+const SKIP = [/ruleset\.ts$/, /validate\.ts$/, /\.test\.ts$/, /testkit\.ts$/, /schema\//, /srdIntegrity/, /legal\//, /i18n\//, /data\//];
 const walk = (d: string): string[] => readdirSync(d).flatMap((n) => { const p = join(d, n); return statSync(p).isDirectory() ? walk(p) : /\.(ts|tsx)$/.test(p) ? [p] : []; });
 
 describe("niente messaggi solo in italiano nel motore e nello store", () => {
