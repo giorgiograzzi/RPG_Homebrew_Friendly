@@ -38,7 +38,7 @@ export interface LoadoutSummary { handsUsed: number; handsMax: number; body?: st
 export interface FeatureInfo {
   id: string; name: string; description: string;
   kind: "species" | "background" | "class" | "subclass" | "feat";
-  source: string; // chi lo dà: "Barbaro", "Aasimar", "Iniziato alla magia"
+  source: string; // chi lo dà: "Barbaro", "Elfo", "Iniziato alla magia"
   level: number; // livello di sblocco (0 = talento)
   resourceId?: string; // contatore degli usi (in Derived.resources)
   activation?: { resource?: string; requires?: string; label?: string; duration?: string; options: { id: string; name: string; description?: string }[] };

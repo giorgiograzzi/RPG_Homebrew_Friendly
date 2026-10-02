@@ -1,0 +1,250 @@
+{
+ "kind": "creation",
+ "entries": [
+  {
+   "id": "creation",
+   "standardArray": [
+    15,
+    14,
+    13,
+    12,
+    10,
+    8
+   ],
+   "pointBuy": {
+    "budget": 27,
+    "min": 8,
+    "max": 15,
+    "costs": {
+     "8": 0,
+     "9": 1,
+     "10": 2,
+     "11": 3,
+     "12": 4,
+     "13": 5,
+     "14": 7,
+     "15": 9
+    }
+   },
+   "recommendedArrays": {
+    "barbarian": {
+     "str": 15,
+     "dex": 13,
+     "con": 14,
+     "int": 10,
+     "wis": 12,
+     "cha": 8
+    },
+    "bard": {
+     "str": 8,
+     "dex": 14,
+     "con": 12,
+     "int": 13,
+     "wis": 10,
+     "cha": 15
+    },
+    "cleric": {
+     "str": 14,
+     "dex": 8,
+     "con": 13,
+     "int": 10,
+     "wis": 15,
+     "cha": 12
+    },
+    "druid": {
+     "str": 8,
+     "dex": 12,
+     "con": 14,
+     "int": 13,
+     "wis": 15,
+     "cha": 10
+    },
+    "fighter": {
+     "str": 15,
+     "dex": 14,
+     "con": 13,
+     "int": 8,
+     "wis": 10,
+     "cha": 12
+    },
+    "monk": {
+     "str": 12,
+     "dex": 15,
+     "con": 13,
+     "int": 10,
+     "wis": 14,
+     "cha": 8
+    },
+    "paladin": {
+     "str": 15,
+     "dex": 10,
+     "con": 13,
+     "int": 8,
+     "wis": 12,
+     "cha": 14
+    },
+    "ranger": {
+     "str": 12,
+     "dex": 15,
+     "con": 13,
+     "int": 8,
+     "wis": 14,
+     "cha": 10
+    },
+    "rogue": {
+     "str": 12,
+     "dex": 15,
+     "con": 13,
+     "int": 14,
+     "wis": 10,
+     "cha": 8
+    },
+    "sorcerer": {
+     "str": 10,
+     "dex": 13,
+     "con": 14,
+     "int": 8,
+     "wis": 12,
+     "cha": 15
+    },
+    "warlock": {
+     "str": 8,
+     "dex": 14,
+     "con": 13,
+     "int": 12,
+     "wis": 10,
+     "cha": 15
+    },
+    "wizard": {
+     "str": 8,
+     "dex": 12,
+     "con": 13,
+     "int": 15,
+     "wis": 14,
+     "cha": 10
+    }
+   },
+   "startingLevels": [
+    {
+     "minLevel": 2,
+     "maxLevel": 4,
+     "gold": 0,
+     "magicItems": {
+      "common": 1,
+      "uncommon": 0,
+      "rare": 0,
+      "veryRare": 0
+     }
+    },
+    {
+     "minLevel": 5,
+     "maxLevel": 10,
+     "gold": 500,
+     "goldDice": {
+      "sides": 10,
+      "count": 1,
+      "multiplier": 25
+     },
+     "magicItems": {
+      "common": 1,
+      "uncommon": 1,
+      "rare": 0,
+      "veryRare": 0
+     }
+    },
+    {
+     "minLevel": 11,
+     "maxLevel": 16,
+     "gold": 5000,
+     "goldDice": {
+      "sides": 10,
+      "count": 1,
+      "multiplier": 250
+     },
+     "magicItems": {
+      "common": 2,
+      "uncommon": 3,
+      "rare": 1,
+      "veryRare": 0
+     }
+    },
+    {
+     "minLevel": 17,
+     "maxLevel": 20,
+     "gold": 20000,
+     "goldDice": {
+      "sides": 10,
+      "count": 1,
+      "multiplier": 250
+     },
+     "magicItems": {
+      "common": 2,
+      "uncommon": 4,
+      "rare": 3,
+      "veryRare": 1
+     }
+    }
+   ],
+   "alignments": [
+    {
+     "id": "lawful_good",
+     "name": "Legale buono"
+    },
+    {
+     "id": "neutral_good",
+     "name": "Neutrale buono"
+    },
+    {
+     "id": "chaotic_good",
+     "name": "Caotico buono"
+    },
+    {
+     "id": "lawful_neutral",
+     "name": "Legale neutrale"
+    },
+    {
+     "id": "neutral",
+     "name": "Neutrale"
+    },
+    {
+     "id": "chaotic_neutral",
+     "name": "Caotico neutrale"
+    },
+    {
+     "id": "lawful_evil",
+     "name": "Legale malvagio"
+    },
+    {
+     "id": "neutral_evil",
+     "name": "Neutrale malvagio"
+    },
+    {
+     "id": "chaotic_evil",
+     "name": "Caotico malvagio"
+    }
+   ],
+   "xpThresholds": [
+    0,
+    300,
+    900,
+    2700,
+    6500,
+    14000,
+    23000,
+    34000,
+    48000,
+    64000,
+    85000,
+    100000,
+    120000,
+    140000,
+    165000,
+    195000,
+    225000,
+    265000,
+    305000,
+    355000
+   ]
+  }
+ ]
+}

@@ -5,7 +5,7 @@ import type { Derived } from "./types";
 export type CasterKind = "full" | "half" | "third";
 
 // Livello da incantatore combinato (multiclasse, file 04 §2): livelli pieni + metà (per eccesso) di Paladino/Ranger
-// + un terzo (per difetto) di Cavaliere mistico/Mistificatore arcano. Il Warlock ha slot del patto a parte.
+// + un terzo (per difetto) delle sottoclassi da terzo di incantatore (non presenti nell'SRD: solo homebrew). Il Warlock ha slot del patto a parte.
 export const casterLevelOf = (kind: CasterKind, level: number) => (kind === "full" ? level : kind === "half" ? Math.ceil(level / 2) : Math.floor(level / 3));
 
 // Slot: con un solo incantatore vale la tabella della sua classe (o sottoclasse); con più classi si usa la tabella

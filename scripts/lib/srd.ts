@@ -84,12 +84,14 @@ export function localize(v: unknown, l: Lang): unknown {
 export interface Entry { id: string; name: { en: string; it: string }; [k: string]: unknown }
 
 // Scrive i file data/srd/<lingua>/<kind>.json con lo stesso contenuto, il nome e la descrizione nella lingua del file
-export function writeKind(kind: string, entries: Entry[]) {
+export function writeKind(kind: string, entries: Entry[] | Record<string, unknown>[]) {
   for (const l of LANGS) {
     mkdirSync(OUT(l), { recursive: true });
-    const out = entries.map((e) => {
+    const out = (entries as Entry[]).map((e) => {
       const d = DESCRIPTIONS[kind]?.[e.id] ?? GROUP_DESCRIPTIONS[String(e.group)];
-      return { ...(localize({ ...e, name: undefined }, l) as object), name: e.name[l].replace(/’/g, "'"), ...(d ? { description: d[l] } : {}), origin: "srd" };
+      // voci senza nome (le regole di creazione) e senza origine (nello schema non c'è) restano come sono
+      const named = e.name ? { name: e.name[l].replace(/’/g, "'") } : {};
+      return { ...(localize({ ...e, name: undefined }, l) as object), ...named, ...(d ? { description: d[l] } : {}), ...(kind === "creation" ? {} : { origin: "srd" }) };
     });
     writeFileSync(`${OUT(l)}/${kind}.json`, JSON.stringify({ kind, entries: out }, null, 1) + "\n");
   }

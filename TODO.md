@@ -51,7 +51,7 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 - [ ] 🟡 Solo a testo (nessun effetto): Fortuna, Furtività innata, Agilità halfling, Coraggioso, Trance, Intraprendente (Ispirazione eroica), sostituzione del trucchetto dell'Elfo alto, congegni dello Gnomo delle rocce, doni della Discendenza gigantica (tutti e 6), Presenza ultraterrena (la sua caratteristica segue la scelta).
 - [ ] 🟡 Scarica di adrenalina (Orco): `recharge: "short_rest"` rappresenta "riposo breve o lungo"; verificare che il motore ricarichi anche con il riposo lungo.
 - [ ] 🟢 L'altezza media di ogni specie non è nei dati (non serve al motore); si può aggiungere come testo.
-- [ ] 🟢 Rimossi `scripts/lib/species-rules.ts` e `feat-rules.ts` (superati da `species-srd.ts` e `feats-srd.ts`); restano da riscrivere `class-rules.ts`, `feature-play.ts`, `spells.ts`, `equipment.ts` (2d-2e).
+- [ ] 🟢 Rimossi `scripts/lib/species-rules.ts` e `feat-rules.ts` (superati da `species-srd.ts` e `feats-srd.ts`); `class-rules.ts` e `feature-play.ts` (residui della versione privata, non usati) sono stati cancellati in 2f; `scripts/lib/spells.ts` ed `equipment.ts` servono ancora.
 
 ### Dati SRD (step 2d, blocco 1: Barbaro, Guerriero, Monaco, Ladro)
 - [ ] 🟡 Le colonne delle tabelle di classe hanno id **inglesi** (`rages`, `rage_damage`, `second_wind`, `weapon_mastery`, `martial_arts`, `focus_points`, `unarmored_movement`, `sneak_attack`). Il motore usa `sneak_attack`, `cantrips` e `prepared` (rinominati in 2d-2, con l'editor homebrew e i suoi test); resta il vecchio `table.attacchi` del Guerriero in `attacksPerAction`.
@@ -124,3 +124,10 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 - [ ] 🟢 Testi con schede di statistiche (Evoca..., Trova cavalcatura) e tabelle (Spostamento, Sciame di meteore...) sono in un unico paragrafo, senza struttura.
 - [ ] 🟢 Tabelle slot per il multiclasse (`slotTables`): ancora da fare, in 2f.
 - [ ] 🟢 Estrazione: nel PDF le pagine hanno due colonne e alcuni blocchi sono fuori ordine nel flusso: per gli incantesimi si legge colonna sinistra poi destra (`pdfPagesColumns`).
+
+### Dati SRD (step 2f: condizioni, slot multiclasse, creazione)
+- [ ] 🔴 **Prima di pubblicare**: i vecchi `*.private.test.ts` (8 file) citano contenuti non SRD (Cavaliere mistico, Aasimar...). Vanno riscritti sull'SRD nello step 4 e poi va tolta l'eccezione `allow` nel test guardia (`src/legal/noProtected.test.ts`).
+- [ ] 🟡 `slotTables`: ci sono solo `full_caster` e `half_caster`. Il terzo di incantatore non esiste nell'SRD (nessuna sottoclasse da terzo di incantatore): resta supportato dal motore solo per l'homebrew. Il vecchio test che si aspetta `third_caster` va tolto.
+- [ ] 🟡 Fasce di partenza (`startingLevels`): l'SRD le dà solo per i livelli 2-20; la 2-4 ha `gold: 0` perché vale l'equipaggiamento normale (+1 oggetto magico comune). Il motore (step 4) deve sommare l'equipaggiamento normale alle fasce 5+ (così dice la tabella: "più equipaggiamento di partenza ordinario").
+- [ ] 🟡 `description` delle condizioni è il testo dell'SRD senza la frase introduttiva. Nel PDF italiano la frase di Incapacitato dice per errore "paralizzato" (tolta). Gli effetti usano il vocabolario del motore; quelli che dipendono da fonte o distanza restano testo (Prono, Invisibile, Spaventato, Afferrato).
+- [ ] 🟢 `recommendedArrays` (serie standard per classe) viene dall'SRD (12 classi). Riposi e morte sono costanti nel motore: da confrontare con l'SRD nello step 4 (riposo lungo: metà Dadi Vita arrotondati per difetto, min 1; Esaurimento -1).
