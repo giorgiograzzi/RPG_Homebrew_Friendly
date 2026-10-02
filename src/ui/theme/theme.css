@@ -115,7 +115,10 @@ h1, h2, h3 { line-height: 1.25; }
   grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr) auto;
   grid-template-areas: "head" "main" "nav"; padding-left: var(--safe-l); padding-right: var(--safe-r);
 }
-@media (display-mode: standalone) { html, body, #root { min-height: 100lvh; } .ui-app { height: 100vh; height: 100lvh; } }
+/* PWA installata: .ui-app resta ancorata al viewport visibile (inset:0, niente 100lvh che sporge dallo schermo) e le barre
+   in basso salgono sopra l'indicatore di chiusura (swipe) di iOS */
+@media (display-mode: standalone) { .ui-app { height: auto; } .ui-tabs, .ui-sections { padding-bottom: calc(var(--safe-b) + 10px); } }
+@media (display-mode: standalone) and (min-width: 1024px) { .ui-tabs, .ui-sections { padding-bottom: 16px; } }
 .ui-title { grid-area: head; display: flex; align-items: center; gap: 8px; min-height: calc(var(--tap) + var(--safe-t)); padding: var(--safe-t) 4px 0 16px;
   background: var(--surface); border-bottom: 1px solid var(--border); }
 .ui-title h1 { flex: 1; margin: 0; font-size: 18px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -349,3 +352,8 @@ h1, h2, h3 { line-height: 1.25; }
   .ui-body { overflow: visible; padding: 0; }
   body { background: #fff; color: #000; }
 }
+
+/* salti rapidi nella scheda unica: restano in alto mentre si scorre */
+.pl-jump { position: sticky; top: -16px; z-index: 5; display: flex; gap: 6px; margin: -16px auto 12px; padding: 8px 0; background: var(--bg); border-bottom: 1px solid var(--border); }
+.pl-jump .ui-btn { flex: 1; padding: 0 8px; }
+#pl-status, #pl-features, #pl-stats { scroll-margin-top: 64px; }

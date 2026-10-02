@@ -18,7 +18,10 @@ import { totalLevel, MAX_LEVEL } from "../engine/levelup";
 import { useMedia, WIDE } from "../ui/useMedia";
 
 // Viste che su schermo largo stanno tutte insieme nella panoramica a colonne
-const DASHBOARD: string[] = ["status", "stats", "attacks", "magic"];
+const DASHBOARD: string[] = ["status", "attacks", "magic"];
+
+// Salti rapidi dentro la scheda unica (telefono)
+const JUMP = ["status", "features", "stats"] as const;
 
 // Scheda giocabile: ogni numero viene dal motore (computeCharacter); qui si cambia solo lo stato di gioco
 export function PlaySheet({ ch, rs, update, onReopen, tab, onSection }: { ch: Character; rs: Ruleset; update: (fn: (c: Character) => Character) => void; onReopen: () => void; tab: SheetView; onSection: (s: SheetView) => void }) {
@@ -34,7 +37,7 @@ export function PlaySheet({ ch, rs, update, onReopen, tab, onSection }: { ch: Ch
       <>
         {head}
         <div className={`pl-cols${d.spellcasting.length > 0 ? " three" : ""}`}>
-          <section className="pl-col" aria-label={it.play.tabs.status}><StatusTab {...props} onSection={onSection} /></section>
+          <section className="pl-col" aria-label={it.play.tabs.status}><StatusTab {...props} onSection={onSection} /><FeaturesTab {...props} /></section>
           <section className="pl-col" aria-label={it.play.tabs.stats}><StatsTab {...props} /><AttacksTab {...props} /></section>
           {d.spellcasting.length > 0 && <section className="pl-col" aria-label={it.play.tabs.magic}><MagicTab {...props} /></section>}
         </div>
@@ -44,9 +47,16 @@ export function PlaySheet({ ch, rs, update, onReopen, tab, onSection }: { ch: Ch
   return (
     <>
       {head}
-      {tab === "status" && <StatusTab {...props} onSection={onSection} />}
-      {tab === "features" && <FeaturesTab {...props} />}
-      {tab === "stats" && <StatsTab {...props} />}
+      {tab === "status" && (
+        <>
+          <nav className="pl-jump" aria-label={it.play.tabs.status}>
+            {JUMP.map((k) => <button key={k} type="button" className="ui-btn" onClick={() => document.getElementById(`pl-${k}`)?.scrollIntoView({ behavior: "smooth", block: "start" })}>{it.play.tabs[k]}</button>)}
+          </nav>
+          <div id="pl-status"><StatusTab {...props} onSection={onSection} /></div>
+          <div id="pl-features"><FeaturesTab {...props} /></div>
+          <div id="pl-stats"><StatsTab {...props} /></div>
+        </>
+      )}
       {tab === "attacks" && <AttacksTab {...props} />}
       {tab === "conditions" && <ConditionsTab {...props} onBack={() => onSection("status")} />}
       {tab === "equip" && <Equip />}
