@@ -7,7 +7,7 @@ import { creationProgress } from "../engine/creation";
 import { SKILLS } from "../engine/schema";
 import type { Character } from "../engine/types";
 import { STRINGS, type Lang } from "../i18n";
-import { SRD_NOTICE } from "../legal/attribution";
+import { DISCLAIMER, SRD_NOTICE } from "../legal/attribution";
 import { autoComplete, finalizeCharacter } from "../wizard/logic";
 import { makeSheetPdf } from "./sheetPdf";
 
@@ -54,7 +54,8 @@ describe("scheda PDF libera", () => {
       expect(text).toContain(P.slots);
       // piè di pagina: dicitura CC-BY esatta della lingua e numerazione su ogni pagina
       pages.forEach((pg, i) => {
-        expect(pg).toContain(SRD_NOTICE[lang].slice(0, 60));
+        expect(pg).toContain(SRD_NOTICE[lang]); // dicitura CC-BY intera, su ogni pagina
+        expect(pg).toContain(DISCLAIMER[lang]);
         expect(pg).toContain(P.page.replace("{n}", String(i + 1)).replace("{t}", String(n)));
       });
       // niente segnaposto o campi vuoti: nessun "undefined"/"NaN"/"[object", niente "?" dovuto a glifi mancanti

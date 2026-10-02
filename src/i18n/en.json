@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "SRD 5.2 Characters",
+    "title": "Danger & Dragons",
     "errorTitle": "Something went wrong",
     "reload": "Reload",
     "skip": "Skip to content",
@@ -15,7 +15,8 @@
     "open": "Menu",
     "settings": "Settings",
     "export": "Export backup",
-    "import": "Import backup"
+    "import": "Import backup",
+    "about": "About and licenses"
   },
   "characters": {
     "title": "Your characters",
@@ -1042,5 +1043,20 @@
       "granted": "granted"
     },
     "ft": "ft"
+  },
+  "about": {
+    "title": "About and licenses",
+    "back": "Back",
+    "version": "Version",
+    "intro": "Free app to create and manage characters with the open rules of the SRD 5.2.1, in Italian and English, also offline.",
+    "srd": "Game content",
+    "license": "CC-BY 4.0 license",
+    "unofficial": "Notice",
+    "code": "App code",
+    "codeText": "The code is released under the MIT license (Copyright © 2026 Giorgio Grazzi): you can use, copy and modify it, keeping the copyright notice.",
+    "font": "PDF sheet font",
+    "fontText": "Noto Sans, Copyright 2022 The Noto Project Authors, SIL Open Font License 1.1 (https://openfontlicense.org).",
+    "homebrew": "Homebrew content",
+    "homebrewText": "What you add as homebrew stays yours and lives only on your device (or in the files you export): it is not part of the SRD."
   }
 }

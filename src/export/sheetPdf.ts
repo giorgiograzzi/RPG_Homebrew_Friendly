@@ -3,7 +3,7 @@ import { SKILLS } from "../engine/schema";
 import type { Ruleset } from "../engine/ruleset";
 import type { Character } from "../engine/types";
 import { STRINGS, type Lang } from "../i18n";
-import { SRD_NOTICE } from "../legal/attribution";
+import { DISCLAIMER, SRD_NOTICE } from "../legal/attribution";
 import { A4, ACCENT, Doc, INK, LINE, MARGIN, MUTED, SOFT, type FontBytes } from "./pdfKit";
 import { buildSheetData, type SheetData } from "./sheetData";
 
@@ -151,15 +151,15 @@ function flow(doc: Doc, d: SheetData, P: Pdf) {
   doc.para(P.spellLegend, MARGIN, CW, { size: 7, color: MUTED });
 }
 
-// Su ogni pagina: dicitura CC-BY dell'SRD e numero di pagina
+// Su ogni pagina: dicitura CC-BY dell'SRD (testo esatto), avviso «non ufficiale» e numero di pagina
 function footer(doc: Doc, lang: Lang, P: Pdf) {
   const n = doc.pages.length;
   doc.pages.forEach((page, i) => {
     doc.page = page;
-    const top = A4.h - MARGIN - 21;
+    const top = A4.h - MARGIN - 31;
     doc.line(MARGIN, top - 3, MARGIN + CW, top - 3, LINE, 0.5);
     let y = top;
-    for (const l of doc.wrap(SRD_NOTICE[lang], CW - 70, 5.8)) { doc.text(l, MARGIN, y, { size: 5.8, color: MUTED }); y += 6.8; }
+    for (const l of [...doc.wrap(SRD_NOTICE[lang], CW - 70, 5.8), ...doc.wrap(DISCLAIMER[lang], CW - 70, 5.8)]) { doc.text(l, MARGIN, y, { size: 5.8, color: MUTED }); y += 6.8; }
     doc.text(P.page.replace("{n}", String(i + 1)).replace("{t}", String(n)), MARGIN, top, { size: 7, color: INK, width: CW, align: "right" });
   });
 }

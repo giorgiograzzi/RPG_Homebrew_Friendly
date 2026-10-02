@@ -21,7 +21,7 @@ export default defineConfig({
       registerType: "prompt",
       includeAssets: ["icons/icon.svg", "icons/apple-touch-icon.png"],
       manifest: {
-        id: "./", name: "Personaggi SRD 5.2", short_name: "PG SRD", description: "Crea e gestisci personaggi con le regole libere dell'SRD 5.2.1, in italiano e inglese, anche senza rete.",
+        id: "./", name: "Danger & Dragons", short_name: "Danger&Dragons", description: "Crea e gestisci personaggi con le regole libere dell'SRD 5.2.1, in italiano e inglese, anche senza rete.",
         lang: "it", dir: "ltr", start_url: "./", scope: "./", display: "standalone", orientation: "any", categories: ["games", "entertainment"],
         background_color: "#f3f4f8", theme_color: "#4f46e5",
         icons: [
