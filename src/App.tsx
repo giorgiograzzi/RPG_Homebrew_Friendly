@@ -12,7 +12,7 @@ import { ReloadPrompt } from "./ui/ReloadPrompt";
 import { useApp } from "./ui/useApp";
 import { useMedia, WIDE } from "./ui/useMedia";
 
-const SECTION_ICONS: Record<(typeof SHEET_SECTIONS)[number], IconName> = { status: "heart", features: "star", stats: "chart", attacks: "sword", equip: "equip", magic: "magic", misc: "notes" };
+const SECTION_ICONS: Record<(typeof SHEET_SECTIONS)[number], IconName> = { status: "heart", attacks: "sword", equip: "equip", magic: "magic", misc: "notes" };
 // Le tab principali non riguardano un personaggio; Scheda, Equip e Magie sono sezioni della scheda
 type TabId = "characters" | "sheet" | "homebrew";
 
@@ -82,7 +82,7 @@ export function App() {
         )}
       </main>
       {inSheet
-        ? <SectionBar items={SHEET_SECTIONS.filter((id) => !wide || !(["stats", "attacks", "magic"] as string[]).includes(id)).map((id) => ({ id, label: id === "status" && wide ? it.play.tabs.overview : it.play.tabs[id], icon: SECTION_ICONS[id] }))} current={section === "conditions" || (wide && ["stats", "attacks", "magic"].includes(section)) ? "status" : section} backLabel={it.play.back}
+        ? <SectionBar items={SHEET_SECTIONS.filter((id) => !wide || !(["attacks", "magic"] as string[]).includes(id)).map((id) => ({ id, label: id === "status" && wide ? it.play.tabs.overview : it.play.tabs[id], icon: SECTION_ICONS[id] }))} current={section === "conditions" || (wide && ["attacks", "magic"].includes(section)) ? "status" : section} backLabel={it.play.back}
             onSelect={(id) => { setSettings(false); setSection(id as SheetView); }} onBack={() => { setSettings(false); setTab("characters"); }} />
         : <TabBar tabs={tabs} current={shown} onSelect={(id) => { setSettings(false); setTab(id as TabId); }} />}
       {importing && <ImportDialog preview={importing} onClose={() => setImporting(null)} onDone={() => setImporting(null)} />}
