@@ -7,7 +7,7 @@ import { testCharacter, testRuleset } from "../compute/testkit";
 import { allQuestions } from "../creation";
 import { buildRuleset, extendRuleset } from "../ruleset";
 import {
-  charactersUsing, copyOfficial, entriesUsedBy, entryFiles, homebrewIds, missingHomebrew, parsePack, validateEntry, type HbEntry,
+  charactersUsing, entriesUsedBy, entryFiles, homebrewIds, missingHomebrew, parsePack, validateEntry, type HbEntry,
 } from "./index";
 
 const t = (it: string) => ({ it });
@@ -139,25 +139,6 @@ describe("homebrew: bozze ↔ dati senza perdere niente", () => {
   it("una sottoclasse nuova ha id dei privilegi stabili", () => {
     const out = subclassToData({ name: "S", description: "", classId: "fighter", features: [{ ...dataToFeature({ id: "", name: t("Colpo"), level: 3 }) }], keep: {} }, "hb_s") as Record<string, any>;
     expect(out.features[0].id).toBe("hb_s_colpo");
-  });
-});
-
-describe("homebrew: copia di una voce ufficiale", () => {
-  const rs = base();
-  it("una classe copiata ha id nuovi, scelte col nuovo prefisso e la stessa lista di incantesimi", () => {
-    const off = { id: "wizard", name: t("Mago"), hitDie: 6, primaryAbility: ["int"], saves: ["int", "wis"], skillChoices: { count: 2, from: "any" }, armorTraining: [], weaponProficiency: [], caster: "full", spellAbility: "int",
-      spellSlots: Array(20).fill([2]), table: { prepared: Array(20).fill(4) }, equipment: {}, features: [], choices: [{ id: "wizard_skills", label: t("Abilità"), count: 2, source: "skills" }, { id: "wizard_spellbook", label: t("Libro"), count: 1, source: "spells:wizard" }] };
-    const e = copyOfficial("classes", off, rs, []);
-    const d = e.data as Record<string, any>;
-    expect(d.id).toBe("hb_mago_copia");
-    expect(d.name.it).toBe("Mago (copia)");
-    expect(d.choices.map((c: { id: string }) => c.id)).toEqual(["hb_mago_copia_skills", "hb_mago_copia_spellbook"]);
-    expect(d.spellList).toBe("wizard");
-    expect(e.enabled).toBe(false);
-    expect(validateEntry("classes", d, rs).ok).toBe(true);
-    // e dopo il giro nel modulo la scelta dell'abilità non si duplica
-    const back = classToData(classFromData(d), d.id, rs, d) as Record<string, any>;
-    expect(back.choices.filter((c: { id: string }) => c.id.endsWith("_skills"))).toHaveLength(1);
   });
 });
 

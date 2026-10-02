@@ -144,6 +144,10 @@ Legenda priorità: 🔴 blocca uno step · 🟡 da fare prima della release · �
 - [ ] 🟢 Nome e descrizione del manifest PWA (`vite.config.ts`) e `index.html` sono ancora solo in italiano (step 9). `<html lang>` si imposta all'avvio.
 - [ ] 🟢 Le unità (piedi/libbre) nei testi dell'interfaccia restano come nei dati; nei dati italiani le distanze sono in metri solo nel testo delle regole.
 
+### Homebrew (step 6)
+- [x] Tolta «copia da voce ufficiale» (UI, `copyOfficial`, testi); test guardia in `homebrew.srd.test.ts`.
+- [x] `data/homebrew/`: tre pacchetti di esempio inventati (specie, background+talento, classe+sottoclasse+6 incantesimi), `template.jsonc` e `README.md`; test sull'SRD vero. Tutta la suite è verde.
+
 ### Verifica interfaccia (step 5)
 - [x] 🔴 Mancava la schermata di level-up (il motore e i testi `levelup.*` c'erano, la UI no): costruita in `src/sheet/LevelUp.tsx` (classe/multiclasse → PF → novità e scelte), pulsante nella testata della scheda.
 - [x] 🟡 Dopo «Applica» negli aumenti di caratteristica la bozza tornava a +0 pur essendo applicata (wizard e level-up): corretto.

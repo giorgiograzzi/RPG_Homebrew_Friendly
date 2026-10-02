@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "name": "Esempio: background",
+  "feats": [
+    {
+      "id": "hb_occhio_del_faro",
+      "name": {
+        "it": "Occhio del faro",
+        "en": "Beacon eye"
+      },
+      "category": "origin",
+      "description": "Talento inventato per l'esempio: chi veglia di notte impara a reagire per primo. +2 all'Iniziativa.",
+      "effects": [
+        {
+          "op": "initiativeBonus",
+          "value": 2
+        }
+      ]
+    }
+  ],
+  "backgrounds": [
+    {
+      "id": "hb_guardiano_del_faro",
+      "name": {
+        "it": "Guardiano del faro",
+        "en": "Lighthouse keeper"
+      },
+      "description": "Background inventato per l'esempio: anni di veglia solitaria su una scogliera.",
+      "abilityOptions": [
+        "con",
+        "wis",
+        "cha"
+      ],
+      "skills": [
+        "perception",
+        "survival"
+      ],
+      "tool": "dice",
+      "feat": "hb_occhio_del_faro",
+      "equipment": {
+        "A": {
+          "items": [
+            {
+              "item": "rope",
+              "qty": 1
+            },
+            {
+              "item": "dagger",
+              "qty": 1
+            }
+          ],
+          "gp": 10
+        },
+        "B": {
+          "items": [],
+          "gp": 50
+        }
+      }
+    }
+  ]
+}

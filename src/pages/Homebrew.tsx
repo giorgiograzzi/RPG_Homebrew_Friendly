@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { examplePacks } from "../data/loadRuleset";
 import { useRuleset } from "../data/ruleset";
 import {
-  HB_KINDS, KIND_GROUPS, buildPack, copyOfficial, duplicateEntry, hbKey, mergeEntries, packNames, parsePack, slugify, type HbEntry, type HbKind, type ParsedPack,
+  HB_KINDS, KIND_GROUPS, buildPack, duplicateEntry, hbKey, mergeEntries, packNames, parsePack, slugify, type HbEntry, type HbKind, type ParsedPack,
 } from "../engine/homebrew";
 import { Editor } from "../homebrew/Editor";
 import { canGiveKind, give, has, take } from "../homebrew/give";
@@ -27,7 +27,6 @@ export function Homebrew() {
   const update = useApp((s) => s.update);
   const [editing, setEditing] = useState<Editing | null>(null);
   const [choose, setChoose] = useState(false);
-  const [official, setOfficial] = useState(false);
   const [del, setDel] = useState<HbEntry | null>(null);
   const [warn, setWarn] = useState<{ names: string[]; run: () => void } | null>(null);
   const [exporting, setExporting] = useState(false);
@@ -71,7 +70,6 @@ export function Homebrew() {
       {note && <div className="ui-banner" role="status">{note}</div>}
       <div className="ui-actions" style={{ justifyContent: "flex-start", flexWrap: "wrap" }}>
         <Button variant="primary" onClick={() => setChoose(true)}>{t.new}</Button>
-        <Button onClick={() => setOfficial(true)}>{t.official}</Button>
         <Button onClick={() => setImporting(true)}>{t.import}</Button>
         <Button onClick={() => setExporting(true)} disabled={entries.length === 0}>{t.export}</Button>
       </div>
@@ -138,7 +136,6 @@ export function Homebrew() {
           ))}
         </Dialog>
       )}
-      {official && <OfficialDialog onClose={() => setOfficial(false)} onPick={(e) => { setOfficial(false); setEditing({ kind: e.kind, entry: e }); }} />}
       {del && (
         <Dialog title={t.delete} onClose={() => setDel(null)}>
           <p>{t.confirmDelete}</p><p><strong>{del.data.name.it}</strong></p>
@@ -160,41 +157,6 @@ export function Homebrew() {
       {exporting && <ExportDialog entries={entries} onClose={() => setExporting(false)} />}
       {importing && <ImportDialog onClose={() => setImporting(false)} onDone={(m) => { setImporting(false); setNote(m); }} />}
     </>
-  );
-}
-
-// Copia di una voce ufficiale come punto di partenza
-function OfficialDialog({ onClose, onPick }: { onClose: () => void; onPick: (e: HbEntry) => void }) {
-  const rs = useRuleset();
-  const entries = useApp((s) => s.homebrew);
-  const [kind, setKind] = useState<HbKind | null>(null);
-  const [q, setQ] = useState("");
-  const list = kind ? [...(rs[kind] as Map<string, Record<string, any>>).values()].filter((x) => x.origin !== "homebrew" && x.name?.it?.toLowerCase().includes(q.toLowerCase())).sort((a, b) => a.name.it.localeCompare(b.name.it, "it")) : [];
-  return (
-    <Dialog title={t.official} onClose={onClose}>
-      <p className="ui-muted">{t.officialHelp}</p>
-      {!kind ? (
-        <div className="ui-actions" style={{ flexWrap: "wrap", justifyContent: "flex-start" }}>
-          {HB_KINDS.map((k) => <Button key={k} onClick={() => setKind(k)}>{t.kindsPlural[k]}</Button>)}
-        </div>
-      ) : (
-        <>
-          <div className="ui-actions" style={{ justifyContent: "flex-start" }}><Button onClick={() => { setKind(null); setQ(""); }}>← {t.back}</Button></div>
-          <input className="ui-input" type="search" style={{ marginBottom: 8 }} placeholder={t.officialSearch} aria-label={t.officialSearch} value={q} onChange={(e) => setQ(e.target.value)} />
-          {list.length === 0 && <p className="ui-muted">{t.officialNone}</p>}
-          <ul className="ui-list">
-            {list.slice(0, 80).map((x) => (
-              <li key={x.id} style={{ display: "block" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <div className="grow"><div className="name">{x.name.it}</div></div>
-                  <Button onClick={() => onPick(copyOfficial(kind, x, rs, entries))}>{t.copy}</Button>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
-    </Dialog>
   );
 }
 

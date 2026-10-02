@@ -1,0 +1,20 @@
+// Modello di pacchetto homebrew: copialo, togli i commenti (// ...) se il tuo editor non li accetta, riempilo e salvalo come .json.
+// Poi: Homebrew → Importa → «Scegli file». Ogni lista (species, feats, backgrounds, classes, subclasses, weapons, armors, items,
+// spells, languages, damageTypes, conditions) è facoltativa. Le voci non valide vengono scartate con il motivo.
+// Gli id devono iniziare con "hb_" e non possono coincidere con quelli dei dati di gioco.
+{
+  "schemaVersion": 1,
+  "name": "Il mio pacchetto",
+  "feats": [
+    {
+      "id": "hb_mio_talento",
+      "name": { "it": "Il mio talento", "en": "My feat" },   // "en" è facoltativo
+      "category": "general",                                  // origin | general | fighting_style | epic_boon
+      "description": "Testo mostrato nella scheda.",
+      "effects": [
+        { "op": "initiativeBonus", "value": 2 },              // gli effetti sono quelli del motore (vedi gli esempi)
+        { "op": "resistance", "types": ["fire"] }
+      ]
+    }
+  ]
+}

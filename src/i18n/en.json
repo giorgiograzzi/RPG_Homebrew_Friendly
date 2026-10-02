@@ -954,12 +954,6 @@
       "spellListOwn": "A list of your own",
       "spellListHelp": "Own = only the spells that include this class (you choose them on the spell's sheet). Or use the list of an existing class."
     },
-    "official": "Start from an existing entry",
-    "officialHelp": "Copies an existing entry as a starting point: you edit it and it becomes yours.",
-    "officialPick": "Choose what to copy",
-    "officialSearch": "Search",
-    "officialNone": "No existing entry of this type.",
-    "copy": "Copy",
     "allPacks": "All packs",
     "noPack": "No pack",
     "pack": "Pack",

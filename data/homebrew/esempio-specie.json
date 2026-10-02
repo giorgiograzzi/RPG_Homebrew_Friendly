@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "name": "Esempio: specie",
+  "species": [
+    {
+      "id": "hb_figli_della_cenere",
+      "name": {
+        "it": "Figli della Cenere",
+        "en": "Ashen Folk"
+      },
+      "description": "Specie inventata per l'esempio: gente nata vicino ai vulcani, con vista nel buio e pelle che non teme il fuoco.",
+      "sizes": [
+        "medium"
+      ],
+      "speed": 30,
+      "effects": [
+        {
+          "op": "sense",
+          "kind": "darkvision",
+          "range": 60
+        },
+        {
+          "op": "resistance",
+          "types": [
+            "fire"
+          ]
+        }
+      ],
+      "choices": [
+        {
+          "id": "hb_cenere_dono",
+          "label": "Dono della cenere",
+          "count": 1,
+          "options": [
+            {
+              "id": "svelto",
+              "name": "Svelto",
+              "effects": [
+                {
+                  "op": "speedBonus",
+                  "value": 10
+                }
+              ]
+            },
+            {
+              "id": "vigile",
+              "name": "Vigile",
+              "effects": [
+                {
+                  "op": "initiativeBonus",
+                  "value": 2
+                }
+              ]
+            },
+            {
+              "id": "robusto",
+              "name": "Robusto",
+              "effects": [
+                {
+                  "op": "hpMaxPerLevel",
+                  "value": 1
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "traits": [
+        {
+          "id": "hb_cenere_pelle",
+          "name": {
+            "it": "Pelle di cenere",
+            "en": "Ashen skin"
+          },
+          "description": "Resistenza ai danni da fuoco e scurovisione fino a 18 m (60 piedi).",
+          "level": 1
+        },
+        {
+          "id": "hb_cenere_brace",
+          "name": {
+            "it": "Brace interiore",
+            "en": "Inner ember"
+          },
+          "description": "Come azione bonus emetti luce fioca per 10 minuti. Usi pari al bonus di competenza, si ricaricano con un riposo lungo.",
+          "level": 1,
+          "usage": {
+            "uses": "pb",
+            "recharge": "long_rest"
+          }
+        }
+      ]
+    }
+  ]
+}
