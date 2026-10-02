@@ -20,6 +20,8 @@ export function download(text: string, name: string) {
 export const exportNow = async (exportAll: () => Promise<string>) =>
   download(await exportAll(), `personaggi-srd-${new Date().toISOString().slice(0, 10)}.json`);
 
+const isStandalone = () => { try { return window.matchMedia("(display-mode: standalone)").matches || (navigator as { standalone?: boolean }).standalone === true; } catch { return false; } };
+
 function StorageStatus() {
   const [info, setInfo] = useState<StorageInfo | null>(null);
   useEffect(() => { void storageInfo().then(setInfo); }, []);
@@ -28,7 +30,7 @@ function StorageStatus() {
   return (
     <fieldset className="ui-group">
       <legend>{tt.title}</legend>
-      <p role="status">{!info.supported ? tt.unsupported : info.persisted ? tt.persisted : tt.notPersisted}</p>
+      <p role="status">{!info.supported ? (isStandalone() ? tt.installedNoApi : tt.unsupported) : info.persisted ? tt.persisted : tt.notPersisted}</p>
       {info.usage !== undefined && info.quota !== undefined && <p className="ui-muted">{fmt(tt.usage, { u: formatBytes(info.usage), q: formatBytes(info.quota) })}</p>}
       {info.supported && !info.persisted && <div className="ui-actions" style={{ justifyContent: "flex-start" }}><Button onClick={() => void requestPersistence().then(setInfo)}>{tt.request}</Button></div>}
     </fieldset>

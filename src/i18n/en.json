@@ -87,7 +87,8 @@
       "notPersisted": "Not protected: if the device is low on space the browser may delete the data. Export a backup often.",
       "request": "Protect storage",
       "unsupported": "This browser cannot protect the storage: export a backup often.",
-      "usage": "Space used: {u} of {q}"
+      "usage": "Space used: {u} of {q}",
+      "installedNoApi": "App installed on the Home screen: the system does not delete an installed app's data on its own, but the browser cannot confirm it. Export a backup now and then anyway."
     }
   },
   "import": {

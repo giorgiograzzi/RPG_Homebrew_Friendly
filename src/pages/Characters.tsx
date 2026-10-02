@@ -52,10 +52,12 @@ export function Characters({ onOpened }: { onOpened: () => void }) {
                 <div className="name">{c.name || t.unnamed}</div>
                 <div className="ui-muted">{formatDate(c.updatedAt)}</div>
               </div>
+              <div className="row-actions">
               <Button onClick={() => void open(c.id).then((ok) => { setFailed(ok ? null : c.id); if (ok) onOpened(); })}>{t.open}</Button>
               <Button onClick={() => void duplicate(c.id)}>{t.duplicate}</Button>
               <Button onClick={() => void exportOne(c.id).then((x) => x && shareOrDownloadJson(x, fileName(c.id)))}>{t.export}</Button>
               <Button variant="danger" aria-label={`${t.delete} ${c.name || t.unnamed}`} onClick={() => setToDelete(c.id)}>✕</Button>
+              </div>
             </li>
           ))}
         </ul>

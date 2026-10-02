@@ -87,7 +87,8 @@
       "notPersisted": "Non protetto: se il dispositivo ha poco spazio il browser potrebbe cancellare i dati. Esporta spesso un backup.",
       "request": "Proteggi l'archivio",
       "unsupported": "Questo browser non permette di proteggere l'archivio: esporta spesso un backup.",
-      "usage": "Spazio usato: {u} su {q}"
+      "usage": "Spazio usato: {u} su {q}",
+      "installedNoApi": "App installata nella Home: il sistema non cancella da solo i dati di una app installata, ma il browser non permette di verificarlo. Esporta comunque un backup ogni tanto."
     }
   },
   "import": {
