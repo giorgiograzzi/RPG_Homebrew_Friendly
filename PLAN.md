@@ -55,7 +55,7 @@ Riscrittura degli estrattori in `scripts/` perché leggano **solo** i due PDF SR
   - **2d-3** ☑: Druido, Stregone, Warlock, Mago.
 - **2e Incantesimi** ☑ (339 incantesimi IT+EN; le tabelle slot multiclasse passano a 2f): tutti quelli dell'SRD (livello, scuola, classi, tempo, gittata, componenti, durata, testo, livelli superiori) + liste per classe + tabelle slot.
 - **2f Condizioni, riposi, morte e regole di gioco** ☑ usate dal motore: 15 condizioni (Esaurimento incluso), tabella slot del multiclasse, regole di creazione (serie standard, costo in punti, serie per classe, tabella PE, fasce di partenza, 9 allineamenti). Riposi e morte restano costanti nel motore (da riverificare sull'SRD nello step 4).
-- **2g (opzionale, da decidere)**: oggetti magici dell'SRD.
+- **2g Oggetti magici** ☑ (258 voci IT+EN, `scripts/extract-magic.ts`): tipo, rarità, sintonia e testo con tabelle; sono voci `items` con categoria `magic` e blocco `magic`, in `data/srd/<lingua>/magic_items.json`. L'abbinamento IT↔EN è la tabella a mano `scripts/lib/magic-names.ts`, ricontrollata dallo script (categoria, rarità, sintonia, dadi, CD). Gli effetti di gioco non sono modellati (solo testo, sintonia e cariche a mano).
 - **Test per ogni sotto-passo**: `npm run validate:data` (schema Zod + riferimenti incrociati) su entrambe le lingue; test "IT e EN hanno gli stessi id" (`src/data/srd.parity.test.ts`); **conteggi attesi** scritti nel test (es. n. di classi, specie, incantesimi) presi dall'indice del PDF; controllo a campione di ≥10 voci per blocco contro il PDF (riportato nel riepilogo); i dubbi vanno in `TODO.md`, non inventati.
 
 ### Step 3 — Caricamento dati e lingua (i18n IT/EN)  ☑

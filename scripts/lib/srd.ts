@@ -84,8 +84,8 @@ export function localize(v: unknown, l: Lang): unknown {
 
 export interface Entry { id: string; name: { en: string; it: string }; [k: string]: unknown }
 
-// Scrive i file data/srd/<lingua>/<kind>.json con lo stesso contenuto, il nome e la descrizione nella lingua del file
-export function writeKind(kind: string, entries: Entry[] | Record<string, unknown>[]) {
+// Scrive i file data/srd/<lingua>/<file>.json (file = kind, se non indicato) con lo stesso contenuto, il nome e la descrizione nella lingua del file
+export function writeKind(kind: string, entries: Entry[] | Record<string, unknown>[], file = kind) {
   for (const l of LANGS) {
     mkdirSync(OUT(l), { recursive: true });
     // gli incantesimi concessi hanno il modo giusto per il loro livello (trucchetto a volontà, ecc.)
@@ -96,7 +96,7 @@ export function writeKind(kind: string, entries: Entry[] | Record<string, unknow
       const named = e.name ? { name: e.name[l].replace(/’/g, "'") } : {};
       return { ...(localize({ ...e, name: undefined }, l) as object), ...named, ...(d ? { description: d[l] } : {}), ...(kind === "creation" ? {} : { origin: "srd" }) };
     });
-    writeFileSync(`${OUT(l)}/${kind}.json`, JSON.stringify({ kind, entries: out }, null, 1) + "\n");
+    writeFileSync(`${OUT(l)}/${file}.json`, JSON.stringify({ kind, entries: out }, null, 1) + "\n");
   }
-  console.log(`${kind}: ${entries.length}`);
+  console.log(`${file}: ${entries.length}`);
 }
