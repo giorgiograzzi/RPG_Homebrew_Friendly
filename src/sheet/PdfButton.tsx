@@ -17,8 +17,9 @@ export function PdfButton({ ch, rs }: { ch: Character; rs: Ruleset }) {
   const run = async () => {
     setState({ busy: true });
     try {
-      const [{ makeSheetPdf }, regular, bold] = await Promise.all([import("../export/sheetPdf"), bytes(regularUrl), bytes(boldUrl)]);
-      const pdf = await makeSheetPdf(ch, rs, lang, { regular, bold });
+      // in italiano la scheda compilabile (moduli con i dati già inseriti); in inglese la scheda a pagine libere
+      const [{ makeFilledSheet }, { makeSheetPdf }, regular, bold] = await Promise.all([import("../export/filledSheet"), import("../export/sheetPdf"), bytes(regularUrl), bytes(boldUrl)]);
+      const pdf = await (lang === "it" ? makeFilledSheet : makeSheetPdf)(ch, rs, lang, { regular, bold });
       const slug = (ch.name || "personaggio").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "personaggio";
       setState({ url: downloadBytes(pdf, `scheda-${slug}.pdf`, "application/pdf") });
     } catch (e) {

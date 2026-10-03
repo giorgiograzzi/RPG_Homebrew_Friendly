@@ -9,6 +9,7 @@ import type { Character } from "../engine/types";
 import { STRINGS, type Lang } from "../i18n";
 import { DISCLAIMER, SRD_NOTICE } from "../legal/attribution";
 import { autoComplete, finalizeCharacter } from "../wizard/logic";
+import { makeFilledSheet } from "./filledSheet";
 import { makeSheetPdf } from "./sheetPdf";
 
 const FONT = (w: number) => readFileSync(`node_modules/@fontsource/noto-sans/files/noto-sans-latin-${w}-normal.woff`);
@@ -81,6 +82,23 @@ describe("scheda PDF libera", () => {
     const { rs, ch } = make("it", "fighter", 1, "Ñandú ★ 龍");
     const { text } = await readPdf(await makeSheetPdf(ch, rs, "it", fonts));
     expect(text).toContain("Ñandú");
+  });
+
+  it("scheda compilabile: campi riempiti dal personaggio e pagine di continuazione", async () => {
+    const { rs, ch } = make("it", "wizard", 5, "Aria Ventosa");
+    const bytes = await makeFilledSheet(ch, rs, "it", fonts);
+    const { PDFDocument } = await import("pdf-lib");
+    const form = (await PDFDocument.load(bytes)).getForm();
+    expect(form.getTextField("nome_personaggio").getText()).toBe("Aria Ventosa");
+    expect(form.getTextField("classe").getText()).toContain(rs.classes.get("wizard")!.name.it);
+    expect(form.getTextField("Intelligenza_mod").getText()).toBe("+3");
+    expect(form.getTextField("Intelligenza_Arcano_bonus").getText()).toMatch(/^\+\d+$/);
+    expect(form.getCheckBox("Intelligenza_Arcano_competenza").isChecked()).toBe(true);
+    expect(form.getTextField("incantesimo_1_1").getText()).toBeTruthy();
+    const { n, text } = await readPdf(bytes);
+    expect(n).toBeGreaterThan(3); // 3 pagine del modulo + continuazione
+    expect(text).toContain(STRINGS.it.pdf.spellDetails.toUpperCase());
+    expect(text).not.toMatch(/undefined|NaN|\[object/);
   });
 
   it("il font incorporato è libero: licenza e attribuzione in repo", () => {

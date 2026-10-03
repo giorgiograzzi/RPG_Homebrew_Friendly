@@ -107,7 +107,6 @@ function header(doc: Doc, d: SheetData, P: Pdf) {
 
 // Dopo la pagina 1 ogni sezione è completa e ha il suo spazio: un blocco intero sta sulla stessa pagina o passa alla successiva, mai spezzato a metà
 function flow(doc: Doc, d: SheetData, P: Pdf) {
-  const fresh = () => { if (doc.y > MARGIN + 1) doc.newPage(); };
 
   // equipaggiamento: resta in pagina 1 solo se ci sta tutto
   const eq = d.equipment.length ? doc.paraHeight(d.equipment.join(", "), CW, 8) : 0;
@@ -120,26 +119,10 @@ function flow(doc: Doc, d: SheetData, P: Pdf) {
   if (d.equipment.length) doc.para(d.equipment.join(", "), MARGIN, CW, { size: 8 });
   if (d.attunement.length) doc.para(`${P.attuned}: ${d.attunement.join(", ")}`, MARGIN, CW, { size: 7.5, color: MUTED });
 
-  // privilegi, tratti, talenti: pagina propria; ogni voce resta intera e il titolo si ripete se la sezione prosegue
-  let first = true;
-  const list = (title: string, items: string[]) => {
-    if (!items.length) return;
-    if (first) { fresh(); first = false; }
-    doc.ensure(26 + Math.min(doc.paraHeight(items[0]!, CW, 7.5, 2.5), 60));
-    doc.heading(title);
-    for (const it of items) {
-      const h = doc.paraHeight(it, CW, 7.5, 2.5);
-      if (doc.y + h > doc.bottom && h < doc.bottom - MARGIN - 20) { doc.newPage(); doc.heading(`${title} ${P.cont}`); }
-      doc.para(it, MARGIN, CW, { size: 7.5, gap: 2.5 });
-    }
-  };
-  list(P.classFeatures, d.classFeatures);
-  list(P.speciesTraits, d.speciesTraits);
-  list(P.feats, d.feats);
-  list(P.details, d.details);
+  featureLists(doc, d, P);
 
   if (!d.spellAbility) return;
-  fresh();
+  fresh(doc);
   doc.heading(P.spellcasting);
   const items: [string, string][] = [[P.spellAbility, d.spellAbility], [P.spellMod, d.spellMod], [P.spellDc, d.spellDc], [P.spellAtk, d.spellAtk]];
   items.forEach(([l, v], i) => doc.box(MARGIN + i * 80, doc.y, 74, 32, l, v, { big: i === 0 ? 9 : 14 }));
@@ -166,9 +149,37 @@ function flow(doc: Doc, d: SheetData, P: Pdf) {
   }
   doc.para(P.spellLegend, MARGIN, CW, { size: 6.5, color: MUTED });
 
+  spellCards(doc, d, P);
+}
+
+
+const fresh = (doc: Doc) => { if (doc.y > MARGIN + 1) doc.newPage(); };
+
+// privilegi, tratti, talenti: pagina propria; ogni voce resta intera e il titolo si ripete se la sezione prosegue
+function featureLists(doc: Doc, d: SheetData, P: Pdf) {
+  // privilegi, tratti, talenti: pagina propria; ogni voce resta intera e il titolo si ripete se la sezione prosegue
+  let first = true;
+  const list = (title: string, items: string[]) => {
+    if (!items.length) return;
+    if (first) { fresh(doc); first = false; }
+    doc.ensure(26 + Math.min(doc.paraHeight(items[0]!, CW, 7.5, 2.5), 60));
+    doc.heading(title);
+    for (const it of items) {
+      const h = doc.paraHeight(it, CW, 7.5, 2.5);
+      if (doc.y + h > doc.bottom && h < doc.bottom - MARGIN - 20) { doc.newPage(); doc.heading(`${title} ${P.cont}`); }
+      doc.para(it, MARGIN, CW, { size: 7.5, gap: 2.5 });
+    }
+  };
+  list(P.classFeatures, d.classFeatures);
+  list(P.speciesTraits, d.speciesTraits);
+  list(P.feats, d.feats);
+  list(P.details, d.details);
+}
+
+function spellCards(doc: Doc, d: SheetData, P: Pdf) {
   // dettaglio: una scheda per incantesimo, su due colonne, ognuna intera
   if (!d.spells.length) return;
-  fresh();
+  fresh(doc);
   doc.heading(P.spellDetails);
   const colW = (CW - 14) / 2, sz = 7, lh = sz * 1.35;
   let pageTop = doc.y, col = 0;
@@ -190,6 +201,20 @@ function flow(doc: Doc, d: SheetData, P: Pdf) {
     ys[col] = y + 7;
   }
   doc.y = Math.max(ys[0]!, ys[1]!);
+}
+
+// Pagine di continuazione della scheda compilabile: testi completi di privilegi, tratti e talenti, equipaggiamento per esteso e schede degli incantesimi
+export async function buildContinuation(d: SheetData, lang: Lang, fonts: FontBytes): Promise<Uint8Array> {
+  const P: Pdf = STRINGS[lang].pdf;
+  const doc = await Doc.create(fonts, `${P.title}: ${d.name || "—"}`);
+  doc.text(`${d.name || "—"} · ${P.title} ${P.cont}`, MARGIN, MARGIN, { size: 12, bold: true, color: ACCENT });
+  doc.line(MARGIN, MARGIN + 18, MARGIN + CW, MARGIN + 18, ACCENT, 0.8);
+  doc.y = MARGIN + 26;
+  featureLists(doc, d, P);
+  if (d.equipment.length) { doc.ensure(60); doc.heading(P.equipment); doc.para(d.equipment.join(", "), MARGIN, CW, { size: 8 }); }
+  spellCards(doc, d, P);
+  footer(doc, lang, P);
+  return doc.pdf.save();
 }
 
 // Su ogni pagina: dicitura CC-BY dell'SRD (testo esatto), avviso «non ufficiale» e numero di pagina

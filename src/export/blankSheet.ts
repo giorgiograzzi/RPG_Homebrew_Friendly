@@ -1,8 +1,10 @@
 import fontkit from "@pdf-lib/fontkit";
-import { PDFDocument, PDFName, rgb, type PDFFont, type PDFPage } from "pdf-lib";
+import { PDFDocument, PDFName, rgb, type PDFFont, type PDFForm, type PDFPage } from "pdf-lib";
+import type { Lang } from "../i18n";
+import { DISCLAIMER, SRD_NOTICE } from "../legal/attribution";
 import type { FontBytes } from "./pdfKit";
 
-// Scheda 2024 compilabile, ridisegnata da zero (A4, 3 pagine): ogni riquadro ha il suo spazio, righe e nomi sono allineati per costruzione.
+// Scheda compilabile, ridisegnata da zero (A4, 3 pagine): ogni riquadro ha il suo spazio, righe e nomi sono allineati per costruzione.
 // I campi usano gli stessi nomi del modulo originale ("Forza_Atletica_bonus", "arma_1_0", "incantesimo_3_C"...) per poterli riempire dal personaggio.
 const W = 595.28, H = 841.89, M = 30, CW = W - 2 * M;
 const PETROL = rgb(0.141, 0.329, 0.357), GOLD = rgb(0.718, 0.584, 0.329), INK = rgb(0.15, 0.23, 0.24), SOFT = rgb(0.45, 0.56, 0.58), TINT = rgb(0.95, 0.97, 0.97);
@@ -16,11 +18,13 @@ const ABILITIES: [string, string[]][] = [
   ["Carisma", ["Inganno", "Intimidire", "Intrattenere", "Persuasione"]],
 ];
 
-export async function buildBlankSheet(fonts: FontBytes): Promise<Uint8Array> {
+// `fill` riempie i campi prima che vengano disegnati; `extra` (un altro PDF) viene accodato come pagine di continuazione
+export async function buildBlankSheet(fonts: FontBytes, o: { lang?: Lang; fill?: (form: PDFForm) => void; extra?: Uint8Array } = {}): Promise<Uint8Array> {
+  const lang = o.lang ?? "it";
   const pdf = await PDFDocument.create();
   pdf.registerFontkit(fontkit);
   const reg = await pdf.embedFont(fonts.regular, { subset: true }), bold = await pdf.embedFont(fonts.bold, { subset: true });
-  pdf.setTitle("Scheda del personaggio - Regole 2024"); pdf.setCreator("RPG Homebrew Friendly");
+  pdf.setTitle("Scheda del personaggio"); pdf.setCreator("RPG Homebrew Friendly");
   const form = pdf.getForm();
 
   let page!: PDFPage;
@@ -54,13 +58,21 @@ export async function buildBlankSheet(fonts: FontBytes): Promise<Uint8Array> {
     text(label, x, top, { size: 7.5, color: INK });
     field(name, x, top + 9, w, 15, o);
   };
+  const wrapText = (str: string, width: number, size: number) => {
+    const out: string[] = []; let cur = "";
+    for (const w of str.replace(/\s+/g, " ").split(" ")) { const t = cur ? `${cur} ${w}` : w; if (reg.widthOfTextAtSize(t, size) <= width || !cur) cur = t; else { out.push(cur); cur = w; } }
+    return cur ? [...out, cur] : out;
+  };
   const newPage = (n: number, sub: string) => {
     page = pdf.addPage([W, H]);
     text("SCHEDA DEL PERSONAGGIO", M, 26, { size: 19, bold: true, color: PETROL });
-    text(`REGOLE 2024  /  ${sub}`, M, 50, { size: 8, color: PETROL });
+    text(`SRD 5.2.1  /  ${sub}`, M, 50, { size: 8, color: PETROL });
     text(`${n}/3`, W - M - 40, 30, { size: 12, bold: true, color: GOLD, width: 40, align: "right" });
     line(M, 64, W - M, 64, SOFT, 0.6);
-    text("Scheda compilabile • Uso personale", M, H - 24, { size: 7, color: PETROL });
+    line(M, H - 44, W - M, H - 44, SOFT, 0.5);
+    // dicitura CC-BY dell'SRD e avviso «non ufficiale» su ogni pagina
+    let fy = H - 41;
+    for (const l of [...wrapText(SRD_NOTICE[lang], CW - 60, 5.8), ...wrapText(DISCLAIMER[lang], CW - 60, 5.8)]) { text(l, M, fy, { size: 5.8, color: SOFT }); fy += 6.6; }
   };
 
   // ───────── pagina 1: caratteristiche e combattimento ─────────
@@ -119,7 +131,7 @@ export async function buildBlankSheet(fonts: FontBytes): Promise<Uint8Array> {
 
   // armi e trucchetti: otto righe
   top += bhs.reduce((a, b) => a + b + gap, 0);
-  const rows = 8, rh = 15, ah = 40 + rows * rh;
+  const rows = 8, rh = 14, ah = 40 + rows * rh;
   box(M, top, CW, ah, "ARMI E TRUCCHETTI DA COMBATTIMENTO");
   const ac = [{ l: "Nome", x: M + 8, w: 170 }, { l: "Bonus att. / CD", x: M + 186, w: 80 }, { l: "Danno e tipo", x: M + 274, w: 110 }, { l: "Note", x: M + 392, w: CW - 400 }];
   ac.forEach((c) => text(c.l, c.x, top + 26, { size: 7.5, bold: true }));
@@ -173,7 +185,7 @@ export async function buildBlankSheet(fonts: FontBytes): Promise<Uint8Array> {
   const hdr = (s: string, hx: number) => text(s, hx, top, { size: 7.5, bold: true, color: PETROL });
   hdr("Liv.", sc.lv); hdr("Nome", sc.name); hdr("Tempo", sc.time); hdr("Gittata", sc.range); hdr("C", sc.c + 2); hdr("R", sc.r + 2); hdr("M", sc.m + 2); hdr("Note", sc.note);
   top += 12;
-  const n = 25, th = (H - 38 - top) / n;
+  const n = 24, th = (H - 54 - top) / n;
   page.drawRectangle({ x: M, y: y(top) - n * th, width: CW, height: n * th, borderColor: PETROL, borderWidth: 0.9 });
   for (let r = 1; r <= n; r++) {
     const ry = top + (r - 1) * th;
@@ -188,6 +200,11 @@ export async function buildBlankSheet(fonts: FontBytes): Promise<Uint8Array> {
   }
   [sc.name - 4, sc.time - 4, sc.range - 4, sc.c - 4, sc.note - 4].forEach((vx) => line(vx, top, vx, top + n * th, SOFT, 0.3));
 
+  o.fill?.(form);
   form.updateFieldAppearances(reg);
+  if (o.extra) {
+    const extra = await PDFDocument.load(o.extra);
+    for (const pg of await pdf.copyPages(extra, extra.getPageIndices())) pdf.addPage(pg);
+  }
   return pdf.save();
 }
