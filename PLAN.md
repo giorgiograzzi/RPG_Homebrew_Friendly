@@ -4,7 +4,7 @@ PWA per creare e gestire personaggi, **italiano + inglese**, offline. Contiene *
 Nasce dall'app privata `giorgiograzzi/Prova_creazione_dnd_character` (non si tocca: resta com'è). Il codice si copia **senza cronologia git**, così i PDF non liberi non entrano mai qui.
 
 ## Stato
-**Chiusi: step 0 (PR #2), 1 (#3), 2a (#4), correttore glifi + descrizioni 2a (#5), piano 5b (#6), 2b (#7), 2c (#8), 2d-1 (#9), 2d-2 (#10), 2d-3 (#11), 2e (#12), 2f (#13): step 2 (dati SRD) chiuso. 3 (#14). 4 (#15). 5b-1 e 5b-2 (#16). 5b-3 (#17). 5b-4/5b-5 (#18): step 5b chiuso. Step 5 (#19). Step 6 (#22). Step 7 (#25). Step 8 (#26). Step 2g e step 9 (#30). Icona nuova (#28, #29). 10: da fare.**
+**Chiusi: step 0 (PR #2), 1 (#3), 2a (#4), correttore glifi + descrizioni 2a (#5), piano 5b (#6), 2b (#7), 2c (#8), 2d-1 (#9), 2d-2 (#10), 2d-3 (#11), 2e (#12), 2f (#13): step 2 (dati SRD) chiuso. 3 (#14). 4 (#15). 5b-1 e 5b-2 (#16). 5b-3 (#17). 5b-4/5b-5 (#18): step 5b chiuso. Step 5 (#19). Step 6 (#22). Step 7 (#25). Step 8 (#26). Step 2g e step 9 (#30). Icona nuova (#28, #29). Privacy Policy, Cookie Policy, avviso sui cookie e rinomina in «Placet del Master» (#34). 10: da fare.**
 
 ## Decisioni già prese (Giorgio)
 | Tema | Scelta |
@@ -16,6 +16,7 @@ Nasce dall'app privata `giorgiograzzi/Prova_creazione_dnd_character` (non si toc
 | PDF scheda | scheda **originale** disegnata nel codice (pdf-lib); il PDF ufficiale WotC non c'è più |
 | Homebrew | tenuto; **tolta** "copia da voce ufficiale"; esempi solo SRD |
 | Licenze | codice MIT; contenuti SRD CC-BY 4.0 con la dicitura ufficiale nell'app e in `ATTRIBUTION.md` |
+| Privacy e cookie | Privacy Policy e Cookie Policy IT/EN nell'app (`src/legal/policies.ts`, titolare Giorgio Grazzi); avviso sui cookie **solo informativo** perché l'app non imposta cookie e usa solo archivi tecnici (2026-10-02). Se arrivano statistiche o servizi esterni: testi aggiornati e banner con Accetta/Rifiuta |
 | Nome | **Placet del Master** (prima «Danger & Dragons»; rinominato il 2026-10-02). Mai la sigla «D&D» né loghi WotC; nome breve della PWA: «Placet Master» |
 | Dati | **tracciati in git** (sono CC-BY): niente più `data/private` |
 
@@ -90,13 +91,14 @@ Oggi l'interfaccia imita Windows XP / Win95 (`src/ui/xp/`, 313 righe di CSS, ~26
 ### Step 8 — Attribuzione e note legali nell'app  ☑ (dicitura identica nei due PDF SRD 5.2.1, verificata dal test)
 - **Cosa**: schermata "Informazioni e licenze" con la dicitura CC-BY esatta (versione per lingua: 5.2.1 sia IT sia EN), link alla licenza, avviso "contenuto non ufficiale, non affiliato a WotC", MIT del codice; stessa dicitura in `ATTRIBUTION.md`, `README` e (se presente) sul PDF della scheda.
 - **Test**: test che la dicitura è presente nell'app, in `ATTRIBUTION.md` e nel PDF generato; il guardia dello step 1 continua a passare.
+- **Aggiunto con #34**: Privacy Policy e Cookie Policy (menu, Impostazioni, Informazioni), avviso sui cookie (`src/ui/CookieBanner.tsx`), `policies.test.ts` e passi nello smoke e2e.
 
 ### Step 9 — PWA, Docker e CI  ☑ (workflow `.github/workflows/ci.yml`, `e2e/offline.mjs`; CI verde su GitHub in #30, compreso `docker compose build`)
 - **Cosa**: adatta manifest/nome/icone (nuove, originali), Docker (il build non dipende più da `data/private`), workflow GitHub Actions: `typecheck`, `test`, `validate:data`, `build`.
 - **Test**: `docker compose build` ok; CI verde; build PWA offline verificato (Playwright con rete spenta dopo il primo caricamento).
 
 ### Step 10 — Rifinitura e release  ◐ (README, checklist `docs/RELEASE.md`, suite verde; restano le firme di Giorgio e il tag)
-- **Cosa**: passata finale sul `TODO.md`, README con istruzioni (uso, homebrew, lingue, licenze), controllo legale finale (rilettura della dicitura, del nome, dei loghi), tag `v1.0.0`.
+- **Cosa**: passata finale sul `TODO.md`, README con istruzioni (uso, homebrew, lingue, licenze), controllo legale finale (rilettura della dicitura, del nome, dei loghi, di Privacy e Cookie Policy con un professionista), tag `v1.0.0`.
 - **Test**: tutta la suite + guardia legale + smoke test; checklist finale firmata da Giorgio.
 
 ---
